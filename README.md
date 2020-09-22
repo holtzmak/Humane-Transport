@@ -12,7 +12,7 @@ This project's main source of background information, process- and requirements-
 
 The deliverables assigned and set out by our post-seconday software engineering course are as follows:
 1. [Project Proposal](https://github.com/holtzmak/Humane-Transport/wiki/Project-Proposal-Document) (September 11, 2020)
-1. Project Vlog 1 [Documentation](https://github.com/holtzmak/Humane-Transport/wiki/Project-Vlog-1-Documentation) (September 23, 2020) Video TBA
+1. Project Vlog 1 [Documentation](https://github.com/holtzmak/Humane-Transport/wiki/Project-Vlog-1-Documentation), [Video](https://github.com/holtzmak/Humane-Transport/blob/master/deliverables/Project%20Vlog%201%20Recording.mp4) (September 23, 2020)
 
 ***
 
