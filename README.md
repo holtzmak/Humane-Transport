@@ -14,6 +14,7 @@ The deliverables assigned and set out by our post-seconday software engineering 
 1. [Project Proposal](https://github.com/holtzmak/Humane-Transport/wiki/Project-Proposal-Document) (September 11, 2020)
 1. Project Vlog 1 [Documentation](https://github.com/holtzmak/Humane-Transport/wiki/Project-Vlog-1-Documentation) and [Video](https://www.youtube.com/watch?v=yEHSdMMVPaU) (September 23, 2020)
 1. Scrum Report 1 [Slides](https://sanakhan1997.github.io/Humane-Transport/) (September 28, 2020)
+1. Project Progress Vlog 1 [Video](https://www.youtube.com/watch?v=9OWY6PUYiAg) and [Slides](https://sanakhan1997.github.io/Humane-Transport/) (October 19, 2020)
 
 Most deliverables available on our [website](https://sanakhan1997.github.io/Humane-Transport/).
 
