@@ -8,7 +8,7 @@ A mobile application to record Canadian animal transport and transfer of care do
 
 This project's main source of background information, process- and requirements-related documentation, architectural- and design-related documentation, and project discussion is the [Wiki](https://github.com/holtzmak/Humane-Transport/wiki).
 
-## Project Deliverables 
+## Project Deliverables
 
 All deliverables available on our [website](https://sanakhan1997.github.io/Humane-Transport/).
 
@@ -34,7 +34,7 @@ This project is not affiliated with nor endorsed by the Canadian Food Inspection
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
-> 
+>
 > This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
