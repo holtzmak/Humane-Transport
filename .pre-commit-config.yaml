@@ -13,10 +13,6 @@ repos:
     rev: b7e9e7fcba4a5aea463e72fe9964c14877bd8130
     hooks:
     -   id: google-style-java
--   repo: https://github.com/Cretezy/dart-format-pre-commit
-    rev: "master"
-    hooks:
-    -   id: dart-format
 -   repo: https://github.com/Cretezy/flutter-format-pre-commit
     rev: "master"
     hooks:

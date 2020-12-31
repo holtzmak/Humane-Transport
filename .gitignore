@@ -25,3 +25,4 @@ hs_err_pid*
 # Miscellanious, or project-relevant files to be ignored
 /.idea/
 .DS_Store
+.cache/
