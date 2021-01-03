@@ -6,11 +6,6 @@ on:
     - 'documentation/**'
     - 'LICENSE'
     - 'README.md'
-  pull_request:
-    paths-ignore:
-    - 'documentation/**'
-    - 'LICENSE'
-    - 'README.md'
 
 jobs:
   build:
