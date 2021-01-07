@@ -1,4 +1,4 @@
-import 'package:app/navigation.dart';
+import 'package:app/navbar/navigation.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
