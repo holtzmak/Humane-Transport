@@ -1,10 +1,12 @@
 import 'package:app/navbar/navigation.dart';
+import 'package:app/sidebar/sidebar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: SideBar(),
       appBar: AppBar(
         title: Text('Home Page'),
       ),
