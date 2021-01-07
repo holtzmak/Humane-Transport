@@ -8,9 +8,8 @@ class InProgress extends StatefulWidget {
 class _InProgressState extends State<InProgress> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    print('In progress');
+    print('Init: In progress');
   }
 
   @override
