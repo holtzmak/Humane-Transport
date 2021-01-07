@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
+import 'humane_transport_app.dart';
 
 void main() => runApp(HumaneTransportApp());
-
-class HumaneTransportApp extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return MaterialApp(home: Text('Hello World'));
-  }
-}
