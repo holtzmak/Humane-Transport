@@ -1,4 +1,5 @@
 import 'package:app/sidebar/local_widgets/list_tile.dart';
+import 'package:app/style/style.dart';
 import 'package:flutter/material.dart';
 
 class SideBar extends StatelessWidget {
@@ -12,24 +13,21 @@ class SideBar extends StatelessWidget {
           DrawerHeader(
             child: Text('Hello'),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: <Color>[
-                  Colors.green,
-                  Colors.greenAccent,
-                ],
-              ),
+              gradient: GradientColors,
             ),
           ),
-          CustomTile(
+          TemplateListTile(
             icon: Icons.star_border,
             text: 'In Progress',
+            textStyle: Theme.of(context).textTheme.bodyText1,
           ),
           SizedBox(
             height: 5.0,
           ),
-          CustomTile(
+          TemplateListTile(
             icon: Icons.history,
             text: 'Travel History',
+            textStyle: Theme.of(context).textTheme.bodyText1,
           ),
         ],
       ),

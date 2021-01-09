@@ -19,7 +19,10 @@ class _InProgressState extends State<InProgress> {
         title: Text('Back to Home'),
       ),
       body: Center(
-        child: Text('This is progress page'),
+        child: Text(
+          'This is in progress page',
+          style: Theme.of(context).textTheme.headline5,
+        ),
       ),
     );
   }
