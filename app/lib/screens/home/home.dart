@@ -27,7 +27,6 @@ class HomePage extends StatelessWidget {
                 ),
               );
             },
-            color: Colors.green[300],
             icon: Icon(Icons.add_circle_outline),
             label: Text('New Travel'),
           ),

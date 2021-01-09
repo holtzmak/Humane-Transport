@@ -18,7 +18,10 @@ class _TravelHistoryState extends State<TravelHistory> {
         title: Text('Back to Home'),
       ),
       body: Center(
-        child: Text('This is Travel History page'),
+        child: Text(
+          'This is Travel History page',
+          style: Theme.of(context).textTheme.headline5,
+        ),
       ),
     );
   }

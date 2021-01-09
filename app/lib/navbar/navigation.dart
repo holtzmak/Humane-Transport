@@ -40,7 +40,7 @@ class _NavigationBarControllerState extends State<NavigationBarController> {
             _selectedIndex = index;
           });
         },
-        selectedItemColor: Colors.green,
+        selectedItemColor: Theme.of(context).iconTheme.color,
       ),
     );
   }
