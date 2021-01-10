@@ -1,0 +1,57 @@
+name: Flutter actions build and integration test
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths-ignore:
+      - 'documentation/**'
+      - 'LICENSE'
+      - 'README.md'
+      - '.gitignore'
+      - 'pre-commit-config.yaml'
+
+defaults:
+  run:
+    working-directory: ./app
+
+jobs:
+  build_and_integration_test:
+    strategy:
+      matrix:
+        device:
+          - iPhone 12 Pro Max (14.2)
+      fail-fast: false
+    runs-on: macOS-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - name: Set up Flutter actions
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '1.22.5'
+          channel: 'stable'
+      - name: List all available devices
+        run: xcrun instruments -s
+      - name: Start devices
+        run: |
+          UDID=$(
+            xcrun instruments -s |
+            awk \
+              -F ' *[][]' \
+              -v 'device=${{ matrix.device }}' \
+              '$1 == device { print $2 }'
+          )
+          xcrun simctl boot ${UDID:?No Simulator with this name found}
+      - run: flutter pub get
+      - run: flutter format --set-exit-if-changed .
+      - run: flutter analyze .
+      - run: flutter test
+      - run: flutter build apk
+      - run: flutter build ios --release --no-codesign
+      # List integration tests here (until a command that runs them all is discovered)
+      - run: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/sidebar_test.dart

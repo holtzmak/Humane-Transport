@@ -1,0 +1,36 @@
+name: Flutter actions formatting and unit testing
+
+on:
+  push:
+    branches-ignore:
+      - 'master'
+    paths-ignore:
+      - 'documentation/**'
+      - 'LICENSE'
+      - 'README.md'
+      - '.gitignore'
+      - 'pre-commit-config.yaml'
+
+defaults:
+  run:
+    working-directory: ./app
+
+jobs:
+  formatting_and_unit_testing:
+    runs-on: macOS-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - name: Set up Flutter actions
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '1.22.5'
+          channel: 'stable'
+      - run: flutter pub get
+      - run: flutter format --set-exit-if-changed .
+      - run: flutter analyze .
+      - run: flutter test
