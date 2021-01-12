@@ -23,8 +23,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   cupertino_icons: ^1.0.0
   provider: ^4.3.2+3
+
+  pdf: ^2.0.0
+  flutter_full_pdf_viewer: ^1.0.6
+  path_provider: ^1.5.1
 
 dev_dependencies:
   flutter_driver:
@@ -32,6 +37,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test: ^1.0.0
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
