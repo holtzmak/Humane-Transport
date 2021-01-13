@@ -1,5 +1,5 @@
-import 'package:app/navbar/navigation.dart';
-import 'package:app/style/style.dart';
+import 'package:app/common/style/style.dart';
+import 'package:app/navigations/nav_bar/navigation.dart';
 import 'package:flutter/material.dart';
 
 class TemplateListTile extends StatelessWidget {

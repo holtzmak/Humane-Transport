@@ -1,5 +1,5 @@
-import 'package:app/sidebar/local_widgets/list_tile.dart';
-import 'package:app/style/style.dart';
+import 'package:app/common/style/style.dart';
+import 'package:app/common/widgets/list_tile.dart';
 import 'package:flutter/material.dart';
 
 class SideBar extends StatelessWidget {
