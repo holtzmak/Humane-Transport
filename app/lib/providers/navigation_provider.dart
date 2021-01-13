@@ -1,5 +1,4 @@
 import 'package:app/screens/history/history.dart';
-import 'package:app/screens/home/home.dart';
 import 'package:app/screens/new_travel/new_travel.dart';
 import 'package:app/screens/ongoing/ongoing.dart';
 import 'package:flutter/material.dart';
