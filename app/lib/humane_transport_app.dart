@@ -1,29 +1,27 @@
 import 'package:app/common/style/style.dart';
-import 'package:app/navigations/nav_bar/navigation.dart';
 import 'package:app/providers/navigation_provider.dart';
+import 'package:app/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'navigations/side_bar/sidebar.dart';
 
 class HumaneTransportApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('Start Application');
-    return ChangeNotifierProvider<NavigationProvider>(
-      create: (_) => NavigationProvider(),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: MainAppColor,
+    return MaterialApp(
+      home: ChangeNotifierProvider<NavigationProvider>(
+        create: (context) => NavigationProvider(),
+        child: HomeScreen(),
+      ),
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(color: MainAppColor),
+        textTheme: TextTheme(
+          headline5: TitleTextStyle,
+          bodyText1: BodyTextStyle,
         ),
-        drawer: SideBar(),
-        body: Consumer<NavigationProvider>(
-          builder: (context, model, child) => IndexedStack(
-            index: model.getIndex,
-            children: model.getCurrentScreen,
-          ),
+        iconTheme: IconThemeData(
+          color: MainAppColor,
         ),
-        bottomNavigationBar: BottomNavBar(),
+        buttonTheme: DefaultRaisedButtonStyle,
       ),
     );
   }

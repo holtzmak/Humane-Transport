@@ -8,7 +8,7 @@ class NavigationItems {
 }
 
 List<NavigationItems> allNavItems = <NavigationItems>[
-  NavigationItems(label: 'Home', icon: Icons.home_outlined),
   NavigationItems(label: 'New Travel', icon: Icons.add_circle_outline),
+  NavigationItems(label: 'Ongoing', icon: Icons.emoji_transportation_outlined),
   NavigationItems(label: 'Travel History', icon: Icons.timeline_outlined),
 ];

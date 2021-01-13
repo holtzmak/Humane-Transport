@@ -5,7 +5,7 @@ void main() {
   testWidgets('HumaneTransportApp says this is home page',
       (WidgetTester tester) async {
     await tester.pumpWidget(HumaneTransportApp());
-    final textFinder = find.text('This is Home Page');
+    final textFinder = find.text('Add new travel');
     expect(textFinder, findsOneWidget);
   });
 }

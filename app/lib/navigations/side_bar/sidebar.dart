@@ -18,7 +18,7 @@ class SideBar extends StatelessWidget {
           ),
           TemplateListTile(
             icon: Icons.home_outlined,
-            text: 'Home',
+            text: 'New Travel',
             textStyle: Theme.of(context).textTheme.bodyText1,
             selectedIndex: 0,
           ),
@@ -27,7 +27,7 @@ class SideBar extends StatelessWidget {
           ),
           TemplateListTile(
             icon: Icons.add_circle_outline,
-            text: 'New travel',
+            text: 'Ongoing travel',
             textStyle: Theme.of(context).textTheme.bodyText1,
             selectedIndex: 1,
           ),
