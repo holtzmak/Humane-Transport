@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class NewTravel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('Building.... Home page');
+    print('Building.... New Travel page');
     return Scaffold(
       body: Center(
-        child: Text('This is home page'),
+        child: Text('Add new travel'),
       ),
     );
   }

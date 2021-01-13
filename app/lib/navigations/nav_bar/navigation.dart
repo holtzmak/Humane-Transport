@@ -1,46 +1,26 @@
-import 'package:app/screens/history/history.dart';
-import 'package:app/screens/in_progress/in_progress.dart';
+import 'package:app/common/style/style.dart';
+import 'package:app/models/nav_items.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:app/providers/navigation_provider.dart';
 
-class NavigationBarController extends StatefulWidget {
+class BottomNavBar extends StatefulWidget {
   @override
-  _NavigationBarControllerState createState() =>
-      _NavigationBarControllerState();
+  _BottomNavBarState createState() => _BottomNavBarState();
 }
 
-class _NavigationBarControllerState extends State<NavigationBarController> {
-  int _selectedIndex = 0;
-  final List<Widget> _widgetOptions = <Widget>[
-    InProgress(),
-    TravelHistory(),
-  ];
-
+class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _widgetOptions,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            label: 'In Progress',
-            icon: Icon(Icons.star_border_outlined),
-          ),
-          BottomNavigationBarItem(
-            label: 'Travel History',
-            icon: Icon(Icons.history_edu_outlined),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        //Update the state when user selected an item
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        selectedItemColor: Theme.of(context).iconTheme.color,
+    return Consumer<NavigationProvider>(
+      builder: (context, model, child) => BottomNavigationBar(
+        items: allNavItems.map((NavigationItems navItem) {
+          return BottomNavigationBarItem(
+              icon: Icon(navItem.icon), label: navItem.label);
+        }).toList(),
+        currentIndex: model.getIndex,
+        onTap: (int index) => model.setIndex = index,
+        selectedItemColor: MainAppColor,
       ),
     );
   }

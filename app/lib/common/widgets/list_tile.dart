@@ -28,7 +28,7 @@ class TemplateListTile extends StatelessWidget {
           Navigator.pop(context);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => NavigationBarController()),
+            MaterialPageRoute(builder: (context) => BottomNavBar()),
           );
         },
         child: Row(

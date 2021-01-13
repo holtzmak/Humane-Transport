@@ -2,4 +2,6 @@ import 'package:flutter/material.dart';
 import 'humane_transport_app.dart';
 
 // TODO: Implement State management system
-void main() => runApp(HumaneTransportApp());
+void main() => runApp(MaterialApp(
+      home: HumaneTransportApp(),
+    ));
