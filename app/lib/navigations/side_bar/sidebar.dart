@@ -17,9 +17,19 @@ class SideBar extends StatelessWidget {
             ),
           ),
           TemplateListTile(
-            icon: Icons.star_border,
-            text: 'In Progress',
+            icon: Icons.home_outlined,
+            text: 'Home',
             textStyle: Theme.of(context).textTheme.bodyText1,
+            selectedIndex: 0,
+          ),
+          SizedBox(
+            height: 5.0,
+          ),
+          TemplateListTile(
+            icon: Icons.add_circle_outline,
+            text: 'New travel',
+            textStyle: Theme.of(context).textTheme.bodyText1,
+            selectedIndex: 1,
           ),
           SizedBox(
             height: 5.0,
@@ -28,6 +38,7 @@ class SideBar extends StatelessWidget {
             icon: Icons.history,
             text: 'Travel History',
             textStyle: Theme.of(context).textTheme.bodyText1,
+            selectedIndex: 2,
           ),
         ],
       ),

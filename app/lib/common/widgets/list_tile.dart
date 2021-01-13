@@ -1,14 +1,19 @@
 import 'package:app/common/style/style.dart';
-import 'package:app/navigations/nav_bar/navigation.dart';
+import 'package:app/providers/navigation_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TemplateListTile extends StatelessWidget {
   final IconData icon;
   final String text;
   final TextStyle textStyle;
+  final int selectedIndex;
 
   TemplateListTile(
-      {@required this.icon, @required this.text, @required this.textStyle}) {
+      {@required this.icon,
+      @required this.text,
+      @required this.textStyle,
+      @required this.selectedIndex}) {
     assert(icon != null);
     assert(text != null);
     assert(textStyle != null);
@@ -24,12 +29,9 @@ class TemplateListTile extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          // TODO: Implement a better way of routing
-          Navigator.pop(context);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => BottomNavBar()),
-          );
+          Navigator.of(context).pop();
+          Provider.of<NavigationProvider>(context, listen: false).setIndex =
+              selectedIndex;
         },
         child: Row(
           children: [
