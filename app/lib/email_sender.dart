@@ -1,4 +1,3 @@
-
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +13,8 @@ class EmailSender {
       isHTML: false,
     );
     String emailResponse;
+
+
     try {
       await FlutterEmailSender.send(email);
       emailResponse = 'success';
@@ -27,6 +28,10 @@ class EmailSender {
 
 class EmailRoute extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
+
+  final validate = false;
+
+
 
   final email = EmailSender();
   final recipientController = TextEditingController();
@@ -44,14 +49,12 @@ class EmailRoute extends StatelessWidget {
               key: formKey,
               child: Column(children: <Widget>[
                 TextFormField(
-                  decoration: InputDecoration(hintText: 'Email'),
+
+                  decoration: InputDecoration(
+                      labelText: 'Enter Email',
+                      errorText: validate ? 'Empty email address' : null),
+
                   controller: recipientController,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter email';
-                    } else
-                      return null;
-                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(hintText: 'Email Subject'),
