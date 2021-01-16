@@ -1,8 +1,5 @@
-import 'dart:io';
-
-import 'package:app/screens/history/pdf_preview.dart';
+import 'package:app/common/utilities/pdf_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 
 class TravelHistory extends StatelessWidget {
   @override
@@ -30,23 +27,8 @@ class TravelHistory extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          try {
-            buildPdf();
-            savePdf();
-            final output = await getTemporaryDirectory();
-            String fullPath = ("${output.path}/example.pdf");
-
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => PdfPreview(
-                          path: fullPath,
-                        )));
-          } on HttpException catch (err) {
-            print('Error: $err');
-          }
-        },
+        onPressed: () => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => PdfPreview())),
         child: Icon(Icons.save),
       ),
     );

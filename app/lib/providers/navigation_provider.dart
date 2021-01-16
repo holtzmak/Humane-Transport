@@ -10,7 +10,9 @@ class NavigationProvider extends ChangeNotifier {
     OngoingTravel(),
     TravelHistory(),
   ];
+
   get getIndex => _index;
+
   set setIndex(int index) {
     _index = index;
     notifyListeners();
