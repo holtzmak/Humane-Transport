@@ -18,11 +18,7 @@ class HomeScreen extends StatelessWidget {
           children: model.getCurrentScreen,
         ),
       ),
-
-
       bottomNavigationBar: BottomNavBar(),
-
-
     );
   }
 }

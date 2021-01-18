@@ -123,7 +123,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
-
   flutter_full_pdf_viewer:
     dependency: "direct main"
     description:
@@ -131,7 +130,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.6"
-
   flutter_test:
     dependency: "direct dev"
     description: flutter
