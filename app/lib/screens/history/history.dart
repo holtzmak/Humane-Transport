@@ -2,10 +2,13 @@ import 'package:app/common/utilities/pdf_preview.dart';
 import 'package:flutter/material.dart';
 
 class TravelHistory extends StatelessWidget {
+  static const route = '/history';
   @override
   Widget build(BuildContext context) {
-    print('Building.... Travel History page');
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       body: ListView.builder(
         itemCount: 20,
         itemBuilder: (context, index) {
@@ -27,8 +30,7 @@ class TravelHistory extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PdfPreview())),
+        onPressed: () => Navigator.of(context).pushNamed(PdfPreview.route),
         child: Icon(Icons.save),
       ),
     );

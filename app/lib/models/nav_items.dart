@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 
-class NavigationItems {
+/// [NavigationItem] holds all information when building [BottomNavigationBarItem].
+class NavigationItem {
+  /// The label content of [BottomNavigationBarItem]
   final String label;
+
+  /// The icon content of [BottomNavigationBarItem]
   final IconData icon;
 
-  NavigationItems({this.label, this.icon});
-}
+  /// Screen initial route that will be handled in [onGenerateRoute]
+  final String initialRoute;
 
-List<NavigationItems> allNavItems = <NavigationItems>[
-  NavigationItems(label: 'New Travel', icon: Icons.add_circle_outline),
-  NavigationItems(label: 'Ongoing', icon: Icons.emoji_transportation_outlined),
-  NavigationItems(label: 'Travel History', icon: Icons.timeline_outlined),
-];
+  /// The route generator for it's inner [Navigator]
+  final RouteFactory onGenerateRoute;
+
+  final GlobalKey<NavigatorState> navigatorState;
+
+  NavigationItem({
+    this.navigatorState,
+    @required this.initialRoute,
+    @required this.onGenerateRoute,
+    @required this.label,
+    @required this.icon,
+  });
+}

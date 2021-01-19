@@ -1,5 +1,7 @@
 PODS:
   - Flutter (1.0.0)
+  - flutter_email_sender (0.0.1):
+    - Flutter
   - flutter_full_pdf_viewer (1.0.1):
     - Flutter
   - integration_test (0.0.1):
@@ -9,6 +11,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - flutter_email_sender (from `.symlinks/plugins/flutter_email_sender/ios`)
   - flutter_full_pdf_viewer (from `.symlinks/plugins/flutter_full_pdf_viewer/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
@@ -16,6 +19,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_email_sender:
+    :path: ".symlinks/plugins/flutter_email_sender/ios"
   flutter_full_pdf_viewer:
     :path: ".symlinks/plugins/flutter_full_pdf_viewer/ios"
   integration_test:
@@ -25,6 +30,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_email_sender: 02d7443217d8c41483223627972bfdc09f74276b
   flutter_full_pdf_viewer: 1b65139fc3236cde300ba6bea2a72669cb07f2e6
   integration_test: 5ed24a436eb7ec17b6a13046e9bf7ca4a404e59e
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
