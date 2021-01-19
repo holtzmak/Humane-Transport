@@ -8,6 +8,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class PdfPreview extends StatefulWidget {
+  static const route = '/pdf_preview';
   @override
   _PdfPreviewState createState() => _PdfPreviewState();
 }
