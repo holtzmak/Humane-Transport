@@ -1,8 +1,10 @@
+import 'package:app/common/widgets/alert_dialog.dart';
 import 'package:app/screens/new_travel/new_travel_journey/test_screen_one.dart';
 import 'package:flutter/material.dart';
 
 class NewTravel extends StatelessWidget {
   static const route = '/home/new_tavel';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +29,17 @@ class NewTravel extends StatelessWidget {
               onPressed: () => Navigator.of(context, rootNavigator: true)
                   .pushNamed(TestScreenOne.route),
               child: Text('Go Next'),
+            ),
+            SizedBox(
+              height: 50.0,
+            ),
+            Text('See if Future code will run, regardless of current screen'),
+            RaisedButton(
+              onPressed: () async => Future.delayed(Duration(seconds: 2)).then(
+                  (_) => launchAlertDialog(context,
+                      title: "An alert in 2 seconds?",
+                      warning: "I am the Future!")),
+              child: Text('Launch Future (2 seconds delay)'),
             ),
           ],
         ),
