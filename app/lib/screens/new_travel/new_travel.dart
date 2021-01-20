@@ -1,4 +1,5 @@
 import 'package:app/common/widgets/alert_dialog.dart';
+import 'package:app/navigation/side_bar/sidebar.dart';
 import 'package:app/screens/new_travel/new_travel_journey/test_screen_one.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class NewTravel extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
       ),
+      drawer: SideBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

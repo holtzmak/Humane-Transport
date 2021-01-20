@@ -1,5 +1,6 @@
 import 'package:app/common/style/style.dart';
 import 'package:app/navigation/nav_bar/template_navigator.dart';
+import 'package:app/navigation/side_bar/sidebar.dart';
 import 'package:app/providers/navigation_provider.dart';
 
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class HomeRootScreen extends StatelessWidget {
               ))
           .toList();
       return Scaffold(
+        drawer: SideBar(),
         body: IndexedStack(
           index: navProvider.getIndex,
           children: screens,
