@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "738341240649",
+    "project_id": "humane-transport-7e5c0",
+    "storage_bucket": "humane-transport-7e5c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738341240649:android:18a839f2aff14465f9a498",
+        "android_client_info": {
+          "package_name": "com.HumaneTransport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738341240649-jt8mhnadjc4aemd86is58msarjkclcp3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNXlKUlQmKldJ1Y6Nvi8lxwuwVNnizwCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738341240649-jt8mhnadjc4aemd86is58msarjkclcp3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "738341240649-ii5aeon7ac841qonv5ol5ff5ttc2eloo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.HumaneTransport"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
