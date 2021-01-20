@@ -30,7 +30,7 @@
 .pub-cache/
 .pub/
 /build/
-
+ios/build/
 # Web related
 lib/generated_plugin_registrant.dart
 
@@ -39,3 +39,11 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
+
+# Google Services (ex. APIs and Firebase)
+android/app/google-services.json
+ios/GoogleService-Info.plist
+
+# Firebase Hosting
+.firebaserc
+firebase-debug.log
