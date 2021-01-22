@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
+  AuthenticationProvider(this._firebaseAuth);
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   ViewState _viewState;
 
@@ -18,7 +19,7 @@ class AuthenticationProvider extends ChangeNotifier {
   Future<void> signIn({String email, String password}) async {
     try {
       setViewState(ViewState.Busy);
-      await Future.delayed(Duration(seconds: 8));
+      await Future.delayed(Duration(seconds: 2));
       print(viewState);
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -36,7 +37,7 @@ class AuthenticationProvider extends ChangeNotifier {
   Future<void> signUp({String email, String password}) async {
     try {
       setViewState(ViewState.Busy);
-      await Future.delayed(Duration(seconds: 8));
+      await Future.delayed(Duration(seconds: 2));
       print(viewState);
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);

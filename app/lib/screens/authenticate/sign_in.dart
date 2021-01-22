@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +43,14 @@ class SignInScreen extends StatelessWidget {
                         child: Text('Sign In'),
                         color: Colors.green,
                       ),
+                SizedBox(
+                  height: 100.0,
+                ),
+                RaisedButton(
+                  child: Text('Go back to welcome screen'),
+                  color: Colors.red,
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
               ],
               // TODO: Account creation
             ),
