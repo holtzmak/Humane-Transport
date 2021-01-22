@@ -1,4 +1,4 @@
-import 'package:app/models/nav_items.dart';
+import 'package:app/models/nav_item_model.dart';
 import 'package:app/routes/inner_navigator/history_route.dart';
 import 'package:app/routes/inner_navigator/new_travel_route.dart';
 import 'package:app/routes/inner_navigator/ongoing_route.dart';
@@ -10,22 +10,22 @@ import 'package:flutter/material.dart';
 class NavigationProvider extends ChangeNotifier {
   int _index = 0;
 
-  List<NavigationItem> _navigationItems = [
-    NavigationItem(
+  List<NavigationItemModel> _navigationItems = [
+    NavigationItemModel(
       label: 'New Travel',
       icon: Icons.add_circle_outline,
       initialRoute: NewTravel.route,
       onGenerateRoute: NewTravelRouteGenerator.onGenerateRoute,
       navigatorState: GlobalKey<NavigatorState>(),
     ),
-    NavigationItem(
+    NavigationItemModel(
       label: 'Ongoing',
       icon: Icons.emoji_transportation_outlined,
       initialRoute: OngoingTravel.route,
       onGenerateRoute: OngoingRouteGenerator.onGenerateRoute,
       navigatorState: GlobalKey<NavigatorState>(),
     ),
-    NavigationItem(
+    NavigationItemModel(
       label: 'Travel History',
       icon: Icons.timeline_outlined,
       initialRoute: TravelHistory.route,
@@ -35,9 +35,9 @@ class NavigationProvider extends ChangeNotifier {
   ];
 
   // Getters
-  List<NavigationItem> get getNavigationItems => _navigationItems;
+  List<NavigationItemModel> get getNavigationItems => _navigationItems;
   get getIndex => _index;
-  NavigationItem get currentScreen => _navigationItems[_index];
+  NavigationItemModel get currentScreen => _navigationItems[_index];
 
   // Setters
   set setIndex(int index) {

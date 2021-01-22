@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// [NavigationItem] holds all information when building [BottomNavigationBarItem].
-class NavigationItem {
+/// [NavigationItemModel] holds all information when building [BottomNavigationBarItem].
+class NavigationItemModel {
   /// The label content of [BottomNavigationBarItem]
   final String label;
 
@@ -16,7 +16,7 @@ class NavigationItem {
 
   final GlobalKey<NavigatorState> navigatorState;
 
-  NavigationItem({
+  NavigationItemModel({
     this.navigatorState,
     @required this.initialRoute,
     @required this.onGenerateRoute,

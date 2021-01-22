@@ -1,6 +1,8 @@
 import 'package:app/common/style/style.dart';
-import 'package:app/providers/navigation_provider.dart';
+import 'package:app/providers/authentication/authentication.dart';
+import 'package:app/providers/navigation/navigation_provider.dart';
 import 'package:app/routes/main_navigator/app_route.dart';
+import 'package:app/screens/authenticate/auth_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,10 +13,17 @@ class HumaneTransportApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<NavigationProvider>(
             create: (context) => NavigationProvider()),
+        ChangeNotifierProvider<AuthenticationProvider>(
+          create: (context) => AuthenticationProvider(),
+        ),
+        StreamProvider(
+            create: (context) =>
+                context.read<AuthenticationProvider>().authStateChanges),
       ],
       child: Builder(
           builder: (context) => MaterialApp(
                 debugShowCheckedModeBanner: false,
+                initialRoute: AuthenticateWrapper.route,
                 onGenerateRoute: AppRouteGenerator.onGenerateRoute,
                 theme: ThemeData(
                   appBarTheme: AppBarTheme(color: MainAppColor),
