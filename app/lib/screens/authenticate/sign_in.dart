@@ -1,23 +1,28 @@
 import 'package:app/common/enums/app_state.dart';
+import 'package:app/navigation/side_bar/sidebar.dart';
 import 'package:app/providers/authentication/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AuthPage extends StatelessWidget {
+class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
+      drawer: SideBar(),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Consumer<AuthenticationProvider>(
           builder: (context, model, child) => Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 200,
+                Text(
+                  'TEST',
+                  key: Key('test'),
                 ),
                 TextFormField(
                   decoration: InputDecoration(hintText: "Email"),

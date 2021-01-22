@@ -41,6 +41,7 @@ class AuthenticationProvider extends ChangeNotifier {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
+      print(e.code);
       // TODO: Handle errors like user already exist
       // TODO: Update UI with the error message
     }
