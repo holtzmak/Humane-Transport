@@ -36,3 +36,5 @@ const BodyTextStyle = TextStyle(
 const DefaultRaisedButtonStyle = ButtonThemeData(
   buttonColor: Colors.green,
 );
+
+const OverlayColor = Color.fromRGBO(0, 0, 0, 0.5);
