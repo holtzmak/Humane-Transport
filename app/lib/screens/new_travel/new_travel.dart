@@ -1,4 +1,3 @@
-import 'package:app/common/enums/app_state.dart';
 import 'package:app/common/widgets/alert_dialog.dart';
 import 'package:app/common/widgets/loading_overlay_screen.dart';
 import 'package:app/navigation/side_bar/sidebar.dart';
@@ -58,15 +57,11 @@ class NewTravel extends StatelessWidget {
               SizedBox(
                 height: 50.0,
               ),
-              model.viewState == ViewState.Busy
-                  ? CircularProgressIndicator()
-                  : RaisedButton(
-                      onPressed: () {
-                        model.signOut();
-                      },
-                      child: Text('Sign Out'),
-                      color: Colors.red,
-                    ),
+              RaisedButton(
+                onPressed: () => model.signOut(),
+                child: Text('Sign Out'),
+                color: Colors.red,
+              ),
             ],
           ),
         ),
