@@ -1,9 +1,9 @@
-import 'package:app/models/nav_items.dart';
+import 'package:app/models/nav_item_model.dart';
 import 'package:flutter/material.dart';
 
 class TemplateNavigator extends StatelessWidget {
   const TemplateNavigator({Key key, this.navigationItem}) : super(key: key);
-  final NavigationItem navigationItem;
+  final NavigationItemModel navigationItem;
 
   @override
   Widget build(BuildContext context) {

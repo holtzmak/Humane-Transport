@@ -1,6 +1,8 @@
+import 'package:app/screens/authenticate/auth_wrapper.dart';
 import 'package:app/screens/home/home.dart';
 import 'package:app/screens/new_travel/new_travel_journey/test_screen_one.dart';
 import 'package:app/screens/new_travel/new_travel_journey/test_screen_two.dart';
+import 'package:app/screens/welcome/welcome.dart';
 
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,12 @@ class AppRouteGenerator {
       settings: settings,
       builder: (BuildContext context) {
         switch (settings.name) {
+          case Welcome.route:
+            return Welcome();
+
+          case AuthenticateWrapper.route:
+            return AuthenticateWrapper();
+
           case HomeRootScreen.route:
             return HomeRootScreen();
 

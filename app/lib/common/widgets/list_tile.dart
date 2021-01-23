@@ -1,5 +1,5 @@
 import 'package:app/common/style/style.dart';
-import 'package:app/providers/navigation_provider.dart';
+import 'package:app/providers/navigation/navigation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
