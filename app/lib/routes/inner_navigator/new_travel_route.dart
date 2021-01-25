@@ -1,3 +1,4 @@
+import 'package:app/common/utilities/image_upload.dart';
 import 'package:app/screens/new_travel/new_travel.dart';
 import 'package:app/screens/new_travel/new_travel_journey/test_screen_one.dart';
 import 'package:app/screens/new_travel/new_travel_journey/test_screen_two.dart';
@@ -14,6 +15,8 @@ class NewTravelRouteGenerator {
             return TestScreenOne();
           case TestScreenTwo.route:
             return TestScreenTwo();
+          case UploadImage.route:
+            return UploadImage();
 
           default:
             return NewTravel();
