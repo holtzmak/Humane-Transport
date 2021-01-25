@@ -14,6 +14,7 @@ class PdfPreview extends StatefulWidget {
 
 class _PdfPreviewState extends State<PdfPreview> {
   Future<File> _pdf;
+  bool exit = false;
 
   @override
   void initState() {
@@ -33,15 +34,30 @@ class _PdfPreviewState extends State<PdfPreview> {
             default:
               if (snapshot.hasError)
                 return Text('Could not build and save PDF: ${snapshot.error}');
-              else
-                return PDFViewerScaffold(
+              else return PDFViewerScaffold(
                   appBar: AppBar(
                     title: Text('Example PDF'),
+                    actions: [
+                      OutlinedButton.icon(
+                          onPressed: () => exitPdf(),
+                          icon: Icon(Icons.mail, color: Colors.white),
+                          label: Text(
+                            'Email',
+                            style: TextStyle(color: Colors.white),
+                          ))
+                    ],
                   ),
                   path: snapshot.data.path,
                 );
           }
         });
+  }
+
+  void exitPdf() {
+    setState(() {
+      exit = !exit;
+    });
+
   }
 
   // TODO: Give this function an object to build PDF from
@@ -55,19 +71,21 @@ class _PdfPreviewState extends State<PdfPreview> {
         Now just adding random text for experimentation purpose. Once we have
         database/API set up, will experimenting on fetching data */
         return <pw.Widget>[
-          pw.Header(level: 0, child: pw.Text('Shipper Information')),
+          pw.Header(
+              level: 0,
+              child: pw.Text('Shipper Information'),
+              outlineColor: PdfColors.blue),
           pw.Paragraph(text: 'Some Information'),
           pw.Paragraph(text: 'Some Information'),
           pw.Header(level: 1, child: pw.Text("Travel Information")),
           pw.Paragraph(text: 'Some Text 1'),
-          pw.Paragraph(text: 'Some Text 2')
+          pw.Paragraph(text: 'Some Text 2'),
         ];
       },
     ));
 
     // TODO: Change the filename to something useful
-    return Future.wait([getTemporaryDirectory(), pdf.save()]).then(
-        (List values) =>
-            File("${values[0].path}/example.pdf").writeAsBytes(values[1]));
+    return Future.wait([getTemporaryDirectory(), pdf.save()]).then((List values) =>
+        File("${values[0].path}/example.pdf").writeAsBytes(values[1]));
   }
 }

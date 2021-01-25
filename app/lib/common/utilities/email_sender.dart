@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter/material.dart';
 
-class EmailSender {
+class EmailSender{
     String emailResponse;
     Future<String> send(String emailBody, String eSubject, String eRecipients,
         File attach) async {
@@ -29,7 +29,7 @@ class EmailSender {
 
 class EmailRoute extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
-
+  static const route = '/email_sender';
   final validate = false;
   final pdf;
   EmailRoute({Key key, @required this.pdf}) : super(key: key);
@@ -39,7 +39,7 @@ class EmailRoute extends StatelessWidget {
   final subjectController = TextEditingController();
   final bodyController = TextEditingController();
 
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,) {
     return Scaffold(
         appBar: AppBar(
           title: Text('Email Form'),
@@ -63,6 +63,7 @@ class EmailRoute extends StatelessWidget {
                   decoration: InputDecoration(hintText: 'Message'),
                   controller: bodyController,
                 ),
+
                 RaisedButton(
                   onPressed: () {
                     if (formKey.currentState.validate()) {
