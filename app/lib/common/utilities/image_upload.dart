@@ -198,14 +198,17 @@ class _UploadImageState extends State<UploadImage> {
   }
 
   _imgFromCamera() async {
+    // ignore: deprecated_member_use
     File image = await ImagePicker.pickImage(
         source: ImageSource.camera, imageQuality: 50);
+
     setState(() {
       _image = image;
     });
   }
 
   _imgFromGallery() async {
+    // ignore: deprecated_member_use
     File image = await ImagePicker.pickImage(
         source: ImageSource.gallery, imageQuality: 50);
     setState(() {
