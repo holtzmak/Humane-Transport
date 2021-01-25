@@ -199,7 +199,6 @@ class _UploadImageState extends State<UploadImage> {
     // ignore: deprecated_member_use
     File image = await ImagePicker.pickImage(
         source: ImageSource.camera, imageQuality: 50);
-
     setState(() {
       _image = image;
     });
