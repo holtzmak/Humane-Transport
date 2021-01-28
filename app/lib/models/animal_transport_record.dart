@@ -18,35 +18,90 @@ class AnimalTransportRecord {
   final AcknowledgementInfo ackInfo;
   final ContingencyPlanInfo contingencyInfo;
 
-  AnimalTransportRecord(this.shipInfo, this.tranInfo, this.fwrInfo,
-      this.vehicleInfo, this.deliveryInfo, this.ackInfo, this.contingencyInfo);
+  AnimalTransportRecord(
+      {@required ShipperInfo shipInfo,
+      @required TransporterInfo tranInfo,
+      @required FeedWaterRestInfo fwrInfo,
+      @required LoadingVehicleInfo vehicleInfo,
+      @required DeliveryInfo deliveryInfo,
+      @required AcknowledgementInfo ackInfo,
+      @required ContingencyPlanInfo contingencyInfo})
+      : shipInfo = shipInfo,
+        tranInfo = tranInfo,
+        fwrInfo = fwrInfo,
+        vehicleInfo = vehicleInfo,
+        deliveryInfo = deliveryInfo,
+        ackInfo = ackInfo,
+        contingencyInfo = contingencyInfo;
 
   AnimalTransportRecord withShipInfo(ShipperInfo newShipInfo) =>
-      AnimalTransportRecord(newShipInfo, tranInfo, fwrInfo, vehicleInfo,
-          deliveryInfo, ackInfo, contingencyInfo);
+      AnimalTransportRecord(
+          shipInfo: newShipInfo,
+          tranInfo: tranInfo,
+          fwrInfo: fwrInfo,
+          vehicleInfo: vehicleInfo,
+          deliveryInfo: deliveryInfo,
+          ackInfo: ackInfo,
+          contingencyInfo: contingencyInfo);
 
   AnimalTransportRecord withTransporterInfo(TransporterInfo newTranInfo) =>
-      AnimalTransportRecord(shipInfo, newTranInfo, fwrInfo, vehicleInfo,
-          deliveryInfo, ackInfo, contingencyInfo);
+      AnimalTransportRecord(
+          shipInfo: shipInfo,
+          tranInfo: newTranInfo,
+          fwrInfo: fwrInfo,
+          vehicleInfo: vehicleInfo,
+          deliveryInfo: deliveryInfo,
+          ackInfo: ackInfo,
+          contingencyInfo: contingencyInfo);
 
   AnimalTransportRecord withFwrInfo(FeedWaterRestInfo newFwrInfo) =>
-      AnimalTransportRecord(shipInfo, tranInfo, newFwrInfo, vehicleInfo,
-          deliveryInfo, ackInfo, contingencyInfo);
+      AnimalTransportRecord(
+          shipInfo: shipInfo,
+          tranInfo: tranInfo,
+          fwrInfo: newFwrInfo,
+          vehicleInfo: vehicleInfo,
+          deliveryInfo: deliveryInfo,
+          ackInfo: ackInfo,
+          contingencyInfo: contingencyInfo);
 
   AnimalTransportRecord withVehicleInfo(LoadingVehicleInfo newVehicleInfo) =>
-      AnimalTransportRecord(shipInfo, tranInfo, fwrInfo, newVehicleInfo,
-          deliveryInfo, ackInfo, contingencyInfo);
+      AnimalTransportRecord(
+          shipInfo: shipInfo,
+          tranInfo: tranInfo,
+          fwrInfo: fwrInfo,
+          vehicleInfo: newVehicleInfo,
+          deliveryInfo: deliveryInfo,
+          ackInfo: ackInfo,
+          contingencyInfo: contingencyInfo);
 
   AnimalTransportRecord withDeliveryInfo(DeliveryInfo newDeliveryInfo) =>
-      AnimalTransportRecord(shipInfo, tranInfo, fwrInfo, vehicleInfo,
-          newDeliveryInfo, ackInfo, contingencyInfo);
+      AnimalTransportRecord(
+          shipInfo: shipInfo,
+          tranInfo: tranInfo,
+          fwrInfo: fwrInfo,
+          vehicleInfo: vehicleInfo,
+          deliveryInfo: newDeliveryInfo,
+          ackInfo: ackInfo,
+          contingencyInfo: contingencyInfo);
 
   AnimalTransportRecord withAckInfo(AcknowledgementInfo newAckInfo) =>
-      AnimalTransportRecord(shipInfo, tranInfo, fwrInfo, vehicleInfo,
-          deliveryInfo, newAckInfo, contingencyInfo);
+      AnimalTransportRecord(
+          shipInfo: shipInfo,
+          tranInfo: tranInfo,
+          fwrInfo: fwrInfo,
+          vehicleInfo: vehicleInfo,
+          deliveryInfo: deliveryInfo,
+          ackInfo: newAckInfo,
+          contingencyInfo: contingencyInfo);
 
   AnimalTransportRecord withContingencyInfo(
           ContingencyPlanInfo newContingencyInfo) =>
-      AnimalTransportRecord(shipInfo, tranInfo, fwrInfo, vehicleInfo,
-          deliveryInfo, ackInfo, newContingencyInfo);
+      AnimalTransportRecord(
+          shipInfo: shipInfo,
+          tranInfo: tranInfo,
+          fwrInfo: fwrInfo,
+          vehicleInfo: vehicleInfo,
+          deliveryInfo: deliveryInfo,
+          ackInfo: ackInfo,
+          contingencyInfo: newContingencyInfo);
 }

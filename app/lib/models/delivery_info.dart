@@ -10,8 +10,17 @@ class DeliveryInfo {
   final List<CompromisedAnimal> _compromisedAnimals;
   final String additionalWelfareConcerns;
 
-  DeliveryInfo(this.recInfo, this.arrivalDate, this.arrivalTime,
-      this._compromisedAnimals, this.additionalWelfareConcerns);
+  DeliveryInfo(
+      {@required ReceiverInfo recInfo,
+      @required DateTime arrivalDate,
+      @required TimeOfDay arrivalTime,
+      @required List<CompromisedAnimal> compromisedAnimals,
+      @required String additionalWelfareConcerns})
+      : recInfo = recInfo,
+        arrivalDate = arrivalDate,
+        arrivalTime = arrivalTime,
+        _compromisedAnimals = compromisedAnimals,
+        additionalWelfareConcerns = additionalWelfareConcerns;
 
   List<CompromisedAnimal> compromisedAnimals() =>
       List.unmodifiable(_compromisedAnimals);

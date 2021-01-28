@@ -13,11 +13,18 @@ class ReceiverInfo {
   final String receiverContactInfo;
 
   ReceiverInfo(
-      this.receiverCompanyName,
-      this.receiverName,
-      this.accountId,
-      this.destinationLocationId,
-      this.destinationLocationName,
-      this.destinationAddress,
-      this.receiverContactInfo);
+      {@required String receiverCompanyName,
+      @required String receiverName,
+      @required Optional<String> accountId,
+      @required String destinationLocationId,
+      @required String destinationLocationName,
+      @required Address destinationAddress,
+      @required String receiverContactInfo})
+      : receiverCompanyName = receiverCompanyName,
+        receiverName = receiverName,
+        accountId = accountId,
+        destinationLocationId = destinationLocationId,
+        destinationLocationName = destinationLocationName,
+        destinationAddress = destinationAddress,
+        receiverContactInfo = receiverContactInfo;
 }
