@@ -38,3 +38,5 @@ const DefaultRaisedButtonStyle = ButtonThemeData(
 );
 
 const OverlayColor = Color.fromRGBO(0, 0, 0, 0.5);
+
+const CircleAvatarBackgroundColor = Color(0xffFDCF09);

@@ -1,3 +1,4 @@
+import 'package:app/common/utilities/image_upload.dart';
 import 'package:app/common/widgets/alert_dialog.dart';
 import 'package:app/common/widgets/loading_overlay_screen.dart';
 import 'package:app/navigation/side_bar/sidebar.dart';
@@ -5,6 +6,7 @@ import 'package:app/providers/authentication/authentication.dart';
 import 'package:app/screens/new_travel/new_travel_journey/test_screen_one.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/widgets.dart';
 
 class NewTravel extends StatelessWidget {
   static const route = '/home/new_travel';
@@ -21,6 +23,15 @@ class NewTravel extends StatelessWidget {
           builder: (context, model, child) => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Text('Testing feature for uploading image'),
+              RaisedButton(
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(UploadImage.route),
+                child: Text('Upload Image'),
+              ),
+              SizedBox(
+                height: 50.0,
+              ),
               Text('Go to page with bottom nav'),
               RaisedButton(
                 onPressed: () => Navigator.of(context, rootNavigator: false)
