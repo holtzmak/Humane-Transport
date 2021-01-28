@@ -12,14 +12,22 @@ class ContingencyPlanInfo {
   final List<ContingencyPlanEvent> _contingencyEvents;
 
   ContingencyPlanInfo(
-      this.goalStatement,
-      this.communicationPlan,
-      this._crisisContacts,
-      this.expectedPrepProcess,
-      this.standardAnimalMonitoring,
-      this._potentialHazards,
-      this._potentialSafetyActions,
-      this._contingencyEvents);
+      {@required String goalStatement,
+      @required String communicationPlan,
+      @required List<String> crisisContacts,
+      @required String expectedPrepProcess,
+      @required String standardAnimalMonitoring,
+      @required List<String> potentialHazards,
+      @required List<String> potentialSafetyActions,
+      @required List<ContingencyPlanEvent> contingencyEvents})
+      : goalStatement = goalStatement,
+        communicationPlan = communicationPlan,
+        _crisisContacts = crisisContacts,
+        expectedPrepProcess = expectedPrepProcess,
+        standardAnimalMonitoring = standardAnimalMonitoring,
+        _potentialHazards = potentialHazards,
+        _potentialSafetyActions = potentialSafetyActions,
+        _contingencyEvents = contingencyEvents;
 
   List<String> crisisContacts() => List.unmodifiable(_crisisContacts);
 
@@ -43,13 +51,20 @@ class ContingencyPlanEvent {
   final List<String> _actionsTaken;
 
   ContingencyPlanEvent(
-      this.eventDate,
-      this.eventTime,
-      this._producerContactsUsed,
-      this._receiverContactsUsed,
-      this.disturbancesIdentified,
-      this._activities,
-      this._actionsTaken);
+      {@required DateTime eventDate,
+      @required TimeOfDay eventTime,
+      @required List<String> producerContactsUsed,
+      @required List<String> receiverContactsUsed,
+      @required String disturbancesIdentified,
+      @required List<ContingencyActivity> activities,
+      @required List<String> actionsTaken})
+      : eventDate = eventDate,
+        eventTime = eventTime,
+        _producerContactsUsed = producerContactsUsed,
+        _receiverContactsUsed = receiverContactsUsed,
+        disturbancesIdentified = disturbancesIdentified,
+        _activities = activities,
+        _actionsTaken = actionsTaken;
 
   List<String> producerContactsUsed() =>
       List.unmodifiable(_producerContactsUsed);
@@ -69,6 +84,13 @@ class ContingencyActivity {
   final String methodOfContact;
   final String instructionsGiven;
 
-  ContingencyActivity(this.time, this.personContacted, this.methodOfContact,
-      this.instructionsGiven);
+  ContingencyActivity(
+      {@required TimeOfDay time,
+      @required String personContacted,
+      @required String methodOfContact,
+      @required String instructionsGiven})
+      : time = time,
+        personContacted = personContacted,
+        methodOfContact = methodOfContact,
+        instructionsGiven = instructionsGiven;
 }
