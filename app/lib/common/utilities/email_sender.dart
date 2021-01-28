@@ -26,7 +26,6 @@ class EmailSender {
       return emailResponse;
     }
   }
-}
 
 class EmailRoute extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
