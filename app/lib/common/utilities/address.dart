@@ -8,6 +8,15 @@ class Address {
   final String country;
   final String postalCode;
 
-  Address(this.streetAddress, this.city, this.provinceOrState, this.country,
-      this.postalCode);
+  Address(
+      {@required String streetAddress,
+      @required String city,
+      @required String provinceOrState,
+      @required String country,
+      @required String postalCode})
+      : streetAddress = streetAddress,
+        city = city,
+        provinceOrState = provinceOrState,
+        country = country,
+        postalCode = postalCode;
 }
