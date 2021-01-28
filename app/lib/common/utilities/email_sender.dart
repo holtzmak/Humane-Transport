@@ -1,26 +1,30 @@
+import 'dart:io';
+import 'package:app/screens/history/history.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter/material.dart';
 
 class EmailSender {
-  Future<void> send(
-      String emailBody, String eSubject, String eRecipients) async {
-    final Email email = Email(
-      body: emailBody,
-      subject: eSubject,
-      recipients: [eRecipients],
-      attachmentPaths: null,
-      isHTML: false,
-    );
     String emailResponse;
-
-    try {
-      await FlutterEmailSender.send(email);
-      emailResponse = 'success';
-    } catch (error) {
-      emailResponse = error.toString();
+    Future<String> send(String emailBody, String eSubject, String eRecipients,
+        File attach) async {
+      final Email email = Email(
+        body: emailBody,
+        subject: eSubject,
+        recipients: [eRecipients],
+        attachmentPaths: [
+          attach.path,
+        ],
+        isHTML: false,
+      );
+      try {
+        await FlutterEmailSender.send(email);
+        emailResponse = 'Email Sent';
+      } catch (error) {
+        emailResponse = error.toString();
+      }
+      return emailResponse;
     }
-
-    print(emailResponse);
   }
 }
 
@@ -28,6 +32,8 @@ class EmailRoute extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   final validate = false;
+  final pdf;
+  EmailRoute({Key key, @required this.pdf}) : super(key: key);
 
   final email = EmailSender();
   final recipientController = TextEditingController();
@@ -62,9 +68,27 @@ class EmailRoute extends StatelessWidget {
                   onPressed: () {
                     if (formKey.currentState.validate()) {
                       print('valid');
-                      email.send(bodyController.text, subjectController.text,
-                          recipientController.text);
+                     Future.value(email.send(
+                              bodyController.text,
+                              subjectController.text,
+                              recipientController.text,
+                              pdf)).then((values) => showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    shape: RoundedRectangleBorder(),
+                                    elevation: 14,
+                                    child: FlatButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(email.emailResponse),
+                                    ),
+                                  );
+                                },
+                              ));
                     }
+                    Navigator.of(context).pushNamed(TravelHistory.route);
                   },
                   child: Text('Submit'),
                 ),
