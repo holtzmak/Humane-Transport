@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
+import 'package:app/common/utilities/email_sender.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class PdfPreview extends StatefulWidget {
@@ -14,7 +15,6 @@ class PdfPreview extends StatefulWidget {
 
 class _PdfPreviewState extends State<PdfPreview> {
   Future<File> _pdf;
-  bool exit = false;
 
   @override
   void initState() {
@@ -34,12 +34,21 @@ class _PdfPreviewState extends State<PdfPreview> {
             default:
               if (snapshot.hasError)
                 return Text('Could not build and save PDF: ${snapshot.error}');
-              else return PDFViewerScaffold(
+              else
+                return PDFViewerScaffold(
                   appBar: AppBar(
                     title: Text('Example PDF'),
                     actions: [
                       OutlinedButton.icon(
-                          onPressed: () => exitPdf(),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EmailRoute(
+                                          pdf: snapshot.requireData,
+                                        )));
+                          },
                           icon: Icon(Icons.mail, color: Colors.white),
                           label: Text(
                             'Email',
@@ -51,13 +60,6 @@ class _PdfPreviewState extends State<PdfPreview> {
                 );
           }
         });
-  }
-
-  void exitPdf() {
-    setState(() {
-      exit = !exit;
-    });
-
   }
 
   // TODO: Give this function an object to build PDF from
@@ -85,7 +87,8 @@ class _PdfPreviewState extends State<PdfPreview> {
     ));
 
     // TODO: Change the filename to something useful
-    return Future.wait([getTemporaryDirectory(), pdf.save()]).then((List values) =>
-        File("${values[0].path}/example.pdf").writeAsBytes(values[1]));
+    return Future.wait([getTemporaryDirectory(), pdf.save()]).then(
+        (List values) =>
+            File("${values[0].path}/example.pdf").writeAsBytes(values[1]));
   }
 }

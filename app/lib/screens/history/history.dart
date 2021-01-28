@@ -1,5 +1,4 @@
 import 'package:app/common/utilities/pdf_preview.dart';
-import 'package:app/common/utilities/email_sender.dart';
 import 'package:flutter/material.dart';
 
 class TravelHistory extends StatelessWidget {
@@ -30,23 +29,10 @@ class TravelHistory extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: Container(
-          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 100.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              FloatingActionButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(PdfPreview.route),
-                child: Icon(Icons.save),
-              ),
-              FloatingActionButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(EmailRoute.route),
-                child: Icon(Icons.mail),
-              ),
-            ],
-          )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.of(context).pushNamed(PdfPreview.route),
+        child: Icon(Icons.save),
+      ),
     );
   }
 }

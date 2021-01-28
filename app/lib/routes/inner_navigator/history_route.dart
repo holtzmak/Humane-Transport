@@ -1,5 +1,4 @@
 import 'package:app/common/utilities/pdf_preview.dart';
-import 'package:app/common/utilities/email_sender.dart';
 import 'package:app/screens/history/history.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +11,6 @@ class HistoryRouteGenerator {
         switch (settings.name) {
           case PdfPreview.route:
             return PdfPreview();
-          case EmailRoute.route:
-            return EmailRoute();
           default:
             return TravelHistory();
         }
