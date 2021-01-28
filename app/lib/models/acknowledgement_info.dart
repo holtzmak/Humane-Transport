@@ -8,5 +8,11 @@ class AcknowledgementInfo {
   final File transporterAck;
   final File receiverAck;
 
-  AcknowledgementInfo(this.shipperAck, this.transporterAck, this.receiverAck);
+  AcknowledgementInfo(
+      {@required File shipperAck,
+      @required File transporterAck,
+      @required File receiverAck})
+      : shipperAck = shipperAck,
+        transporterAck = transporterAck,
+        receiverAck = receiverAck;
 }

@@ -11,10 +11,16 @@ class ShipperInfo {
   final String shipperContactInfo;
 
   ShipperInfo(
-      this.shipperName,
-      this.shipperIsAnimalOwner,
-      this.departureLocationId,
-      this.departureLocationName,
-      this.departureAddress,
-      this.shipperContactInfo);
+      {@required String shipperName,
+      @required bool shipperIsAnimalOwner,
+      @required String departureLocationId,
+      @required String departureLocationName,
+      @required Address departureAddress,
+      @required String shipperContactInfo})
+      : shipperName = shipperName,
+        shipperIsAnimalOwner = shipperIsAnimalOwner,
+        departureLocationId = departureLocationId,
+        departureLocationName = departureLocationName,
+        departureAddress = departureAddress,
+        shipperContactInfo = shipperContactInfo;
 }
