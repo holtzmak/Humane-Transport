@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:async';
+import 'package:app/common/style/style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,11 +37,8 @@ class _UploadImageState extends State<UploadImage> {
   }
 
   Widget _previewImage() {
-    //final Text retrieveError = _getRetrieveErrorWidget();
     if (_imageFile != null) {
       if (kIsWeb) {
-        // Why network?
-        // See https://pub.dev/packages/image_picker#getting-ready-for-the-web-platform
         return Image.network(_imageFile.path);
       } else {
         return Semantics(
@@ -116,7 +114,7 @@ class _UploadImageState extends State<UploadImage> {
             },
             child: CircleAvatar(
               radius: 55,
-              backgroundColor: Color(0xffFDCF09),
+              backgroundColor: CircleAvatarBackgroundColor,
               child: _image != null
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(50),
