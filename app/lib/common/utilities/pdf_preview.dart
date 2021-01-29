@@ -1,10 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
+import 'package:app/common/utilities/email_sender.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class PdfPreview extends StatefulWidget {
@@ -38,6 +38,23 @@ class _PdfPreviewState extends State<PdfPreview> {
                 return PDFViewerScaffold(
                   appBar: AppBar(
                     title: Text('Example PDF'),
+                    actions: [
+                      OutlinedButton.icon(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EmailRoute(
+                                          pdf: snapshot.requireData,
+                                        )));
+                          },
+                          icon: Icon(Icons.mail, color: Colors.white),
+                          label: Text(
+                            'Email',
+                            style: TextStyle(color: Colors.white),
+                          ))
+                    ],
                   ),
                   path: snapshot.data.path,
                 );
@@ -56,12 +73,15 @@ class _PdfPreviewState extends State<PdfPreview> {
         Now just adding random text for experimentation purpose. Once we have
         database/API set up, will experimenting on fetching data */
         return <pw.Widget>[
-          pw.Header(level: 0, child: pw.Text('Shipper Information')),
+          pw.Header(
+              level: 0,
+              child: pw.Text('Shipper Information'),
+              outlineColor: PdfColors.blue),
           pw.Paragraph(text: 'Some Information'),
           pw.Paragraph(text: 'Some Information'),
           pw.Header(level: 1, child: pw.Text("Travel Information")),
           pw.Paragraph(text: 'Some Text 1'),
-          pw.Paragraph(text: 'Some Text 2')
+          pw.Paragraph(text: 'Some Text 2'),
         ];
       },
     ));

@@ -1,40 +1,46 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter/material.dart';
 
 class EmailSender {
-  Future<void> send(
-      String emailBody, String eSubject, String eRecipients) async {
+  String emailResponse;
+
+  void send(
+      String emailBody, String eSubject, String eRecipients, File attach) {
     final Email email = Email(
       body: emailBody,
       subject: eSubject,
       recipients: [eRecipients],
-      attachmentPaths: null,
+      attachmentPaths: [
+        attach.path,
+      ],
       isHTML: false,
     );
-    String emailResponse;
-
     try {
-      await FlutterEmailSender.send(email);
-      emailResponse = 'success';
+      FlutterEmailSender.send(email);
+      emailResponse = 'Success';
     } catch (error) {
       emailResponse = error.toString();
     }
-
-    print(emailResponse);
   }
 }
 
 class EmailRoute extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
-
+  static const route = '/email_sender';
   final validate = false;
+  final pdf;
+  EmailRoute({Key key, @required this.pdf}) : super(key: key);
 
   final email = EmailSender();
   final recipientController = TextEditingController();
   final subjectController = TextEditingController();
   final bodyController = TextEditingController();
 
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     return Scaffold(
         appBar: AppBar(
           title: Text('Email Form'),
@@ -63,7 +69,19 @@ class EmailRoute extends StatelessWidget {
                     if (formKey.currentState.validate()) {
                       print('valid');
                       email.send(bodyController.text, subjectController.text,
-                          recipientController.text);
+                          recipientController.text, pdf);
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: Text('Email Response'),
+                                content: Text(email.emailResponse),
+                                actions: <Widget>[
+                                  FlatButton(
+                                      onPressed: () =>
+                                          {Navigator.of(context).pop()},
+                                      child: Text('Close')),
+                                ],
+                              ));
                     }
                   },
                   child: Text('Submit'),
