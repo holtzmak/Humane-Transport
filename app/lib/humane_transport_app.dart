@@ -1,41 +1,26 @@
-import 'package:app/common/style/style.dart';
-import 'package:app/providers/authentication/authentication.dart';
-import 'package:app/providers/navigation/navigation_provider.dart';
-import 'package:app/routes/main_navigator/app_route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:app/ui/common/style/style.dart';
+import 'package:app/ui/routes/main_navigator/app_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'core/services/navigation/nav_service.dart';
+import 'core/services/service_locator.dart';
 
 class HumaneTransportApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<NavigationProvider>(
-            create: (context) => NavigationProvider()),
-        ChangeNotifierProvider<AuthenticationProvider>(
-          create: (context) => AuthenticationProvider(FirebaseAuth.instance),
+    return MaterialApp(
+      onGenerateRoute: AppRouteGenerator.onGenerateRoute,
+      navigatorKey: locator<NavigationService>().navigationKey,
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(color: MainAppColor),
+        textTheme: TextTheme(
+          headline5: TitleTextStyle,
+          bodyText1: BodyTextStyle,
         ),
-        StreamProvider(
-            create: (context) =>
-                context.read<AuthenticationProvider>().authStateChanges),
-      ],
-      child: Builder(
-          builder: (context) => MaterialApp(
-                debugShowCheckedModeBanner: false,
-                onGenerateRoute: AppRouteGenerator.onGenerateRoute,
-                theme: ThemeData(
-                  appBarTheme: AppBarTheme(color: MainAppColor),
-                  textTheme: TextTheme(
-                    headline5: TitleTextStyle,
-                    bodyText1: BodyTextStyle,
-                  ),
-                  iconTheme: IconThemeData(
-                    color: MainAppColor,
-                  ),
-                  buttonTheme: DefaultRaisedButtonStyle,
-                ),
-              )),
+        iconTheme: IconThemeData(
+          color: MainAppColor,
+        ),
+        buttonTheme: DefaultRaisedButtonStyle,
+      ),
     );
   }
 }

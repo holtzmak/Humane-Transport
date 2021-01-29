@@ -1,4 +1,4 @@
-import 'package:app/common/utilities/optional.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
