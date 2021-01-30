@@ -37,10 +37,6 @@ class SignInScreen extends StatelessWidget {
                     decoration: InputDecoration(hintText: "Password"),
                   ),
                   RaisedButton(
-                    // onPressed: () async => LoadingOverlayScreen.of(context)
-                    //     .during(model.signIn(
-                    //         email: emailController.text.trim(),
-                    //         password: passwordController.text.trim())),
                     onPressed: () {
                       model.signIn(
                           email: emailController.text.trim(),

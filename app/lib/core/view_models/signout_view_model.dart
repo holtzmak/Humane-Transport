@@ -12,8 +12,8 @@ class SignOutViewModel extends BaseViewModel {
   Future signOut() async {
     // TODO: Should handle exception error
     try {
-      await _authenticationService.signOut();
       _navigationService.pop();
+      await _authenticationService.signOut();
       print('user successfully signed out');
     } catch (e) {
       print(e.message);
