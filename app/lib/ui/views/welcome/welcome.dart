@@ -12,24 +12,19 @@ class Welcome extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<WelcomeViewModel>(
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: Text('hello'),
-        ),
+        appBar: AppBar(),
         drawer: SideBar(),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Welcome",
-                key: Key('welcome'),
-              ),
+              Text('Welcome User'),
               // TODO: Register button
               RaisedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(SignInScreen.route);
                 },
-                child: Text('Sign in'),
+                child: Text('Continue'),
               )
             ],
           ),

@@ -11,7 +11,7 @@ void main() {
 
     testWidgets('HumaneTransportApp says Welcome', (WidgetTester tester) async {
       await tester.pumpWidget(HumaneTransportApp());
-      final textFinder = find.text('Welcome');
+      final textFinder = find.text('Welcome User');
       expect(textFinder, findsOneWidget);
     });
   });

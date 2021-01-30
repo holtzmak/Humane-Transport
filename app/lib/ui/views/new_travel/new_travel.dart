@@ -2,7 +2,6 @@ import 'package:app/core/utilities/image_upload.dart';
 import 'package:app/core/view_models/signout_view_model.dart';
 import 'package:app/ui/views/base_view.dart';
 import 'package:app/ui/widgets/alert_dialog.dart';
-import 'package:app/ui/widgets/loading_overlay_screen.dart';
 import 'package:app/ui/widgets/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -59,11 +58,6 @@ class NewTravel extends StatelessWidget {
               ),
               SizedBox(
                 height: 50.0,
-              ),
-              RaisedButton(
-                onPressed: () async => LoadingOverlayScreen.of(context)
-                    .during(Future.delayed(Duration(seconds: 5))),
-                child: Text("Launch the loading screen"),
               ),
               SizedBox(
                 height: 50.0,
