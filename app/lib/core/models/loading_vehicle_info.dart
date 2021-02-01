@@ -24,6 +24,11 @@ class LoadingVehicleInfo {
         _animalsLoaded = animalsLoaded;
 
   List<AnimalGroup> animalsLoaded() => List.unmodifiable(_animalsLoaded);
+
+  List<String> animalSpeciesLoaded() {
+    return List.unmodifiable(
+        _animalsLoaded.map((animalGroup) => animalGroup.species).toList());
+  }
 }
 
 @immutable

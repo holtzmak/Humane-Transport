@@ -1,34 +1,24 @@
 import 'package:app/core/utilities/pdf_preview.dart';
+import 'package:app/core/view_models/atr_pre_view_model.dart';
+import 'package:app/ui/views/base_view.dart';
 import 'package:flutter/material.dart';
 
 class TravelHistory extends StatelessWidget {
   static const route = '/history';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
       ),
-      body: ListView.builder(
-        itemCount: 20,
-        itemBuilder: (context, index) {
-          return Card(
-            color: index % 2 == 0 ? Colors.grey[300] : null,
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Text('Travel History ${index + 1}',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                  Text(
-                      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'),
-                ],
-              ),
-            ),
-          );
-        },
+      body: BaseView<AnimalTransportRecordPreViewModel>(
+        builder: (context, model, _) => Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: model.animalTransportPreviews,
+        ),
       ),
+      // TODO: Make PDF from selected ATRPreview, need to make cards selectable
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).pushNamed(PdfPreview.route),
         child: Icon(Icons.save),
