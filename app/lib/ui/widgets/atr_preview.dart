@@ -1,5 +1,6 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AnimalTransportRecordPreview extends StatelessWidget {
   final AnimalTransportRecord atr;
@@ -9,17 +10,14 @@ class AnimalTransportRecordPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            leading: Icon(Icons.local_shipping),
-            title: Text(
-                'Delivery for ${atr.deliveryInfo.recInfo.receiverCompanyName}'),
-            subtitle: Text(
-                'Date: ${atr.vehicleInfo.dateAndTimeLoaded} Animals: ${atr.vehicleInfo.animalsLoaded().join(',')}'),
-          ),
-        ],
+      child: Material(
+        child: ListTile(
+          leading: Icon(Icons.local_shipping),
+          title: Text(
+              'Delivery for ${atr.deliveryInfo.recInfo.receiverCompanyName}'),
+          subtitle: Text(
+              'Date: ${DateFormat("yyyy-MM-dd hh:mm").format(atr.vehicleInfo.dateAndTimeLoaded)}, Animals: ${atr.vehicleInfo.animalSpeciesLoaded().join(',')}'),
+        ),
       ),
     );
   }

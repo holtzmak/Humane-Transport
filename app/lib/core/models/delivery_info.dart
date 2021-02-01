@@ -12,11 +12,11 @@ class DeliveryInfo {
 
   DeliveryInfo(
       {@required ReceiverInfo recInfo,
-      @required DateTime arrivalDate,
+      @required DateTime arrivalDateAndTime,
       @required List<CompromisedAnimal> compromisedAnimals,
       @required String additionalWelfareConcerns})
       : recInfo = recInfo,
-        arrivalDateAndTime = arrivalDate,
+        arrivalDateAndTime = arrivalDateAndTime,
         _compromisedAnimals = compromisedAnimals,
         additionalWelfareConcerns = additionalWelfareConcerns;
 
