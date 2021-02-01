@@ -23,14 +23,22 @@ testAddress() => Address(
     postalCode: "ABC123");
 
 // If you want to specify any info use AnimalTransportRecord.with()
-testAnimalTransportRecord() => AnimalTransportRecord(
-    shipInfo: testShipperInfo(),
-    tranInfo: testTransporterInfo(),
-    fwrInfo: testFwrInfo(),
-    vehicleInfo: testVehicleInfo(),
-    deliveryInfo: testDeliveryInfo(),
-    ackInfo: testAckInfo(),
-    contingencyInfo: testContingencyInfo());
+testAnimalTransportRecord(
+        {ShipperInfo shipInfo,
+        TransporterInfo tranInfo,
+        FeedWaterRestInfo fwrInfo,
+        LoadingVehicleInfo vehicleInfo,
+        DeliveryInfo deliveryInfo,
+        AcknowledgementInfo ackInfo,
+        ContingencyPlanInfo contingencyInfo}) =>
+    AnimalTransportRecord(
+        shipInfo: shipInfo ?? testShipperInfo(),
+        tranInfo: tranInfo ?? testTransporterInfo(),
+        fwrInfo: fwrInfo ?? testFwrInfo(),
+        vehicleInfo: vehicleInfo ?? testVehicleInfo(),
+        deliveryInfo: deliveryInfo ?? testDeliveryInfo(),
+        ackInfo: ackInfo ?? testAckInfo(),
+        contingencyInfo: contingencyInfo ?? testContingencyInfo());
 
 testShipperInfo(
         {String shipperName,
@@ -107,7 +115,7 @@ testVehicleInfo(
         loadingArea: loadingArea ?? 1,
         loadingDensity: loadingDensity ?? 1,
         animalsPerLoadingArea: animalsPerLoadingArea ?? 1,
-        animalsLoaded: null);
+        animalsLoaded: animalsLoaded ?? [testAnimalGroup()]);
 
 testAnimalGroup(
         {String species,
@@ -142,7 +150,7 @@ testDeliveryInfo(
         String additionalWelfareConcerns}) =>
     DeliveryInfo(
         recInfo: recInfo ?? testReceiverInfo(),
-        arrivalDate: arrivalDate ?? DateTime.now(),
+        arrivalDateAndTime: arrivalDate ?? DateTime.now(),
         compromisedAnimals: compromisedAnimals ?? List.empty(),
         additionalWelfareConcerns: additionalWelfareConcerns ?? "None");
 

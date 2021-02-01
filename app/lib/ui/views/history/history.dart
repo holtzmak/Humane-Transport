@@ -13,9 +13,9 @@ class TravelHistory extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: BaseView<AnimalTransportRecordPreViewModel>(
-        builder: (context, model, _) => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: model.animalTransportPreviews,
+        builder: (context, model, _) => ListView.builder(
+          itemCount: model.animalTransportPreviews.length,
+          itemBuilder: (context, index) => model.animalTransportPreviews[index],
         ),
       ),
       // TODO: Make PDF from selected ATRPreview, need to make cards selectable

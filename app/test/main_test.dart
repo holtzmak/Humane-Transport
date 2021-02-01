@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Group test', () {
-    // Needed to show where the implementations are located
     setUpAll(() {
+      // TODO: Make a test locator
       setUpLocator();
     });
 
