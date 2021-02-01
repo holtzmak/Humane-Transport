@@ -15,5 +15,8 @@ void main() {
     test('Value get does throw', () {
       expect(() => Optional(null).get(), throwsException);
     });
+    test('Empty constructor is empty', () {
+      expect(Optional.empty().isPresent(), false);
+    });
   });
 }

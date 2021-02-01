@@ -2,22 +2,19 @@ import 'package:flutter/material.dart';
 
 @immutable
 class LoadingVehicleInfo {
-  final DateTime dateLoaded;
-  final TimeOfDay timeLoaded;
+  final DateTime dateAndTimeLoaded;
   final int loadingArea;
   final int loadingDensity;
   final int animalsPerLoadingArea;
   final List<AnimalGroup> _animalsLoaded;
 
   LoadingVehicleInfo(
-      {@required DateTime dateLoaded,
-      @required TimeOfDay timeLoaded,
+      {@required DateTime dateAndTimeLoaded,
       @required int loadingArea,
       @required int loadingDensity,
       @required int animalsPerLoadingArea,
       @required List<AnimalGroup> animalsLoaded})
-      : dateLoaded = dateLoaded,
-        timeLoaded = timeLoaded,
+      : dateAndTimeLoaded = dateAndTimeLoaded,
         loadingArea = loadingArea,
         loadingDensity = loadingDensity,
         animalsPerLoadingArea = animalsPerLoadingArea,
