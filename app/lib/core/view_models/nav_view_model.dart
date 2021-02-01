@@ -35,12 +35,13 @@ class NavigationViewModel extends BaseViewModel {
     )
   ];
 
-  // Getters
-  List<NavigationItemModel> get getNavigationItems => _navigationItems;
-  get getIndex => _index;
+  List<NavigationItemModel> get getNavigationItems =>
+      List.unmodifiable(_navigationItems);
+
   NavigationItemModel get currentScreen => _navigationItems[_index];
 
-  // Setters
+  get getIndex => _index;
+
   set setIndex(int index) {
     _index = index;
     notifyListeners();

@@ -24,9 +24,9 @@ class SignInViewModel extends BaseViewModel {
     setState(ViewState.Idle);
     if (result is bool) {
       /*
-      The problem here is that we completely seperated our business logic to our UI and therefore
+      The problem here is that we completely separated our business logic to our UI and therefore
       do not have any access to context. When everything is mixed up, we can do the following:
-      Navigator.pushNamed(context, route); But since we dont have access to context, we will use
+      Navigator.pushNamed(context, route); But since we don't have access to context, we will use
       a service that will do such thing for us
        */
       if (result) {
