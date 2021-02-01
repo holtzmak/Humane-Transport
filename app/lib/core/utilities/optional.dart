@@ -5,7 +5,11 @@ import 'package:flutter/foundation.dart';
 class Optional<T> {
   final T _optional;
 
-  Optional(this._optional);
+  Optional._internal(this._optional);
+
+  factory Optional(T it) => Optional._internal(it);
+
+  factory Optional.empty() => Optional._internal(null);
 
   bool isPresent() => _optional != null;
 

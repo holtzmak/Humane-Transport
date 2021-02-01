@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AnimalTransportRecordPreview extends StatelessWidget {
   final AnimalTransportRecord atr;
 
-  AnimalTransportRecordPreview({this.atr});
+  AnimalTransportRecordPreview({@required this.atr});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class AnimalTransportRecordPreview extends StatelessWidget {
             title: Text(
                 'Delivery for ${atr.deliveryInfo.recInfo.receiverCompanyName}'),
             subtitle: Text(
-                'Date: ${atr.vehicleInfo.dateLoaded} Animals: ${atr.vehicleInfo.animalsLoaded().join(',')}'),
+                'Date: ${atr.vehicleInfo.dateAndTimeLoaded} Animals: ${atr.vehicleInfo.animalsLoaded().join(',')}'),
           ),
         ],
       ),

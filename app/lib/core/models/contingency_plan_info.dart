@@ -42,8 +42,7 @@ class ContingencyPlanInfo {
 
 @immutable
 class ContingencyPlanEvent {
-  final DateTime eventDate;
-  final TimeOfDay eventTime;
+  final DateTime eventDateAndTime;
   final List<String> _producerContactsUsed;
   final List<String> _receiverContactsUsed;
   final String disturbancesIdentified;
@@ -51,15 +50,13 @@ class ContingencyPlanEvent {
   final List<String> _actionsTaken;
 
   ContingencyPlanEvent(
-      {@required DateTime eventDate,
-      @required TimeOfDay eventTime,
+      {@required DateTime eventDateAndTime,
       @required List<String> producerContactsUsed,
       @required List<String> receiverContactsUsed,
       @required String disturbancesIdentified,
       @required List<ContingencyActivity> activities,
       @required List<String> actionsTaken})
-      : eventDate = eventDate,
-        eventTime = eventTime,
+      : eventDateAndTime = eventDateAndTime,
         _producerContactsUsed = producerContactsUsed,
         _receiverContactsUsed = receiverContactsUsed,
         disturbancesIdentified = disturbancesIdentified,
