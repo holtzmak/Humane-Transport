@@ -8,20 +8,19 @@ import '../../test_animal_transport_record.dart';
 void main() {
   group('Animal Transport Record Preview', () {
     testWidgets('Previews right information', (WidgetTester tester) async {
-      final testDate = DateTime.now();
+      final testDate = DateTime.parse("2021-01-01 01:01");
       final testCompany = "Test Company";
       final testSpecies = "Cows";
+      final testRecWithDelvInfo = testAnimalTransportRecord().withDeliveryInfo(
+          testDeliveryInfo(
+              recInfo: testReceiverInfo(receiverCompanyName: testCompany)));
+      final testRecWithInfo = testRecWithDelvInfo.withVehicleInfo(
+          testVehicleInfo(
+              dateAndTimeLoaded: testDate,
+              animalsLoaded: [testAnimalGroup(species: testSpecies)]));
 
-      // Must wrap widget in MaterialApp if not "home" widget under test
       await tester.pumpWidget(new MaterialApp(
-          home: AnimalTransportRecordPreview(
-        atr: testAnimalTransportRecord(
-            deliveryInfo: testDeliveryInfo(
-                recInfo: testReceiverInfo(receiverCompanyName: testCompany)),
-            vehicleInfo: testVehicleInfo(
-                dateAndTimeLoaded: testDate,
-                animalsLoaded: [testAnimalGroup(species: testSpecies)])),
-      )));
+          home: AnimalTransportRecordPreview(atr: testRecWithInfo)));
 
       expect(find.text("Delivery for $testCompany"), findsOneWidget);
       expect(
