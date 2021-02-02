@@ -48,22 +48,21 @@ class TransporterInfo {
 
   List<String> driverNames() => List.unmodifiable(_driverNames);
 
-  Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      'companyName' : companyName,
+      'companyName': companyName,
       'companyAddress': companyAddress,
-      'driverNames' : _driverNames,
-      'vehicleProvinc':vehicleProvince,
-      'vehicleLicensePlate':vehicleLicensePlate,
-      'trailerProvince':trailerProvince,
-      'trailerLicensePlate':trailerLicensePlate,
-      'dateLastCleaned':dateLastCleaned,
+      'driverNames': _driverNames,
+      'vehicleProvinc': vehicleProvince,
+      'vehicleLicensePlate': vehicleLicensePlate,
+      'trailerProvince': trailerProvince,
+      'trailerLicensePlate': trailerLicensePlate,
+      'dateLastCleaned': dateLastCleaned,
       'addressLastCleaned': addressLastCleanedAt,
-      'driversAreBriefed':driversAreBriefed,
-      'driversHaveTraining':driversHaveTraining,
-      'trainingType':trainingType,
-      'trainingExpiry':trainingExpiryDate,
-
+      'driversAreBriefed': driversAreBriefed,
+      'driversHaveTraining': driversHaveTraining,
+      'trainingType': trainingType,
+      'trainingExpiry': trainingExpiryDate,
     };
     return map;
   }
