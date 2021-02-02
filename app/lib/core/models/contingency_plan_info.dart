@@ -12,19 +12,15 @@ class ContingencyPlanInfo {
   final List<ContingencyPlanEvent> _contingencyEvents;
 
   ContingencyPlanInfo(
-      {@required String goalStatement,
-      @required String communicationPlan,
+      {@required this.goalStatement,
+      @required this.communicationPlan,
       @required List<String> crisisContacts,
-      @required String expectedPrepProcess,
-      @required String standardAnimalMonitoring,
+      @required this.expectedPrepProcess,
+      @required this.standardAnimalMonitoring,
       @required List<String> potentialHazards,
       @required List<String> potentialSafetyActions,
       @required List<ContingencyPlanEvent> contingencyEvents})
-      : goalStatement = goalStatement,
-        communicationPlan = communicationPlan,
-        _crisisContacts = crisisContacts,
-        expectedPrepProcess = expectedPrepProcess,
-        standardAnimalMonitoring = standardAnimalMonitoring,
+      : _crisisContacts = crisisContacts,
         _potentialHazards = potentialHazards,
         _potentialSafetyActions = potentialSafetyActions,
         _contingencyEvents = contingencyEvents;
@@ -50,16 +46,14 @@ class ContingencyPlanEvent {
   final List<String> _actionsTaken;
 
   ContingencyPlanEvent(
-      {@required DateTime eventDateAndTime,
+      {@required this.eventDateAndTime,
       @required List<String> producerContactsUsed,
       @required List<String> receiverContactsUsed,
-      @required String disturbancesIdentified,
+      @required this.disturbancesIdentified,
       @required List<ContingencyActivity> activities,
       @required List<String> actionsTaken})
-      : eventDateAndTime = eventDateAndTime,
-        _producerContactsUsed = producerContactsUsed,
+      : _producerContactsUsed = producerContactsUsed,
         _receiverContactsUsed = receiverContactsUsed,
-        disturbancesIdentified = disturbancesIdentified,
         _activities = activities,
         _actionsTaken = actionsTaken;
 
@@ -82,12 +76,8 @@ class ContingencyActivity {
   final String instructionsGiven;
 
   ContingencyActivity(
-      {@required TimeOfDay time,
-      @required String personContacted,
-      @required String methodOfContact,
-      @required String instructionsGiven})
-      : time = time,
-        personContacted = personContacted,
-        methodOfContact = methodOfContact,
-        instructionsGiven = instructionsGiven;
+      {@required this.time,
+      @required this.personContacted,
+      @required this.methodOfContact,
+      @required this.instructionsGiven});
 }

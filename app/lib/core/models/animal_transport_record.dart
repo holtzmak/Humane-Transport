@@ -1,6 +1,7 @@
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:flutter/material.dart';
+
 import 'acknowledgement_info.dart';
 import 'contingency_plan_info.dart';
 import 'delivery_info.dart';
@@ -18,20 +19,13 @@ class AnimalTransportRecord {
   final ContingencyPlanInfo contingencyInfo;
 
   AnimalTransportRecord(
-      {@required ShipperInfo shipInfo,
-      @required TransporterInfo tranInfo,
-      @required FeedWaterRestInfo fwrInfo,
-      @required LoadingVehicleInfo vehicleInfo,
-      @required DeliveryInfo deliveryInfo,
-      @required AcknowledgementInfo ackInfo,
-      @required ContingencyPlanInfo contingencyInfo})
-      : shipInfo = shipInfo,
-        tranInfo = tranInfo,
-        fwrInfo = fwrInfo,
-        vehicleInfo = vehicleInfo,
-        deliveryInfo = deliveryInfo,
-        ackInfo = ackInfo,
-        contingencyInfo = contingencyInfo;
+      {@required this.shipInfo,
+      @required this.tranInfo,
+      @required this.fwrInfo,
+      @required this.vehicleInfo,
+      @required this.deliveryInfo,
+      @required this.ackInfo,
+      @required this.contingencyInfo});
 
   AnimalTransportRecord withShipInfo(ShipperInfo newShipInfo) =>
       AnimalTransportRecord(

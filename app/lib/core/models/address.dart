@@ -9,14 +9,9 @@ class Address {
   final String postalCode;
 
   Address(
-      {@required String streetAddress,
-      @required String city,
-      @required String provinceOrState,
-      @required String country,
-      @required String postalCode})
-      : streetAddress = streetAddress,
-        city = city,
-        provinceOrState = provinceOrState,
-        country = country,
-        postalCode = postalCode;
+      {@required this.streetAddress,
+      @required this.city,
+      @required this.provinceOrState,
+      @required this.country,
+      @required this.postalCode});
 }

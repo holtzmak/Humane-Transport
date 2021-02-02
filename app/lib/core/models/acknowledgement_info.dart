@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 @immutable
@@ -8,10 +9,7 @@ class AcknowledgementInfo {
   final File receiverAck;
 
   AcknowledgementInfo(
-      {@required File shipperAck,
-      @required File transporterAck,
-      @required File receiverAck})
-      : shipperAck = shipperAck,
-        transporterAck = transporterAck,
-        receiverAck = receiverAck;
+      {@required this.shipperAck,
+      @required this.transporterAck,
+      @required this.receiverAck});
 }
