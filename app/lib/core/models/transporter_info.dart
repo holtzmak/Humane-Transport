@@ -19,32 +19,20 @@ class TransporterInfo {
   final DateTime trainingExpiryDate;
 
   TransporterInfo(
-      {@required String companyName,
-      @required Address companyAddress,
+      {@required this.companyName,
+      @required this.companyAddress,
       @required List<String> driverNames,
-      @required String vehicleProvince,
-      @required String vehicleLicensePlate,
-      @required String trailerProvince,
-      @required String trailerLicensePlate,
-      @required DateTime dateLastCleaned,
-      @required Address addressLastCleanedAt,
-      @required bool driversAreBriefed,
-      @required bool driversHaveTraining,
-      @required String trainingType,
-      @required DateTime trainingExpiryDate})
-      : companyName = companyName,
-        companyAddress = companyAddress,
-        _driverNames = driverNames,
-        vehicleProvince = vehicleProvince,
-        vehicleLicensePlate = vehicleLicensePlate,
-        trailerProvince = trailerProvince,
-        trailerLicensePlate = trailerLicensePlate,
-        dateLastCleaned = dateLastCleaned,
-        addressLastCleanedAt = addressLastCleanedAt,
-        driversAreBriefed = driversAreBriefed,
-        driversHaveTraining = driversHaveTraining,
-        trainingType = trainingType,
-        trainingExpiryDate = trainingExpiryDate;
+      @required this.vehicleProvince,
+      @required this.vehicleLicensePlate,
+      @required this.trailerProvince,
+      @required this.trailerLicensePlate,
+      @required this.dateLastCleaned,
+      @required this.addressLastCleanedAt,
+      @required this.driversAreBriefed,
+      @required this.driversHaveTraining,
+      @required this.trainingType,
+      @required this.trainingExpiryDate})
+      : _driverNames = driverNames;
 
   List<String> driverNames() => List.unmodifiable(_driverNames);
 }

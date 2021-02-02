@@ -9,16 +9,12 @@ class LoadingVehicleInfo {
   final List<AnimalGroup> _animalsLoaded;
 
   LoadingVehicleInfo(
-      {@required DateTime dateAndTimeLoaded,
-      @required int loadingArea,
-      @required int loadingDensity,
-      @required int animalsPerLoadingArea,
+      {@required this.dateAndTimeLoaded,
+      @required this.loadingArea,
+      @required this.loadingDensity,
+      @required this.animalsPerLoadingArea,
       @required List<AnimalGroup> animalsLoaded})
-      : dateAndTimeLoaded = dateAndTimeLoaded,
-        loadingArea = loadingArea,
-        loadingDensity = loadingDensity,
-        animalsPerLoadingArea = animalsPerLoadingArea,
-        _animalsLoaded = animalsLoaded;
+      : _animalsLoaded = animalsLoaded;
 
   List<AnimalGroup> animalsLoaded() => List.unmodifiable(_animalsLoaded);
 
@@ -40,21 +36,15 @@ class AnimalGroup {
   final List<CompromisedAnimal> _specialNeedsAnimals;
 
   AnimalGroup(
-      {@required String species,
-      @required int groupAge,
-      @required int approximateWeight,
-      @required String animalPurpose,
-      @required int numberAnimals,
-      @required bool animalsFitForTransport,
+      {@required this.species,
+      @required this.groupAge,
+      @required this.approximateWeight,
+      @required this.animalPurpose,
+      @required this.numberAnimals,
+      @required this.animalsFitForTransport,
       @required List<CompromisedAnimal> compromisedAnimals,
       @required List<CompromisedAnimal> specialNeedsAnimals})
-      : species = species,
-        groupAge = groupAge,
-        approximateWeight = approximateWeight,
-        animalPurpose = animalPurpose,
-        numberAnimals = numberAnimals,
-        animalsFitForTransport = animalsFitForTransport,
-        _compromisedAnimals = compromisedAnimals,
+      : _compromisedAnimals = compromisedAnimals,
         _specialNeedsAnimals = specialNeedsAnimals;
 
   List<CompromisedAnimal> compromisedAnimals() =>
@@ -70,8 +60,6 @@ class CompromisedAnimal {
   final String measuresTakenToCareForAnimal;
 
   CompromisedAnimal(
-      {@required String animalDescription,
-      @required String measuresTakenToCareForAnimal})
-      : animalDescription = animalDescription,
-        measuresTakenToCareForAnimal = measuresTakenToCareForAnimal;
+      {@required this.animalDescription,
+      @required this.measuresTakenToCareForAnimal});
 }

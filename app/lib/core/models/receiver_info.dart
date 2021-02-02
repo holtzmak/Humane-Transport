@@ -1,5 +1,6 @@
 import 'package:app/core/utilities/optional.dart';
 import 'package:flutter/material.dart';
+
 import 'address.dart';
 
 @immutable
@@ -13,18 +14,11 @@ class ReceiverInfo {
   final String receiverContactInfo;
 
   ReceiverInfo(
-      {@required String receiverCompanyName,
-      @required String receiverName,
-      @required Optional<String> accountId,
-      @required String destinationLocationId,
-      @required String destinationLocationName,
-      @required Address destinationAddress,
-      @required String receiverContactInfo})
-      : receiverCompanyName = receiverCompanyName,
-        receiverName = receiverName,
-        accountId = accountId,
-        destinationLocationId = destinationLocationId,
-        destinationLocationName = destinationLocationName,
-        destinationAddress = destinationAddress,
-        receiverContactInfo = receiverContactInfo;
+      {@required this.receiverCompanyName,
+      @required this.receiverName,
+      @required this.accountId,
+      @required this.destinationLocationId,
+      @required this.destinationLocationName,
+      @required this.destinationAddress,
+      @required this.receiverContactInfo});
 }

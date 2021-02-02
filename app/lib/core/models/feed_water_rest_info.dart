@@ -9,12 +9,10 @@ class FeedWaterRestInfo {
   final List<FeedWaterRestEvent> _fwrEvents;
 
   FeedWaterRestInfo(
-      {@required DateTime lastFwrDate,
-      @required Address lastFwrLocation,
+      {@required this.lastFwrDate,
+      @required this.lastFwrLocation,
       @required List<FeedWaterRestEvent> fwrEvents})
-      : lastFwrDate = lastFwrDate,
-        lastFwrLocation = lastFwrLocation,
-        _fwrEvents = fwrEvents;
+      : _fwrEvents = fwrEvents;
 
   List<FeedWaterRestEvent> fwrEvents() => List.unmodifiable(_fwrEvents);
 }
@@ -27,12 +25,8 @@ class FeedWaterRestEvent {
   final bool fwrProvidedOnboard;
 
   FeedWaterRestEvent(
-      {@required bool animalsWereUnloaded,
-      @required DateTime fwrTime,
-      @required Address lastFwrLocation,
-      @required bool fwrProvidedOnboard})
-      : animalsWereUnloaded = animalsWereUnloaded,
-        fwrTime = fwrTime,
-        lastFwrLocation = lastFwrLocation,
-        fwrProvidedOnboard = fwrProvidedOnboard;
+      {@required this.animalsWereUnloaded,
+      @required this.fwrTime,
+      @required this.lastFwrLocation,
+      @required this.fwrProvidedOnboard});
 }
