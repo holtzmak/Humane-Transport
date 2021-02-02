@@ -1,3 +1,4 @@
+import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/view_models/atr_pre_view_model.dart';
 import 'package:app/core/view_models/nav_view_model.dart';
 import 'package:app/core/view_models/signin_view_model.dart';
@@ -13,6 +14,7 @@ final locator = GetIt.instance;
 void setUpLocator() {
   locator.registerLazySingleton<AuthenticationService>(
       () => AuthenticationService());
+  locator.registerLazySingleton<DatabaseService>(() => DatabaseService());
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
 
   locator.registerFactory<WelcomeViewModel>(() => WelcomeViewModel());

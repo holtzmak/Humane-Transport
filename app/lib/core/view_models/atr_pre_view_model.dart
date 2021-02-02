@@ -3,9 +3,8 @@ import 'package:app/ui/widgets/atr_preview.dart';
 
 class AnimalTransportRecordPreViewModel extends BaseViewModel {
   /*
-   TODO: This class should be hooked to another class to map
-   ATRPreview from the raw records, which are then pushed through here
-   or it should make previews from the raw here (listening function).
+   TODO: #130. This class should use DatabaseService to map
+   ATRPreview from the raw records, which are then pushed through here.
    */
   final List<AnimalTransportRecordPreview> _animalTransportPreviews = [];
 
