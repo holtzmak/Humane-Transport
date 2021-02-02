@@ -16,7 +16,7 @@ class AnimalTransportRecordPreview extends StatelessWidget {
           title: Text(
               'Delivery for ${atr.deliveryInfo.recInfo.receiverCompanyName}'),
           subtitle: Text(
-              'Date: ${DateFormat("yyyy-MM-dd hh:mm").format(atr.vehicleInfo.dateAndTimeLoaded)}, Animals: ${atr.vehicleInfo.animalSpeciesLoaded().join(',')}'),
+              '${DateFormat("yyyy-MM-dd hh:mm").format(atr.vehicleInfo.dateAndTimeLoaded)} ${atr.vehicleInfo.animalSpeciesLoaded().join(',')}'),
         ),
       ),
     );
