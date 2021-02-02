@@ -50,22 +50,23 @@ class TransporterInfo {
   Driver(s) have received humane transport training?: ${driversHaveTraining ? 'Yes' : 'No'}
   Training type: $trainingType, Expiry date: ${DateFormat("yyyy-MM-dd hh:mm").format(trainingExpiryDate)}''';
 
-  Map<String, dynamic> toMap(){
-    var map = <String, dynamic>{
-      'companyName' : companyName,
-      'companyAddress': companyAddress,
-      'driverNames' : _driverNames,
-      'vehicleProvinc':vehicleProvince,
-      'vehicleLicensePlate':vehicleLicensePlate,
-      'trailerProvince':trailerProvince,
-      'trailerLicensePlate':trailerLicensePlate,
-      'dateLastCleaned':dateLastCleaned,
-      'addressLastCleaned': addressLastCleanedAt,
-      'driversAreBriefed':driversAreBriefed,
-      'driversHaveTraining':driversHaveTraining,
-      'trainingType':trainingType,
-      'trainingExpiry':trainingExpiryDate,
 
+  Map<String, dynamic> toMap() {
+
+    var map = <String, dynamic>{
+      'companyName': companyName,
+      'companyAddress': companyAddress,
+      'driverNames': _driverNames,
+      'vehicleProvinc': vehicleProvince,
+      'vehicleLicensePlate': vehicleLicensePlate,
+      'trailerProvince': trailerProvince,
+      'trailerLicensePlate': trailerLicensePlate,
+      'dateLastCleaned': dateLastCleaned,
+      'addressLastCleaned': addressLastCleanedAt,
+      'driversAreBriefed': driversAreBriefed,
+      'driversHaveTraining': driversHaveTraining,
+      'trainingType': trainingType,
+      'trainingExpiry': trainingExpiryDate,
     };
     return map;
   }
