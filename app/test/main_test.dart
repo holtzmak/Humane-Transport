@@ -3,7 +3,7 @@ import 'package:app/humane_transport_app.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('Group test', () {
+  group('Application main', () {
     setUpAll(() {
       // TODO: Make a test locator
       setUpLocator();
