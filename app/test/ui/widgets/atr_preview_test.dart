@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 
-import '../../test_animal_transport_record.dart';
+import '../../../test_lib/test_animal_transport_record.dart';
 
 void main() {
   group('Animal Transport Record Preview', () {
