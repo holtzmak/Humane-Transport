@@ -7,7 +7,7 @@ import '../../test_lib/test_animal_transport_record.dart';
 
 void main() {
   group('Animal Transport Record Preview', () {
-    testWidgets('Previews right information', (WidgetTester tester) async {
+    testWidgets('shows right information', (WidgetTester tester) async {
       final testDate = DateTime.parse("2021-01-01 01:01");
       final testCompany = "Test Company";
       final testSpecies = "Cows";
