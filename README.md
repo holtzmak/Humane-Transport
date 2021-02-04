@@ -22,6 +22,7 @@ The deliverables assigned and set out by our post-seconday software engineering 
 1. Team/Instructor Scrum Report 3 [Slides](https://sanakhan1997.github.io/Humane-Transport/) (November 23, 2020)
 1. Project Progress Vlog 3 [Video](https://youtu.be/hMpPf16VFHM) and [Slides](https://sanakhan1997.github.io/Humane-Transport/) (December 14, 2020)
 1. Team/Instructor Scrum Report 4 [Slides](https://sanakhan1997.github.io/Humane-Transport/) (January 21, 2021)
+1. Project Progress Vlog 4 [Video](https://youtu.be/BHDtMDXqNDQ) and [Slides](https://sanakhan1997.github.io/Humane-Transport/) (February 04, 2021)
 
 ***
 
