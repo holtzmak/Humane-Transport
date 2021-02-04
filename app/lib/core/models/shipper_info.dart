@@ -19,12 +19,10 @@ class ShipperInfo {
       @required this.departureAddress,
       @required this.shipperContactInfo});
 
-  String toString() => '''
-  Shipper name: $shipperName
-  Shipper is animal owner: ${shipperIsAnimalOwner ? 'yes' : 'no'}
+  String toString() => '''Shipper name: $shipperName
+  Shipper is animal owner: ${shipperIsAnimalOwner ? 'Yes' : 'No'}
   Departure location ID: $departureLocationId
   Departure location name: $departureLocationName
   Departure address: $departureAddress
-  Shipper contact info: $shipperContactInfo
-  ''';
+  Shipper contact info: $shipperContactInfo''';
 }
