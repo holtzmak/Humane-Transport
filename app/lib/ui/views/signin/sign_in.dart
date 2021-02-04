@@ -1,8 +1,8 @@
 import 'package:app/core/enums/view_state.dart';
 import 'package:app/core/view_models/signin_view_model.dart';
 import 'package:app/ui/views/base_view.dart';
-import 'package:app/ui/widgets/busy_overlay.dart';
-import 'package:app/ui/widgets/sidebar.dart';
+import 'package:app/ui/widgets/utility/busy_overlay.dart';
+import 'package:app/ui/widgets/utility/sidebar.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatelessWidget {

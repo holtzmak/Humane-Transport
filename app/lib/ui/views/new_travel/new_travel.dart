@@ -1,8 +1,8 @@
 import 'package:app/core/utilities/image_upload.dart';
 import 'package:app/core/view_models/signout_view_model.dart';
 import 'package:app/ui/views/base_view.dart';
-import 'package:app/ui/widgets/alert_dialog.dart';
-import 'package:app/ui/widgets/sidebar.dart';
+import 'package:app/ui/widgets/utility/alert_dialog.dart';
+import 'package:app/ui/widgets/utility/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'new_travel_journey.dart/test_screen_one.dart';

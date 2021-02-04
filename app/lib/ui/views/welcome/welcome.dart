@@ -2,7 +2,7 @@ import 'package:app/core/view_models/welcome_view_model.dart';
 import 'package:app/ui/views/base_view.dart';
 import 'package:app/ui/views/home/home.dart';
 import 'package:app/ui/views/signin/sign_in.dart';
-import 'package:app/ui/widgets/sidebar.dart';
+import 'package:app/ui/widgets/utility/sidebar.dart';
 import 'package:flutter/material.dart';
 
 class Welcome extends StatelessWidget {
