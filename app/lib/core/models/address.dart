@@ -14,4 +14,9 @@ class Address {
       @required this.provinceOrState,
       @required this.country,
       @required this.postalCode});
+
+  String toString() => '''
+  $streetAddress
+  $city, $provinceOrState, $country, $postalCode
+  ''';
 }

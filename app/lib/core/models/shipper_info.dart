@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'address.dart';
 
 @immutable
@@ -17,4 +18,13 @@ class ShipperInfo {
       @required this.departureLocationName,
       @required this.departureAddress,
       @required this.shipperContactInfo});
+
+  String toString() => '''
+  Shipper name: $shipperName
+  Shipper is animal owner: ${shipperIsAnimalOwner ? 'yes' : 'no'}
+  Departure location ID: $departureLocationId
+  Departure location name: $departureLocationName
+  Departure address: $departureAddress
+  Shipper contact info: $shipperContactInfo
+  ''';
 }
