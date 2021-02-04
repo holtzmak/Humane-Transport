@@ -23,9 +23,19 @@ class _AnimalTransportRecordDisplayState
     extends State<AnimalTransportRecordDisplay> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        child: _buildExpansionPanels(),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back),
+          // TODO: Replace this with correct nav call
+          onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          child: _buildExpansionPanels(),
+        ),
       ),
     );
   }

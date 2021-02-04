@@ -18,8 +18,8 @@ class AnimalTransportRecordPreview extends StatelessWidget {
           Text('Delivery for ${atr.deliveryInfo.recInfo.receiverCompanyName}'),
       subtitle: Text(
           '${DateFormat("yyyy-MM-dd hh:mm").format(atr.vehicleInfo.dateAndTimeLoaded)} ${atr.vehicleInfo.animalSpeciesLoaded().join(',')}'),
-      onTap: () => Navigator.push(
-          context,
+      // TODO: Replace this with correct nav call
+      onTap: () => Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
               builder: (context) => AnimalTransportRecordDisplay(atr: atr))),
     )));
