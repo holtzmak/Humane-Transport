@@ -1,8 +1,8 @@
 import 'package:app/core/view_models/nav_view_model.dart';
 import 'package:app/ui/common/style/style.dart';
 import 'package:app/ui/views/base_view.dart';
-import 'package:app/ui/widgets/sidebar.dart';
-import 'package:app/ui/widgets/template_navigator.dart';
+import 'package:app/ui/widgets/utility/sidebar.dart';
+import 'package:app/ui/widgets/utility/template_navigator.dart';
 import 'package:flutter/material.dart';
 
 class HomeRootScreen extends StatelessWidget {
