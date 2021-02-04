@@ -14,6 +14,7 @@ class BaseView<T extends BaseViewModel> extends StatefulWidget {
 
 class _BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> {
   T model = locator<T>();
+
   @override
   void initState() {
     if (widget.onModelReady != null) {

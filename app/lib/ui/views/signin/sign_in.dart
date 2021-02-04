@@ -1,4 +1,3 @@
-import 'package:app/core/enums/view_state.dart';
 import 'package:app/core/view_models/signin_view_model.dart';
 import 'package:app/ui/views/base_view.dart';
 import 'package:app/ui/widgets/busy_overlay.dart';
@@ -8,12 +7,12 @@ import 'package:flutter/material.dart';
 class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  static const route = '/signIn';
+  static const route = '/signin';
   @override
   Widget build(BuildContext context) {
     return BaseView<SignInViewModel>(
       builder: (context, model, child) => BusyOverlay(
-        show: model.state == ViewState.Busy,
+        show: model.busy,
         child: Scaffold(
           appBar: AppBar(),
           drawer: SideBar(),
@@ -23,10 +22,7 @@ class SignInScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'TEST',
-                    key: Key('test'),
-                  ),
+                  Text('Sign in'),
                   TextFormField(
                     key: Key('emailKey'),
                     decoration: InputDecoration(hintText: "Email"),
@@ -51,7 +47,7 @@ class SignInScreen extends StatelessWidget {
                   RaisedButton(
                     child: Text('Go back to welcome screen'),
                     color: Colors.red,
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => model.popScreen(),
                   ),
                 ],
                 // TODO: Account creation

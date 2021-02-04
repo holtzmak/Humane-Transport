@@ -2,7 +2,6 @@ import 'package:app/core/utilities/image_upload.dart';
 import 'package:app/core/view_models/signout_view_model.dart';
 import 'package:app/ui/views/base_view.dart';
 import 'package:app/ui/widgets/alert_dialog.dart';
-import 'package:app/ui/widgets/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'new_travel_journey.dart/test_screen_one.dart';
@@ -12,14 +11,13 @@ class NewTravel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-      ),
-      drawer: SideBar(),
-      body: Center(
-        child: BaseView<SignOutViewModel>(
-          builder: (context, model, child) => Column(
+    return BaseView<SignOutViewModel>(
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+        ),
+        body: Center(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text('Testing feature for uploading image'),
