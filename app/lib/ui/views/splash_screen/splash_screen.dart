@@ -16,12 +16,15 @@ class SplashScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text('PUT LOGO HERE!'),
+              SizedBox(
+                height: 100,
+              ),
               CircularProgressIndicator(
                 strokeWidth: 4,
                 valueColor: AlwaysStoppedAnimation(
                   Theme.of(context).primaryColor,
                 ),
-              )
+              ),
             ],
           ),
         ),
