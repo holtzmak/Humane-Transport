@@ -1,14 +1,17 @@
+import 'package:app/core/enums/auth_result_status.dart';
 import 'package:app/core/models/test_history.dart';
+import 'package:app/core/services/dialogs/dialogs_service.dart';
 import 'package:app/core/services/firestore/firestore_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/utilities/auth_exception.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:flutter/material.dart';
 
 class AddHistoryViewModel extends BaseViewModel {
   final FirestoreService _firestoreService = locator<FirestoreService>();
   final NavigationService _navigationService = locator<NavigationService>();
-
+  final DialogService _dialogService = locator<DialogService>();
   HistoryRecord _edittingHistory;
   bool get _isEditting => _edittingHistory != null;
 
@@ -31,10 +34,17 @@ class AddHistoryViewModel extends BaseViewModel {
     setBusy(false);
 
     // If result is type String, then something went wrong
-    if (result is String) {
-      print('Something went wrong');
+    if (result == ResultStatus.successful) {
+      await _dialogService.showDialog(
+        title: 'Travel History',
+        description: 'Successfully added!',
+      );
     } else {
-      print('Sucessfully added ');
+      final errorMessage = ExceptionHandler.exceptionMessage(result);
+      await _dialogService.showDialog(
+        title: 'Travel History Creation Failed',
+        description: errorMessage,
+      );
     }
     _navigationService.pop();
   }

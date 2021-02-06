@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:app/core/enums/auth_result_status.dart';
 import 'package:app/core/models/test_history.dart';
 import 'package:app/core/models/user_info.dart';
+import 'package:app/core/utilities/auth_exception.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreService {
@@ -11,6 +13,7 @@ class FirestoreService {
   final StreamController<List<HistoryRecord>> _historyController =
       StreamController<List<HistoryRecord>>.broadcast();
 
+  ResultStatus _status;
   Future addUserToFirestore(UserInformation user) async {
     try {
       await _userCollectionReference.doc(user.userId).set(user.toJson());
@@ -22,25 +25,27 @@ class FirestoreService {
   Future fetchUser(String currentUserId) async {
     try {
       var userData = await _userCollectionReference.doc(currentUserId).get();
+
       return UserInformation.fromFirestore(userData.data());
     } catch (e) {
       return e.code;
     }
   }
 
-  Future addHistory(HistoryRecord historyRecord) async {
+  Future<ResultStatus> addHistory(HistoryRecord historyRecord) async {
     try {
       await _historyCollectionReference
           .doc(historyRecord.userId)
           .collection('history_data')
           .add(historyRecord.toJson());
+      _status = ResultStatus.successful;
     } catch (e) {
-      return e.code;
+      _status = ExceptionHandler.handleException(e);
     }
+    return _status;
   }
 
   Stream getHistoryRecordsInRealTime(String currentUserId) {
-    // Register the handler for when the posts data changes
     _historyCollectionReference
         .doc(currentUserId)
         .collection('history_data')
@@ -61,27 +66,32 @@ class FirestoreService {
     return _historyController.stream;
   }
 
-  Future updatHistoryTravel(HistoryRecord historyRecord) async {
+  Future<ResultStatus> updatHistoryTravel(HistoryRecord historyRecord) async {
     try {
       await _historyCollectionReference
           .doc(historyRecord.userId)
           .collection('history_data')
           .doc(historyRecord.documentId)
           .update(historyRecord.toJson());
+      _status = ResultStatus.successful;
     } catch (e) {
-      print(e.code);
+      _status = ExceptionHandler.handleException(e);
     }
+    return _status;
   }
 
-  Future deletePost(String documentId, String currentUserId) async {
+  Future<ResultStatus> deletePost(
+      String documentId, String currentUserId) async {
     try {
       await _historyCollectionReference
           .doc(currentUserId)
           .collection('history_data')
           .doc(documentId)
           .delete();
+      _status = ResultStatus.successful;
     } catch (e) {
-      print(e.code);
+      _status = ExceptionHandler.handleException(e);
     }
+    return _status;
   }
 }

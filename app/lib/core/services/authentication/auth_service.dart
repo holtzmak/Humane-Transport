@@ -1,23 +1,20 @@
 import 'dart:async';
+import 'package:app/core/enums/auth_result_status.dart';
 import 'package:app/core/models/user_info.dart';
 import 'package:app/core/services/firestore/firestore_service.dart';
 import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/utilities/auth_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirestoreService _firestoreService = locator<FirestoreService>();
-
+  ResultStatus _status;
   UserInformation _currentUser;
   UserInformation get currentUser => _currentUser;
 
-  /*
-   This needs to be a dynamic type as we may expect bool or a string as return type.
-   Note: Same logic applies to other methods here.
-  [FirebaseAuthException] - Will return String if something went wrong
-  */
-  Future signIn({
+  Future<ResultStatus> signIn({
     @required String email,
     @required String password,
   }) async {
@@ -28,18 +25,20 @@ class AuthenticationService {
         password: password,
       );
       var user = await _firestoreService.fetchUser(authResult.user.uid);
-      var isUserExist = user != null;
 
-      await _populateCurrentUser(authResult.user);
-
-      print('${user.firstName} currently signed in!');
-      return isUserExist;
+      if (user != null) {
+        await _populateCurrentUser(authResult.user);
+        _status = ResultStatus.successful;
+      } else {
+        _status = ResultStatus.undefined;
+      }
     } on FirebaseAuthException catch (e) {
-      return e.code;
+      _status = ExceptionHandler.handleException(e);
     }
+    return _status;
   }
 
-  Future signUp({
+  Future<ResultStatus> signUp({
     @required String firstName,
     @required String lastName,
     @required String userEmailAddress,
@@ -53,56 +52,56 @@ class AuthenticationService {
         password: password,
       );
 
-      // Uses the service to create a new user to Firestore
-      await _firestoreService.addUserToFirestore(UserInformation(
-        userId: authResult.user.uid,
-        firstName: firstName,
-        lastName: lastName,
-        userEmailAddress: userEmailAddress,
-        userPhoneNumber: userPhoneNumber,
-      ));
-
-      return authResult.user != null;
+      if (authResult.user != null) {
+        // Uses the service to create a new user to Firestore
+        await _firestoreService.addUserToFirestore(UserInformation(
+          userId: authResult.user.uid,
+          firstName: firstName,
+          lastName: lastName,
+          userEmailAddress: userEmailAddress,
+          userPhoneNumber: userPhoneNumber,
+        ));
+        _status = ResultStatus.successful;
+      } else {
+        _status = ResultStatus.undefined;
+      }
     } on FirebaseAuthException catch (e) {
-      return e.code;
+      _status = ExceptionHandler.handleException(e);
     }
+    return _status;
   }
 
-  Future<void> signOut() async {
+  Future signOut() async {
     try {
       await _firebaseAuth.signOut();
     } on FirebaseAuthException catch (e) {
-      return e.code;
+      _status = ExceptionHandler.handleException(e);
     }
+    return _status;
   }
 
-  Future isLoggedIn() async {
+  Future<dynamic> isLoggedIn() async {
     var firebaseUser = _firebaseAuth.currentUser;
     if (firebaseUser == null) return false;
-
     try {
       var user = await _firestoreService.fetchUser(firebaseUser.uid);
-      var isUserExist = user != null;
 
-      /*
-      As soon as the system confirmed a user is logged in, populate
-      user information to be readily available.
-      */
-      await _populateCurrentUser(firebaseUser);
-
-      return isUserExist;
+      if (user != null) {
+        await _populateCurrentUser(firebaseUser);
+        _status = ResultStatus.isLoggedIn;
+      } else {
+        _status = ResultStatus.undefined;
+      }
+      return _status;
     } on FirebaseAuthException catch (e) {
-      return e.code;
+      _status = ExceptionHandler.handleException(e);
     }
+    return _status;
   }
 
-  Future _populateCurrentUser(User user) async {
-    try {
-      if (user != null) {
-        _currentUser = await _firestoreService.fetchUser(user.uid);
-      }
-    } on FirebaseAuthException catch (e) {
-      return e.code;
+  Future<void> _populateCurrentUser(User user) async {
+    if (user != null) {
+      _currentUser = await _firestoreService.fetchUser(user.uid);
     }
   }
 }

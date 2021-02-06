@@ -10,21 +10,15 @@ class HistoryRecord {
     this.documentId,
   });
 
+  HistoryRecord.fromFirestore(Map<String, dynamic> data, String documentId)
+      : title = data['title'],
+        userId = data['userId'],
+        documentId = documentId;
+
   Map<String, dynamic> toJson() {
     return {
       'userId': userId,
       'title': title,
     };
-  }
-
-  static HistoryRecord fromFirestore(
-      Map<String, dynamic> data, String documentId) {
-    if (data == null) return null;
-
-    return HistoryRecord(
-      title: data['title'],
-      userId: data['userId'],
-      documentId: documentId,
-    );
   }
 }

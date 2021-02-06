@@ -1,4 +1,5 @@
 import 'package:app/core/models/test_history.dart';
+import 'package:app/core/services/dialogs/dialogs_service.dart';
 import 'package:app/core/services/firestore/firestore_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
@@ -8,7 +9,7 @@ import 'package:app/ui/views/add_history/add_history.dart';
 class OngoingViewModel extends BaseViewModel {
   final FirestoreService _firestoreService = locator<FirestoreService>();
   final NavigationService _navigationService = locator<NavigationService>();
-
+  final DialogService _dialogService = locator<DialogService>();
   List<HistoryRecord> _history = [];
   List<HistoryRecord> get histories => _history;
 
@@ -40,13 +41,18 @@ class OngoingViewModel extends BaseViewModel {
   }
 
   Future deletePost(int index) async {
-    setBusy(true);
-    try {
+    var dialogResponse = await _dialogService.showConfirmationDialog(
+      title: 'Hold Up!',
+      description: 'Are you sure you want to delete this record?',
+      confirmationText: 'Yes',
+      cancelText: 'No',
+    );
+
+    if (dialogResponse.confirmed) {
+      setBusy(true);
       await _firestoreService.deletePost(
           _history[index].documentId, currentUser.userId);
-    } catch (e) {
-      print(e.message);
+      setBusy(false);
     }
-    setBusy(false);
   }
 }

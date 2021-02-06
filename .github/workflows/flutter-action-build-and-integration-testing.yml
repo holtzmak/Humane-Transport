@@ -33,7 +33,7 @@ jobs:
       - name: Set up Flutter actions
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: '1.22.5'
+          flutter-version: '1.22.6'
           channel: 'stable'
       - name: List all available devices
         run: xcrun instruments -s

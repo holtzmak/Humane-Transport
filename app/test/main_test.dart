@@ -1,4 +1,5 @@
 import 'package:app/core/services/authentication/auth_service.dart';
+import 'package:app/core/services/dialogs/dialogs_service.dart';
 import 'package:app/core/services/firestore/firestore_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/view_models/splash_screen_view_model.dart';
@@ -25,6 +26,7 @@ void main() {
     testWidgets('first route is welcome screen', (WidgetTester tester) async {
       addLazySingletonForTest(testLocator, () => NavigationService());
       addLazySingletonForTest(testLocator, () => FirestoreService());
+      addLazySingletonForTest(testLocator, () => DialogService());
       addLazySingletonForTest(testLocator, () => AuthenticationService());
 
       addFactoryForTest(testLocator, () => SplashScreenViewModel());

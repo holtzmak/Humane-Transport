@@ -1,3 +1,4 @@
+import 'package:app/core/enums/auth_result_status.dart';
 import 'package:app/core/services/authentication/auth_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
@@ -12,18 +13,14 @@ class SplashScreenViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
 
   Future handleStartLogic() async {
-    try {
-      var authResult = await _authenticationService.isLoggedIn();
+    var result = await _authenticationService.isLoggedIn();
 
-      if (authResult) {
-        Future.delayed(Duration(seconds: 3)).then(
-            (value) => _navigationService.navigateTo(HomeRootScreen.route));
-      } else {
-        Future.delayed(Duration(seconds: 3)).then(
-            (value) => _navigationService.navigateTo(WelcomeScreen.route));
-      }
-    } catch (e) {
-      print(e.message);
+    if (result == ResultStatus.isLoggedIn) {
+      Future.delayed(Duration(seconds: 3))
+          .then((value) => _navigationService.navigateTo(HomeRootScreen.route));
+    } else {
+      Future.delayed(Duration(seconds: 3))
+          .then((value) => _navigationService.navigateTo(WelcomeScreen.route));
     }
   }
 }

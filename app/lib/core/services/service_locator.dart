@@ -1,4 +1,5 @@
 import 'package:app/core/services/database/database_service.dart';
+import 'package:app/core/services/dialogs/dialogs_service.dart';
 import 'package:app/core/view_models/add_history_view_model.dart';
 import 'package:app/core/view_models/atr_pre_view_model.dart';
 import 'package:app/core/view_models/nav_view_model.dart';
@@ -21,6 +22,7 @@ void setUpLocator() {
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => FirestoreService());
   locator.registerLazySingleton(() => DatabaseService());
+  locator.registerLazySingleton(() => DialogService());
 
   locator.registerFactory(() => SplashScreenViewModel());
   locator.registerFactory(() => WelcomeViewModel());
