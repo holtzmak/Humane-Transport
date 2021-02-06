@@ -21,7 +21,7 @@ class AnimalTransportRecordDisplay extends StatefulWidget {
           headerValue: 'Loading Vehicle Information',
           expandedValue: atr.vehicleInfo.toString()),
       ExpansionListItem(
-          headerValue: 'Deliver Information',
+          headerValue: 'Delivery Information',
           expandedValue: atr.deliveryInfo.toString()),
       ExpansionListItem(
           headerValue: 'Acknowledgements',

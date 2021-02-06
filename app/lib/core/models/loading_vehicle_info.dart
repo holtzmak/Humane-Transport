@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 @immutable
 class LoadingVehicleInfo {
@@ -22,6 +23,15 @@ class LoadingVehicleInfo {
     return List.unmodifiable(
         _animalsLoaded.map((animalGroup) => animalGroup.species).toList());
   }
+
+  String toString() =>
+      '''Date and time of loading: ${DateFormat("yyyy-MM-dd hh:mm").format(dateAndTimeLoaded)}
+      Floor or container area available to animals (m2 or ft2): $loadingArea
+      Loading density: $loadingDensity
+      Animals per floor area (Kg/m2 or lbs/ft2): $animalsPerLoadingArea
+      Animals loaded:
+      ${_animalsLoaded.map((group) => group.toString()).join('\n')}
+  ''';
 }
 
 @immutable
