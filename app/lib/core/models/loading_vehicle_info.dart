@@ -52,6 +52,29 @@ class AnimalGroup {
 
   List<CompromisedAnimal> specialNeedsAnimals() =>
       List.unmodifiable(_specialNeedsAnimals);
+
+  String _compromisedAnimalsToString() => _compromisedAnimals.isEmpty
+      ? 'N/A'
+      : _compromisedAnimals
+          .map((animal) => animal.toString())
+          .toList()
+          .join(",");
+
+  String _specialNeedsAnimalsToString() => _specialNeedsAnimals.isEmpty
+      ? 'N/A'
+      : _specialNeedsAnimals
+          .map((animal) => animal.toString())
+          .toList()
+          .join(",");
+
+  String toString() => '''Animal(s) description:
+  Species: $species, Group age: $groupAge, Approximate weight: $approximateWeight
+  Purpose: $animalPurpose, Number of animals: $numberAnimals
+  Are all animals fit for transport: ${animalsFitForTransport ? 'Yes' : 'No'}
+  Number of compromised animals loaded: ${_compromisedAnimals.length}
+  Compromised animal(s), identification description and measures taken: ${_compromisedAnimalsToString()}
+  Number of animal(s) with special needs: ${_specialNeedsAnimals.length}
+  Special needs animal(s), identification description and measures taken: ${_specialNeedsAnimalsToString()}''';
 }
 
 @immutable
@@ -62,4 +85,8 @@ class CompromisedAnimal {
   CompromisedAnimal(
       {@required this.animalDescription,
       @required this.measuresTakenToCareForAnimal});
+
+  String toString() => '''$animalDescription
+  $measuresTakenToCareForAnimal
+  ''';
 }

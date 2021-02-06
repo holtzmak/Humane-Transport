@@ -9,8 +9,26 @@ class AnimalTransportRecordDisplay extends StatefulWidget {
       : super(key: key) {
     _atrForDisplay.addAll([
       ExpansionListItem(
-          headerValue: 'Shipping Information',
+          headerValue: 'Shipper\'s Information',
           expandedValue: atr.shipInfo.toString()),
+      ExpansionListItem(
+          headerValue: 'Transporter\'s Information',
+          expandedValue: atr.tranInfo.toString()),
+      ExpansionListItem(
+          headerValue: 'Feed, Water, and Rest Information',
+          expandedValue: atr.fwrInfo.toString()),
+      ExpansionListItem(
+          headerValue: 'Loading Vehicle Information',
+          expandedValue: atr.vehicleInfo.toString()),
+      ExpansionListItem(
+          headerValue: 'Deliver Information',
+          expandedValue: atr.deliveryInfo.toString()),
+      ExpansionListItem(
+          headerValue: 'Acknowledgements',
+          expandedValue: atr.ackInfo.toString()),
+      ExpansionListItem(
+          headerValue: 'Contingency Plan',
+          expandedValue: atr.contingencyInfo.toString()),
     ]);
   }
 
@@ -27,7 +45,7 @@ class _AnimalTransportRecordDisplayState
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+          icon: new Icon(Icons.arrow_back_ios),
           // TODO: Replace this with correct nav call
           onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
         ),
