@@ -19,10 +19,9 @@ class ShipperInfo {
       @required this.departureAddress,
       @required this.shipperContactInfo});
 
-  String toString() => '''Shipper name: $shipperName
-  Shipper is animal owner: ${shipperIsAnimalOwner ? 'Yes' : 'No'}
-  Departure location ID: $departureLocationId
-  Departure location name: $departureLocationName
-  Departure address: $departureAddress
-  Shipper contact info: $shipperContactInfo''';
+  String toString() => '''Name: $shipperName
+  The shipper is the owner of the animals loaded in the vehicle: ${shipperIsAnimalOwner ? 'Yes' : 'No'}
+  Departure Premises Identification number (PID): $departureLocationId, Name: $departureLocationName
+  Address: $departureAddress
+  Shipper’s Contact information in case of emergency: $shipperContactInfo''';
 }

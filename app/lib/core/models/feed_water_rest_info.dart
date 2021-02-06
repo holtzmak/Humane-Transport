@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'address.dart';
 
@@ -15,6 +16,10 @@ class FeedWaterRestInfo {
       : _fwrEvents = fwrEvents;
 
   List<FeedWaterRestEvent> fwrEvents() => List.unmodifiable(_fwrEvents);
+
+  String toString() =>
+      '''Last access to feed, water and rest (FWR) prior to loading:
+      Date and time: ${DateFormat("yyyy-MM-dd hh:mm").format(lastFwrDate)}, Place: $lastFwrLocation''';
 }
 
 @immutable
@@ -29,4 +34,9 @@ class FeedWaterRestEvent {
       @required this.fwrTime,
       @required this.lastFwrLocation,
       @required this.fwrProvidedOnboard});
+
+  String toString() =>
+      '''Animals unloaded?: ${animalsWereUnloaded ? 'Yes' : 'No'}
+      Date and time: ${DateFormat("yyyy-MM-dd hh:mm").format(fwrTime)}, Place: $lastFwrLocation
+      Provided onboard?: ${fwrProvidedOnboard ? 'Yes' : 'No'}''';
 }

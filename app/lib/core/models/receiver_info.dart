@@ -21,4 +21,11 @@ class ReceiverInfo {
       @required this.destinationLocationName,
       @required this.destinationAddress,
       @required this.receiverContactInfo});
+
+  String toString() => '''Receiving company name: $receiverCompanyName
+  Representative name: $receiverName
+  Account identification number of the consignee in the database of the responsible administrator (Optional): ${accountId.isPresent() ? accountId.get() : "N/A"}
+  Destination and Premises Identification number (PID): $destinationLocationId, Name: $destinationLocationName
+  Address: $destinationAddress
+  Receiver’s Contact number in case of emergency: $receiverContactInfo''';
 }
