@@ -1,5 +1,6 @@
 import 'package:app/core/enums/view_state.dart';
 import 'package:app/core/services/authentication/auth_service.dart';
+import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
@@ -7,7 +8,7 @@ import 'package:app/ui/views/home/home.dart';
 import 'package:flutter/material.dart';
 
 class SignInViewModel extends BaseViewModel {
-  //Inject auth service
+  final DialogService _dialogService = locator<DialogService>();
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
@@ -36,9 +37,14 @@ class SignInViewModel extends BaseViewModel {
         print('Please try again later');
       }
     } else {
-      //If it's not a bool type, then something went wrong
-      //Checks if password is correct, email is formatted and etc
-      print(result);
+      /*
+        This block of code is temporary only. This just shows you how
+        to consume dialog service.
+      */
+      _dialogService.showDialog(
+        title: 'Sign in failed',
+        description: result,
+      );
     }
   }
 }

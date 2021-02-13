@@ -24,15 +24,4 @@ class AuthenticationService {
     // TODO: Should handle exception error
     await _firebaseAuth.signOut();
   }
-
-  void user() {
-    // ignore: deprecated_member_use
-    FirebaseAuth.instance.authStateChanges().listen((User user) {
-      if (user == null) {
-        return null;
-      } else {
-        return user;
-      }
-    });
-  }
 }
