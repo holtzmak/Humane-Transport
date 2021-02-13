@@ -1,7 +1,6 @@
 import 'package:app/core/utilities/image_upload.dart';
 import 'package:app/core/view_models/signout_view_model.dart';
 import 'package:app/ui/views/base_view.dart';
-import 'package:app/ui/widgets/utility/alert_dialog.dart';
 import 'package:app/ui/widgets/utility/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -48,13 +47,6 @@ class NewTravel extends StatelessWidget {
               ),
               SizedBox(
                 height: 50.0,
-              ),
-              RaisedButton(
-                onPressed: () async => Future.delayed(Duration(seconds: 2))
-                    .then((_) => launchAlertDialog(context,
-                        title: "An alert in 2 seconds?",
-                        warning: "I am the Future!")),
-                child: Text('Launch Future (2 seconds delay)'),
               ),
               SizedBox(
                 height: 50.0,
