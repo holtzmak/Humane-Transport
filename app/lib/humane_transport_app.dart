@@ -12,6 +12,10 @@ class HumaneTransportApp extends StatelessWidget {
     return MaterialApp(
       onGenerateRoute: AppRouteGenerator.onGenerateRoute,
       navigatorKey: locator<NavigationService>().navigationKey,
+      /*
+      As per Filled stack suggestion, this must be wrapped with Navigator.
+      https://medium.com/flutter-community/manager-your-flutter-dialogs-with-a-dialog-manager-1e862529523a
+      */
       builder: (context, child) => Navigator(
         key: locator<DialogService>().dialogNavigationKey,
         onGenerateRoute: (settings) => MaterialPageRoute(

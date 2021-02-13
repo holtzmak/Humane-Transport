@@ -1,12 +1,13 @@
 // Followed tutorial: https://www.filledstacks.com/post/manager-your-flutter-dialogs-with-a-dialog-manager/
 import 'dart:async';
 import 'package:app/core/models/dialog.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:flutter/material.dart';
 
 class DialogService {
-  GlobalKey<NavigatorState> _dialogNavigationKey = GlobalKey<NavigatorState>();
+  final _dialogNavigationKey = GlobalKey<NavigatorState>();
   Function(DialogRequest) _showDialogListener;
-  Completer<DialogResponse> _dialogCompleter;
+  Optional<Completer<DialogResponse>> _dialogCompleter;
 
   GlobalKey<NavigatorState> get dialogNavigationKey => _dialogNavigationKey;
 
@@ -19,13 +20,13 @@ class DialogService {
     String description,
     String buttonText = 'Ok',
   }) {
-    _dialogCompleter = Completer<DialogResponse>();
+    _dialogCompleter = Optional(Completer<DialogResponse>());
     _showDialogListener(DialogRequest(
       title: title,
       description: description,
       buttonText: buttonText,
     ));
-    return _dialogCompleter.future;
+    return _dialogCompleter.get().future;
   }
 
   Future<DialogResponse> showConfirmationDialog(
@@ -33,18 +34,20 @@ class DialogService {
       String description,
       String confirmationText = 'Ok',
       String cancelText = 'Cancel'}) {
-    _dialogCompleter = Completer<DialogResponse>();
+    _dialogCompleter = Optional(Completer<DialogResponse>());
+
     _showDialogListener(DialogRequest(
         title: title,
         description: description,
         buttonText: confirmationText,
         cancelText: cancelText));
-    return _dialogCompleter.future;
+    return _dialogCompleter.get().future;
   }
 
   void dialogComplete(DialogResponse response) {
     _dialogNavigationKey.currentState.pop();
-    _dialogCompleter.complete(response);
-    _dialogCompleter = null;
+    _dialogCompleter.get().complete(response);
+    // TODO: If possible, make use of Optional
+    _dialogCompleter = Optional.empty();
   }
 }
