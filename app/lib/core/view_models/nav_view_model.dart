@@ -22,7 +22,7 @@ class NavigationViewModel extends BaseViewModel {
     NavigationItemModel(
       label: 'Active',
       icon: Icons.emoji_transportation_outlined,
-      initialRoute: Active.route,
+      initialRoute: ActiveScreen.route,
       onGenerateRoute: ActiveRouteGenerator.onGenerateRoute,
       navigatorState: GlobalKey<NavigatorState>(),
     ),
