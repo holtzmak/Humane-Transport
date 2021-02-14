@@ -20,6 +20,9 @@ class HistoryScreen extends StatelessWidget {
       ),
       // TODO: Make PDF from selected ATRPreview, need to make cards selectable
       floatingActionButton: FloatingActionButton(
+        /* The navigator for the floating action button is not the same as our app navigator
+           https://stackoverflow.com/questions/60872579/navigating-inside-a-floating-action-button\
+         */
         onPressed: () => Navigator.of(context).pushNamed(PDFScreen.route),
         child: Icon(Icons.save),
       ),

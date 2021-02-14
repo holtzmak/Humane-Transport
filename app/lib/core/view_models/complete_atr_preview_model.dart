@@ -34,8 +34,6 @@ class CompleteATRPreviewModel extends BaseViewModel {
   ATRPreview createPreview(AnimalTransportRecord atr) => ATRPreview(
         atr: atr,
         tapCallback: (BuildContext context, AnimalTransportRecord atr) =>
-            // Need to specify root navigator as we are building outside of a
-            // widget that is known to navigator
             // TODO: Replace with NavigatorService
             Navigator.of(context, rootNavigator: true).push(
                 MaterialPageRoute(builder: (context) => ATRDisplay(atr: atr))),

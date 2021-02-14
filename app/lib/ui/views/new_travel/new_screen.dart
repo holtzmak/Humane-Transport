@@ -1,6 +1,7 @@
 import 'package:app/core/view_models/sign_out_view_model.dart';
 import 'package:app/ui/views/navigation_drawer.dart';
 import 'package:app/ui/views/new_travel/test_screens/test_screen_one.dart';
+import 'package:app/ui/views/new_travel/test_screens/test_screen_three.dart';
 import 'package:app/ui/widgets/utility/image_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
@@ -28,27 +29,22 @@ class NewScreen extends StatelessWidget {
                     Navigator.of(context).pushNamed(ImageScreen.route),
                 child: Text('Upload Image'),
               ),
-              SizedBox(
-                height: 50.0,
-              ),
-              Text('Go to test page'),
+              Padding(padding: EdgeInsets.all(5.0)),
+              Text('Go to test page with bottom nav'),
               RaisedButton(
                 onPressed: () =>
                     Navigator.of(context).pushNamed(TestScreenOne.route),
                 child: Text('Go Next'),
               ),
-              SizedBox(
-                height: 50.0,
+              Padding(padding: EdgeInsets.all(5.0)),
+              Text('Go to test page without bottom nav'),
+              RaisedButton(
+                onPressed: () => Navigator.of(context, rootNavigator: true)
+                    .push(MaterialPageRoute(
+                        builder: (context) => TestScreenThree())),
+                child: Text('Go Next'),
               ),
-              SizedBox(
-                height: 50.0,
-              ),
-              SizedBox(
-                height: 50.0,
-              ),
-              SizedBox(
-                height: 50.0,
-              ),
+              Padding(padding: EdgeInsets.all(10.0)),
               RaisedButton(
                 onPressed: () => model.signOut(),
                 child: Text('Sign Out'),
