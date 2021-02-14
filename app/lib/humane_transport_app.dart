@@ -1,10 +1,11 @@
 import 'package:app/ui/common/style/style.dart';
-import 'package:app/ui/routes/main_navigator/app_route.dart';
+import 'package:app/ui/routes/main_navigator/app_route_generator.dart';
 import 'package:flutter/material.dart';
+
 import 'core/services/dialog/dialog_service.dart';
 import 'core/services/navigation/nav_service.dart';
 import 'core/services/service_locator.dart';
-import 'core/utilities/dialog_manager.dart';
+import 'ui/widgets/utility/dialog_screen.dart';
 
 class HumaneTransportApp extends StatelessWidget {
   @override
@@ -18,8 +19,8 @@ class HumaneTransportApp extends StatelessWidget {
       */
       builder: (context, child) => Navigator(
         key: locator<DialogService>().dialogNavigationKey,
-        onGenerateRoute: (settings) => MaterialPageRoute(
-            builder: (context) => DialogManager(child: child)),
+        onGenerateRoute: (settings) =>
+            MaterialPageRoute(builder: (context) => DialogScreen(child: child)),
       ),
       theme: ThemeData(
         appBarTheme: AppBarTheme(color: MainAppColor),

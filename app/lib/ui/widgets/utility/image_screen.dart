@@ -1,18 +1,20 @@
-import 'dart:io';
 import 'dart:async';
+import 'dart:io';
+
 import 'package:app/ui/common/style/style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UploadImage extends StatefulWidget {
-  const UploadImage({Key key}) : super(key: key);
+class ImageScreen extends StatefulWidget {
+  const ImageScreen({Key key}) : super(key: key);
   static const route = '/image_upload';
+
   @override
-  _UploadImageState createState() => _UploadImageState();
+  _ImageScreenState createState() => _ImageScreenState();
 }
 
-class _UploadImageState extends State<UploadImage> {
+class _ImageScreenState extends State<ImageScreen> {
   PickedFile _imageFile;
   dynamic _pickImageError;
   File _image;

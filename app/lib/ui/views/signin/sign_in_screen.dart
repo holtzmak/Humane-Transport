@@ -1,32 +1,30 @@
-import 'package:app/core/enums/view_state.dart';
-import 'package:app/core/view_models/signin_view_model.dart';
-import 'package:app/ui/views/base_view.dart';
-import 'package:app/ui/widgets/utility/busy_overlay.dart';
-import 'package:app/ui/widgets/utility/sidebar.dart';
+import 'package:app/core/view_models/sign_in_view_model.dart';
+import 'package:app/ui/common/view_state.dart';
+import 'package:app/ui/views/navigation_drawer.dart';
+import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
+import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 
+// TODO: Update as per #152.
 class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   static const route = '/signIn';
+
   @override
   Widget build(BuildContext context) {
-    return BaseView<SignInViewModel>(
-      builder: (context, model, child) => BusyOverlay(
+    return TemplateBaseViewModel<SignInViewModel>(
+      builder: (context, model, child) => BusyOverlayScreen(
         show: model.state == ViewState.Busy,
         child: Scaffold(
           appBar: AppBar(),
-          drawer: SideBar(),
+          drawer: NavigationDrawer(),
           body: Padding(
             padding: const EdgeInsets.all(20),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'TEST',
-                    key: Key('test'),
-                  ),
                   TextFormField(
                     key: Key('emailKey'),
                     decoration: InputDecoration(hintText: "Email"),
@@ -54,7 +52,6 @@ class SignInScreen extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
-                // TODO: Account creation
               ),
             ),
           ),

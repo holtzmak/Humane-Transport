@@ -1,12 +1,14 @@
 import 'package:app/core/models/animal_transport_record.dart';
-import 'package:app/ui/widgets/atr_display.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AnimalTransportRecordPreview extends StatelessWidget {
+class ATRPreview extends StatelessWidget {
   final AnimalTransportRecord atr;
 
-  AnimalTransportRecordPreview({@required this.atr});
+  // TODO: This should be GestureTapCallback, when NavService doesn't need context
+  final Function(BuildContext, AnimalTransportRecord) tapCallback;
+
+  ATRPreview({@required this.atr, @required this.tapCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +20,7 @@ class AnimalTransportRecordPreview extends StatelessWidget {
           Text('Delivery for ${atr.deliveryInfo.recInfo.receiverCompanyName}'),
       subtitle: Text(
           '${DateFormat("yyyy-MM-dd hh:mm").format(atr.vehicleInfo.dateAndTimeLoaded)} ${atr.vehicleInfo.animalSpeciesLoaded().join(',')}'),
-      // TODO: Replace this with correct nav call
-      onTap: () => Navigator.of(context, rootNavigator: true).push(
-          MaterialPageRoute(
-              builder: (context) => AnimalTransportRecordDisplay(atr: atr))),
+      onTap: tapCallback(context, atr),
     )));
   }
 }

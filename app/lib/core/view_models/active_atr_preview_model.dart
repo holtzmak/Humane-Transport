@@ -6,13 +6,14 @@ import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/widgets/atr_preview.dart';
 import 'package:flutter/cupertino.dart';
 
-class AnimalTransportRecordPreViewModel extends BaseViewModel {
+/// This ViewModel will only view active ATR models
+class ActiveATRPreviewModel extends BaseViewModel {
   final DatabaseService _databaseService = locator<DatabaseService>();
-  StreamSubscription<AnimalTransportRecordPreview> previewSubscription;
+  StreamSubscription<ATRPreview> previewSubscription;
 
-  AnimalTransportRecordPreViewModel() {
+  ActiveATRPreviewModel() {
     previewSubscription = _databaseService
-        .getUpdatedPreviews()
+        .getUpdatedActiveATRs()
         .listen((preview) => addAll([preview]));
   }
 
@@ -22,12 +23,12 @@ class AnimalTransportRecordPreViewModel extends BaseViewModel {
     super.dispose();
   }
 
-  final List<AnimalTransportRecordPreview> _animalTransportPreviews = [];
+  final List<ATRPreview> _animalTransportPreviews = [];
 
-  List<AnimalTransportRecordPreview> get animalTransportPreviews =>
+  List<ATRPreview> get animalTransportPreviews =>
       List.unmodifiable(_animalTransportPreviews);
 
-  void addAll(List<AnimalTransportRecordPreview> animalTransportPreviews) {
+  void addAll(List<ATRPreview> animalTransportPreviews) {
     _animalTransportPreviews.addAll(animalTransportPreviews);
     notifyListeners();
   }

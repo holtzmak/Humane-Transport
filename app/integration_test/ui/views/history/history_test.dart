@@ -28,7 +28,7 @@ void main() {
 
       // Wait for cheap stream to load in
       await tester.pump(Duration(seconds: 6));
-      expect(find.byType(AnimalTransportRecordPreview), findsOneWidget);
+      expect(find.byType(ATRPreview), findsOneWidget);
     });
   });
 }

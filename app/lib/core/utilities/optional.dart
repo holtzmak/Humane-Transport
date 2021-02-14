@@ -9,6 +9,10 @@ class Optional<T> {
 
   factory Optional(T it) => Optional._internal(it);
 
+  factory Optional.of(T it) => Optional._internal(it);
+
+  factory Optional.ofNullable(T it) => Optional._internal(it);
+
   factory Optional.empty() => Optional._internal(null);
 
   bool isPresent() => _optional != null;

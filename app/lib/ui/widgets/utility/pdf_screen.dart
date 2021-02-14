@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
@@ -6,15 +7,16 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import 'email_sender.dart';
+import 'email_screen.dart';
 
-class PdfPreview extends StatefulWidget {
+class PDFScreen extends StatefulWidget {
   static const route = '/pdf_preview';
+
   @override
-  _PdfPreviewState createState() => _PdfPreviewState();
+  _PDFScreenState createState() => _PDFScreenState();
 }
 
-class _PdfPreviewState extends State<PdfPreview> {
+class _PDFScreenState extends State<PDFScreen> {
   Future<File> _pdf;
 
   @override
@@ -25,12 +27,12 @@ class _PdfPreviewState extends State<PdfPreview> {
 
   @override
   build(BuildContext context) {
+    // TODO: Use the BusyOverlay here
     return FutureBuilder<File>(
         future: _pdf,
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              // TODO: Replace this with loading screen
               return Text('Loading PDF');
             default:
               if (snapshot.hasError)

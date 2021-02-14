@@ -9,8 +9,7 @@ import '../../test_lib/test_animal_transport_record.dart';
 void main() {
   void expectInformation(WidgetTester tester, AnimalTransportRecord testRecord,
       String headerExpected, String informationExpected) async {
-    await tester.pumpWidget(
-        new MaterialApp(home: AnimalTransportRecordDisplay(atr: testRecord)));
+    await tester.pumpWidget(new MaterialApp(home: ATRDisplay(atr: testRecord)));
 
     /* At the time of writing, we're using ExpansionPanels.
          Despite the expanded information not being visible initially,

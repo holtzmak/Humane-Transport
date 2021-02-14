@@ -2,12 +2,11 @@ import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/ui/widgets/utility/expansion_list_item.dart';
 import 'package:flutter/material.dart';
 
-class AnimalTransportRecordDisplay extends StatefulWidget {
-  final List<ExpansionListItem> _atrForDisplay = [];
+class ATRDisplay extends StatefulWidget {
+  final List<ExpansionListItem> _displayFields = [];
 
-  AnimalTransportRecordDisplay({Key key, AnimalTransportRecord atr})
-      : super(key: key) {
-    _atrForDisplay.addAll([
+  ATRDisplay({Key key, AnimalTransportRecord atr}) : super(key: key) {
+    _displayFields.addAll([
       ExpansionListItem(
           headerValue: 'Shipper\'s Information',
           expandedValue: atr.shipInfo.toString()),
@@ -33,12 +32,10 @@ class AnimalTransportRecordDisplay extends StatefulWidget {
   }
 
   @override
-  _AnimalTransportRecordDisplayState createState() =>
-      _AnimalTransportRecordDisplayState();
+  _ATRDisplayState createState() => _ATRDisplayState();
 }
 
-class _AnimalTransportRecordDisplayState
-    extends State<AnimalTransportRecordDisplay> {
+class _ATRDisplayState extends State<ATRDisplay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +43,7 @@ class _AnimalTransportRecordDisplayState
         automaticallyImplyLeading: false,
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back_ios),
-          // TODO: Replace this with correct nav call
+          // TODO: Replace this with correct nav service
           onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
         ),
       ),
@@ -62,13 +59,14 @@ class _AnimalTransportRecordDisplayState
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
-          widget._atrForDisplay[index].isExpanded = !isExpanded;
+          widget._displayFields[index].isExpanded = !isExpanded;
         });
       },
-      children: widget._atrForDisplay.map<ExpansionPanel>((item) {
+      children: widget._displayFields.map<ExpansionPanel>((item) {
         return ExpansionPanel(
           headerBuilder: (context, isExpanded) =>
               ListTile(title: Text(item.headerValue)),
+          // TODO: Replace body with a custom widget
           body: ListTile(title: Text(item.expandedValue)),
           isExpanded: item.isExpanded,
         );

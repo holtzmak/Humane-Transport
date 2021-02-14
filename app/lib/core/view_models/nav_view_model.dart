@@ -1,11 +1,11 @@
 import 'package:app/core/models/nav_item_model.dart';
 import 'package:app/core/view_models/base_view_model.dart';
-import 'package:app/ui/routes/inner_navigator/history_route.dart';
-import 'package:app/ui/routes/inner_navigator/new_travel_route.dart';
-import 'package:app/ui/routes/inner_navigator/ongoing_route.dart';
-import 'package:app/ui/views/history/history.dart';
-import 'package:app/ui/views/new_travel/new_travel.dart';
-import 'package:app/ui/views/ongoing/ongoing.dart';
+import 'package:app/ui/routes/inner_navigator/active_route_generator.dart';
+import 'package:app/ui/routes/inner_navigator/history_route_generator.dart';
+import 'package:app/ui/routes/inner_navigator/new_route_generator.dart';
+import 'package:app/ui/views/active/active_screen.dart';
+import 'package:app/ui/views/history/history_screen.dart';
+import 'package:app/ui/views/new_travel/new_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavigationViewModel extends BaseViewModel {
@@ -13,23 +13,23 @@ class NavigationViewModel extends BaseViewModel {
 
   List<NavigationItemModel> _navigationItems = [
     NavigationItemModel(
-      label: 'New Travel',
+      label: 'New',
       icon: Icons.add_circle_outline,
-      initialRoute: NewTravel.route,
-      onGenerateRoute: NewTravelRouteGenerator.onGenerateRoute,
+      initialRoute: NewScreen.route,
+      onGenerateRoute: NewRouteGenerator.onGenerateRoute,
       navigatorState: GlobalKey<NavigatorState>(),
     ),
     NavigationItemModel(
-      label: 'Ongoing',
+      label: 'Active',
       icon: Icons.emoji_transportation_outlined,
-      initialRoute: OngoingTravel.route,
-      onGenerateRoute: OngoingRouteGenerator.onGenerateRoute,
+      initialRoute: Active.route,
+      onGenerateRoute: ActiveRouteGenerator.onGenerateRoute,
       navigatorState: GlobalKey<NavigatorState>(),
     ),
     NavigationItemModel(
-      label: 'Travel History',
+      label: 'History',
       icon: Icons.timeline_outlined,
-      initialRoute: TravelHistory.route,
+      initialRoute: HistoryScreen.route,
       onGenerateRoute: HistoryRouteGenerator.onGenerateRoute,
       navigatorState: GlobalKey<NavigatorState>(),
     )

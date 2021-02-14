@@ -2,7 +2,7 @@ import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/view_models/welcome_view_model.dart';
 import 'package:app/humane_transport_app.dart';
-import 'package:app/ui/views/welcome/welcome.dart';
+import 'package:app/ui/views/welcome/welcome_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
@@ -20,7 +20,7 @@ void main() {
       addLazySingletonForTest(testLocator, () => DialogService());
       await tester.pumpWidget(HumaneTransportApp());
 
-      expect(find.widgetWithText(Welcome, 'Welcome!'), findsOneWidget);
+      expect(find.widgetWithText(WelcomeScreen, 'Welcome!'), findsOneWidget);
     });
   });
 }

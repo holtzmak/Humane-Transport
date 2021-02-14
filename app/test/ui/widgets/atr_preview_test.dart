@@ -19,8 +19,8 @@ void main() {
               dateAndTimeLoaded: testDate,
               animalsLoaded: [testAnimalGroup(species: testSpecies)]));
 
-      await tester.pumpWidget(new MaterialApp(
-          home: AnimalTransportRecordPreview(atr: testRecWithInfo)));
+      await tester
+          .pumpWidget(new MaterialApp(home: ATRPreview(atr: testRecWithInfo)));
 
       expect(find.text("Delivery for $testCompany"), findsOneWidget);
       expect(
