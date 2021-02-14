@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
-class EmailScreen {
+class EmailSender {
   String emailResponse;
 
   void send(
@@ -27,15 +27,15 @@ class EmailScreen {
   }
 }
 
-class EmailRoute extends StatelessWidget {
+class EmailScreen extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   static const route = '/email_sender';
   final validate = false;
   final pdf;
 
-  EmailRoute({Key key, @required this.pdf}) : super(key: key);
+  EmailScreen({Key key, @required this.pdf}) : super(key: key);
 
-  final email = EmailScreen();
+  final email = EmailSender();
   final recipientController = TextEditingController();
   final subjectController = TextEditingController();
   final bodyController = TextEditingController();

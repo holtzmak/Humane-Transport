@@ -1,5 +1,6 @@
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
+import 'package:app/core/view_models/active_atr_preview_model.dart';
 import 'package:app/core/view_models/complete_atr_preview_model.dart';
 import 'package:app/core/view_models/nav_view_model.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
@@ -25,4 +26,5 @@ void setUpLocator() {
   locator.registerFactory<NavigationViewModel>(() => NavigationViewModel());
   locator.registerFactory<CompleteATRPreviewModel>(
       () => CompleteATRPreviewModel());
+  locator.registerFactory<ActiveATRPreviewModel>(() => ActiveATRPreviewModel());
 }

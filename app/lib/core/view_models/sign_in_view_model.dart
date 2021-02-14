@@ -19,13 +19,15 @@ class SignInViewModel extends BaseViewModel {
     @required String password,
   }) async {
     setState(ViewState.Busy);
-    _authenticationService
-        .signIn(email: email, password: password)
-        .whenComplete(() => _navigationService.navigateTo(HomeScreen.route))
-        .catchError((error) => _dialogService.showDialog(
-              title: 'Sign in failed',
-              description: error.message,
-            ));
-    setState(ViewState.Idle);
+    _authenticationService.signIn(email: email, password: password).then((_) {
+      _navigationService.navigateTo(HomeScreen.route);
+      setState(ViewState.Idle);
+    }).catchError((error) {
+      setState(ViewState.Idle);
+      _dialogService.showDialog(
+        title: 'Sign in failed',
+        description: error.message,
+      );
+    });
   }
 }

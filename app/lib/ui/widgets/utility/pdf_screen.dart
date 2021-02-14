@@ -48,7 +48,7 @@ class _PDFScreenState extends State<PDFScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => EmailRoute(
+                                    builder: (context) => EmailScreen(
                                           pdf: snapshot.requireData,
                                         )));
                           },
