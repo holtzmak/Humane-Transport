@@ -69,6 +69,7 @@ class _ATRDisplayState extends State<ATRDisplay> {
           // TODO: Replace body with a custom widget
           body: ListTile(title: Text(item.expandedValue)),
           isExpanded: item.isExpanded,
+          canTapOnHeader: true,
         );
       }).toList(),
     );
