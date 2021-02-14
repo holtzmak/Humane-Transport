@@ -12,7 +12,7 @@ void main() {
   Future<void> navigateToHistoryScreen(WidgetTester tester) async {
     await tester.tap(find.widgetWithText(RaisedButton, "Skip sign in"));
     await tester.pumpAndSettle();
-    await tester.tap(find.text("Travel History"));
+    await tester.tap(find.text("History"));
     await tester.pumpAndSettle();
   }
 
