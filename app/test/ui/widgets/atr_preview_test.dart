@@ -19,8 +19,13 @@ void main() {
               dateAndTimeLoaded: testDate,
               animalsLoaded: [testAnimalGroup(species: testSpecies)]));
 
-      await tester
-          .pumpWidget(new MaterialApp(home: ATRPreview(atr: testRecWithInfo)));
+      await tester.pumpWidget(new MaterialApp(
+          home: ATRPreview(
+        atr: testRecWithInfo,
+        tapCallback: (context, atr) {
+          // Do nothing for test
+        },
+      )));
 
       expect(find.text("Delivery for $testCompany"), findsOneWidget);
       expect(
