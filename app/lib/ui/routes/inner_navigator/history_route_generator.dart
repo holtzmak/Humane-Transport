@@ -1,5 +1,5 @@
-import 'package:app/core/utilities/pdf_preview.dart';
-import 'package:app/ui/views/history/history.dart';
+import 'package:app/ui/views/history/history_screen.dart';
+import 'package:app/ui/widgets/utility/pdf_screen.dart';
 import 'package:flutter/material.dart';
 
 /// The inner [Navigator] for History
@@ -9,10 +9,11 @@ class HistoryRouteGenerator {
       settings: settings,
       builder: (BuildContext context) {
         switch (settings.name) {
-          case PdfPreview.route:
-            return PdfPreview();
+          case PDFScreen.route:
+            return PDFScreen();
+
           default:
-            return TravelHistory();
+            return HistoryScreen();
         }
       },
     );

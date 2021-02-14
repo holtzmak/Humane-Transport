@@ -1,27 +1,17 @@
 import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future signIn({
+  Future<UserCredential> signIn({
     @required String email,
     @required String password,
-  }) async {
-    try {
-      var user = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return user != null;
-    } catch (e) {
-      return e.message;
-    }
-  }
+  }) async =>
+      _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
 
-  Future signOut() async {
-    // TODO: Should handle exception error
-    await _firebaseAuth.signOut();
-  }
+  Future<void> signOut() async => _firebaseAuth.signOut();
 }

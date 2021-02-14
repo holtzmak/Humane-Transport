@@ -1,43 +1,38 @@
 import 'package:app/ui/common/style/style.dart';
 import 'package:flutter/material.dart';
 
-import 'list_tile.dart';
+import '../widgets/utility/drawer_list_tile.dart';
 
-class SideBar extends StatelessWidget {
+class NavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        // TODOS: Add more rows(e.g. user img) and styling
         children: [
           DrawerHeader(
-            child: Text('Hello'),
+            child: Text('Menu'),
             decoration: BoxDecoration(
               gradient: GradientColors,
             ),
           ),
-          TemplateListTile(
+          DrawerListTile(
             icon: Icons.home_outlined,
-            text: 'New Travel',
+            text: 'New',
             textStyle: Theme.of(context).textTheme.bodyText1,
             selectedIndex: 0,
           ),
-          SizedBox(
-            height: 5.0,
-          ),
-          TemplateListTile(
+          Padding(padding: EdgeInsets.all(5.0)),
+          DrawerListTile(
             icon: Icons.add_circle_outline,
-            text: 'Ongoing travel',
+            text: 'Active',
             textStyle: Theme.of(context).textTheme.bodyText1,
             selectedIndex: 1,
           ),
-          SizedBox(
-            height: 5.0,
-          ),
-          TemplateListTile(
+          Padding(padding: EdgeInsets.all(5.0)),
+          DrawerListTile(
             icon: Icons.history,
-            text: 'Travel History',
+            text: 'History',
             textStyle: Theme.of(context).textTheme.bodyText1,
             selectedIndex: 2,
           ),

@@ -3,13 +3,13 @@ import 'package:app/ui/common/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TemplateListTile extends StatelessWidget {
+class DrawerListTile extends StatelessWidget {
   final IconData icon;
   final String text;
   final TextStyle textStyle;
   final int selectedIndex;
 
-  TemplateListTile(
+  DrawerListTile(
       {@required this.icon,
       @required this.text,
       @required this.textStyle,

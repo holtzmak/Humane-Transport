@@ -1,12 +1,12 @@
 import 'package:app/ui/common/style/style.dart';
 import 'package:flutter/material.dart';
 
-class BusyOverlay extends StatelessWidget {
+class BusyOverlayScreen extends StatelessWidget {
   final Widget child;
   final String title;
   final bool show;
 
-  const BusyOverlay({
+  const BusyOverlayScreen({
     this.child,
     this.title = 'Loading...',
     this.show = false,

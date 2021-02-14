@@ -3,17 +3,21 @@ import 'package:app/core/view_models/base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BaseView<T extends BaseViewModel> extends StatefulWidget {
+class TemplateBaseViewModel<T extends BaseViewModel> extends StatefulWidget {
   final Widget Function(BuildContext context, T model, Widget child) builder;
   final Function(T) onModelReady;
-  BaseView({this.builder, this.onModelReady});
+
+  TemplateBaseViewModel({this.builder, this.onModelReady});
 
   @override
-  _BaseViewState<T> createState() => _BaseViewState<T>();
+  _TemplateBaseViewModelState<T> createState() =>
+      _TemplateBaseViewModelState<T>();
 }
 
-class _BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> {
+class _TemplateBaseViewModelState<T extends BaseViewModel>
+    extends State<TemplateBaseViewModel<T>> {
   T model = locator<T>();
+
   @override
   void initState() {
     if (widget.onModelReady != null) {

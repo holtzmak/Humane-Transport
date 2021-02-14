@@ -1,10 +1,11 @@
-import 'package:app/ui/views/new_travel/new_travel_journey.dart/test_screen_two.dart';
+import 'package:app/ui/views/new_travel/test_screens/test_screen_two.dart';
 import 'package:flutter/material.dart';
-import '../new_travel.dart';
+
+import '../new_screen.dart';
 
 class TestScreenOne extends StatefulWidget {
   const TestScreenOne({Key key}) : super(key: key);
-  static const route = '${NewTravel.route}/test_screen_one';
+  static const route = '${NewScreen.route}/test_screen_one';
 
   @override
   _TestScreenOneState createState() => _TestScreenOneState();
@@ -12,6 +13,7 @@ class TestScreenOne extends StatefulWidget {
 
 class _TestScreenOneState extends State<TestScreenOne> {
   int _counter = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,8 +30,6 @@ class _TestScreenOneState extends State<TestScreenOne> {
                   Navigator.of(context).pushNamed(TestScreenTwo.route),
               child: Text('Go Next'),
             ),
-
-            // TODO: Warn user data will be lost if not save
             RaisedButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text('Go Back'),

@@ -1,10 +1,11 @@
-import 'package:app/core/utilities/pdf_preview.dart';
-import 'package:app/core/view_models/atr_pre_view_model.dart';
-import 'package:app/ui/views/base_view.dart';
+import 'package:app/core/view_models/complete_atr_preview_model.dart';
+import 'package:app/ui/widgets/utility/pdf_screen.dart';
 import 'package:flutter/material.dart';
 
-class TravelHistory extends StatelessWidget {
-  static const route = '/history';
+import '../../widgets/utility/template_base_view_model.dart';
+
+class Active extends StatelessWidget {
+  static const route = '/active';
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class TravelHistory extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
       ),
-      body: BaseView<AnimalTransportRecordPreViewModel>(
+      body: TemplateBaseViewModel<CompleteATRPreviewModel>(
         builder: (context, model, _) => ListView.builder(
           itemCount: model.animalTransportPreviews.length,
           itemBuilder: (context, index) => model.animalTransportPreviews[index],
@@ -20,7 +21,7 @@ class TravelHistory extends StatelessWidget {
       ),
       // TODO: Make PDF from selected ATRPreview, need to make cards selectable
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).pushNamed(PdfPreview.route),
+        onPressed: () => Navigator.of(context).pushNamed(PDFScreen.route),
         child: Icon(Icons.save),
       ),
     );

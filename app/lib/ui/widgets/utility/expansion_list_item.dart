@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ExpansionListItem {
+  // TODO: Replace this with a Widget
   final String expandedValue;
   final String headerValue;
   bool isExpanded;

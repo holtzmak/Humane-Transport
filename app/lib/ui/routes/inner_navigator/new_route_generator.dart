@@ -1,11 +1,11 @@
-import 'package:app/core/utilities/image_upload.dart';
-import 'package:app/ui/views/new_travel/new_travel.dart';
-import 'package:app/ui/views/new_travel/new_travel_journey.dart/test_screen_one.dart';
-import 'package:app/ui/views/new_travel/new_travel_journey.dart/test_screen_two.dart';
+import 'package:app/ui/views/new_travel/new_screen.dart';
+import 'package:app/ui/views/new_travel/test_screens/test_screen_one.dart';
+import 'package:app/ui/views/new_travel/test_screens/test_screen_two.dart';
+import 'package:app/ui/widgets/utility/image_screen.dart';
 import 'package:flutter/material.dart';
 
 /// The inner [Navigator] for NewTravel
-class NewTravelRouteGenerator {
+class NewRouteGenerator {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     return MaterialPageRoute(
       settings: settings,
@@ -15,11 +15,11 @@ class NewTravelRouteGenerator {
             return TestScreenOne();
           case TestScreenTwo.route:
             return TestScreenTwo();
-          case UploadImage.route:
-            return UploadImage();
+          case ImageScreen.route:
+            return ImageScreen();
 
           default:
-            return NewTravel();
+            return NewScreen();
         }
       },
     );

@@ -1,17 +1,18 @@
-import 'package:app/core/models/dialog.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/widgets/utility/dialog.dart';
 import 'package:flutter/material.dart';
 
-class DialogManager extends StatefulWidget {
+class DialogScreen extends StatefulWidget {
   final Widget child;
-  DialogManager({Key key, this.child}) : super(key: key);
 
-  _DialogManagerState createState() => _DialogManagerState();
+  DialogScreen({Key key, this.child}) : super(key: key);
+
+  _DialogScreenState createState() => _DialogScreenState();
 }
 
-class _DialogManagerState extends State<DialogManager> {
+class _DialogScreenState extends State<DialogScreen> {
   DialogService _dialogService = locator<DialogService>();
 
   @override

@@ -1,7 +1,8 @@
 // Followed tutorial: https://www.filledstacks.com/post/manager-your-flutter-dialogs-with-a-dialog-manager/
 import 'dart:async';
-import 'package:app/core/models/dialog.dart';
+
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/widgets/utility/dialog.dart';
 import 'package:flutter/material.dart';
 
 class DialogService {
@@ -47,7 +48,6 @@ class DialogService {
   void dialogComplete(DialogResponse response) {
     _dialogNavigationKey.currentState.pop();
     _dialogCompleter.get().complete(response);
-    // TODO: If possible, make use of Optional
     _dialogCompleter = Optional.empty();
   }
 }
