@@ -54,4 +54,4 @@ jobs:
       - run: flutter build apk
       - run: flutter build ios --release --no-codesign
       # List integration tests here (until a command that runs them all is discovered)
-      - run: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/ui/views/history/history_test.dart
+      - run: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/ui/views/history/history_screen_test.dart
