@@ -20,7 +20,7 @@ class ATRPreview extends StatelessWidget {
           Text('Delivery for ${atr.deliveryInfo.recInfo.receiverCompanyName}'),
       subtitle: Text(
           '${DateFormat("yyyy-MM-dd hh:mm").format(atr.vehicleInfo.dateAndTimeLoaded)} ${atr.vehicleInfo.animalSpeciesLoaded().join(',')}'),
-      onTap: tapCallback(context, atr),
+      onTap: () => tapCallback(context, atr),
     )));
   }
 }

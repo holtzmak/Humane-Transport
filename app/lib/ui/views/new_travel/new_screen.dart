@@ -31,20 +31,14 @@ class NewScreen extends StatelessWidget {
               SizedBox(
                 height: 50.0,
               ),
-              Text('Go to page with bottom nav'),
+              Text('Go to test page'),
               RaisedButton(
-                onPressed: () => Navigator.of(context, rootNavigator: false)
-                    .pushNamed(TestScreenOne.route),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(TestScreenOne.route),
                 child: Text('Go Next'),
               ),
               SizedBox(
                 height: 50.0,
-              ),
-              Text('Go to page without bottom nav'),
-              RaisedButton(
-                onPressed: () => Navigator.of(context, rootNavigator: true)
-                    .pushNamed(TestScreenOne.route),
-                child: Text('Go Next'),
               ),
               SizedBox(
                 height: 50.0,

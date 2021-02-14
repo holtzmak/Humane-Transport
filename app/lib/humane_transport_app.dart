@@ -16,6 +16,10 @@ class HumaneTransportApp extends StatelessWidget {
       /*
       As per Filled stack suggestion, this must be wrapped with Navigator.
       https://medium.com/flutter-community/manager-your-flutter-dialogs-with-a-dialog-manager-1e862529523a
+
+      With the use of DialogService, we must use one navigator. Generating
+      another navigator will not work as we only have the one service, and so
+      the one GlobalKey.
       */
       builder: (context, child) => Navigator(
         key: locator<DialogService>().dialogNavigationKey,
