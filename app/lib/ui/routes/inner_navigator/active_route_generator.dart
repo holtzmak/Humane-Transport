@@ -9,7 +9,7 @@ class ActiveRouteGenerator {
       builder: (BuildContext context) {
         switch (settings.name) {
           default:
-            return Active();
+            return ActiveScreen();
         }
       },
     );

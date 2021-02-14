@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/utility/template_base_view_model.dart';
 
-class Active extends StatelessWidget {
+class ActiveScreen extends StatelessWidget {
   static const route = '/active';
 
   @override
