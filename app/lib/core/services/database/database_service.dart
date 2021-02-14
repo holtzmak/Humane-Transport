@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/test_animal_transport_record.dart';
