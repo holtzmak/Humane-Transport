@@ -80,16 +80,16 @@ void main() {
     await tester.tap(find.text('/'));
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
-    expect(find.text('/'), findsNothing);
+    expect(find.text('/', skipOffstage: false), findsOneWidget);
     expect(find.text('A'), findsOneWidget);
-    expect(find.text('B'), findsNothing);
+    expect(find.text('B', skipOffstage: false), findsNothing);
 
     // Navigate to page B, replacing A
     await tester.tap(find.text('A'));
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
-    expect(find.text('/'), findsNothing);
-    expect(find.text('A'), findsNothing);
+    expect(find.text('/', skipOffstage: false), findsOneWidget);
+    expect(find.text('A', skipOffstage: false), findsNothing);
     expect(find.text('B'), findsOneWidget);
 
     // Pop B
@@ -97,7 +97,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('/'), findsOneWidget);
-    expect(find.text('A'), findsNothing);
-    expect(find.text('B'), findsNothing);
+    expect(find.text('A', skipOffstage: false), findsNothing);
+    expect(find.text('B', skipOffstage: false), findsNothing);
   });
 }
