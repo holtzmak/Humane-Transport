@@ -1,8 +1,12 @@
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/services/service_locator.dart';
 import 'package:app/ui/widgets/utility/expansion_list_item.dart';
 import 'package:flutter/material.dart';
 
 class ATRDisplay extends StatefulWidget {
+  static const route = "/atrDisplay";
+  final NavigationService _navigationService = locator<NavigationService>();
   final List<ExpansionListItem> _displayFields = [];
 
   ATRDisplay({Key key, AnimalTransportRecord atr}) : super(key: key) {
@@ -43,8 +47,7 @@ class _ATRDisplayState extends State<ATRDisplay> {
         automaticallyImplyLeading: false,
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back_ios),
-          // TODO: Replace this with correct nav service
-          onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+          onPressed: () => widget._navigationService.pop(),
         ),
       ),
       body: SingleChildScrollView(
@@ -66,7 +69,6 @@ class _ATRDisplayState extends State<ATRDisplay> {
         return ExpansionPanel(
           headerBuilder: (context, isExpanded) =>
               ListTile(title: Text(item.headerValue)),
-          // TODO: Replace body with a custom widget
           body: ListTile(title: Text(item.expandedValue)),
           isExpanded: item.isExpanded,
           canTapOnHeader: true,

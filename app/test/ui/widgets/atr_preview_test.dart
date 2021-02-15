@@ -11,10 +11,10 @@ void main() {
       final testDate = DateTime.parse("2021-01-01 01:01");
       final testCompany = "Test Company";
       final testSpecies = "Cows";
-      final testRecWithDelvInfo = testAnimalTransportRecord().withDeliveryInfo(
+      final testRecWithDelInfo = testAnimalTransportRecord().withDeliveryInfo(
           testDeliveryInfo(
               recInfo: testReceiverInfo(receiverCompanyName: testCompany)));
-      final testRecWithInfo = testRecWithDelvInfo.withVehicleInfo(
+      final testRecWithInfo = testRecWithDelInfo.withVehicleInfo(
           testVehicleInfo(
               dateAndTimeLoaded: testDate,
               animalsLoaded: [testAnimalGroup(species: testSpecies)]));
@@ -22,7 +22,7 @@ void main() {
       await tester.pumpWidget(new MaterialApp(
           home: ATRPreview(
         atr: testRecWithInfo,
-        tapCallback: (context, atr) {
+        onTap: () {
           // Do nothing for test
         },
       )));
