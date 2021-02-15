@@ -31,7 +31,7 @@ class ActiveATRPreviewModel extends BaseViewModel {
 
   ATRPreview createPreview(AnimalTransportRecord atr) => ATRPreview(
       atr: atr,
-      tapCallback: (BuildContext context, AnimalTransportRecord atr) {
+      onTap: () {
         // TODO: #134. Link the editing screen
       });
 

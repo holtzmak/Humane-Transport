@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/services/database/database_service.dart';
+import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/widgets/atr_display.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 
 /// This ViewModel will only view complete ATR models
 class CompleteATRPreviewModel extends BaseViewModel {
+  final NavigationService _navigationService = locator<NavigationService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
   StreamSubscription<AnimalTransportRecord> previewSubscription;
 
@@ -32,12 +34,9 @@ class CompleteATRPreviewModel extends BaseViewModel {
       List.unmodifiable(_animalTransportPreviews);
 
   ATRPreview createPreview(AnimalTransportRecord atr) => ATRPreview(
-        atr: atr,
-        tapCallback: (BuildContext context, AnimalTransportRecord atr) =>
-            // TODO: Replace with NavigatorService
-            Navigator.of(context, rootNavigator: true).push(
-                MaterialPageRoute(builder: (context) => ATRDisplay(atr: atr))),
-      );
+      atr: atr,
+      onTap: () =>
+          _navigationService.navigateTo(ATRDisplay.route, arguments: atr));
 
   void addAll(List<ATRPreview> animalTransportPreviews) {
     _animalTransportPreviews.addAll(animalTransportPreviews);
