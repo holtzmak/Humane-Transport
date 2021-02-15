@@ -1,7 +1,13 @@
+import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/ui/views/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class TestScreenThree extends StatefulWidget {
-  const TestScreenThree({Key key}) : super(key: key);
+  final NavigationService _navigationService = locator<NavigationService>();
+  static const route = "${HomeScreen.route}/test_screen_three";
+
+  TestScreenThree({Key key}) : super(key: key);
 
   @override
   _TestScreenThreeState createState() => _TestScreenThreeState();
@@ -17,7 +23,7 @@ class _TestScreenThreeState extends State<TestScreenThree> {
         automaticallyImplyLeading: false,
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+          onPressed: () => widget._navigationService.pop(),
         ),
       ),
       body: Center(

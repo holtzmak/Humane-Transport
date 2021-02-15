@@ -1,12 +1,14 @@
+import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
-import 'package:app/ui/views/navigation_drawer.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 
 // TODO: Update as per #152.
 class SignInScreen extends StatelessWidget {
+  final NavigationService _navigationService = locator<NavigationService>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   static const route = '/signIn';
@@ -18,7 +20,6 @@ class SignInScreen extends StatelessWidget {
         show: model.state == ViewState.Busy,
         child: Scaffold(
           appBar: AppBar(),
-          drawer: NavigationDrawer(),
           body: Padding(
             padding: const EdgeInsets.all(20),
             child: Center(
@@ -49,7 +50,7 @@ class SignInScreen extends StatelessWidget {
                   RaisedButton(
                     child: Text('Go back to welcome screen'),
                     color: Colors.red,
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => _navigationService.pop(),
                   ),
                 ],
               ),
