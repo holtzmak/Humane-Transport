@@ -1,3 +1,4 @@
+import 'package:app/core/utilities/optional.dart';
 import 'package:flutter/material.dart';
 
 /// The Navigation Service which simplifies using main and inner navigators
@@ -11,15 +12,19 @@ class NavigationService {
   }
 
   Future<dynamic> navigateTo(String routeName, {dynamic arguments}) {
-    return _navigationKey.currentState
-        .pushNamed(routeName, arguments: arguments);
+    return Optional(arguments).isPresent()
+        ? _navigationKey.currentState.pushNamed(routeName, arguments: arguments)
+        : _navigationKey.currentState.pushNamed(routeName);
   }
 
   /// Replace the current route of the navigator by pushing the route named
   /// [routeName] and then disposing the previous route once the new route has
   /// finished animating in.
-  Future<dynamic> navigateAndReplace(String routeName) {
-    return _navigationKey.currentState.pushReplacementNamed(routeName);
+  Future<dynamic> navigateAndReplace(String routeName, {dynamic arguments}) {
+    return Optional(arguments).isPresent()
+        ? _navigationKey.currentState
+            .pushReplacementNamed(routeName, arguments: arguments)
+        : _navigationKey.currentState.pushReplacementNamed(routeName);
   }
 
   /// Calls [pop] repeatedly until the predicate returns true.
