@@ -10,6 +10,7 @@ class NewRouteGenerator {
     return MaterialPageRoute(
       settings: settings,
       builder: (BuildContext context) {
+        // These routes contain a bottom nav
         switch (settings.name) {
           case TestScreenOne.route:
             return TestScreenOne();

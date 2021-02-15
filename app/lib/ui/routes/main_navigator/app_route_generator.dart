@@ -5,11 +5,16 @@ import 'package:app/ui/views/signin/sign_in_screen.dart';
 import 'package:app/ui/views/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
+/// The main route generator for routes since app main
 class AppRouteGenerator {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     return MaterialPageRoute(
       settings: settings,
       builder: (BuildContext context) {
+        /* These routes do not contain a bottom nav.
+           These routes will be pushed on top of inner navigator routes,
+           blocking them.
+         */
         switch (settings.name) {
           case WelcomeScreen.route:
             return WelcomeScreen();

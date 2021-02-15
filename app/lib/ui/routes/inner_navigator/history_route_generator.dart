@@ -8,6 +8,7 @@ class HistoryRouteGenerator {
     return MaterialPageRoute(
       settings: settings,
       builder: (BuildContext context) {
+        // These routes contain a bottom nav
         switch (settings.name) {
           case PDFScreen.route:
             return PDFScreen();
