@@ -1,4 +1,4 @@
-import 'package:app/ui/views/new_travel/test_screens/test_screen_two.dart';
+import 'package:app/ui/views/new/test_screens/test_screen_two.dart';
 import 'package:flutter/material.dart';
 
 import '../new_screen.dart';

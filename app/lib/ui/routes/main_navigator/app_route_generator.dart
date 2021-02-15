@@ -1,6 +1,6 @@
 import 'package:app/ui/views/home/home_screen.dart';
-import 'package:app/ui/views/new_travel/test_screens/test_screen_one.dart';
-import 'package:app/ui/views/new_travel/test_screens/test_screen_two.dart';
+import 'package:app/ui/views/new/test_screens/test_screen_one.dart';
+import 'package:app/ui/views/new/test_screens/test_screen_two.dart';
 import 'package:app/ui/views/signin/sign_in_screen.dart';
 import 'package:app/ui/views/welcome/welcome_screen.dart';
 import 'package:app/ui/widgets/atr_display.dart';
@@ -13,8 +13,7 @@ class AppRouteGenerator {
       settings: settings,
       builder: (BuildContext context) {
         /* These routes do not contain a bottom nav.
-           These routes will be pushed on top of inner navigator routes,
-           blocking them.
+           These routes will be pushed on top of the root route.
          */
         switch (settings.name) {
           case WelcomeScreen.route:

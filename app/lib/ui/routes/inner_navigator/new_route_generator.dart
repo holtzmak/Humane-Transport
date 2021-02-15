@@ -1,6 +1,6 @@
-import 'package:app/ui/views/new_travel/new_screen.dart';
-import 'package:app/ui/views/new_travel/test_screens/test_screen_one.dart';
-import 'package:app/ui/views/new_travel/test_screens/test_screen_two.dart';
+import 'package:app/ui/views/new/new_screen.dart';
+import 'package:app/ui/views/new/test_screens/test_screen_one.dart';
+import 'package:app/ui/views/new/test_screens/test_screen_two.dart';
 import 'package:app/ui/widgets/utility/image_screen.dart';
 import 'package:flutter/material.dart';
 
