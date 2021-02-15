@@ -5,7 +5,7 @@ import 'package:app/ui/routes/inner_navigator/history_route_generator.dart';
 import 'package:app/ui/routes/inner_navigator/new_route_generator.dart';
 import 'package:app/ui/views/active/active_screen.dart';
 import 'package:app/ui/views/history/history_screen.dart';
-import 'package:app/ui/views/new_travel/new_screen.dart';
+import 'package:app/ui/views/new/new_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavigationViewModel extends BaseViewModel {
