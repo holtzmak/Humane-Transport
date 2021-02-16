@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import '../../test_lib/test_animal_transport_record.dart';
 
 void main() {
-  group('Animal Transport Record Preview', () {
+  group('ATR Preview Card', () {
     testWidgets('shows right information', (WidgetTester tester) async {
       final testDate = DateTime.parse("2021-01-01 01:01");
       final testCompany = "Test Company";

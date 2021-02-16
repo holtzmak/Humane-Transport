@@ -30,9 +30,16 @@ class FeedWaterRestInfo {
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text(
-              "Last access to feed, water and rest (FWR) prior to loading"),
-          subtitle: Text(
-              '${DateFormat("yyyy-MM-dd hh:mm").format(lastFwrDate)}, $lastFwrLocation')),
+              "Last access to feed, water and rest (FWR) prior to loading")),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Date and time"),
+          subtitle:
+              Text('${DateFormat("yyyy-MM-dd hh:mm").format(lastFwrDate)}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Place"),
+          subtitle: Text('$lastFwrLocation')),
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("If FWR was provided during transport")),
