@@ -13,6 +13,24 @@ class ATRDisplayScreen extends StatefulWidget {
       ExpansionListItem(
           headerValue: 'Shipper\'s Information',
           expandedValue: atr.shipInfo.toWidget()),
+      ExpansionListItem(
+          headerValue: 'Transporter\'s Information',
+          expandedValue: atr.tranInfo.toWidget()),
+      ExpansionListItem(
+          headerValue: 'Feed, Water, and Rest Information',
+          expandedValue: atr.fwrInfo.toWidget()),
+      ExpansionListItem(
+          headerValue: 'Loading Vehicle Information',
+          expandedValue: atr.vehicleInfo.toWidget()),
+      ExpansionListItem(
+          headerValue: 'Delivery Information',
+          expandedValue: atr.deliveryInfo.toWidget()),
+      ExpansionListItem(
+          headerValue: 'Acknowledgements',
+          expandedValue: atr.ackInfo.toWidget()),
+      ExpansionListItem(
+          headerValue: 'Contingency Plan',
+          expandedValue: atr.contingencyInfo.toWidget()),
     ]);
   }
 
