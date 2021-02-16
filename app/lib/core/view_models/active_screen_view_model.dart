@@ -8,11 +8,11 @@ import 'package:app/ui/widgets/atr_preview.dart';
 import 'package:flutter/cupertino.dart';
 
 /// This ViewModel will only view active ATR models
-class ActiveATRPreviewModel extends BaseViewModel {
+class ActiveScreenViewModel extends BaseViewModel {
   final DatabaseService _databaseService = locator<DatabaseService>();
   StreamSubscription<AnimalTransportRecord> previewSubscription;
 
-  ActiveATRPreviewModel() {
+  ActiveScreenViewModel() {
     previewSubscription = _databaseService
         .getUpdatedActiveATRs()
         .listen((atr) => addAll([createPreview(atr)]));
