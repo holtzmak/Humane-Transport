@@ -12,7 +12,7 @@ final testLocator = GetIt.instance;
 
 void main() {
   group('Application main', () {
-    tearDown(() => resetForTest(testLocator));
+    tearDown(() async => resetForTest(testLocator));
 
     testWidgets('first route is welcome screen', (WidgetTester tester) async {
       addLazySingletonForTest(testLocator, () => WelcomeViewModel());
