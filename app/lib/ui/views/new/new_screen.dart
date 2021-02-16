@@ -14,7 +14,7 @@ class NewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: TemplateBaseViewModel<NewScreenViewModel>(

@@ -2,12 +2,12 @@ import 'package:app/core/models/animal_transport_record.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ATRPreview extends StatelessWidget {
+class ATRPreviewCard extends StatelessWidget {
   final AnimalTransportRecord atr;
 
   final GestureTapCallback onTap;
 
-  ATRPreview({@required this.atr, @required this.onTap});
+  ATRPreviewCard({@required this.atr, @required this.onTap});
 
   @override
   Widget build(BuildContext context) {
