@@ -1,15 +1,18 @@
 import 'package:app/core/models/animal_transport_record.dart';
-import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/view_models/history_screen_view_model.dart';
 import 'package:app/ui/views/history/atr_display_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../test_lib/test_animal_transport_record.dart';
+import '../../../test_lib/test_animal_transport_record.dart';
 
 class MockNavigationService extends Mock implements NavigationService {}
+
+class MockHistoryScreenViewModel extends Mock
+    implements HistoryScreenViewModel {}
 
 final testLocator = GetIt.instance;
 
@@ -28,63 +31,67 @@ void main() {
     expect(find.widgetWithText(ListTile, informationExpected), findsOneWidget);
   }
 
-  group('Animal Transport Record Display', () {
+  group('ATR Display Screen', () {
     setUpAll(() async {
       testLocator.registerLazySingleton<NavigationService>(
           () => MockNavigationService());
+      testLocator.registerLazySingleton<HistoryScreenViewModel>(
+          () => MockHistoryScreenViewModel());
     });
 
     testWidgets('shows right shipping info', (WidgetTester tester) async {
-      final testRecord = testAnimalTransportRecord().withShipInfo(ShipperInfo(
-          shipperName: "Dave Goodman",
-          shipperIsAnimalOwner: true,
-          departureLocationId: "ABCDEFG",
-          departureLocationName: "Goodman Goods",
-          departureAddress: testAddress(),
-          shipperContactInfo: "1306111111"));
-      expectInformation(tester, testRecord, "Shipper\'s Information",
-          testRecord.shipInfo.toString());
+      final testShipperName = "Dave Goodman";
+      final testRecord = testAnimalTransportRecord()
+          .withShipInfo(testShipperInfo(shipperName: testShipperName));
+      expectInformation(
+          tester, testRecord, "Shipper\'s Information", testShipperName);
     });
+
     testWidgets('shows right transporter info', (WidgetTester tester) async {
+      final testDriverName = "Jackson Been";
       final testRecord = testAnimalTransportRecord().withTransporterInfo(
-          testTransporterInfo(
-              companyName: "John Company",
-              driverNames: ["Jane Doe", "Jack Son"],
-              trainingType: "Standard training"));
-      expectInformation(tester, testRecord, "Transporter\'s Information",
-          testRecord.tranInfo.toString());
+          testTransporterInfo(driverNames: [testDriverName]));
+      expectInformation(
+          tester, testRecord, "Transporter\'s Information", testDriverName);
     });
+
     testWidgets('shows right FWR info', (WidgetTester tester) async {
-      final testRecord = testAnimalTransportRecord().withFwrInfo(
-          testFwrInfo(lastFwrDate: DateTime.parse("2021-01-01 01:01")));
-      expectInformation(tester, testRecord, "Feed, Water, and Rest Information",
-          testRecord.fwrInfo.toString());
+      final testDate = "2021-01-01 01:01";
+      final testRecord = testAnimalTransportRecord()
+          .withFwrInfo(testFwrInfo(lastFwrDate: DateTime.parse(testDate)));
+      expectInformation(
+          tester, testRecord, "Feed, Water, and Rest Information", testDate);
     });
+
     testWidgets('shows right loading info', (WidgetTester tester) async {
+      final testDate = "2021-02-02 02:02";
       final testRecord = testAnimalTransportRecord().withVehicleInfo(
-          testVehicleInfo(
-              dateAndTimeLoaded: DateTime.parse("2021-02-02 02:02")));
-      expectInformation(tester, testRecord, "Loading Vehicle Information",
-          testRecord.vehicleInfo.toString());
+          testVehicleInfo(dateAndTimeLoaded: DateTime.parse(testDate)));
+      expectInformation(
+          tester, testRecord, "Loading Vehicle Information", testDate);
     });
+
     testWidgets('shows right delivery info', (WidgetTester tester) async {
+      final testDate = "2021-03-03 03:03";
       final testRecord = testAnimalTransportRecord().withDeliveryInfo(
-          testDeliveryInfo(arrivalDate: DateTime.parse("2021-03-03 03:03")));
-      expectInformation(tester, testRecord, "Delivery Information",
-          testRecord.deliveryInfo.toString());
+          testDeliveryInfo(arrivalDate: DateTime.parse(testDate)));
+      expectInformation(tester, testRecord, "Delivery Information", testDate);
     });
+
     testWidgets('shows right acknowledgement info',
         (WidgetTester tester) async {
       // TODO: Use test/mock files here once we have a way to show acks
+      final testAck = "Consignee acknowledgement";
       final testRecord = testAnimalTransportRecord();
-      expectInformation(tester, testRecord, "Acknowledgements",
-          testRecord.ackInfo.toString());
+      expectInformation(tester, testRecord, "Acknowledgements", testAck);
     });
+
     testWidgets('shows right contingency info', (WidgetTester tester) async {
+      final testGoalStatement = "To move animals safely";
       final testRecord = testAnimalTransportRecord().withContingencyInfo(
-          testContingencyInfo(goalStatement: "To move animals safely"));
-      expectInformation(tester, testRecord, "Contingency Plan",
-          testRecord.contingencyInfo.toString());
+          testContingencyInfo(goalStatement: testGoalStatement));
+      expectInformation(
+          tester, testRecord, "Contingency Plan", testGoalStatement);
     });
   });
 }

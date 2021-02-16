@@ -59,7 +59,7 @@ class TransporterInfo {
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("(including trailer)"),
-          subtitle: Text('$trailerProvince, $trailerProvince')),
+          subtitle: Text('$trailerProvince, $trailerLicensePlate')),
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("Conveyance or container last cleaned and disinfected")),
