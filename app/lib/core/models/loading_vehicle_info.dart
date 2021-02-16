@@ -24,14 +24,33 @@ class LoadingVehicleInfo {
         _animalsLoaded.map((animalGroup) => animalGroup.species).toList());
   }
 
-  String toString() =>
-      '''Date and time of loading: ${DateFormat("yyyy-MM-dd hh:mm").format(dateAndTimeLoaded)}
-      Floor or container area available to animals (m2 or ft2): $loadingArea
-      Loading density: $loadingDensity
-      Animals per floor area (Kg/m2 or lbs/ft2): $animalsPerLoadingArea
-      Animals loaded:
-      ${_animalsLoaded.map((group) => group.toString()).join('\n')}
-  ''';
+  Widget toWidget() {
+    final List<Widget> fields = [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Date and time of loading"),
+          subtitle: Text(
+              '${DateFormat("yyyy-MM-dd hh:mm").format(dateAndTimeLoaded)}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title:
+              Text("Floor or container area available to animals (m2 or ft2)"),
+          subtitle: Text('$loadingArea')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Loading density"),
+          subtitle: Text('$loadingDensity')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Animals per floor area (Kg/m2 or lbs/ft2)"),
+          subtitle: Text('$animalsPerLoadingArea')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Animals loaded")),
+    ];
+    fields.addAll(_animalsLoaded.map((group) => group.toWidget()).toList());
+    return Column(children: fields);
+  }
 }
 
 @immutable
@@ -63,28 +82,76 @@ class AnimalGroup {
   List<CompromisedAnimal> specialNeedsAnimals() =>
       List.unmodifiable(_specialNeedsAnimals);
 
-  String _compromisedAnimalsToString() => _compromisedAnimals.isEmpty
-      ? 'N/A'
-      : _compromisedAnimals
-          .map((animal) => animal.toString())
-          .toList()
-          .join(",");
+  List<Widget> _compromisedAnimalsToWidget() => _compromisedAnimals.isEmpty
+      ? [
+          ListTile(
+              visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+              title: Text("N/A"))
+        ]
+      : _compromisedAnimals.map((animal) => animal.toWidget()).toList();
 
-  String _specialNeedsAnimalsToString() => _specialNeedsAnimals.isEmpty
-      ? 'N/A'
-      : _specialNeedsAnimals
-          .map((animal) => animal.toString())
-          .toList()
-          .join(",");
+  List<Widget> _specialNeedsAnimalsToWidget() => _specialNeedsAnimals.isEmpty
+      ? [
+          ListTile(
+              visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+              title: Text("N/A"))
+        ]
+      : _specialNeedsAnimals.map((animal) => animal.toWidget()).toList();
 
-  String toString() => '''Animal(s) description:
-  Species: $species, Group age: $groupAge, Approximate weight: $approximateWeight
-  Purpose: $animalPurpose, Number of animals: $numberAnimals
-  Are all animals fit for transport: ${animalsFitForTransport ? 'Yes' : 'No'}
-  Number of compromised animals loaded: ${_compromisedAnimals.length}
-  Compromised animal(s), identification description and measures taken: ${_compromisedAnimalsToString()}
-  Number of animal(s) with special needs: ${_specialNeedsAnimals.length}
-  Special needs animal(s), identification description and measures taken: ${_specialNeedsAnimalsToString()}''';
+  Widget toWidget() {
+    final List<Widget> fields = [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Animal(s) description")),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Species"),
+          subtitle: Text(species)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Group age"),
+          subtitle: Text('$groupAge')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Approximate weight"),
+          subtitle: Text('$approximateWeight')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Purpose"),
+          subtitle: Text(animalPurpose)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Number of animals"),
+          subtitle: Text('$numberAnimals')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Are all animals fit for transport?"),
+          subtitle: Text(' ${animalsFitForTransport ? 'Yes' : 'No'}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Number of compromised animals loaded"),
+          subtitle: Text('${_compromisedAnimals.length}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "Compromised animal(s), identification description and measures taken")),
+    ];
+    final List<Widget> specialNeedsFields = [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Number of animal(s) with special needs"),
+          subtitle: Text('${_specialNeedsAnimals.length}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "Special needs animal(s), identification description and measures taken")),
+    ];
+
+    fields.addAll(_compromisedAnimalsToWidget());
+    fields.addAll(specialNeedsFields);
+    fields.addAll(_specialNeedsAnimalsToWidget());
+    return Column(children: fields);
+  }
 }
 
 @immutable
@@ -96,5 +163,8 @@ class CompromisedAnimal {
       {@required this.animalDescription,
       @required this.measuresTakenToCareForAnimal});
 
-  String toString() => '$animalDescription\n$measuresTakenToCareForAnimal';
+  Widget toWidget() => ListTile(
+      visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+      title: Text(animalDescription),
+      subtitle: Text(measuresTakenToCareForAnimal));
 }

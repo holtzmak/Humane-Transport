@@ -27,12 +27,7 @@ class DeliveryInfo {
               visualDensity: VisualDensity(horizontal: 0, vertical: -2),
               title: Text('N/A'))
         ]
-      : _compromisedAnimals
-          .map((animals) => ListTile(
-              visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-              title: Text(animals.animalDescription),
-              subtitle: Text(animals.measuresTakenToCareForAnimal)))
-          .toList();
+      : _compromisedAnimals.map((animals) => animals.toWidget()).toList();
 
   Widget toWidget() {
     final List<Widget> fields = [

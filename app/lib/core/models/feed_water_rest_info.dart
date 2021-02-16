@@ -17,9 +17,29 @@ class FeedWaterRestInfo {
 
   List<FeedWaterRestEvent> fwrEvents() => List.unmodifiable(_fwrEvents);
 
-  String toString() =>
-      '''Last access to feed, water and rest (FWR) prior to loading:
-      Date and time: ${DateFormat("yyyy-MM-dd hh:mm").format(lastFwrDate)}, Place: $lastFwrLocation''';
+  List<Widget> _fwrEventsToWidget() => _fwrEvents.isEmpty
+      ? [
+          ListTile(
+              visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+              title: Text("N/A"))
+        ]
+      : _fwrEvents.map((event) => event.toWidget()).toList();
+
+  Widget toWidget() {
+    final List<Widget> fields = [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "Last access to feed, water and rest (FWR) prior to loading"),
+          subtitle: Text(
+              '${DateFormat("yyyy-MM-dd hh:mm").format(lastFwrDate)}, $lastFwrLocation')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("If FWR was provided during transport")),
+    ];
+    fields.addAll(_fwrEventsToWidget());
+    return Column(children: fields);
+  }
 }
 
 @immutable
@@ -35,8 +55,24 @@ class FeedWaterRestEvent {
       @required this.lastFwrLocation,
       @required this.fwrProvidedOnboard});
 
-  String toString() =>
-      '''Animals unloaded?: ${animalsWereUnloaded ? 'Yes' : 'No'}
-      Date and time: ${DateFormat("yyyy-MM-dd hh:mm").format(fwrTime)}, Place: $lastFwrLocation
-      Provided onboard?: ${fwrProvidedOnboard ? 'Yes' : 'No'}''';
+  Widget toWidget() {
+    return Column(children: [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Animals unloaded?"),
+          subtitle: Text('${animalsWereUnloaded ? 'Yes' : 'No'}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Date and time"),
+          subtitle: Text('${DateFormat("yyyy-MM-dd hh:mm").format(fwrTime)}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Place"),
+          subtitle: Text('$lastFwrLocation')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Provided onboard?"),
+          subtitle: Text('${fwrProvidedOnboard ? 'Yes' : 'No'}')),
+    ]);
+  }
 }

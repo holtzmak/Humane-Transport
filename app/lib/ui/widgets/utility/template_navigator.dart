@@ -1,4 +1,4 @@
-import 'package:app/core/models/nav_item_model.dart';
+import 'package:app/ui/widgets/models/nav_item_model.dart';
 import 'package:flutter/material.dart';
 
 class TemplateNavigator extends StatelessWidget {
