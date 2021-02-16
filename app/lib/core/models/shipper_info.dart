@@ -24,7 +24,7 @@ class ShipperInfo {
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("Name"),
-          subtitle: Text('$shipperName')),
+          subtitle: Text(shipperName)),
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text(
@@ -33,11 +33,11 @@ class ShipperInfo {
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("Departure Premises Identification number (PID)"),
-          subtitle: Text('$departureLocationId')),
+          subtitle: Text(departureLocationId)),
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("Name"),
-          subtitle: Text('$departureLocationName')),
+          subtitle: Text(departureLocationName)),
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("Address"),
@@ -45,7 +45,7 @@ class ShipperInfo {
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("Shipper’s Contact information in case of emergency"),
-          subtitle: Text('$shipperContactInfo')),
+          subtitle: Text(shipperContactInfo)),
     ]);
   }
 }

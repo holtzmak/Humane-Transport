@@ -13,10 +13,18 @@ class AcknowledgementInfo {
       @required this.transporterAck,
       @required this.receiverAck});
 
-  // TODO: Resolve how to display ack info
-  // Most other info is strings, perhaps this should give a widget for display
-  String toString() => '''Shipper acknowledgement:
-  Transporter acknowledgement:
-  Consignee acknowledgement:
-  ''';
+  // TODO: Resolve how to display ack info, if it's an image or w/e
+  Widget toWidget() {
+    return Column(children: [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Shipper acknowledgement")),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Transporter acknowledgement")),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Consignee acknowledgement")),
+    ]);
+  }
 }

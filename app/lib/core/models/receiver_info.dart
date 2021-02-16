@@ -22,10 +22,37 @@ class ReceiverInfo {
       @required this.destinationAddress,
       @required this.receiverContactInfo});
 
-  String toString() => '''Receiving company name: $receiverCompanyName
-  Representative name: $receiverName
-  Account identification number of the consignee in the database of the responsible administrator (Optional): ${accountId.isPresent() ? accountId.get() : "N/A"}
-  Destination and Premises Identification number (PID): $destinationLocationId, Name: $destinationLocationName
-  Address: $destinationAddress
-  Receiver’s Contact number in case of emergency: $receiverContactInfo''';
+  Widget toWidget() {
+    return Column(children: [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Receiving company name"),
+          subtitle: Text(receiverCompanyName)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Representative name"),
+          subtitle: Text(receiverName)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "Account identification number of the consignee in the database of the responsible administrator (Optional)"),
+          subtitle: Text('${accountId.isPresent() ? accountId.get() : "N/A"}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Destination and Premises Identification number (PID)"),
+          subtitle: Text(destinationLocationId)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Name"),
+          subtitle: Text(destinationLocationName)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Address"),
+          subtitle: Text('$destinationAddress')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Receiver’s Contact number in case of emergency"),
+          subtitle: Text(receiverContactInfo)),
+    ]);
+  }
 }

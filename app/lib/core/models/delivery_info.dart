@@ -21,16 +21,44 @@ class DeliveryInfo {
   List<CompromisedAnimal> compromisedAnimals() =>
       List.unmodifiable(_compromisedAnimals);
 
-  String _compromisedAnimalsToString() => _compromisedAnimals.isEmpty
-      ? 'N/A'
+  List<Widget> _compromisedAnimalsToWidget() => _compromisedAnimals.isEmpty
+      ? [
+          ListTile(
+              visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+              title: Text('N/A'))
+        ]
       : _compromisedAnimals
-          .map((animal) => animal.toString())
-          .toList()
-          .join(",");
+          .map((animals) => ListTile(
+              visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+              title: Text(animals.animalDescription),
+              subtitle: Text(animals.measuresTakenToCareForAnimal)))
+          .toList();
 
-  String toString() => '''$recInfo
-  Date and time of arrival: ${DateFormat("yyyy-MM-dd hh:mm").format(arrivalDateAndTime)}
-  All animals arrived in good condition?: ${_compromisedAnimals.isEmpty ? 'Yes' : 'No'}
-  Description of transport related conditions and actions taken to address prior to arrival: ${_compromisedAnimalsToString()}
-  Additional animal welfare concerns for the consignee to be aware of ?: $additionalWelfareConcerns''';
+  Widget toWidget() {
+    final List<Widget> fields = [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Date and time of arrival"),
+          subtitle: Text(
+              '${DateFormat("yyyy-MM-dd hh:mm").format(arrivalDateAndTime)}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("All animals arrived in good condition?"),
+          subtitle: Text('${_compromisedAnimals.isEmpty ? 'Yes' : 'No'}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "Description of transport related conditions and actions taken to address prior to arrival")),
+    ];
+    final Widget welfareConcerns = ListTile(
+        visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+        title: Text(
+            "Additional animal welfare concerns for the consignee to be aware of ?"),
+        subtitle: Text(additionalWelfareConcerns));
+
+    fields.insert(0, recInfo.toWidget());
+    fields.addAll(_compromisedAnimalsToWidget());
+    fields.add(welfareConcerns);
+    return Column(children: fields);
+  }
 }

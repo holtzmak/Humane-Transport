@@ -96,7 +96,5 @@ class CompromisedAnimal {
       {@required this.animalDescription,
       @required this.measuresTakenToCareForAnimal});
 
-  String toString() => '''$animalDescription
-  $measuresTakenToCareForAnimal
-  ''';
+  String toString() => '$animalDescription\n$measuresTakenToCareForAnimal';
 }
