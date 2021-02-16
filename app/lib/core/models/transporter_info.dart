@@ -37,15 +37,56 @@ class TransporterInfo {
 
   List<String> driverNames() => List.unmodifiable(_driverNames);
 
-  String toString() => '''Name and address of transporting company: $companyName
-  $companyAddress
-  Driver(s) name(s): ${driverNames().join(",")}
-  Province and License Plate number of the conveyance transporting the animals: $vehicleProvince, $vehicleLicensePlate
-  (including trailer): $trailerProvince, $trailerProvince
-  Conveyance or container last cleaned and disinfected:
-  Date and time: ${DateFormat("yyyy-MM-dd hh:mm").format(dateLastCleaned)}
-  Place: $addressLastCleanedAt
-  Driver(s) have been briefed on the contingency plan?: ${driversAreBriefed ? 'Yes' : 'No'}
-  Driver(s) have received humane transport training?: ${driversHaveTraining ? 'Yes' : 'No'}
-  Training type: $trainingType, Expiry date: ${DateFormat("yyyy-MM-dd hh:mm").format(trainingExpiryDate)}''';
+  Widget toWidget() {
+    return Column(children: [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Name of transporting company"),
+          subtitle: Text(companyName)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Address"),
+          subtitle: Text('$companyAddress')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Driver(s) name(s)"),
+          subtitle: Text('${driverNames().join(",")}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "Province and License Plate number of the conveyance transporting the animals"),
+          subtitle: Text('$vehicleProvince, $vehicleLicensePlate')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("(including trailer)"),
+          subtitle: Text('$trailerProvince, $trailerProvince')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Conveyance or container last cleaned and disinfected")),
+      ListTile(
+        visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+        title: Text("Date and time"),
+        subtitle:
+            Text('${DateFormat("yyyy-MM-dd hh:mm").format(dateLastCleaned)}'),
+      ),
+      ListTile(
+        visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+        title: Text("Place"),
+        subtitle: Text('$addressLastCleanedAt'),
+      ),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Driver(s) have been briefed on the contingency plan?"),
+          subtitle: Text('${driversAreBriefed ? 'Yes' : 'No'}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Driver(s) have received humane transport training?"),
+          subtitle: Text('${driversHaveTraining ? 'Yes' : 'No'}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Training type and Expiry date"),
+          subtitle: Text(
+              '$trainingType, ${DateFormat("yyyy-MM-dd hh:mm").format(trainingExpiryDate)}')),
+    ]);
+  }
 }
