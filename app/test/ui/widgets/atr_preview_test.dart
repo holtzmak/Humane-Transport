@@ -1,4 +1,4 @@
-import 'package:app/ui/widgets/atr_preview.dart';
+import 'package:app/ui/widgets/atr_preview_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +20,7 @@ void main() {
               animalsLoaded: [testAnimalGroup(species: testSpecies)]));
 
       await tester.pumpWidget(new MaterialApp(
-          home: ATRPreview(
+          home: ATRPreviewCard(
         atr: testRecWithInfo,
         onTap: () {
           // Do nothing for test

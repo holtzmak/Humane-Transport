@@ -1,8 +1,8 @@
+import 'package:app/ui/views/history/atr_display_screen.dart';
 import 'package:app/ui/views/home/home_screen.dart';
 import 'package:app/ui/views/new/test_screens/test_screen_three.dart';
 import 'package:app/ui/views/signin/sign_in_screen.dart';
 import 'package:app/ui/views/welcome/welcome_screen.dart';
-import 'package:app/ui/widgets/atr_display.dart';
 import 'package:flutter/material.dart';
 
 /// The main route generator for routes since app main
@@ -27,8 +27,8 @@ class AppRouteGenerator {
           case TestScreenThree.route:
             return TestScreenThree();
 
-          case ATRDisplay.route:
-            return ATRDisplay(atr: settings.arguments);
+          case ATRDisplayScreen.route:
+            return ATRDisplayScreen(atr: settings.arguments);
 
           default:
             throw Exception('Invalid route: ${settings.name}');

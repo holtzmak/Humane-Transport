@@ -5,8 +5,8 @@ import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
-import 'package:app/ui/widgets/atr_display.dart';
-import 'package:app/ui/widgets/atr_preview.dart';
+import 'package:app/ui/views/history/atr_display_screen.dart';
+import 'package:app/ui/widgets/atr_preview_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,17 +28,17 @@ class HistoryScreenViewModel extends BaseViewModel {
     super.dispose();
   }
 
-  final List<ATRPreview> _animalTransportPreviews = [];
+  final List<ATRPreviewCard> _animalTransportPreviews = [];
 
-  List<ATRPreview> get animalTransportPreviews =>
+  List<ATRPreviewCard> get animalTransportPreviews =>
       List.unmodifiable(_animalTransportPreviews);
 
-  ATRPreview createPreview(AnimalTransportRecord atr) => ATRPreview(
+  ATRPreviewCard createPreview(AnimalTransportRecord atr) => ATRPreviewCard(
       atr: atr,
-      onTap: () =>
-          _navigationService.navigateTo(ATRDisplay.route, arguments: atr));
+      onTap: () => _navigationService.navigateTo(ATRDisplayScreen.route,
+          arguments: atr));
 
-  void addAll(List<ATRPreview> animalTransportPreviews) {
+  void addAll(List<ATRPreviewCard> animalTransportPreviews) {
     _animalTransportPreviews.addAll(animalTransportPreviews);
     notifyListeners();
   }
@@ -46,5 +46,9 @@ class HistoryScreenViewModel extends BaseViewModel {
   void removeAll() {
     _animalTransportPreviews.clear();
     notifyListeners();
+  }
+
+  void navigateToHistoryScreen() {
+    _navigationService.pop();
   }
 }

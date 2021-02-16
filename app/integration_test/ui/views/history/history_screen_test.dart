@@ -1,6 +1,6 @@
 import 'package:app/main.dart' as app;
 import 'package:app/ui/views/history/history_screen.dart';
-import 'package:app/ui/widgets/atr_preview.dart';
+import 'package:app/ui/widgets/atr_preview_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -30,7 +30,8 @@ void main() {
       // Wait for cheap stream to load in
       await tester.pump(Duration(seconds: 6));
       final previewFinder = find.descendant(
-          of: find.byType(HistoryScreen), matching: find.byType(ATRPreview));
+          of: find.byType(HistoryScreen),
+          matching: find.byType(ATRPreviewCard));
       expect(previewFinder, findsOneWidget);
     });
   });

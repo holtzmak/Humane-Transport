@@ -1,7 +1,7 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
-import 'package:app/ui/widgets/atr_display.dart';
+import 'package:app/ui/views/history/atr_display_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -16,7 +16,8 @@ final testLocator = GetIt.instance;
 void main() {
   void expectInformation(WidgetTester tester, AnimalTransportRecord testRecord,
       String headerExpected, String informationExpected) async {
-    await tester.pumpWidget(new MaterialApp(home: ATRDisplay(atr: testRecord)));
+    await tester
+        .pumpWidget(new MaterialApp(home: ATRDisplayScreen(atr: testRecord)));
 
     /* At the time of writing, we're using ExpansionPanels.
          Despite the expanded information not being visible initially,
