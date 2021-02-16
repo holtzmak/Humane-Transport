@@ -11,12 +11,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// This ViewModel will only view complete ATR models
-class CompleteATRPreviewModel extends BaseViewModel {
+class HistoryScreenViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
   StreamSubscription<AnimalTransportRecord> previewSubscription;
 
-  CompleteATRPreviewModel() {
+  HistoryScreenViewModel() {
     previewSubscription = _databaseService
         .getUpdatedCompleteATRs()
         .listen((atr) => addAll([createPreview(atr)]));

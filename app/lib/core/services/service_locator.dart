@@ -1,11 +1,11 @@
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
-import 'package:app/core/view_models/active_atr_preview_model.dart';
-import 'package:app/core/view_models/complete_atr_preview_model.dart';
+import 'package:app/core/view_models/active_screen_view_model.dart';
+import 'package:app/core/view_models/history_screen_view_model.dart';
 import 'package:app/core/view_models/nav_view_model.dart';
+import 'package:app/core/view_models/new_screen_view_model.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
-import 'package:app/core/view_models/sign_out_view_model.dart';
-import 'package:app/core/view_models/welcome_view_model.dart';
+import 'package:app/core/view_models/welcome_screen_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 import 'authentication/auth_service.dart';
@@ -20,11 +20,12 @@ void setUpLocator() {
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<DialogService>(() => DialogService());
 
-  locator.registerFactory<WelcomeViewModel>(() => WelcomeViewModel());
+  locator
+      .registerFactory<WelcomeScreenViewModel>(() => WelcomeScreenViewModel());
   locator.registerFactory<SignInViewModel>(() => SignInViewModel());
-  locator.registerFactory<SignOutViewModel>(() => SignOutViewModel());
+  locator.registerFactory<NewScreenViewModel>(() => NewScreenViewModel());
   locator.registerFactory<NavigationViewModel>(() => NavigationViewModel());
-  locator.registerFactory<CompleteATRPreviewModel>(
-      () => CompleteATRPreviewModel());
-  locator.registerFactory<ActiveATRPreviewModel>(() => ActiveATRPreviewModel());
+  locator
+      .registerFactory<HistoryScreenViewModel>(() => HistoryScreenViewModel());
+  locator.registerFactory<ActiveScreenViewModel>(() => ActiveScreenViewModel());
 }
