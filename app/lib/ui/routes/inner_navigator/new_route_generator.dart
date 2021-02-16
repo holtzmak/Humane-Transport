@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 class NewRouteGenerator {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     return MaterialPageRoute(
-      settings: settings,
+      settings: RouteSettings(name: settings.name),
       builder: (BuildContext context) {
         // These routes contain a bottom nav
         switch (settings.name) {
+          case NewScreen.route:
+            return NewScreen();
           case TestScreenOne.route:
             return TestScreenOne();
           case TestScreenTwo.route:
@@ -20,7 +22,7 @@ class NewRouteGenerator {
             return ImageScreen();
 
           default:
-            return NewScreen();
+            throw Exception('Invalid route: ${settings.name}');
         }
       },
     );

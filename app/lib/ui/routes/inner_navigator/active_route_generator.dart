@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 class ActiveRouteGenerator {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     return MaterialPageRoute(
-      settings: settings,
+      settings: RouteSettings(name: settings.name),
       builder: (BuildContext context) {
         // These routes contain a bottom nav
         switch (settings.name) {
-          default:
+          case ActiveScreen.route:
             return ActiveScreen();
+          default:
+            throw Exception('Invalid route: ${settings.name}');
         }
       },
     );

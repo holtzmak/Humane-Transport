@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class AppRouteGenerator {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     return MaterialPageRoute(
-      settings: settings,
+      settings: RouteSettings(name: settings.name),
       builder: (BuildContext context) {
         /* These routes do not contain a bottom nav.
            These routes will be pushed on top of the root route.
@@ -17,16 +17,12 @@ class AppRouteGenerator {
         switch (settings.name) {
           case WelcomeScreen.route:
             return WelcomeScreen();
-
           case SignInScreen.route:
             return SignInScreen();
-
           case HomeScreen.route:
             return HomeScreen();
-
           case TestScreenThree.route:
             return TestScreenThree();
-
           case ATRDisplayScreen.route:
             return ATRDisplayScreen(atr: settings.arguments);
 
