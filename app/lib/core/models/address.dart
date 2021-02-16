@@ -16,5 +16,5 @@ class Address {
       @required this.postalCode});
 
   String toString() =>
-      '''$streetAddress\n$city, $provinceOrState, $country, $postalCode''';
+      '$streetAddress\n$city, $provinceOrState, $country, $postalCode';
 }

@@ -36,19 +36,55 @@ class ContingencyPlanInfo {
   List<ContingencyPlanEvent> contingencyEvents() =>
       List.unmodifiable(_contingencyEvents);
 
-  String _contingencyEventsToString() => _contingencyEvents.isEmpty
-      ? 'No events occurred during transport'
-      : _contingencyEvents.map((event) => event.toString()).toList().join(",");
+  List<Widget> _contingencyEventsToWidget() => _contingencyEvents.isEmpty
+      ? [
+          ListTile(
+              visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+              title: Text('No events occurred during transport'))
+        ]
+      : _contingencyEvents.map((event) => event.toWidget()).toList();
 
-  String toString() =>
-      '''Goal Statement (company’s goal and purpose of the plan i.e avoid animal suffering): $goalStatement
-  Communication Plan (who should be contacted and who will initiate or permit the process?): $communicationPlan
-  Crisis contacts and links( general helpline, industry related links and websites): ${_crisisContacts.join(',')}
-  Expected Preparation Process (what should be done prior to loading animals?): $expectedPrepProcess
-  Standard Animal Monitoring: $standardAnimalMonitoring
-  Potential Hazard/Events/Challenges: ${_potentialHazards.join(',')}
-  Potential Actions to Ensure Human or Animal Safety: ${_potentialSafetyActions.join(',')}
-  Event Specific Plan(s): ${_contingencyEventsToString()}''';
+  Widget toWidget() {
+    final List<Widget> fields = [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "Goal Statement (company’s goal and purpose of the plan i.e avoid animal suffering)"),
+          subtitle: Text(goalStatement)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "Communication Plan (who should be contacted and who will initiate or permit the process?)"),
+          subtitle: Text(communicationPlan)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "Crisis contacts and links( general helpline, industry related links and websites)"),
+          subtitle: Text('${_crisisContacts.join(',')}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "Expected Preparation Process (what should be done prior to loading animals?)"),
+          subtitle: Text(expectedPrepProcess)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Standard Animal Monitoring"),
+          subtitle: Text(standardAnimalMonitoring)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Potential Hazard/Events/Challenges"),
+          subtitle: Text('${_potentialHazards.join(',')}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Potential Actions to Ensure Human or Animal Safety"),
+          subtitle: Text('${_potentialSafetyActions.join(',')}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Event Specific Plan(s)")),
+    ];
+    fields.addAll(_contingencyEventsToWidget());
+    return Column(children: fields);
+  }
 }
 
 @immutable
@@ -82,14 +118,39 @@ class ContingencyPlanEvent {
 
   List<String> actionsTaken() => List.unmodifiable(_actionsTaken);
 
-  String toString() =>
-      '''Date and time of event: ${DateFormat("yyyy-MM-dd hh:mm").format(eventDateAndTime)}
-  Producer's emergency contacts used: ${_producerContactsUsed.join(",")}
-  Receiver's emergency contacts used: ${_receiverContactsUsed.join(",")}
-  Transportation challenges and disturbances identified by driver: $disturbancesIdentified
-  List of animal welfare related measures and actions taken(specific to the event): ${_actionsTaken.join(",")}
-  Carrier's communication activities:
-  ${_activities.map((activity) => activity.toString()).toList().join(',')}''';
+  Widget toWidget() {
+    final List<Widget> widgetFields = [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Date and time of event"),
+          subtitle: Text(
+              '${DateFormat("yyyy-MM-dd hh:mm").format(eventDateAndTime)}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Producer's emergency contacts used"),
+          subtitle: Text('${_producerContactsUsed.join(",")}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Receiver's emergency contacts used"),
+          subtitle: Text('${_receiverContactsUsed.join(",")}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "Transportation challenges and disturbances identified by driver"),
+          subtitle: Text(disturbancesIdentified)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "List of animal welfare related measures and actions taken(specific to the event)"),
+          subtitle: Text('${_actionsTaken.join(",")}')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Carrier's communication activities")),
+    ];
+    widgetFields
+        .addAll(_activities.map((activity) => activity.toWidget()).toList());
+    return Column(children: widgetFields);
+  }
 }
 
 @immutable
@@ -105,8 +166,25 @@ class ContingencyActivity {
       @required this.methodOfContact,
       @required this.instructionsGiven});
 
-  String toString() => '''Time of communication: $time
-  Who was contacted: $personContacted
-  Communication method used: $methodOfContact
-  What instructions were given and decisions made with the guidance of emergency contacts reached: $instructionsGiven''';
+  Widget toWidget() {
+    return Column(children: [
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Time of communication"),
+          subtitle: Text('$time')),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Who was contacted"),
+          subtitle: Text(personContacted)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text("Communication method used"),
+          subtitle: Text(methodOfContact)),
+      ListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+          title: Text(
+              "What instructions were given and decisions made with the guidance of emergency contacts reached"),
+          subtitle: Text(instructionsGiven)),
+    ]);
+  }
 }
