@@ -1,10 +1,17 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/shipper_info.dart';
+import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/ui/widgets/atr_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mockito/mockito.dart';
 
 import '../../test_lib/test_animal_transport_record.dart';
+
+class MockNavigationService extends Mock implements NavigationService {}
+
+final testLocator = GetIt.instance;
 
 void main() {
   void expectInformation(WidgetTester tester, AnimalTransportRecord testRecord,
@@ -21,6 +28,11 @@ void main() {
   }
 
   group('Animal Transport Record Display', () {
+    setUpAll(() async {
+      testLocator.registerLazySingleton<NavigationService>(
+          () => MockNavigationService());
+    });
+
     testWidgets('shows right shipping info', (WidgetTester tester) async {
       final testRecord = testAnimalTransportRecord().withShipInfo(ShipperInfo(
           shipperName: "Dave Goodman",
