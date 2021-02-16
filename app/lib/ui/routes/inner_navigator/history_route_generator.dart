@@ -6,15 +6,17 @@ import 'package:flutter/material.dart';
 class HistoryRouteGenerator {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     return MaterialPageRoute(
-      settings: settings,
+      settings: RouteSettings(name: settings.name),
       builder: (BuildContext context) {
         // These routes contain a bottom nav
         switch (settings.name) {
           case PDFScreen.route:
             return PDFScreen();
+          case HistoryScreen.route:
+            return HistoryScreen();
 
           default:
-            return HistoryScreen();
+            throw Exception('Invalid route: ${settings.name}');
         }
       },
     );
