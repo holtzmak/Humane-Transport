@@ -1,11 +1,10 @@
 import 'package:app/core/view_models/active_screen_view_model.dart';
-import 'package:app/ui/views/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/utility/template_base_view_model.dart';
 
 class ActiveScreen extends StatelessWidget {
-  static const route = '${HomeScreen.route}/active';
+  static const route = '/active';
 
   @override
   Widget build(BuildContext context) {

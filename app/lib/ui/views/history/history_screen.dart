@@ -1,11 +1,10 @@
 import 'package:app/core/view_models/history_screen_view_model.dart';
-import 'package:app/ui/views/home/home_screen.dart';
 import 'package:app/ui/widgets/utility/pdf_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 
 class HistoryScreen extends StatelessWidget {
-  static const route = '${HomeScreen.route}/history';
+  static const route = '/history';
 
   @override
   Widget build(BuildContext context) {
