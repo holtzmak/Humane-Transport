@@ -26,5 +26,4 @@ abstract class DatabaseInterface {
   Future<dynamic> updateAckInfo();
 
   Future<dynamic> updateContingencyInfo();
-
 }
