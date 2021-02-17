@@ -1,10 +1,11 @@
 import 'dart:async';
+import 'package:app/core/services/database_provider/database_provider.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:app/core/models/user.dart';
 import 'package:app/core/models/animal_transport_record.dart';
 
-class DatabaseServices {
+class DatabaseServices extends DatabaseInterface {
   var networkStatus;
   MySqlConnection dbConnect;
 
@@ -45,7 +46,7 @@ class DatabaseServices {
       print("Cannot Register(Connection Error)");
   }
 
-  Future<dynamic> getUser(User getUser) async {
+  Future<Results> getUser(User getUser) async {
     dbConnect = await connectRemote();
     var userQuery = await dbConnect.query('''
         SELECT username, password, userID FROM transporters where username = ? AND password = ?
@@ -54,7 +55,16 @@ class DatabaseServices {
     return userQuery;
   }
 
-  newForm(AnimalTransportRecord newRecord, String withInfo) async {
+  Future<dynamic> updatePassword(User user) async {
+    dbConnect = await connectRemote();
+    var updatePwd = await dbConnect.query('''
+    UPDATE User SET password = ? WHERE username = ?''',
+        [user.password, user.username]);
+    dbConnect.close();
+    return updatePwd;
+  }
+
+  Future<dynamic> newRecord(AnimalTransportRecord newRecord) async {
     dbConnect = await connectRemote();
     await dbConnect.query('''
         INSERT INTO TransporterInfo(companyName, trainingType, companyAddress, addressLastCleanedAt, dateLastCleaned,
@@ -100,13 +110,12 @@ class DatabaseServices {
         ]);
 
     await dbConnect.query('''
-        INSERT INTO VehicleInfo(animalsPerLoadingArea, DateLoaded, LoadingArea, LoadingDensity, TimeLoaded) VALUES
-        (?,?,?,?,?)''', [
+        INSERT INTO VehicleInfo(animalsPerLoadingArea, DateAndTtimeLoaded, LoadingArea, LoadingDensity) VALUES
+        (?,?,?,?)''', [
       newRecord.vehicleInfo.animalsPerLoadingArea,
       newRecord.vehicleInfo.dateLoaded,
       newRecord.vehicleInfo.loadingArea,
-      newRecord.vehicleInfo.loadingDensity,
-      newRecord.vehicleInfo.timeLoaded
+      newRecord.vehicleInfo.loadingDensity
     ]);
 
     await dbConnect.query('''
@@ -118,7 +127,6 @@ class DatabaseServices {
         (?,?,?,?,?,?)''', [
       newRecord.deliveryInfo.additionalWelfareConcerns,
       newRecord.deliveryInfo.arrivalDate,
-      newRecord.deliveryInfo.arrivalTime,
       newRecord.deliveryInfo.recInfo
     ]);
 
@@ -132,81 +140,70 @@ class DatabaseServices {
     dbConnect.close();
   }
 
-  Future<dynamic> getRecentFormsList(User user) async {
+  Future<Results> getRecord(User user) async {
+    dbConnect = await connectRemote();
+    var recentRecord = await dbConnect.query('''
+    Select * FROM ATR WHERE ArrivalDate = (select max(ArrivalDate) from ATR where username = ?)''',
+        [user.username]);
+    dbConnect.close();
+    return recentRecord;
+  }
+
+  Future<dynamic> retrieveUserRecords(User user) async {
     dbConnect = await connectRemote();
     var formList = await dbConnect.query('''
-      SELECT FormId, DateCreated FROM AtrRecord WHERE userName = ?
+      SELECT FormId, DateCreated FROM ATR WHERE userName = ?
       ''', [user.username]);
     dbConnect.close();
     return formList;
   }
 
-  Future<dynamic> getTransporterRecord(String formId) async {
+  Future<dynamic> updateTranInfo() async {
     dbConnect = await connectRemote();
-    var transporterInfo = await dbConnect.query('''
-      SELECT * FROM TransporterInfo WHERE formId = ?
-      ''', [formId]);
+    var updateTransporter = await dbConnect.query('''DATABASE QUERY''');
     dbConnect.close();
-    return transporterInfo;
+    return updateTransporter;
   }
 
-  Future<dynamic> getShipperInfo(String formId) async {
+  Future<dynamic> updateShipperInfo() async {
     dbConnect = await connectRemote();
-    var shipInfo =
-        await dbConnect.query('''SELECT * FROM ShipInfo WHERE formId = ?
-      ''', [formId]);
+    var updateShipper = await dbConnect.query('''DATABASE QUERY''');
     dbConnect.close();
-    return shipInfo;
+    return updateShipper;
   }
 
-  Future<dynamic> getReceiverInfo(String formId) async {
+  Future<dynamic> updateFwr() async {
     dbConnect = await connectRemote();
-    var receiverInfo = await dbConnect.query('''
-      SELECT * FROM FwrInfo WHERE formId = ?
-      ''', [formId]);
+    var updateFwr = await dbConnect.query('''DATABASE QUERY''');
     dbConnect.close();
-    return receiverInfo;
+    return updateFwr;
   }
 
-  Future<dynamic> getVehicleInfo(String formId) async {
+  Future<dynamic> updateVehicleLoadingInfo() async {
     dbConnect = await connectRemote();
-    var vehicleInfo = await dbConnect.query('''
-      SELECT * FROM VehicleInfo WHERE formId = ?
-      ''', [formId]);
+    var updateVehicle = await dbConnect.query('''DATABASE QUERY''');
     dbConnect.close();
-    return vehicleInfo;
+    return updateVehicle;
   }
 
-  Future<dynamic> getFwrInfo(String formId) async {
+  Future<dynamic> updateDeliveryInfo() async {
     dbConnect = await connectRemote();
-    var fwrInfo = await dbConnect.query('''
-      SELECT * FROM FwrInfo WHERE formID = ?
-      ''', [formId]);
+    var updateDelivery = await dbConnect.query('''DATABASE QUERY''');
     dbConnect.close();
-    return fwrInfo;
+    return updateDelivery;
   }
 
-  Future<dynamic> getContingency(String formId) async {
+  Future<dynamic> updateAckInfo() async {
     dbConnect = await connectRemote();
-    var contingency = await dbConnect
-        .query('''SELECT * FROM ContingencyPlan WHERE formId = ?''', [formId]);
+    var updateAck = await dbConnect.query('''DATABASE QUERY''');
     dbConnect.close();
-    return contingency;
+    return updateAck;
   }
 
-  Future<dynamic> getDeliveryInfo(String formId) async {
+  Future<dynamic> updateContingencyInfo() async {
     dbConnect = await connectRemote();
-    var deliveryInfo = await dbConnect
-        .query('''SELECT * FROM DeliveryInfo WHERE formID = ?''', [formId]);
+    var updateContingencyPlan = await dbConnect.query('''DATABASE QUERY''');
     dbConnect.close();
-    return deliveryInfo;
-  }
-
-  Future<dynamic> getAckInfo(String formId) async {
-    dbConnect = await connectRemote();
-    var ackInfo = await dbConnect
-        .query('''SELECT * FROM AckInfo WHERE formId = ? ''', [formId]);
-    dbConnect.close();
-    return ackInfo;
+    return updateContingencyPlan;
   }
 }
