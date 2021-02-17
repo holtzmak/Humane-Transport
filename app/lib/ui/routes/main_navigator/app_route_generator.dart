@@ -1,3 +1,4 @@
+import 'package:app/ui/views/active/atr_editing_screen.dart';
 import 'package:app/ui/views/history/atr_display_screen.dart';
 import 'package:app/ui/views/home/home_screen.dart';
 import 'package:app/ui/views/new/test_screens/test_screen_three.dart';
@@ -25,6 +26,8 @@ class AppRouteGenerator {
             return TestScreenThree();
           case ATRDisplayScreen.route:
             return ATRDisplayScreen(atr: settings.arguments);
+          case ATREditingScreen.route:
+            return ATREditingScreen(atr: settings.arguments);
 
           default:
             throw Exception('Invalid route: ${settings.name}');
