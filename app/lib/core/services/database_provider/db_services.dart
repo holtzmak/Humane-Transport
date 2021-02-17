@@ -132,7 +132,6 @@ class DatabaseServices extends DatabaseInterface {
       [newRecord.ackInfo.receiverAck, newRecord.ackInfo.shipperAck, newRecord.ackInfo.transporterAck]
     );
 
-
     dbConnect.close();
   }
 

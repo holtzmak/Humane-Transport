@@ -70,5 +70,4 @@ class TransporterInfo {
     };
     return map;
   }
-
 }
