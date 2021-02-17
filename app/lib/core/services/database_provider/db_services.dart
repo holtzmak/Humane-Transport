@@ -111,26 +111,31 @@ class DatabaseServices extends DatabaseInterface {
 
     await dbConnect.query('''
         INSERT INTO VehicleInfo(animalsPerLoadingArea, DateLoaded, LoadingArea, LoadingDensity, TimeLoaded) VALUES
-        (?,?,?,?,?)''', [newRecord.vehicleInfo.animalsPerLoadingArea, newRecord.vehicleInfo.dateAndTimeLoaded,
-        newRecord.vehicleInfo.loadingArea, newRecord.vehicleInfo.loadingDensity]
-    );
+        (?,?,?,?,?)''', [
+      newRecord.vehicleInfo.animalsPerLoadingArea,
+      newRecord.vehicleInfo.dateAndTimeLoaded,
+      newRecord.vehicleInfo.loadingArea,
+      newRecord.vehicleInfo.loadingDensity
+    ]);
 
-    await dbConnect.query(
-        '''
-        INSERT INTO FwrInfo(lastFwrDate, lastFwrLocation) VALUES (?,?)''', [newRecord.fwrInfo.lastFwrDate, newRecord.fwrInfo.lastFwrLocation]);
+    await dbConnect.query('''
+        INSERT INTO FwrInfo(lastFwrDate, lastFwrLocation) VALUES (?,?)''',
+        [newRecord.fwrInfo.lastFwrDate, newRecord.fwrInfo.lastFwrLocation]);
 
-    await dbConnect.query(
-        '''
+    await dbConnect.query('''
         INSERT INTO DeliveryInfo(departureAddress, LocationId, LocationName, ContactInfo, shipperIsOwner, shipperName) VALUES
-        (?,?,?,?,?,?)''', [newRecord.deliveryInfo.additionalWelfareConcerns, newRecord.deliveryInfo.arrivalDateAndTime,
-        newRecord.deliveryInfo.recInfo]
-    );
+        (?,?,?,?,?,?)''', [
+      newRecord.deliveryInfo.additionalWelfareConcerns,
+      newRecord.deliveryInfo.arrivalDateAndTime,
+      newRecord.deliveryInfo.recInfo
+    ]);
 
-    await dbConnect.query(
-      '''
-      INSERT INTO AckInfo(receiverAck, shipperAck, tranAck) VALUES (?,?,?)''',
-      [newRecord.ackInfo.receiverAck, newRecord.ackInfo.shipperAck, newRecord.ackInfo.transporterAck]
-    );
+    await dbConnect.query('''
+      INSERT INTO AckInfo(receiverAck, shipperAck, tranAck) VALUES (?,?,?)''', [
+      newRecord.ackInfo.receiverAck,
+      newRecord.ackInfo.shipperAck,
+      newRecord.ackInfo.transporterAck
+    ]);
 
     dbConnect.close();
   }

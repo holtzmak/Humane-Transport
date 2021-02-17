@@ -37,7 +37,6 @@ class TransporterInfo {
 
   List<String> driverNames() => List.unmodifiable(_driverNames);
 
-
   String toString() => '''Name and address of transporting company: $companyName
   $companyAddress
   Driver(s) name(s): ${driverNames().join(",")}
@@ -50,9 +49,7 @@ class TransporterInfo {
   Driver(s) have received humane transport training?: ${driversHaveTraining ? 'Yes' : 'No'}
   Training type: $trainingType, Expiry date: ${DateFormat("yyyy-MM-dd hh:mm").format(trainingExpiryDate)}''';
 
-
   Map<String, dynamic> toMap() {
-
     var map = <String, dynamic>{
       'companyName': companyName,
       'companyAddress': companyAddress,
