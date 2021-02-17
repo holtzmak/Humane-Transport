@@ -5,6 +5,7 @@ import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
+import 'package:app/ui/views/active/atr_editing_screen.dart';
 import 'package:app/ui/widgets/atr_preview_card.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -33,9 +34,8 @@ class ActiveScreenViewModel extends BaseViewModel {
 
   ATRPreviewCard createPreview(AnimalTransportRecord atr) => ATRPreviewCard(
       atr: atr,
-      onTap: () {
-        // TODO: #134. Link the editing screen
-      });
+      onTap: () => _navigationService.navigateTo(ATREditingScreen.route,
+          arguments: atr));
 
   void addAll(List<ATRPreviewCard> animalTransportPreviews) {
     _animalTransportPreviews.addAll(animalTransportPreviews);

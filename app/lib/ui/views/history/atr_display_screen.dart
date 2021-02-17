@@ -5,10 +5,11 @@ import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ATRDisplayScreen extends StatefulWidget {
-  static const route = "/atrDisplay";
+  static const route = "/atrDisplayScreen";
   final List<ExpansionListItem> _displayFields = [];
 
-  ATRDisplayScreen({Key key, AnimalTransportRecord atr}) : super(key: key) {
+  ATRDisplayScreen({Key key, @required AnimalTransportRecord atr})
+      : super(key: key) {
     _displayFields.addAll([
       ExpansionListItem(
           headerValue: 'Shipper\'s Information',
@@ -47,7 +48,7 @@ class _ATRDisplayScreenState extends State<ATRDisplayScreen> {
                 automaticallyImplyLeading: false,
                 leading: new IconButton(
                   icon: new Icon(Icons.arrow_back_ios),
-                  onPressed: () => model.navigateToHistoryScreen(),
+                  onPressed: model.navigateToHistoryScreen,
                 ),
               ),
               body: SingleChildScrollView(
