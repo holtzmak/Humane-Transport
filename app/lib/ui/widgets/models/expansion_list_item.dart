@@ -11,3 +11,21 @@ class ExpansionListItem {
     this.isExpanded = false,
   });
 }
+
+Widget buildExpansionPanelList(
+    {@required Function(int, bool) expansionCallback,
+    @required List<ExpansionListItem> items}) {
+  return ExpansionPanelList(
+    expandedHeaderPadding: EdgeInsets.only(top: 0.0, bottom: 0.0),
+    expansionCallback: expansionCallback,
+    children: items.map<ExpansionPanel>((item) {
+      return ExpansionPanel(
+        headerBuilder: (context, isExpanded) =>
+            ListTile(title: Text(item.headerValue)),
+        body: item.expandedValue,
+        isExpanded: item.isExpanded,
+        canTapOnHeader: true,
+      );
+    }).toList(),
+  );
+}

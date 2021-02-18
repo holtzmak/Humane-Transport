@@ -53,29 +53,15 @@ class _ATRDisplayScreenState extends State<ATRDisplayScreen> {
               ),
               body: SingleChildScrollView(
                 child: Container(
-                  child: _buildExpansionPanels(),
+                  child: buildExpansionPanelList(
+                      expansionCallback: (int index, bool isExpanded) {
+                        setState(() {
+                          widget._displayFields[index].isExpanded = !isExpanded;
+                        });
+                      },
+                      items: widget._displayFields),
                 ),
               ),
             ));
-  }
-
-  Widget _buildExpansionPanels() {
-    return ExpansionPanelList(
-      expandedHeaderPadding: EdgeInsets.only(top: 0.0, bottom: 0.0),
-      expansionCallback: (int index, bool isExpanded) {
-        setState(() {
-          widget._displayFields[index].isExpanded = !isExpanded;
-        });
-      },
-      children: widget._displayFields.map<ExpansionPanel>((item) {
-        return ExpansionPanel(
-          headerBuilder: (context, isExpanded) =>
-              ListTile(title: Text(item.headerValue)),
-          body: item.expandedValue,
-          isExpanded: item.isExpanded,
-          canTapOnHeader: true,
-        );
-      }).toList(),
-    );
   }
 }

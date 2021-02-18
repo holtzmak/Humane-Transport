@@ -17,6 +17,24 @@ class Address {
       @required this.country,
       @required this.postalCode});
 
+  @override
+  int get hashCode =>
+      streetAddress.hashCode ^
+      city.hashCode ^
+      provinceOrState.hashCode ^
+      country.hashCode ^
+      postalCode.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is Address) &&
+        other.streetAddress == streetAddress &&
+        other.city == city &&
+        other.provinceOrState == provinceOrState &&
+        other.country == country &&
+        other.postalCode == postalCode;
+  }
+
   String toString() =>
       '$streetAddress\n$city, $provinceOrState, $country, $postalCode';
 }

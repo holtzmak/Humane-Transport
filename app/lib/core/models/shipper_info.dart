@@ -19,6 +19,25 @@ class ShipperInfo {
       @required this.departureAddress,
       @required this.shipperContactInfo});
 
+  @override
+  int get hashCode =>
+      shipperName.hashCode ^
+      shipperIsAnimalOwner.hashCode ^
+      departureLocationId.hashCode ^
+      departureLocationName.hashCode ^
+      departureAddress.hashCode ^
+      shipperContactInfo.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is ShipperInfo) &&
+        other.shipperName == shipperName &&
+        other.shipperIsAnimalOwner == shipperIsAnimalOwner &&
+        other.departureLocationId == departureLocationId &&
+        other.departureAddress == departureAddress &&
+        other.shipperContactInfo == shipperContactInfo;
+  }
+
   Widget toWidget() {
     return Column(children: [
       ListTile(

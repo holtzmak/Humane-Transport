@@ -26,7 +26,7 @@ class ShipperInfoFormField extends GroupFormField<ShipperInfo> {
             AddressFormField(initialAddr: initialInfo.departureAddress),
         _contactInfoController =
             TextEditingController(text: initialInfo.shipperContactInfo),
-        super(key: key);
+        super(key: key, formName: "Shipper's Information");
 
   @override
   _ShipperInfoFormFieldState createState() => _ShipperInfoFormFieldState();
