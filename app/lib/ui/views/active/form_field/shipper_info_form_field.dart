@@ -1,7 +1,7 @@
-import 'package:app/core/models/address.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:flutter/material.dart';
 
+import 'address_form_field.dart';
 import 'group_form_field.dart';
 
 class ShipperInfoFormField extends GroupFormField<ShipperInfo> {
@@ -10,6 +10,7 @@ class ShipperInfoFormField extends GroupFormField<ShipperInfo> {
   final TextEditingController _isAnimalOwnerController;
   final TextEditingController _departureIdController;
   final TextEditingController _departureNameController;
+  final AddressFormField _addressFormField;
   final TextEditingController _contactInfoController;
 
   ShipperInfoFormField(
@@ -21,6 +22,8 @@ class ShipperInfoFormField extends GroupFormField<ShipperInfo> {
             TextEditingController(text: initialInfo.departureLocationId),
         _departureNameController =
             TextEditingController(text: initialInfo.departureLocationName),
+        _addressFormField =
+            AddressFormField(initialAddr: initialInfo.departureAddress),
         _contactInfoController =
             TextEditingController(text: initialInfo.shipperContactInfo),
         super(key: key);
@@ -32,15 +35,11 @@ class ShipperInfoFormField extends GroupFormField<ShipperInfo> {
   void save() {
     onSaved(ShipperInfo(
         shipperName: _nameController.text,
-        shipperIsAnimalOwner: _isAnimalOwnerController == "Yes" ? true : false,
+        shipperIsAnimalOwner:
+            _isAnimalOwnerController.text == "Yes" ? true : false,
         departureLocationId: _departureIdController.text,
         departureLocationName: _departureNameController.text,
-        departureAddress: Address(
-            streetAddress: "123 Anywhere St.",
-            city: "Somewhere",
-            provinceOrState: "Someplace",
-            country: "Somehow",
-            postalCode: "ABC123"),
+        departureAddress: _addressFormField.getAddress(),
         shipperContactInfo: _contactInfoController.text));
   }
 }
@@ -80,13 +79,7 @@ class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
           subtitle: TextFormField(
             controller: widget._departureNameController,
           )),
-      // Make AddressFormField
-      // ListTile(
-      //     title: Text("Address"),
-      //     subtitle: TextFormField(
-      //       controller: _departureNameController,
-      //       initialValue: widget.initialInfo.departureLocationName,
-      //     )),
+      ListTile(title: Text("Address"), subtitle: widget._addressFormField),
       ListTile(
           title: Text("Shipper’s Contact information in case of emergency"),
           subtitle: TextFormField(

@@ -6,16 +6,12 @@ import 'package:app/core/models/test_animal_transport_record.dart';
 class DatabaseService {
   // TODO: #130. Replace with actual DB functions
   Stream<AnimalTransportRecord> getUpdatedCompleteATRs() async* {
-    while (true) {
-      await Future.delayed(Duration(seconds: 5));
-      yield testAnimalTransportRecord();
-    }
+    await Future.delayed(Duration(seconds: 5));
+    yield testAnimalTransportRecord();
   }
 
   Stream<AnimalTransportRecord> getUpdatedActiveATRs() async* {
-    while (true) {
-      await Future.delayed(Duration(seconds: 5));
-      yield testAnimalTransportRecord();
-    }
+    await Future.delayed(Duration(seconds: 5));
+    yield testAnimalTransportRecord();
   }
 }
