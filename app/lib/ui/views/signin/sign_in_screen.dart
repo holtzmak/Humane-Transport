@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 // TODO: Update as per #152.
 class SignInScreen extends StatelessWidget {
+  // TODO: TextEditingControllers must be disposed of in State<T> of Stateful widgets
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   static const route = '/signIn';

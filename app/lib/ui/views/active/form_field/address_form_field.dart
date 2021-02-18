@@ -4,27 +4,25 @@ import 'package:flutter/material.dart';
 /// A custom form field for addresses
 /// Intended to be used inside a GroupFormField
 class AddressFormField extends StatefulWidget {
-  // TODO: Make the address from known countries, states, cities
-  // https://pub.dev/packages/country_state_city_picker
-  final TextEditingController _streetController;
-  final TextEditingController _cityController;
-  final TextEditingController _stateController;
-  final TextEditingController _countryController;
-  final TextEditingController _postCodeController;
+  final Address initialAddr;
+  final _AddressFormFieldState state = _AddressFormFieldState();
 
-  AddressFormField({Key key, @required Address initialAddr})
-      : _streetController =
-            TextEditingController(text: initialAddr.streetAddress),
-        _cityController = TextEditingController(text: initialAddr.city),
-        _stateController =
-            TextEditingController(text: initialAddr.provinceOrState),
-        _countryController = TextEditingController(text: initialAddr.country),
-        _postCodeController =
-            TextEditingController(text: initialAddr.postalCode),
-        super(key: key);
+  AddressFormField({Key key, @required this.initialAddr}) : super(key: key);
 
   @override
-  _AddressFormFieldState createState() => _AddressFormFieldState();
+  _AddressFormFieldState createState() => state;
+
+  Address getAddress() => state.getAddress();
+}
+
+class _AddressFormFieldState extends State<AddressFormField> {
+  // TODO: Make the address from known countries, states, cities
+  // https://pub.dev/packages/country_state_city_picker
+  TextEditingController _streetController;
+  TextEditingController _cityController;
+  TextEditingController _stateController;
+  TextEditingController _countryController;
+  TextEditingController _postCodeController;
 
   Address getAddress() => Address(
       streetAddress: _streetController.text,
@@ -32,36 +30,58 @@ class AddressFormField extends StatefulWidget {
       provinceOrState: _stateController.text,
       country: _countryController.text,
       postalCode: _postCodeController.text);
-}
 
-class _AddressFormFieldState extends State<AddressFormField> {
+  @override
+  void initState() {
+    _streetController =
+        TextEditingController(text: widget.initialAddr.streetAddress);
+    _cityController = TextEditingController(text: widget.initialAddr.city);
+    _stateController =
+        TextEditingController(text: widget.initialAddr.provinceOrState);
+    _countryController =
+        TextEditingController(text: widget.initialAddr.country);
+    _postCodeController =
+        TextEditingController(text: widget.initialAddr.postalCode);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _streetController.dispose();
+    _cityController.dispose();
+    _stateController.dispose();
+    _countryController.dispose();
+    _postCodeController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       ListTile(
           title: Text("Street"),
           subtitle: TextFormField(
-            controller: widget._streetController,
+            controller: _streetController,
           )),
       ListTile(
           title: Text("City"),
           subtitle: TextFormField(
-            controller: widget._cityController,
+            controller: _cityController,
           )),
       ListTile(
           title: Text("Province or State"),
           subtitle: TextFormField(
-            controller: widget._stateController,
+            controller: _stateController,
           )),
       ListTile(
           title: Text("Country"),
           subtitle: TextFormField(
-            controller: widget._countryController,
+            controller: _countryController,
           )),
       ListTile(
           title: Text("Postal Code"),
           subtitle: TextFormField(
-            controller: widget._postCodeController,
+            controller: _postCodeController,
           )),
     ]);
   }
