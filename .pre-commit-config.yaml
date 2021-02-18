@@ -14,6 +14,6 @@ repos:
     hooks:
     -   id: google-style-java
 -   repo: https://github.com/Cretezy/flutter-format-pre-commit
-    rev: "master"
+    rev: 4a1df675bb74dea371c17934933e257e46f8dd98
     hooks:
     -   id: flutter-format
