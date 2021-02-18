@@ -5,35 +5,58 @@ import 'address_form_field.dart';
 import 'group_form_field.dart';
 
 class ShipperInfoFormField extends GroupFormField<ShipperInfo> {
+  final _ShipperInfoFormFieldState _state = _ShipperInfoFormFieldState();
   final Function(ShipperInfo info) onSaved;
-  final TextEditingController _nameController;
-  final TextEditingController _isAnimalOwnerController;
-  final TextEditingController _departureIdController;
-  final TextEditingController _departureNameController;
-  final AddressFormField _addressFormField;
-  final TextEditingController _contactInfoController;
+  final ShipperInfo initialInfo;
 
   ShipperInfoFormField(
-      {Key key, @required ShipperInfo initialInfo, @required this.onSaved})
-      : _nameController = TextEditingController(text: initialInfo.shipperName),
-        _isAnimalOwnerController = TextEditingController(
-            text: initialInfo.shipperIsAnimalOwner ? "Yes" : "No"),
-        _departureIdController =
-            TextEditingController(text: initialInfo.departureLocationId),
-        _departureNameController =
-            TextEditingController(text: initialInfo.departureLocationName),
-        _addressFormField =
-            AddressFormField(initialAddr: initialInfo.departureAddress),
-        _contactInfoController =
-            TextEditingController(text: initialInfo.shipperContactInfo),
-        super(key: key, formName: "Shipper's Information");
+      {Key key, @required this.initialInfo, @required this.onSaved})
+      : super(key: key, formName: "Shipper's Information");
 
   @override
-  _ShipperInfoFormFieldState createState() => _ShipperInfoFormFieldState();
+  _ShipperInfoFormFieldState createState() => _state;
 
   @override
+  void save() => _state.save();
+}
+
+class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
+  TextEditingController _nameController;
+  TextEditingController _isAnimalOwnerController;
+  TextEditingController _departureIdController;
+  TextEditingController _departureNameController;
+  AddressFormField _addressFormField;
+  TextEditingController _contactInfoController;
+
+  @override
+  void initState() {
+    _nameController =
+        TextEditingController(text: widget.initialInfo.shipperName);
+    _isAnimalOwnerController = TextEditingController(
+        text: widget.initialInfo.shipperIsAnimalOwner ? "Yes" : "No");
+    _departureIdController =
+        TextEditingController(text: widget.initialInfo.departureLocationId);
+    _departureNameController =
+        TextEditingController(text: widget.initialInfo.departureLocationName);
+    _addressFormField =
+        AddressFormField(initialAddr: widget.initialInfo.departureAddress);
+    _contactInfoController =
+        TextEditingController(text: widget.initialInfo.shipperContactInfo);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _isAnimalOwnerController.dispose();
+    _departureIdController.dispose();
+    _departureNameController.dispose();
+    _contactInfoController.dispose();
+    super.dispose();
+  }
+
   void save() {
-    onSaved(ShipperInfo(
+    widget.onSaved(ShipperInfo(
         shipperName: _nameController.text,
         shipperIsAnimalOwner:
             _isAnimalOwnerController.text == "Yes" ? true : false,
@@ -42,23 +65,21 @@ class ShipperInfoFormField extends GroupFormField<ShipperInfo> {
         departureAddress: _addressFormField.getAddress(),
         shipperContactInfo: _contactInfoController.text));
   }
-}
 
-class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       ListTile(
           title: Text("Name"),
           subtitle: TextFormField(
-            controller: widget._nameController,
+            controller: _nameController,
           )),
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text(
               "The shipper is the owner of the animals loaded in the vehicle?"),
           subtitle: DropdownButtonFormField(
-            value: widget._isAnimalOwnerController.text,
+            value: _isAnimalOwnerController.text,
             items: ["Yes", "No"]
                 .map((label) => DropdownMenuItem(
                       child: Text(label),
@@ -66,24 +87,24 @@ class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
                     ))
                 .toList(),
             onChanged: (String value) => setState(() {
-              widget._isAnimalOwnerController.text = value;
+              _isAnimalOwnerController.text = value;
             }),
           )),
       ListTile(
           title: Text("Departure Premises Identification number (PID)"),
           subtitle: TextFormField(
-            controller: widget._departureIdController,
+            controller: _departureIdController,
           )),
       ListTile(
           title: Text("Name"),
           subtitle: TextFormField(
-            controller: widget._departureNameController,
+            controller: _departureNameController,
           )),
-      ListTile(title: Text("Address"), subtitle: widget._addressFormField),
+      ListTile(title: Text("Address"), subtitle: _addressFormField),
       ListTile(
           title: Text("Shipper’s Contact information in case of emergency"),
           subtitle: TextFormField(
-            controller: widget._contactInfoController,
+            controller: _contactInfoController,
           )),
       RaisedButton(child: Text("Save"), onPressed: widget.save)
     ]);
