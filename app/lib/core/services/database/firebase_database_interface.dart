@@ -1,6 +1,7 @@
 import 'dart:async';
-
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/firestore_user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mysql1/mysql1.dart';
@@ -10,9 +11,28 @@ import 'database_interface.dart';
 // TODO: #130. Replace MySQL and SQLFLite with Firebase Database calls.
 // We also probably need a separate service for FireBaseAuthentication
 // Up to you if these are in the same file
-class FirebaseDatabaseInterface extends DatabaseInterface {
+class FirebaseDatabaseInterface implements DatabaseInterface {
+  final FirebaseFirestore _firestore;
+
   var networkStatus;
   MySqlConnection dbConnect;
+
+  FirebaseDatabaseInterface(this._firestore);
+
+  /*
+    Explanation why 'set' is used instead of 'add' when new user is created in
+    FirebaseAuth.
+    https://stackoverflow.com/questions/60423700/flutter-creating-a-user-in-firestore-using-the-account-created-from-firebase-au
+  */
+  Future<void> newUser(FirestoreUser newUser) async =>
+      _firestore.collection('users').doc(newUser.userId).set(newUser.toJSON());
+
+  Future<FirestoreUser> getUser(String userId) async => _firestore
+      .collection('users')
+      .doc(userId)
+      .get()
+      .then((DocumentSnapshot snapshot) =>
+          FirestoreUser.fromJSON(snapshot.data()));
 
   Future<bool> checkConnectivity() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -34,33 +54,6 @@ class FirebaseDatabaseInterface extends DatabaseInterface {
         db: 'remote_database',
         password: "capstone"));
     return remoteConnect;
-  }
-
-  newUser(User newUser) async {
-    var res;
-    networkStatus = await checkConnectivity();
-
-    if (networkStatus == true) {
-      dbConnect = await connectRemote();
-      res = await dbConnect.query('''DATABASE QUERY''');
-      dbConnect.close();
-      return res;
-    } else
-      print("Cannot Register(Connection Error)");
-  }
-
-  Future<Results> getUser(User getUser) async {
-    dbConnect = await connectRemote();
-    var userQuery = await dbConnect.query('''DATABASE QUERY''');
-    dbConnect.close();
-    return userQuery;
-  }
-
-  Future<dynamic> updatePassword(User user) async {
-    dbConnect = await connectRemote();
-    var updatePwd = await dbConnect.query('''DATABASE QUERY''');
-    dbConnect.close();
-    return updatePwd;
   }
 
   Future<dynamic> newRecord(AnimalTransportRecord newRecord) async {
