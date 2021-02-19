@@ -14,6 +14,8 @@ abstract class DatabaseInterface {
 
   Future<dynamic> getRecord(User user);
 
+  // TODO: #130. Replace these individual methods with single functions like updateIncompleteATR(), addCompleteATR(), removeIncompleteATR(), and so on
+  // We don't handle ATRs in pieces ATM
   Future<dynamic> updateTranInfo();
   // We might not need this
   Future<dynamic> updateShipperInfo();
