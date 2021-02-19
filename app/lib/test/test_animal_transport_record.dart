@@ -15,12 +15,18 @@ import 'package:flutter/material.dart';
 
 // Test tools intended to be used for convenience.
 
-testAddress() => Address(
-    streetAddress: "123 Anywhere St.",
-    city: "Somewhere",
-    provinceOrState: "Someplace",
-    country: "Somehow",
-    postalCode: "ABC123");
+testAddress(
+        {String streetAddress,
+        String city,
+        String provinceOrState,
+        String country,
+        String postalCode}) =>
+    Address(
+        streetAddress: streetAddress ?? "123 Anywhere St.",
+        city: city ?? "Somewhere",
+        provinceOrState: provinceOrState ?? "Someplace",
+        country: country ?? "Somehow",
+        postalCode: postalCode ?? "ABC123");
 
 // If you want to specify any info use AnimalTransportRecord.with()
 testAnimalTransportRecord(
