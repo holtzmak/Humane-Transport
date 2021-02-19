@@ -14,6 +14,9 @@ class DatabaseService {
   Future<void> newUser(FirestoreUser newUser) async =>
       interface.newUser(newUser);
 
+  // TODO: #130. Replace these functions with the Firestore provider pattern equivalent
+  // Meaning, this function may stay but it needs the "real" implementation
+  // where we listen to Firestore for changes and get them
   Stream<AnimalTransportRecord> getUpdatedCompleteATRs() async* {
     await Future.delayed(Duration(seconds: 5));
     yield testAnimalTransportRecord();
