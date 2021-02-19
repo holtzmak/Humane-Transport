@@ -20,7 +20,7 @@ void setUpLocator() {
   locator.registerFactory<DatabaseInterface>(
       () => FirebaseDatabaseInterface(FirebaseFirestore.instance));
 
-  locator.registerLazySingleton(
+  locator.registerLazySingleton<DatabaseService>(
       () => DatabaseService(locator<DatabaseInterface>()));
 
   locator.registerLazySingleton<AuthenticationService>(
