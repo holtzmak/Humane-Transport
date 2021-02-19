@@ -1,6 +1,7 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
+import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
 import 'package:app/ui/views/active/form_field/group_form_field.dart';
@@ -12,6 +13,7 @@ import 'package:intl/intl.dart';
 
 class ATREditingScreen extends StatefulWidget {
   final DialogService _dialogService = locator<DialogService>();
+  final NavigationService _navigationService = locator<NavigationService>();
   static const route = "/atrEditingScreen";
   final AnimalTransportRecord atr;
 
@@ -46,10 +48,13 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     fields.forEach((groupField) => groupField.save());
     // TODO: Call service and submit the completed atr
     // TODO: Call service and remove the incomplete atr
-    widget._dialogService.showDialog(
-        title: "Animal Transport Form Submitted",
-        description:
-            '${DateFormat("yyyy-MM-dd hh:mm").format(_replacementAtr.vehicleInfo.dateAndTimeLoaded)}');
+    widget._dialogService
+        .showDialog(
+            title: "Animal Transport Form Submitted",
+            description:
+                '${DateFormat("yyyy-MM-dd hh:mm").format(_replacementAtr.vehicleInfo.dateAndTimeLoaded)}',
+            buttonText: "Ok")
+        .then((_) => widget._navigationService.pop());
   }
 
   @override
