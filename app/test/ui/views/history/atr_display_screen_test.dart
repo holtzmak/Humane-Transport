@@ -1,13 +1,12 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/view_models/history_screen_view_model.dart';
+import 'package:app/test/test_animal_transport_record.dart';
 import 'package:app/ui/views/history/atr_display_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
-
-import '../../../test_lib/test_animal_transport_record.dart';
 
 class MockNavigationService extends Mock implements NavigationService {}
 
