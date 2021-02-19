@@ -78,6 +78,26 @@ void main() {
     });
 
     testWidgets('calls onSaved with edited info when save button pressed',
-        (WidgetTester tester) async {});
+        (WidgetTester tester) async {
+      final initialName = "Jason Blue";
+      final editedName = "Jackson Black";
+      final testInfo = testShipperInfo(shipperName: initialName);
+      final expectedEditedInfo = testShipperInfo(shipperName: editedName);
+
+      final saveButtonFinder = find.widgetWithText(RaisedButton, "Save");
+      final shipperNameFinder = find.widgetWithText(TextFormField, initialName);
+
+      ShipperInfo callbackInfo;
+      final onSavedCallback = (ShipperInfo info) => callbackInfo = info;
+
+      await pumpShipperInfoFormField(tester, testInfo, onSavedCallback);
+      // Edit text
+      await tester.enterText(shipperNameFinder, editedName);
+      // Save
+      await tester.ensureVisible(saveButtonFinder);
+      await tester.tap(saveButtonFinder);
+      await tester.pumpAndSettle();
+      expect(callbackInfo, expectedEditedInfo);
+    });
   });
 }
