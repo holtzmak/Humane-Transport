@@ -109,18 +109,19 @@ class _StringFormFieldState extends State<StringFormField> {
   Widget build(BuildContext context) {
     return widget.onDelete.isPresent()
         ? ListTile(
-            title: Text(widget.initial),
-            subtitle: TextFormField(
-              controller: _textController,
-            ))
-        : ListTile(
-            title: Text(widget.initial),
+            title: Text(widget.title),
             subtitle: TextFormField(
               controller: _textController,
             ),
             trailing: IconButton(
               icon: Icon(Icons.delete),
-              onPressed: widget.onDelete.get()(getString()),
+              onPressed: () => widget.onDelete.get()(getString()),
+            ),
+          )
+        : ListTile(
+            title: Text(widget.title),
+            subtitle: TextFormField(
+              controller: _textController,
             ),
           );
   }
