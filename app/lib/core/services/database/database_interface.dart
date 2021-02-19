@@ -1,26 +1,23 @@
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/firestore_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class DatabaseInterface {
   // TODO: #130. The return types on these functions should not be dynamic
   // Make it explicit what each function returns, if anything
 
-  // For example, newUser should return Future<void>, we only care if it was a success
-  Future<dynamic> newUser(User newUser);
+  Future<void> newUser(FirestoreUser newUser);
 
-  // and getUser should return Future<User>, not dynamic
-  Future<dynamic> getUser(User getUser);
-
-  Future<dynamic> updatePassword(User user);
+  Future<FirestoreUser> getUser(String userId);
 
   Future<dynamic> newRecord(AnimalTransportRecord newRecord);
 
   Future<dynamic> getRecord(User user);
 
   Future<dynamic> updateTranInfo();
-
+  // We might not need this
   Future<dynamic> updateShipperInfo();
-
+  // We might not need this
   Future<dynamic> updateFwr();
 
   Future<dynamic> updateVehicleLoadingInfo();
