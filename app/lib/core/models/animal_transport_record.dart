@@ -19,6 +19,7 @@ class AnimalTransportRecord {
   final ContingencyPlanInfo contingencyInfo;
   final String atrId;
   final String userId;
+  final bool isComplete;
 
   AnimalTransportRecord({
     @required this.shipInfo,
@@ -30,6 +31,7 @@ class AnimalTransportRecord {
     @required this.contingencyInfo,
     @required this.atrId,
     @required this.userId,
+    this.isComplete = false,
   });
 
   AnimalTransportRecord.fromJSON(Map<String, dynamic> json)
@@ -41,7 +43,8 @@ class AnimalTransportRecord {
         vehicleInfo = LoadingVehicleInfo.fromJSON(json['vehicleInfo']),
         deliveryInfo = DeliveryInfo.fromJSON(json['deliveryInfo']),
         ackInfo = AcknowledgementInfo.fromJSON(json['ackInfo']),
-        contingencyInfo = ContingencyPlanInfo.fromJSON(json['contingencyInfo']);
+        contingencyInfo = ContingencyPlanInfo.fromJSON(json['contingencyInfo']),
+        isComplete = json['isComplete'];
 
   Map<String, dynamic> toJSON() => {
         'shipInfo': shipInfo.toJSON(),
