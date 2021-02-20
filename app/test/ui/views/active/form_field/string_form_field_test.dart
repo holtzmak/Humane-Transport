@@ -1,5 +1,5 @@
 import 'package:app/core/utilities/optional.dart';
-import 'package:app/ui/views/active/form_field/multi_list_string_form_field.dart';
+import 'package:app/ui/views/active/form_field/multi_string_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
