@@ -2,22 +2,25 @@ import 'package:app/core/utilities/optional.dart';
 import 'package:flutter/material.dart';
 
 /// A custom form field for List<String>
-class MultiListStringFormField extends StatefulWidget {
+class MultiStringFormField extends StatefulWidget {
   final List<String> initialList;
   final String titles;
-  final _MultiListStringFormFieldState state = _MultiListStringFormFieldState();
+  final _MultiStringFormFieldState state = _MultiStringFormFieldState();
 
-  MultiListStringFormField(
+  MultiStringFormField(
       {Key key, @required this.initialList, @required this.titles})
       : super(key: key);
 
   @override
-  _MultiListStringFormFieldState createState() => state;
+  _MultiStringFormFieldState createState() => state;
 
   List<String> getList() => state.getList();
 }
 
-class _MultiListStringFormFieldState extends State<MultiListStringFormField> {
+class _MultiStringFormFieldState extends State<MultiStringFormField> {
+  // TODO: #134. This class should offer validation for non-empty lists, if desired
+  // Meaning that the validation function should have optional non-empty check
+  // if at least one field should exist, and the first item should have no delete button
   final List<StringFormField> _fields = [];
 
   List<String> getList() => _fields.map((field) => field.getString()).toList();
@@ -45,8 +48,13 @@ class _MultiListStringFormFieldState extends State<MultiListStringFormField> {
 
   @override
   void initState() {
-    widget.initialList.map((it) => _addField(it));
     super.initState();
+    _fields.addAll(widget.initialList
+        .map((it) => StringFormField(
+            initial: it,
+            title: widget.titles,
+            onDelete: Optional.of(_deleteField)))
+        .toList());
   }
 
   @override
@@ -55,10 +63,12 @@ class _MultiListStringFormFieldState extends State<MultiListStringFormField> {
       children: [
         _fields.isEmpty
             ? Text("No fields, try adding some!")
-            : ListView.builder(
+            : Container(
+                child: ListView.builder(
+                shrinkWrap: true, // Make the List take min possible space
                 itemCount: _fields.length,
                 itemBuilder: (_, i) => _fields[i],
-              ),
+              )),
         RaisedButton(
           child: Text("Add field"),
           onPressed: () => _addField(""),
@@ -95,8 +105,8 @@ class _StringFormFieldState extends State<StringFormField> {
 
   @override
   void initState() {
-    _textController = TextEditingController(text: widget.initial);
     super.initState();
+    _textController = TextEditingController(text: widget.initial);
   }
 
   @override
