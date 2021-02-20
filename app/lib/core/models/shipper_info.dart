@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'address.dart';
 
 @immutable
@@ -18,6 +17,23 @@ class ShipperInfo {
       @required this.departureLocationName,
       @required this.departureAddress,
       @required this.shipperContactInfo});
+
+  ShipperInfo.fromJSON(Map<String, dynamic> json)
+      : shipperName = json['shipperName'],
+        shipperIsAnimalOwner = json['shipperIsAnimalOwner'],
+        departureLocationId = json['departureLocationId'],
+        departureLocationName = json['departureLocationName'],
+        departureAddress = Address.fromJSON(json['departureAddress']),
+        shipperContactInfo = json['shipperContactInfo'];
+
+  Map<String, dynamic> toJSON() => {
+        'shipperName': shipperName,
+        'shipperIsAnimalOwner': shipperIsAnimalOwner,
+        'departureLocationId': departureLocationId,
+        'departureLocationName': departureLocationName,
+        'departureAddress': departureAddress.toJSON(),
+        'shipperContactInfo': shipperContactInfo,
+      };
 
   @override
   int get hashCode =>

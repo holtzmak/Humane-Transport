@@ -17,6 +17,20 @@ class FeedWaterRestInfo {
 
   List<FeedWaterRestEvent> fwrEvents() => List.unmodifiable(_fwrEvents);
 
+  FeedWaterRestInfo.fromJSON(Map<String, dynamic> json)
+      : lastFwrDate = json['lastFwrDate'],
+        lastFwrLocation = Address.fromJSON(json['lastFwrLocation']),
+        _fwrEvents = json['_fwrEvents']
+            .map<FeedWaterRestEvent>(
+                (fwrEvent) => FeedWaterRestEvent.fromJson(fwrEvent))
+            .toList();
+
+  Map<String, dynamic> toJSON() => {
+        'lastFwrDate': lastFwrDate,
+        'lastFwrLocation': lastFwrLocation.toJSON(),
+        '_fwrEvents': _fwrEvents.map((fwrEvent) => fwrEvent.toJSON()).toList(),
+      };
+
   List<Widget> _fwrEventsToWidget() => _fwrEvents.isEmpty
       ? [
           ListTile(
@@ -61,6 +75,19 @@ class FeedWaterRestEvent {
       @required this.fwrTime,
       @required this.lastFwrLocation,
       @required this.fwrProvidedOnboard});
+
+  FeedWaterRestEvent.fromJson(Map<String, dynamic> json)
+      : animalsWereUnloaded = json['animalsWereUnloaded'],
+        fwrTime = json['fwrTime'],
+        lastFwrLocation = Address.fromJSON(json['lastFwrLocation']),
+        fwrProvidedOnboard = json['fwrProvidedOnboard'];
+
+  Map<String, dynamic> toJSON() => {
+        'animalsWereUnloaded': animalsWereUnloaded,
+        'fwrTime': fwrTime,
+        'lastFwrLocation': lastFwrLocation.toJSON(),
+        'fwrProvidedOnboard': fwrProvidedOnboard,
+      };
 
   Widget toWidget() {
     return Column(children: [

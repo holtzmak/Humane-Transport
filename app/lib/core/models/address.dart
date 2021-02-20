@@ -17,6 +17,21 @@ class Address {
       @required this.country,
       @required this.postalCode});
 
+  Address.fromJSON(Map<String, dynamic> json)
+      : streetAddress = json['streetAddress'],
+        city = json['city'],
+        provinceOrState = json['provinceOrState'],
+        postalCode = json['postalCode'],
+        country = json['country'];
+
+  Map<String, dynamic> toJSON() => {
+        'streetAddress': streetAddress,
+        'city': city,
+        'provinceOrState': provinceOrState,
+        'country': country,
+        'postalCode': postalCode
+      };
+
   @override
   int get hashCode =>
       streetAddress.hashCode ^

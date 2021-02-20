@@ -26,6 +26,32 @@ class ContingencyPlanInfo {
         _potentialSafetyActions = potentialSafetyActions,
         _contingencyEvents = contingencyEvents;
 
+  ContingencyPlanInfo.fromJSON(Map<String, dynamic> json)
+      : goalStatement = json['goalStatement'],
+        communicationPlan = json['communicationPlan'],
+        _crisisContacts = List.from(json['_crisisContacts']),
+        expectedPrepProcess = json['expectedPrepProcess'],
+        standardAnimalMonitoring = json['standardAnimalMonitoring'],
+        _potentialHazards = List.from(json['_potentialHazards']),
+        _potentialSafetyActions = List.from(json['_potentialSafetyActions']),
+        _contingencyEvents = json['_contingencyEvents']
+            .map<ContingencyPlanEvent>((contingencyEvent) =>
+                ContingencyPlanEvent.fromJSON(contingencyEvent))
+            .toList();
+
+  Map<String, dynamic> toJSON() => {
+        'goalStatement': goalStatement,
+        'communicationPlan': communicationPlan,
+        '_crisisContacts': _crisisContacts,
+        'expectedPrepProcess': expectedPrepProcess,
+        'standardAnimalMonitoring': standardAnimalMonitoring,
+        '_potentialHazards': _potentialHazards,
+        '_potentialSafetyActions': _potentialSafetyActions,
+        '_contingencyEvents': _contingencyEvents
+            .map((contingencyEvent) => contingencyEvent.toJSON())
+            .toList()
+      };
+
   List<String> crisisContacts() => List.unmodifiable(_crisisContacts);
 
   List<String> potentialHazards() => List.unmodifiable(_potentialHazards);
@@ -108,6 +134,27 @@ class ContingencyPlanEvent {
         _activities = activities,
         _actionsTaken = actionsTaken;
 
+  ContingencyPlanEvent.fromJSON(Map<String, dynamic> json)
+      : eventDateAndTime = json['eventDateAndTime'],
+        _producerContactsUsed = List.from(json['_producerContactsUsed']),
+        _receiverContactsUsed = List.from(json['_receiverContactsUsed']),
+        disturbancesIdentified = json['disturbancesIdentified'],
+        _activities = json['_activities']
+            .map<ContingencyActivity>(
+                (compAnimal) => ContingencyActivity.fromJSON(compAnimal))
+            .toList(),
+        _actionsTaken = List.from(json['_actionsTaken']);
+
+  Map<String, dynamic> toJSON() => {
+        'eventDateAndTime': eventDateAndTime,
+        '_producerContactsUsed': _producerContactsUsed,
+        '_receiverContactsUsed': _receiverContactsUsed,
+        'disturbancesIdentified': disturbancesIdentified,
+        '_activities':
+            _activities.map((activity) => activity.toJSON()).toList(),
+        '_actionsTaken': _actionsTaken,
+      };
+
   List<String> producerContactsUsed() =>
       List.unmodifiable(_producerContactsUsed);
 
@@ -165,6 +212,19 @@ class ContingencyActivity {
       @required this.personContacted,
       @required this.methodOfContact,
       @required this.instructionsGiven});
+
+  ContingencyActivity.fromJSON(Map<String, dynamic> json)
+      : time = json['time'],
+        personContacted = json['personContacted'],
+        methodOfContact = json['methodOfContact'],
+        instructionsGiven = json['instructionsGiven'];
+
+  Map<String, dynamic> toJSON() => {
+        'time': time,
+        'personContacted': personContacted,
+        'methodOfContact': methodOfContact,
+        'instructionsGiven': instructionsGiven,
+      };
 
   Widget toWidget() {
     return Column(children: [

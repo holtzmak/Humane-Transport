@@ -37,6 +37,37 @@ class TransporterInfo {
 
   List<String> driverNames() => List.unmodifiable(_driverNames);
 
+  TransporterInfo.fromJSON(Map<String, dynamic> json)
+      : companyName = json['companyName'],
+        companyAddress = Address.fromJSON(json['companyAddress']),
+        _driverNames = List.from(json['_driverNames']),
+        vehicleProvince = json['vehicleProvince'],
+        vehicleLicensePlate = json['vehicleLicensePlate'],
+        trailerProvince = json['trailerProvince'],
+        trailerLicensePlate = json['trailerLicensePlate'],
+        dateLastCleaned = json['dateLastCleaned'],
+        addressLastCleanedAt = Address.fromJSON(json['addressLastCleanedAt']),
+        driversAreBriefed = json['driversAreBriefed'],
+        driversHaveTraining = json['driversHaveTraining'],
+        trainingType = json['trainingType'],
+        trainingExpiryDate = json['trainingExpiryDate'];
+
+  Map<String, dynamic> toJSON() => {
+        'companyName': companyName,
+        'companyAddress': companyAddress.toJSON(),
+        '_driverNames': _driverNames,
+        'vehicleProvince': vehicleProvince,
+        'vehicleLicensePlate': vehicleLicensePlate,
+        'trailerProvince': trailerProvince,
+        'trailerLicensePlate': trailerLicensePlate,
+        'dateLastCleaned': dateLastCleaned,
+        'addressLastCleanedAt': addressLastCleanedAt.toJSON(),
+        'driversAreBriefed': driversAreBriefed,
+        'driversHaveTraining': driversHaveTraining,
+        'trainingType': trainingType,
+        'trainingExpiryDate': trainingExpiryDate,
+      };
+
   Widget toWidget() {
     return Column(children: [
       ListTile(

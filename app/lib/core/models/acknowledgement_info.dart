@@ -13,6 +13,17 @@ class AcknowledgementInfo {
       @required this.transporterAck,
       @required this.receiverAck});
 
+  AcknowledgementInfo.fromJSON(Map<String, dynamic> json)
+      : shipperAck = json['shipperAck'],
+        transporterAck = json['transporterAck'],
+        receiverAck = json['receiverAck'];
+
+  Map<String, dynamic> toJSON() => {
+        'shipperAck': shipperAck,
+        'transporterAck': transporterAck,
+        'receiverAck': receiverAck
+      };
+
   // TODO: Resolve how to display ack info, if it's an image or w/e
   Widget toWidget() {
     return Column(children: [

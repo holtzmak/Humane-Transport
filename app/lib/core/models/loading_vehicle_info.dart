@@ -17,6 +17,24 @@ class LoadingVehicleInfo {
       @required List<AnimalGroup> animalsLoaded})
       : _animalsLoaded = animalsLoaded;
 
+  LoadingVehicleInfo.fromJSON(Map<String, dynamic> json)
+      : dateAndTimeLoaded = json['dateAndTimeLoaded'],
+        loadingArea = json['loadingArea'],
+        loadingDensity = json['loadingDensity'],
+        animalsPerLoadingArea = json['animalsPerLoadingArea'],
+        _animalsLoaded = json['_animalsLoaded']
+            .map<AnimalGroup>(
+                (animalLoaded) => AnimalGroup.fromJSON(animalLoaded))
+            .toList();
+
+  Map<String, dynamic> toJSON() => {
+        'dateAndTimeLoaded': dateAndTimeLoaded,
+        'loadingArea': loadingArea,
+        'loadingDensity': loadingDensity,
+        'animalsPerLoadingArea': animalsPerLoadingArea,
+        '_animalsLoaded':
+            _animalsLoaded.map((animalLoaded) => animalLoaded.toJSON()).toList()
+      };
   List<AnimalGroup> animalsLoaded() => List.unmodifiable(_animalsLoaded);
 
   List<String> animalSpeciesLoaded() {
@@ -75,6 +93,37 @@ class AnimalGroup {
       @required List<CompromisedAnimal> specialNeedsAnimals})
       : _compromisedAnimals = compromisedAnimals,
         _specialNeedsAnimals = specialNeedsAnimals;
+
+  AnimalGroup.fromJSON(Map<String, dynamic> json)
+      : species = json['species'],
+        groupAge = json['groupAge'],
+        approximateWeight = json['approximateWeight'],
+        animalPurpose = json['animalPurpose'],
+        numberAnimals = json['numberAnimals'],
+        animalsFitForTransport = json['animalsFitForTransport'],
+        _compromisedAnimals = json['_compromisedAnimals']
+            .map<CompromisedAnimal>(
+                (compAnimal) => CompromisedAnimal.fromJSON(compAnimal))
+            .toList(),
+        _specialNeedsAnimals = json['_specialNeedsAnimals']
+            .map<CompromisedAnimal>(
+                (specialAnimal) => CompromisedAnimal.fromJSON(specialAnimal))
+            .toList();
+
+  Map<String, dynamic> toJSON() => {
+        'species': species,
+        'groupAge': groupAge,
+        'approximateWeight': approximateWeight,
+        'animalPurpose': animalPurpose,
+        'numberAnimals': numberAnimals,
+        'animalsFitForTransport': animalsFitForTransport,
+        '_compromisedAnimals': _compromisedAnimals
+            .map((compAnimal) => compAnimal.toJSON())
+            .toList(),
+        '_specialNeedsAnimals': _specialNeedsAnimals
+            .map((specialAnimal) => specialAnimal.toJSON())
+            .toList(),
+      };
 
   List<CompromisedAnimal> compromisedAnimals() =>
       List.unmodifiable(_compromisedAnimals);
@@ -162,6 +211,15 @@ class CompromisedAnimal {
   CompromisedAnimal(
       {@required this.animalDescription,
       @required this.measuresTakenToCareForAnimal});
+
+  CompromisedAnimal.fromJSON(Map<String, dynamic> json)
+      : animalDescription = json['animalDescription'],
+        measuresTakenToCareForAnimal = json['measuresTakenToCareForAnimal'];
+
+  Map<String, dynamic> toJSON() => {
+        'animalDescription': animalDescription,
+        'measuresTakenToCareForAnimal': measuresTakenToCareForAnimal,
+      };
 
   Widget toWidget() => ListTile(
       visualDensity: VisualDensity(horizontal: 0, vertical: -2),

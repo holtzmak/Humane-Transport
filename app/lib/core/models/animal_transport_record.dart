@@ -17,15 +17,39 @@ class AnimalTransportRecord {
   final DeliveryInfo deliveryInfo;
   final AcknowledgementInfo ackInfo;
   final ContingencyPlanInfo contingencyInfo;
+  final String atrId;
 
-  AnimalTransportRecord(
-      {@required this.shipInfo,
-      @required this.tranInfo,
-      @required this.fwrInfo,
-      @required this.vehicleInfo,
-      @required this.deliveryInfo,
-      @required this.ackInfo,
-      @required this.contingencyInfo});
+  AnimalTransportRecord({
+    @required this.shipInfo,
+    @required this.tranInfo,
+    @required this.fwrInfo,
+    @required this.vehicleInfo,
+    @required this.deliveryInfo,
+    @required this.ackInfo,
+    @required this.contingencyInfo,
+    @required this.atrId,
+  });
+
+  AnimalTransportRecord.fromJSON(Map<String, dynamic> json)
+      : shipInfo = ShipperInfo.fromJSON(json['shipInfo']),
+        tranInfo = TransporterInfo.fromJSON(json['tranInfo']),
+        fwrInfo = FeedWaterRestInfo.fromJSON(json['fwrInfo']),
+        vehicleInfo = LoadingVehicleInfo.fromJSON(json['vehicleInfo']),
+        deliveryInfo = DeliveryInfo.fromJSON(json['deliveryInfo']),
+        ackInfo = AcknowledgementInfo.fromJSON(json['ackInfo']),
+        contingencyInfo = ContingencyPlanInfo.fromJSON(json['contingencyInfo']),
+        atrId = json['atrId'];
+
+  Map<String, dynamic> toJSON() => {
+        'shipInfo': shipInfo.toJSON(),
+        'tranInfo': tranInfo.toJSON(),
+        'fwrInfo': fwrInfo.toJSON(),
+        'vehicleInfo': vehicleInfo.toJSON(),
+        'deliveryInfo': deliveryInfo.toJSON(),
+        'ackInfo': ackInfo.toJSON(),
+        'contingencyInfo': ackInfo.toJSON(),
+        'atrId': atrId
+      };
 
   AnimalTransportRecord withShipInfo(ShipperInfo newShipInfo) =>
       AnimalTransportRecord(
@@ -35,7 +59,8 @@ class AnimalTransportRecord {
           vehicleInfo: vehicleInfo,
           deliveryInfo: deliveryInfo,
           ackInfo: ackInfo,
-          contingencyInfo: contingencyInfo);
+          contingencyInfo: contingencyInfo,
+          atrId: atrId);
 
   AnimalTransportRecord withTransporterInfo(TransporterInfo newTranInfo) =>
       AnimalTransportRecord(
@@ -45,7 +70,8 @@ class AnimalTransportRecord {
           vehicleInfo: vehicleInfo,
           deliveryInfo: deliveryInfo,
           ackInfo: ackInfo,
-          contingencyInfo: contingencyInfo);
+          contingencyInfo: contingencyInfo,
+          atrId: atrId);
 
   AnimalTransportRecord withFwrInfo(FeedWaterRestInfo newFwrInfo) =>
       AnimalTransportRecord(
@@ -55,7 +81,8 @@ class AnimalTransportRecord {
           vehicleInfo: vehicleInfo,
           deliveryInfo: deliveryInfo,
           ackInfo: ackInfo,
-          contingencyInfo: contingencyInfo);
+          contingencyInfo: contingencyInfo,
+          atrId: atrId);
 
   AnimalTransportRecord withVehicleInfo(LoadingVehicleInfo newVehicleInfo) =>
       AnimalTransportRecord(
@@ -65,7 +92,8 @@ class AnimalTransportRecord {
           vehicleInfo: newVehicleInfo,
           deliveryInfo: deliveryInfo,
           ackInfo: ackInfo,
-          contingencyInfo: contingencyInfo);
+          contingencyInfo: contingencyInfo,
+          atrId: atrId);
 
   AnimalTransportRecord withDeliveryInfo(DeliveryInfo newDeliveryInfo) =>
       AnimalTransportRecord(
@@ -75,7 +103,8 @@ class AnimalTransportRecord {
           vehicleInfo: vehicleInfo,
           deliveryInfo: newDeliveryInfo,
           ackInfo: ackInfo,
-          contingencyInfo: contingencyInfo);
+          contingencyInfo: contingencyInfo,
+          atrId: atrId);
 
   AnimalTransportRecord withAckInfo(AcknowledgementInfo newAckInfo) =>
       AnimalTransportRecord(
@@ -85,7 +114,8 @@ class AnimalTransportRecord {
           vehicleInfo: vehicleInfo,
           deliveryInfo: deliveryInfo,
           ackInfo: newAckInfo,
-          contingencyInfo: contingencyInfo);
+          contingencyInfo: contingencyInfo,
+          atrId: atrId);
 
   AnimalTransportRecord withContingencyInfo(
           ContingencyPlanInfo newContingencyInfo) =>
@@ -96,5 +126,6 @@ class AnimalTransportRecord {
           vehicleInfo: vehicleInfo,
           deliveryInfo: deliveryInfo,
           ackInfo: ackInfo,
-          contingencyInfo: newContingencyInfo);
+          contingencyInfo: newContingencyInfo,
+          atrId: atrId);
 }
