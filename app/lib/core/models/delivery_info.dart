@@ -20,7 +20,8 @@ class DeliveryInfo {
 
   DeliveryInfo.fromJSON(Map<String, dynamic> json)
       : recInfo = ReceiverInfo.fromJson(json['receiverInfo']),
-        arrivalDateAndTime = json['arrivalDateAndTime'],
+        arrivalDateAndTime =
+            DateTime.parse(json['arrivalDateAndTime'].toString()),
         _compromisedAnimals = json['_compromisedAnimals']
             .map<CompromisedAnimal>(
                 (compAnimal) => CompromisedAnimal.fromJSON(compAnimal))

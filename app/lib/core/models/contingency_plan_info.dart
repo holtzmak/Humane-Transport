@@ -135,7 +135,7 @@ class ContingencyPlanEvent {
         _actionsTaken = actionsTaken;
 
   ContingencyPlanEvent.fromJSON(Map<String, dynamic> json)
-      : eventDateAndTime = json['eventDateAndTime'],
+      : eventDateAndTime = DateTime.parse(json['eventDateAndTime']),
         _producerContactsUsed = List.from(json['_producerContactsUsed']),
         _receiverContactsUsed = List.from(json['_receiverContactsUsed']),
         disturbancesIdentified = json['disturbancesIdentified'],
@@ -214,7 +214,7 @@ class ContingencyActivity {
       @required this.instructionsGiven});
 
   ContingencyActivity.fromJSON(Map<String, dynamic> json)
-      : time = json['time'],
+      : time = TimeOfDay.fromDateTime(DateTime.parse(json['time'])),
         personContacted = json['personContacted'],
         methodOfContact = json['methodOfContact'],
         instructionsGiven = json['instructionsGiven'];

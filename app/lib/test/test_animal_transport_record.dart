@@ -37,16 +37,19 @@ testAnimalTransportRecord(
         DeliveryInfo deliveryInfo,
         AcknowledgementInfo ackInfo,
         ContingencyPlanInfo contingencyInfo,
-        String atrId}) =>
+        String atrId,
+        String userId}) =>
     AnimalTransportRecord(
-        shipInfo: shipInfo ?? testShipperInfo(),
-        tranInfo: tranInfo ?? testTransporterInfo(),
-        fwrInfo: fwrInfo ?? testFwrInfo(),
-        vehicleInfo: vehicleInfo ?? testVehicleInfo(),
-        deliveryInfo: deliveryInfo ?? testDeliveryInfo(),
-        ackInfo: ackInfo ?? testAckInfo(),
-        contingencyInfo: contingencyInfo ?? testContingencyInfo(),
-        atrId: atrId ?? "someId");
+      shipInfo: shipInfo ?? testShipperInfo(),
+      tranInfo: tranInfo ?? testTransporterInfo(),
+      fwrInfo: fwrInfo ?? testFwrInfo(),
+      vehicleInfo: vehicleInfo ?? testVehicleInfo(),
+      deliveryInfo: deliveryInfo ?? testDeliveryInfo(),
+      ackInfo: ackInfo ?? testAckInfo(),
+      contingencyInfo: contingencyInfo ?? testContingencyInfo(),
+      atrId: atrId ?? "someId",
+      userId: userId ?? "some userId",
+    );
 
 testShipperInfo(
         {String shipperName,

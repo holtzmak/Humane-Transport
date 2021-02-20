@@ -18,7 +18,8 @@ class LoadingVehicleInfo {
       : _animalsLoaded = animalsLoaded;
 
   LoadingVehicleInfo.fromJSON(Map<String, dynamic> json)
-      : dateAndTimeLoaded = json['dateAndTimeLoaded'],
+      : dateAndTimeLoaded =
+            DateTime.parse(json['dateAndTimeLoaded'].toString()),
         loadingArea = json['loadingArea'],
         loadingDensity = json['loadingDensity'],
         animalsPerLoadingArea = json['animalsPerLoadingArea'],
