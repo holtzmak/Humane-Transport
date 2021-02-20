@@ -34,7 +34,7 @@ class ReceiverInfo {
   Map<String, dynamic> toJSON() => {
         'receiverCompanyName': receiverCompanyName,
         'receiverName': receiverName,
-        'accountId': receiverCompanyName ?? Optional.empty(),
+        'accountId': accountId ?? Optional.empty(),
         'destinationLocationId': destinationLocationId,
         'destinationLocationName': destinationLocationName,
         'destinationAddress': destinationAddress.toJSON(),
