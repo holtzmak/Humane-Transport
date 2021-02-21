@@ -10,7 +10,7 @@ abstract class DatabaseInterface {
 
   Future<FirestoreUser> getUser(String userId);
 
-  Future<dynamic> newRecord(AnimalTransportRecord newRecord);
+  Future<void> newRecord(AnimalTransportRecord newRecord);
 
   Future<dynamic> getRecord(User user);
 
