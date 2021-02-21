@@ -20,6 +20,9 @@ void main() {
       final widget = StringFormField(
         initial: testItem,
         title: testTitle,
+        onSaved: (String _) {
+          // do nothing for test
+        },
         onDelete: Optional.empty(),
       );
       await pumpStringFormField(tester, widget);
@@ -28,21 +31,23 @@ void main() {
 
     testWidgets('calls onDelete when delete button pressed',
         (WidgetTester tester) async {
-      final testItem = "Test";
-      String callbackInfo;
-      final onSavedCallback = (String info) => callbackInfo = info;
+      bool wasCallback;
+      final onDeleteCallback = () => wasCallback = true;
       final deleteButtonFinder = find.byIcon(Icons.delete);
       final widget = StringFormField(
-        initial: testItem,
+        initial: "Test",
         title: "Test Title",
-        onDelete: Optional.of(onSavedCallback),
+        onSaved: (String _) {
+          // do nothing for test
+        },
+        onDelete: Optional.of(onDeleteCallback),
       );
 
       await pumpStringFormField(tester, widget);
       await tester.ensureVisible(deleteButtonFinder);
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
-      expect(callbackInfo, testItem);
+      expect(wasCallback, isTrue);
     });
 
     testWidgets('has no onDelete', (WidgetTester tester) async {
@@ -50,36 +55,36 @@ void main() {
       final widget = StringFormField(
         initial: "Test",
         title: "Test Title",
+        onSaved: (String _) {
+          // do nothing for test
+        },
         onDelete: Optional.empty(),
       );
       await pumpStringFormField(tester, widget);
       expect(deleteButtonFinder, findsNothing);
     });
 
-    testWidgets('getString with info', (WidgetTester tester) async {
+    testWidgets('onSaved called when edited', (WidgetTester tester) async {
       final testInfo = "Test";
+      final editedInfo = "Edited";
+      String callback;
+      final onSavedCallback = (String changed) => callback = changed;
+      final fieldFinder = find.widgetWithText(TextFormField, testInfo);
+      final editedFieldFinder = find.widgetWithText(TextFormField, editedInfo);
       final widget = StringFormField(
         initial: testInfo,
         title: "Test Title",
-        onDelete: Optional.empty(),
-      );
-      await pumpStringFormField(tester, widget);
-      expect(widget.getString(), testInfo);
-    });
-
-    testWidgets('getString with edited info', (WidgetTester tester) async {
-      final testInfo = "Test";
-      final editedTestInfo = "EditedTest";
-      final fieldFinder = find.widgetWithText(ListTile, testInfo);
-      final widget = StringFormField(
-        initial: testInfo,
-        title: "Test Title",
+        onSaved: onSavedCallback,
         onDelete: Optional.empty(),
       );
 
       await pumpStringFormField(tester, widget);
-      await tester.enterText(fieldFinder, editedTestInfo);
-      expect(editedTestInfo, widget.getString());
+      await tester.enterText(fieldFinder, editedInfo);
+      await tester.pumpAndSettle();
+      // expect was saved
+      expect(callback, editedInfo);
+      // expect edited text visible
+      expect(editedFieldFinder, findsOneWidget);
     });
   });
 }
