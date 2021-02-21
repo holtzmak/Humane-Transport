@@ -18,6 +18,25 @@ class DeliveryInfo {
       @required this.additionalWelfareConcerns})
       : _compromisedAnimals = compromisedAnimals;
 
+  DeliveryInfo.fromJSON(Map<String, dynamic> json)
+      : recInfo = ReceiverInfo.fromJson(json['receiverInfo']),
+        arrivalDateAndTime =
+            DateTime.parse(json['arrivalDateAndTime'].toString()),
+        _compromisedAnimals = json['_compromisedAnimals']
+            .map<CompromisedAnimal>(
+                (compAnimal) => CompromisedAnimal.fromJSON(compAnimal))
+            .toList(),
+        additionalWelfareConcerns = json['additionalWelfareConcerns'];
+
+  Map<String, dynamic> toJSON() => {
+        'recInfo': recInfo.toJSON(),
+        'arrivalDateAndTime': arrivalDateAndTime,
+        '_compromisedAnimals': _compromisedAnimals
+            .map((compAnimal) => compAnimal.toJSON())
+            .toList(),
+        'additionalWelfareConcerns': additionalWelfareConcerns,
+      };
+
   List<CompromisedAnimal> compromisedAnimals() =>
       List.unmodifiable(_compromisedAnimals);
 

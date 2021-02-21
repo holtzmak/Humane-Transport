@@ -22,6 +22,25 @@ class ReceiverInfo {
       @required this.destinationAddress,
       @required this.receiverContactInfo});
 
+  ReceiverInfo.fromJson(Map<String, dynamic> json)
+      : receiverCompanyName = json['receiverCompanyName'],
+        receiverName = json['receiverName'],
+        accountId = Optional.ofNullable(json['accountId']),
+        destinationLocationId = json['destinationLocationId'],
+        destinationLocationName = json['destinationLocationName'],
+        destinationAddress = Address.fromJSON(json['destinationAddress']),
+        receiverContactInfo = json['receiverContactInfo'];
+
+  Map<String, dynamic> toJSON() => {
+        'receiverCompanyName': receiverCompanyName,
+        'receiverName': receiverName,
+        'accountId': accountId.isPresent() ? accountId.get() : null,
+        'destinationLocationId': destinationLocationId,
+        'destinationLocationName': destinationLocationName,
+        'destinationAddress': destinationAddress.toJSON(),
+        'receiverContactInfo': receiverContactInfo
+      };
+
   Widget toWidget() {
     return Column(children: [
       ListTile(
