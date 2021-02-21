@@ -25,7 +25,7 @@ class ReceiverInfo {
   ReceiverInfo.fromJson(Map<String, dynamic> json)
       : receiverCompanyName = json['receiverCompanyName'],
         receiverName = json['receiverName'],
-        accountId = json['accountId'] ?? Optional.empty(),
+        accountId = Optional.ofNullable(json['accountId']),
         destinationLocationId = json['destinationLocationId'],
         destinationLocationName = json['destinationLocationName'],
         destinationAddress = Address.fromJSON(json['destinationAddress']),
@@ -34,7 +34,7 @@ class ReceiverInfo {
   Map<String, dynamic> toJSON() => {
         'receiverCompanyName': receiverCompanyName,
         'receiverName': receiverName,
-        'accountId': accountId ?? Optional.empty(),
+        'accountId': accountId.isPresent() ? accountId.get() : null,
         'destinationLocationId': destinationLocationId,
         'destinationLocationName': destinationLocationName,
         'destinationAddress': destinationAddress.toJSON(),

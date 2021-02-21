@@ -1,7 +1,6 @@
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:flutter/material.dart';
-
 import 'acknowledgement_info.dart';
 import 'contingency_plan_info.dart';
 import 'delivery_info.dart';
@@ -17,7 +16,6 @@ class AnimalTransportRecord {
   final DeliveryInfo deliveryInfo;
   final AcknowledgementInfo ackInfo;
   final ContingencyPlanInfo contingencyInfo;
-  final String atrId;
   final String userId;
   final bool isComplete;
 
@@ -29,14 +27,12 @@ class AnimalTransportRecord {
     @required this.deliveryInfo,
     @required this.ackInfo,
     @required this.contingencyInfo,
-    @required this.atrId,
     @required this.userId,
     this.isComplete = false,
   });
 
   AnimalTransportRecord.fromJSON(Map<String, dynamic> json)
-      : atrId = json['atrId'],
-        userId = json['userId'],
+      : userId = json['userId'],
         shipInfo = ShipperInfo.fromJSON(json['shipInfo']),
         tranInfo = TransporterInfo.fromJSON(json['tranInfo']),
         fwrInfo = FeedWaterRestInfo.fromJSON(json['fwrInfo']),
@@ -54,7 +50,6 @@ class AnimalTransportRecord {
         'deliveryInfo': deliveryInfo.toJSON(),
         'ackInfo': ackInfo.toJSON(),
         'contingencyInfo': ackInfo.toJSON(),
-        'atrId': atrId,
         'userId': userId
       };
 
@@ -67,7 +62,6 @@ class AnimalTransportRecord {
           deliveryInfo: deliveryInfo,
           ackInfo: ackInfo,
           contingencyInfo: contingencyInfo,
-          atrId: atrId,
           userId: userId);
 
   AnimalTransportRecord withTransporterInfo(TransporterInfo newTranInfo) =>
@@ -79,7 +73,6 @@ class AnimalTransportRecord {
           deliveryInfo: deliveryInfo,
           ackInfo: ackInfo,
           contingencyInfo: contingencyInfo,
-          atrId: atrId,
           userId: userId);
 
   AnimalTransportRecord withFwrInfo(FeedWaterRestInfo newFwrInfo) =>
@@ -91,7 +84,6 @@ class AnimalTransportRecord {
           deliveryInfo: deliveryInfo,
           ackInfo: ackInfo,
           contingencyInfo: contingencyInfo,
-          atrId: atrId,
           userId: userId);
 
   AnimalTransportRecord withVehicleInfo(LoadingVehicleInfo newVehicleInfo) =>
@@ -103,7 +95,6 @@ class AnimalTransportRecord {
           deliveryInfo: deliveryInfo,
           ackInfo: ackInfo,
           contingencyInfo: contingencyInfo,
-          atrId: atrId,
           userId: userId);
 
   AnimalTransportRecord withDeliveryInfo(DeliveryInfo newDeliveryInfo) =>
@@ -115,7 +106,6 @@ class AnimalTransportRecord {
           deliveryInfo: newDeliveryInfo,
           ackInfo: ackInfo,
           contingencyInfo: contingencyInfo,
-          atrId: atrId,
           userId: userId);
 
   AnimalTransportRecord withAckInfo(AcknowledgementInfo newAckInfo) =>
@@ -127,7 +117,6 @@ class AnimalTransportRecord {
           deliveryInfo: deliveryInfo,
           ackInfo: newAckInfo,
           contingencyInfo: contingencyInfo,
-          atrId: atrId,
           userId: userId);
 
   AnimalTransportRecord withContingencyInfo(
@@ -140,6 +129,5 @@ class AnimalTransportRecord {
           deliveryInfo: deliveryInfo,
           ackInfo: ackInfo,
           contingencyInfo: newContingencyInfo,
-          atrId: atrId,
           userId: userId);
 }

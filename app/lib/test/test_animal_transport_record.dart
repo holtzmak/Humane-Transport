@@ -47,7 +47,6 @@ testAnimalTransportRecord(
       deliveryInfo: deliveryInfo ?? testDeliveryInfo(),
       ackInfo: ackInfo ?? testAckInfo(),
       contingencyInfo: contingencyInfo ?? testContingencyInfo(),
-      atrId: atrId ?? "someId",
       userId: userId ?? "some userId",
     );
 

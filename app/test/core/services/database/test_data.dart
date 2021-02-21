@@ -12,7 +12,6 @@ Map<String, dynamic> fakeData() {
 
 Map<String, dynamic> fakeATR() {
   Map<String, dynamic> _fakeATRResponse = {
-    "atrId": "1235",
     "userId": "23512",
     "isComplete": false,
     "shipInfo": {
