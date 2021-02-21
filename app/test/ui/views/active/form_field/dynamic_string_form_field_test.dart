@@ -1,4 +1,4 @@
-import 'package:app/ui/views/active/form_field/multi_string_form_field.dart';
+import 'package:app/ui/views/active/form_field/dynamic_string_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,7 +12,7 @@ void main() {
   }
 
   Future<void> pumpStringFormField(
-          WidgetTester tester, MultiStringFormField widget) async =>
+          WidgetTester tester, DynamicStringFormField widget) async =>
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
         body: widget,
@@ -23,9 +23,12 @@ void main() {
         (WidgetTester tester) async {
       final testItems = ["Test0", "Test1", "Test2"];
       final testTitle = "Test Title";
-      final widget = MultiStringFormField(
+      final widget = DynamicStringFormField(
         initialList: testItems,
         titles: testTitle,
+        onSaved: (List<String> _) {
+          // do nothing for test
+        },
       );
       await pumpStringFormField(tester, widget);
       await tester.pumpAndSettle();
@@ -34,9 +37,12 @@ void main() {
 
     testWidgets('shows no information when no fields',
         (WidgetTester tester) async {
-      final widget = MultiStringFormField(
+      final widget = DynamicStringFormField(
         initialList: <String>[],
         titles: "Test Title",
+        onSaved: (List<String> _) {
+          // do nothing for test
+        },
       );
       await pumpStringFormField(tester, widget);
       expect(find.text("No fields, try adding some!"), findsOneWidget);
@@ -46,17 +52,20 @@ void main() {
         (WidgetTester tester) async {
       final testItems = ["Test0", "Test1", "Test2"];
       final testTitle = "Test Title";
-      final firstItemDeleteButtonFinder = find.byIcon(Icons.delete).last;
-      final widget = MultiStringFormField(
+      final firstItemDeleteButtonFinder = find.byIcon(Icons.delete).first;
+      final widget = DynamicStringFormField(
         initialList: testItems,
         titles: testTitle,
+        onSaved: (List<String> _) {
+          // do nothing for test
+        },
       );
 
       await pumpStringFormField(tester, widget);
       await tester.tap(firstItemDeleteButtonFinder);
       await tester.pumpAndSettle();
-      expect(find.text("Test2"), findsNothing);
-      verifyNoDuplicateInfoShown(testTitle, ["Test0", "Test1"]);
+      expect(find.text("Test0"), findsNothing);
+      verifyNoDuplicateInfoShown(testTitle, ["Test1", "Test2"]);
     });
 
     testWidgets('delete button pressed removes field, leaves empty list',
@@ -64,9 +73,12 @@ void main() {
       final testItems = ["Test0"];
       final testTitle = "Test Title";
       final deleteButtonFinder = find.byIcon(Icons.delete);
-      final widget = MultiStringFormField(
+      final widget = DynamicStringFormField(
         initialList: testItems,
         titles: testTitle,
+        onSaved: (List<String> _) {
+          // do nothing for test
+        },
       );
       await pumpStringFormField(tester, widget);
       await tester.tap(deleteButtonFinder);
@@ -77,51 +89,38 @@ void main() {
     testWidgets('add button pressed adds empty field',
         (WidgetTester tester) async {
       final testTitle = "Test Title";
-      final widget = MultiStringFormField(
+      final widget = DynamicStringFormField(
         initialList: <String>[],
         titles: testTitle,
+        onSaved: (List<String> _) {
+          // do nothing for test
+        },
       );
       await pumpStringFormField(tester, widget);
-      final addButtonFinder = find.widgetWithText(RaisedButton, "Add field");
+      final addButtonFinder = find.byIcon(Icons.add);
       await tester.tap(addButtonFinder);
       await tester.pumpAndSettle();
       verifyNoDuplicateInfoShown(testTitle, [""]);
+      expect(find.text("No fields, try adding some!"), findsNothing);
     });
 
-    testWidgets('getList with info', (WidgetTester tester) async {
-      final testTitle = "Test Title";
-      final testItems = ["Test0", "Test1", "Test2"];
-      final widget = MultiStringFormField(
-        initialList: testItems,
-        titles: testTitle,
-      );
-      await pumpStringFormField(tester, widget);
-      expect(widget.getList(), testItems);
-    });
-
-    testWidgets('getList with empty info', (WidgetTester tester) async {
-      final testTitle = "Test Title";
-      final testItems = <String>[];
-      final widget = MultiStringFormField(
-        initialList: testItems,
-        titles: testTitle,
-      );
-      await pumpStringFormField(tester, widget);
-      expect(widget.getList(), testItems);
-    });
-
-    testWidgets('getList with edited info', (WidgetTester tester) async {
+    testWidgets('onSaved called when info is edited',
+        (WidgetTester tester) async {
       final testTitle = "Test Title";
       final testItems = ["Test0", "Test1", "Test2"];
       final editedItems = ["Test3", "Test1", "Test2"];
+      List<String> callback;
+      final onSaved = (List<String> changed) => callback = changed;
       final fieldFinder = find.text("Test0");
-      final widget = MultiStringFormField(
+      final widget = DynamicStringFormField(
         initialList: testItems,
         titles: testTitle,
+        onSaved: onSaved,
       );
       await pumpStringFormField(tester, widget);
       await tester.enterText(fieldFinder, "Test3");
-      expect(widget.getList(), editedItems);
+      await tester.pumpAndSettle();
+      expect(callback, editedItems);
     });
   });
 }

@@ -1,40 +1,37 @@
 import 'package:app/core/utilities/optional.dart';
 import 'package:flutter/material.dart';
 
-/// A custom form field with onDelete callback
+/// A custom form field with onSaved and onDelete callback
 class StringFormField extends StatefulWidget {
   final String initial;
   final String title;
-  final Optional<Function(String)> onDelete;
-  final _StringFormFieldState state = _StringFormFieldState();
+  final FormFieldSetter<String> onSaved;
+  final Optional<Function()> onDelete;
 
   StringFormField(
       {Key key,
       @required this.initial,
       @required this.title,
+      @required this.onSaved,
       @required this.onDelete})
       : super(key: key);
 
   @override
-  _StringFormFieldState createState() => state;
-
-  String getString() => state.getString();
+  _StringFormFieldState createState() => _StringFormFieldState();
 }
 
 class _StringFormFieldState extends State<StringFormField> {
-  TextEditingController _textController;
-
-  String getString() => _textController.text;
+  TextEditingController controller;
 
   @override
   void initState() {
+    controller = TextEditingController(text: widget.initial);
     super.initState();
-    _textController = TextEditingController(text: widget.initial);
   }
 
   @override
   void dispose() {
-    _textController.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -44,17 +41,23 @@ class _StringFormFieldState extends State<StringFormField> {
         ? ListTile(
             title: Text(widget.title),
             subtitle: TextFormField(
-              controller: _textController,
+              controller: controller,
+              // This is the same as onSaved, so we can avoid needing an
+              // explicit save button in dynamic forms
+              onChanged: widget.onSaved,
+              onSaved: widget.onSaved,
             ),
             trailing: IconButton(
               icon: Icon(Icons.delete),
-              onPressed: () => widget.onDelete.get()(getString()),
+              onPressed: widget.onDelete.get(),
             ),
           )
         : ListTile(
             title: Text(widget.title),
             subtitle: TextFormField(
-              controller: _textController,
+              controller: controller,
+              onSaved: widget.onSaved,
+              onChanged: widget.onSaved,
             ),
           );
   }
