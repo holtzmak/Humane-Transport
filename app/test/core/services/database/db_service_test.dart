@@ -1,3 +1,4 @@
+import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/firestore_user.dart';
 import 'package:app/core/services/database/database_interface.dart';
 import 'package:app/core/services/database/database_service.dart';
@@ -15,6 +16,7 @@ void main() {
   final mockDocumentReference = MockDocumentReference();
   final mockDocumentSnapshot = MockDocumentSnapshot();
   final _fakeResponse = fakeData();
+  final _fakeAtrResponse = fakeATR();
   DatabaseService dbService;
   group('Database Service -', () {
     setUpAll(() async {
@@ -58,6 +60,14 @@ void main() {
           .thenReturn(mockDocumentReference);
       await dbService.newUser(userModel);
       verify(mockDocumentReference.set(userModel.toJSON()));
+    });
+
+    test('should add new atr to firestore', () async {
+      final userModel = AnimalTransportRecord.fromJSON(_fakeAtrResponse);
+      when(mockFirestoreInstance.collection(any))
+          .thenReturn(mockCollectionReference);
+      await dbService.newRecord(userModel);
+      verify(mockCollectionReference.add(userModel.toJSON()));
     });
   });
 }

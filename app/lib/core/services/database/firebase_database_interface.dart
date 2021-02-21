@@ -34,6 +34,9 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
       .then((DocumentSnapshot snapshot) =>
           FirestoreUser.fromJSON(snapshot.data()));
 
+  Future<void> newRecord(AnimalTransportRecord newRecord) async =>
+      _firestore.collection('atr').add(newRecord.toJSON());
+
   Future<bool> checkConnectivity() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
@@ -54,82 +57,6 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
         db: 'remote_database',
         password: "capstone"));
     return remoteConnect;
-  }
-
-  Future<dynamic> newRecord(AnimalTransportRecord newRecord) async {
-    dbConnect = await connectRemote();
-    await dbConnect.query('''
-        INSERT INTO TransporterInfo(companyName, trainingType, companyAddress, addressLastCleanedAt, dateLastCleaned,
-        driversAreBriefed, driversHaveTraining, trailerLicensePlate, trailerProvince, trainingExpiryDate, vehicleLicensePlate,
-        vehicleProvince) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)''', [
-      newRecord.tranInfo.companyName,
-      newRecord.tranInfo.trainingType,
-      newRecord.tranInfo.companyAddress,
-      newRecord.tranInfo.addressLastCleanedAt,
-      newRecord.tranInfo.dateLastCleaned,
-      newRecord.tranInfo.driversAreBriefed,
-      newRecord.tranInfo.driversHaveTraining,
-      newRecord.tranInfo.trailerLicensePlate,
-      newRecord.tranInfo.trailerProvince,
-      newRecord.tranInfo.trainingExpiryDate,
-      newRecord.tranInfo.vehicleLicensePlate,
-      newRecord.tranInfo.vehicleProvince
-    ]);
-
-    await dbConnect.query('''
-        INSERT INTO ShipInfo(departureAddress, LocationId, LocationName, ContactInfo, shipperIsOwner, shipperName) VALUES
-        (?,?,?,?,?,?)''', [
-      newRecord.shipInfo.departureAddress,
-      newRecord.shipInfo.departureLocationId,
-      newRecord.shipInfo.departureLocationName,
-      newRecord.shipInfo.shipperContactInfo,
-      newRecord.shipInfo.shipperIsAnimalOwner,
-      newRecord.shipInfo.shipperName
-    ]);
-
-    await dbConnect.query(
-        '''
-        INSERT INTO ContingencyPlan(communicationPlan, expectedPrepProcess, goalStatement, standardMonitoring) VALUES (?,?,?,?)''',
-        [
-          newRecord.contingencyInfo.communicationPlan,
-          newRecord.contingencyInfo.expectedPrepProcess,
-          newRecord.contingencyInfo.goalStatement,
-          newRecord.contingencyInfo.standardAnimalMonitoring,
-          newRecord.contingencyInfo.potentialSafetyActions(),
-          newRecord.contingencyInfo.contingencyEvents(),
-          newRecord.contingencyInfo.crisisContacts(),
-          newRecord.contingencyInfo.potentialHazards()
-        ]);
-
-    await dbConnect.query('''
-        INSERT INTO VehicleInfo(animalsPerLoadingArea, DateLoaded, LoadingArea, LoadingDensity, TimeLoaded) VALUES
-        (?,?,?,?,?)''', [
-      newRecord.vehicleInfo.animalsPerLoadingArea,
-      newRecord.vehicleInfo.dateAndTimeLoaded,
-      newRecord.vehicleInfo.loadingArea,
-      newRecord.vehicleInfo.loadingDensity
-    ]);
-
-    await dbConnect.query('''
-        INSERT INTO FwrInfo(lastFwrDate, lastFwrLocation) VALUES (?,?)''',
-        [newRecord.fwrInfo.lastFwrDate, newRecord.fwrInfo.lastFwrLocation]);
-
-    await dbConnect.query('''
-        INSERT INTO DeliveryInfo(departureAddress, LocationId, LocationName, ContactInfo, shipperIsOwner, shipperName) VALUES
-        (?,?,?,?,?,?)''', [
-      newRecord.deliveryInfo.additionalWelfareConcerns,
-      newRecord.deliveryInfo.arrivalDateAndTime,
-      newRecord.deliveryInfo.recInfo
-    ]);
-
-    await dbConnect.query('''
-      INSERT INTO AckInfo(receiverAck, shipperAck, tranAck) VALUES (?,?,?)''', [
-      newRecord.ackInfo.receiverAck,
-      newRecord.ackInfo.shipperAck,
-      newRecord.ackInfo.transporterAck
-    ]);
-
-    dbConnect.close();
   }
 
   Future<Results> getRecord(User user) async {
