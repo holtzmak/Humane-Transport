@@ -24,7 +24,7 @@ void main() {
 
   void setUpMockExpectations() {
     when(mockFirebaseAuth.createUserWithEmailAndPassword(
-            email: userEmailAddress, password: password))
+        email: userEmailAddress, password: password))
         .thenAnswer((_) async => mockUserCredential);
     when(mockUserCredential.user).thenReturn(mockUser);
     when(mockUser.uid).thenReturn(testUserId);
@@ -41,14 +41,14 @@ void main() {
       });
       try {
         await AuthenticationService(
-                firebaseAuth: mockFirebaseAuth,
-                firebaseFirestore: mockFirebaseFirestore)
+            firebaseAuth: mockFirebaseAuth,
+            firebaseFirestore: mockFirebaseFirestore)
             .signUp(
-                firstName: firstName,
-                lastName: lastName,
-                userEmailAddress: userEmailAddress,
-                userPhoneNumber: userPhoneNumber,
-                password: password);
+            firstName: firstName,
+            lastName: lastName,
+            userEmailAddress: userEmailAddress,
+            userPhoneNumber: userPhoneNumber,
+            password: password);
       } catch (e) {
         // This test should pass
         fail(e);
@@ -57,18 +57,18 @@ void main() {
 
     test('sign up failed, create user failed', () async {
       when(mockFirebaseAuth.createUserWithEmailAndPassword(
-              email: userEmailAddress, password: password))
+          email: userEmailAddress, password: password))
           .thenAnswer((_) async => Future.error('Error Here'));
       try {
         await AuthenticationService(
-                firebaseAuth: mockFirebaseAuth,
-                firebaseFirestore: mockFirebaseFirestore)
+            firebaseAuth: mockFirebaseAuth,
+            firebaseFirestore: mockFirebaseFirestore)
             .signUp(
-                firstName: firstName,
-                lastName: lastName,
-                userEmailAddress: userEmailAddress,
-                userPhoneNumber: userPhoneNumber,
-                password: password);
+            firstName: firstName,
+            lastName: lastName,
+            userEmailAddress: userEmailAddress,
+            userPhoneNumber: userPhoneNumber,
+            password: password);
       } catch (e) {
         expect(e, 'Error Here');
       }
@@ -80,14 +80,14 @@ void main() {
           .thenAnswer((_) async => Future.error('Error Here'));
       try {
         await AuthenticationService(
-                firebaseAuth: mockFirebaseAuth,
-                firebaseFirestore: mockFirebaseFirestore)
+            firebaseAuth: mockFirebaseAuth,
+            firebaseFirestore: mockFirebaseFirestore)
             .signUp(
-                firstName: firstName,
-                lastName: lastName,
-                userEmailAddress: userEmailAddress,
-                userPhoneNumber: userPhoneNumber,
-                password: password);
+            firstName: firstName,
+            lastName: lastName,
+            userEmailAddress: userEmailAddress,
+            userPhoneNumber: userPhoneNumber,
+            password: password);
       } catch (e) {
         expect(e, 'Error Here');
       }

@@ -2,18 +2,42 @@ import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
+import 'package:app/ui/views/signup/sign_up_screen.dart';
 import 'package:app/ui/views/welcome/welcome_screen.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 
-// TODO: Update as per #152.
-class SignInScreen extends StatelessWidget {
-  // TODO: TextEditingControllers must be disposed of in State<T> of Stateful widgets
+class SignInScreen extends StatefulWidget {
+  static const route = '/signIn';
+  final NavigationService _navigationService = locator<NavigationService>();
+  final formKey = GlobalKey<FormState>();
+
+  SignInScreen({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _SignInScreenState createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final NavigationService _navigationService = locator<NavigationService>();
-  static const route = '/signIn';
+
+
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  String emptyFieldValidation(String value) {
+    if (value.isEmpty) {
+      return "* Required";
+    } else
+      return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +49,9 @@ class SignInScreen extends StatelessWidget {
           body: Padding(
             padding: const EdgeInsets.all(40),
             child: Center(
+              child: SingleChildScrollView(
+              child: Form(
+                key: widget.formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -42,6 +69,8 @@ class SignInScreen extends StatelessWidget {
                     ),
                   ),
                   TextFormField(
+                    key: ObjectKey("Email"),
+                    validator: emptyFieldValidation,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(), labelText: "Email"),
                     controller: emailController,
@@ -52,6 +81,8 @@ class SignInScreen extends StatelessWidget {
                     ),
                   ),
                   TextFormField(
+                    key: ObjectKey("Password"),
+                    validator: emptyFieldValidation,
                     controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
@@ -75,9 +106,11 @@ class SignInScreen extends StatelessWidget {
                   ),
                   RaisedButton(
                     onPressed: () {
-                      model.signIn(
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim());
+                      if (widget.formKey.currentState.validate()) {
+                        model.signIn(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim());
+                      }
                     },
                     child: Text('Sign In',
                         style: TextStyle(
@@ -89,9 +122,18 @@ class SignInScreen extends StatelessWidget {
                     height: 100.0,
                   ),
                   TextButton(
+                    child: Text('Do not have an account? Sign Up Here'),
+                    onPressed: () => widget._navigationService.navigateTo(SignUpScreen.route),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 20.0,
+                    ),
+                  ),
+                  TextButton(
                     child: Text('Go back to welcome screen'),
                     onPressed: () =>
-                        _navigationService.navigateTo(WelcomeScreen.route),
+                        widget._navigationService.navigateTo(WelcomeScreen.route),
                   ),
                 ],
               ),
@@ -99,6 +141,6 @@ class SignInScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
+    )));
   }
 }
