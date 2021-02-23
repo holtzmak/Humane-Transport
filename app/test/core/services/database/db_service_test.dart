@@ -1,5 +1,5 @@
-import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/firestore_user.dart';
+import 'package:app/core/models/initial_atr.dart';
 import 'package:app/core/services/database/database_interface.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/database/firebase_database_interface.dart';
@@ -16,7 +16,7 @@ void main() {
   final mockDocumentReference = MockDocumentReference();
   final mockDocumentSnapshot = MockDocumentSnapshot();
   final _fakeResponse = fakeData();
-  final _fakeAtrResponse = fakeATR();
+  final _fakeInitialAtr = fakeInitialAtr();
   DatabaseService dbService;
   group('Database Service -', () {
     setUpAll(() async {
@@ -30,7 +30,6 @@ void main() {
       when(mockFirestoreInstance.collection('users'))
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
-      // Note: Then answer is used in async
       when(mockDocumentReference.get())
           .thenAnswer((_) async => mockDocumentSnapshot);
       when(mockDocumentSnapshot.data()).thenReturn(_fakeResponse);
@@ -59,15 +58,37 @@ void main() {
       when(mockCollectionReference.doc(userModel.userId))
           .thenReturn(mockDocumentReference);
       await dbService.newUser(userModel);
-      verify(mockDocumentReference.set(userModel.toJSON()));
+      verify(mockDocumentReference.set(userModel.toJSON())).called(1);
     });
 
-    test('should add new atr to firestore', () async {
-      final userModel = AnimalTransportRecord.fromJSON(_fakeAtrResponse);
+    test('should set new initial atr to firestore', () async {
+      final userModel = InitialAtr.fromJSON(_fakeInitialAtr, '123');
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
-      await dbService.newRecord(userModel);
-      verify(mockCollectionReference.add(userModel.toJSON()));
+      await dbService.saveNewAtr(userModel);
+      verify(mockCollectionReference.add(userModel.toJSON())).called(1);
+    });
+
+    test('should delete atr to firestore', () async {
+      final userModel = InitialAtr.fromJSON(_fakeInitialAtr, '123');
+      when(mockFirestoreInstance.collection(any))
+          .thenReturn(mockCollectionReference);
+      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockDocumentReference.delete())
+          .thenAnswer((_) async => Future.value());
+      final result = await dbService.removeAtr(userModel.atrDocumentId);
+      expect(result, true);
+    });
+
+    test('should not delete', () async {
+      final userModel = InitialAtr.fromJSON(_fakeInitialAtr, '123');
+      when(mockFirestoreInstance.collection(any))
+          .thenReturn(mockCollectionReference);
+      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockDocumentReference.delete())
+          .thenAnswer((_) async => Future.error('Could not be deleted'));
+      final result = await dbService.removeAtr(userModel.atrDocumentId);
+      expect(result, false);
     });
   });
 }

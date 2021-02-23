@@ -1,11 +1,15 @@
 import 'dart:async';
-import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/acknowledgement_info.dart';
+import 'package:app/core/models/feed_water_rest_info.dart';
+import 'package:app/core/models/delivery_info.dart';
+import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/models/firestore_user.dart';
+import 'package:app/core/models/initial_atr.dart';
+import 'package:app/core/models/loading_vehicle_info.dart';
+import 'package:app/core/models/shipper_info.dart';
+import 'package:app/core/models/transporter_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mysql1/mysql1.dart';
-
 import 'database_interface.dart';
 
 // TODO: #130. Replace MySQL and SQLFLite with Firebase Database calls.
@@ -13,20 +17,9 @@ import 'database_interface.dart';
 // Up to you if these are in the same file
 class FirebaseDatabaseInterface implements DatabaseInterface {
   final FirebaseFirestore _firestore;
-
-  var networkStatus;
-  MySqlConnection dbConnect;
-
   FirebaseDatabaseInterface(this._firestore);
 
-  /*
-    Explanation why 'set' is used instead of 'add' when new user is created in
-    FirebaseAuth.
-    https://stackoverflow.com/questions/60423700/flutter-creating-a-user-in-firestore-using-the-account-created-from-firebase-au
-  */
-  Future<void> newUser(FirestoreUser newUser) async =>
-      _firestore.collection('users').doc(newUser.userId).set(newUser.toJSON());
-
+  @override
   Future<FirestoreUser> getUser(String userId) async => _firestore
       .collection('users')
       .doc(userId)
@@ -34,91 +27,79 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
       .then((DocumentSnapshot snapshot) =>
           FirestoreUser.fromJSON(snapshot.data()));
 
-  Future<void> newRecord(AnimalTransportRecord newRecord) async =>
-      _firestore.collection('atr').add(newRecord.toJSON());
+  @override
+  Future<void> newUser(FirestoreUser newUser) async =>
+      _firestore.collection('users').doc(newUser.userId).set(newUser.toJSON());
 
-  Future<bool> checkConnectivity() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile) {
-      // I am connected to a mobile network.
-      return true;
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      // I am connected to a wifi network.
-      return true;
-    } else
-      return false;
+  @override
+  Future getRecord(User user) {
+    // TODO: implement getRecord
+    throw UnimplementedError();
   }
 
-  Future<MySqlConnection> connectRemote() async {
-    final remoteConnect = await MySqlConnection.connect(ConnectionSettings(
-        host: 'localhost',
-        port: 0000,
-        user: 'root',
-        db: 'remote_database',
-        password: "capstone"));
-    return remoteConnect;
-  }
+  @override
+  Future<void> setShipperInfo(String atrId, ShipperInfo shipperInfo) async =>
+      _firestore
+          .collection('atr')
+          .doc(atrId)
+          .set(shipperInfo.toJSON(), SetOptions(merge: true));
 
-  Future<Results> getRecord(User user) async {
-    dbConnect = await connectRemote();
-    var recentRecord = await dbConnect.query('''DATABASE QUERY''');
-    dbConnect.close();
-    return recentRecord;
-  }
+  @override
+  Future<void> setTransporterInfo(
+          String atrId, TransporterInfo transporterInfo) async =>
+      _firestore
+          .collection('atr')
+          .doc(atrId)
+          .set(transporterInfo.toJSON(), SetOptions(merge: true));
 
-  Future<dynamic> retrieveUserRecords(User user) async {
-    dbConnect = await connectRemote();
-    var formList = await dbConnect.query('''DATABASE QUERY''');
-    dbConnect.close();
-    return formList;
-  }
+  @override
+  Future<void> saveNewAtr(InitialAtr atr) async =>
+      _firestore.collection('atr').add(atr.toJSON());
 
-  Future<dynamic> updateTranInfo() async {
-    dbConnect = await connectRemote();
-    var updateTransporter = await dbConnect.query('''DATABASE QUERY''');
-    dbConnect.close();
-    return updateTransporter;
-  }
+  @override
+  Future<void> setAckInfo(
+          String atrId, AcknowledgementInfo acknowledgementInfo) async =>
+      _firestore
+          .collection('atr')
+          .doc(atrId)
+          .set(acknowledgementInfo.toJSON(), SetOptions(merge: true));
 
-  Future<dynamic> updateShipperInfo() async {
-    dbConnect = await connectRemote();
-    var updateShipper = await dbConnect.query('''DATABASE QUERY''');
-    dbConnect.close();
-    return updateShipper;
-  }
+  @override
+  Future<void> setContingencyPlanInfo(
+          String atrId, ContingencyPlanInfo contingencyPlanInfo) async =>
+      _firestore
+          .collection('atr')
+          .doc(atrId)
+          .set(contingencyPlanInfo.toJSON(), SetOptions(merge: true));
 
-  Future<dynamic> updateFwr() async {
-    dbConnect = await connectRemote();
-    var updateFwr = await dbConnect.query('''DATABASE QUERY''');
-    dbConnect.close();
-    return updateFwr;
-  }
+  @override
+  Future<void> setDeliveryInfo(String atrId, DeliveryInfo deliveryInfo) async =>
+      _firestore
+          .collection('atr')
+          .doc(atrId)
+          .set(deliveryInfo.toJSON(), SetOptions(merge: true));
 
-  Future<dynamic> updateVehicleLoadingInfo() async {
-    dbConnect = await connectRemote();
-    var updateVehicle = await dbConnect.query('''DATABASE QUERY''');
-    dbConnect.close();
-    return updateVehicle;
-  }
+  @override
+  Future<void> setFwrInfo(
+          String atrId, FeedWaterRestInfo feedWaterRestInfo) async =>
+      _firestore
+          .collection('atr')
+          .doc(atrId)
+          .set(feedWaterRestInfo.toJSON(), SetOptions(merge: true));
 
-  Future<dynamic> updateDeliveryInfo() async {
-    dbConnect = await connectRemote();
-    var updateDelivery = await dbConnect.query('''DATABASE QUERY''');
-    dbConnect.close();
-    return updateDelivery;
-  }
+  @override
+  Future<void> setLoadingVehicleInfo(
+          String atrId, LoadingVehicleInfo vehicleInfo) async =>
+      _firestore
+          .collection('atr')
+          .doc(atrId)
+          .set(vehicleInfo.toJSON(), SetOptions(merge: true));
 
-  Future<dynamic> updateAckInfo() async {
-    dbConnect = await connectRemote();
-    var updateAck = await dbConnect.query('''DATABASE QUERY''');
-    dbConnect.close();
-    return updateAck;
-  }
+  @override
+  Future<void> updateAtr(InitialAtr atr) async =>
+      _firestore.doc(atr.atrDocumentId).update(atr.toJSON());
 
-  Future<dynamic> updateContingencyInfo() async {
-    dbConnect = await connectRemote();
-    var updateContingencyPlan = await dbConnect.query('''DATABASE QUERY''');
-    dbConnect.close();
-    return updateContingencyPlan;
-  }
+  @override
+  Future<void> removeAtr(String atrId) async =>
+      _firestore.collection('atr').doc(atrId).delete();
 }

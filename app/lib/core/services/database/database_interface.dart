@@ -1,5 +1,12 @@
-import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/acknowledgement_info.dart';
+import 'package:app/core/models/contingency_plan_info.dart';
+import 'package:app/core/models/delivery_info.dart';
+import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/models/firestore_user.dart';
+import 'package:app/core/models/initial_atr.dart';
+import 'package:app/core/models/loading_vehicle_info.dart';
+import 'package:app/core/models/shipper_info.dart';
+import 'package:app/core/models/transporter_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class DatabaseInterface {
@@ -10,23 +17,29 @@ abstract class DatabaseInterface {
 
   Future<FirestoreUser> getUser(String userId);
 
-  Future<void> newRecord(AnimalTransportRecord newRecord);
+  Future<void> saveNewAtr(InitialAtr atr);
+
+  Future<void> updateAtr(InitialAtr atr);
+
+  Future<void> setShipperInfo(String atrId, ShipperInfo shipperInfo);
+
+  Future<void> setTransporterInfo(
+      String atrId, TransporterInfo transporterInfo);
+
+  Future<void> setFwrInfo(String atrId, FeedWaterRestInfo feedWaterRestInfo);
+
+  Future<void> setLoadingVehicleInfo(
+      String atrId, LoadingVehicleInfo vehicleInfo);
+
+  Future<void> setDeliveryInfo(String atrId, DeliveryInfo deliveryInfo);
+
+  Future<void> setAckInfo(
+      String atrId, AcknowledgementInfo acknowledgementInfo);
+
+  Future<void> setContingencyPlanInfo(
+      String atrId, ContingencyPlanInfo contingencyPlanInfo);
+
+  Future<void> removeAtr(String atrId);
 
   Future<dynamic> getRecord(User user);
-
-  // TODO: #130. Replace these individual methods with single functions like updateIncompleteATR(), addCompleteATR(), removeIncompleteATR(), and so on
-  // We don't handle ATRs in pieces ATM
-  Future<dynamic> updateTranInfo();
-  // We might not need this
-  Future<dynamic> updateShipperInfo();
-  // We might not need this
-  Future<dynamic> updateFwr();
-
-  Future<dynamic> updateVehicleLoadingInfo();
-
-  Future<dynamic> updateDeliveryInfo();
-
-  Future<dynamic> updateAckInfo();
-
-  Future<dynamic> updateContingencyInfo();
 }

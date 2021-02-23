@@ -10,6 +10,14 @@ Map<String, dynamic> fakeData() {
   return _fakeResponse;
 }
 
+Map<String, dynamic> fakeInitialAtr() {
+  Map<String, dynamic> _fakeResponse = {
+    "userId": "23512",
+    "isComplete": false,
+  };
+  return _fakeResponse;
+}
+
 Map<String, dynamic> fakeATR() {
   Map<String, dynamic> _fakeATRResponse = {
     "userId": "23512",
