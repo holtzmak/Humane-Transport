@@ -1,88 +1,99 @@
 import 'package:app/core/models/address.dart';
+import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
 
 /// A custom form field for addresses
 /// Intended to be used inside a GroupFormField
 class AddressFormField extends StatefulWidget {
   final Address initialAddr;
-  final _AddressFormFieldState state = _AddressFormFieldState();
+  final Function(Address) onSaved;
 
-  AddressFormField({Key key, @required this.initialAddr}) : super(key: key);
+  // Use the form key to save all the fields of this form
+  final formKey = GlobalKey<FormState>();
+
+  AddressFormField(
+      {Key key, @required this.initialAddr, @required this.onSaved})
+      : super(key: key);
 
   @override
-  _AddressFormFieldState createState() => state;
-
-  Address getAddress() => state.getAddress();
+  _AddressFormFieldState createState() => _AddressFormFieldState();
 }
 
 class _AddressFormFieldState extends State<AddressFormField> {
   // TODO: Make the address from known countries, states, cities
   // https://pub.dev/packages/country_state_city_picker
-  TextEditingController _streetController;
-  TextEditingController _cityController;
-  TextEditingController _stateController;
-  TextEditingController _countryController;
-  TextEditingController _postCodeController;
-
-  Address getAddress() => Address(
-      streetAddress: _streetController.text,
-      city: _cityController.text,
-      provinceOrState: _stateController.text,
-      country: _countryController.text,
-      postalCode: _postCodeController.text);
+  String _street;
+  String _city;
+  String _provinceOrState;
+  String _country;
+  String _postalCode;
 
   @override
   void initState() {
-    _streetController =
-        TextEditingController(text: widget.initialAddr.streetAddress);
-    _cityController = TextEditingController(text: widget.initialAddr.city);
-    _stateController =
-        TextEditingController(text: widget.initialAddr.provinceOrState);
-    _countryController =
-        TextEditingController(text: widget.initialAddr.country);
-    _postCodeController =
-        TextEditingController(text: widget.initialAddr.postalCode);
+    _street = widget.initialAddr.streetAddress;
+    _city = widget.initialAddr.city;
+    _provinceOrState = widget.initialAddr.provinceOrState;
+    _country = widget.initialAddr.country;
+    _postalCode = widget.initialAddr.postalCode;
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _streetController.dispose();
-    _cityController.dispose();
-    _stateController.dispose();
-    _countryController.dispose();
-    _postCodeController.dispose();
-    super.dispose();
+  void _saveAll() {
+    widget.onSaved(Address(
+        streetAddress: _street,
+        city: _city,
+        provinceOrState: _provinceOrState,
+        country: _country,
+        postalCode: _postalCode));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      ListTile(
-          title: Text("Street"),
-          subtitle: TextFormField(
-            controller: _streetController,
-          )),
-      ListTile(
-          title: Text("City"),
-          subtitle: TextFormField(
-            controller: _cityController,
-          )),
-      ListTile(
-          title: Text("Province or State"),
-          subtitle: TextFormField(
-            controller: _stateController,
-          )),
-      ListTile(
-          title: Text("Country"),
-          subtitle: TextFormField(
-            controller: _countryController,
-          )),
-      ListTile(
-          title: Text("Postal Code"),
-          subtitle: TextFormField(
-            controller: _postCodeController,
-          )),
-    ]);
+    return Form(
+      key: widget.formKey,
+      child: Column(children: [
+        StringFormField(
+            initial: _street,
+            title: "Street",
+            onSaved: (String changed) {
+              _street = changed;
+              _saveAll();
+            },
+            onDelete: Optional.empty()),
+        StringFormField(
+            initial: _city,
+            title: "City",
+            onSaved: (String changed) {
+              _city = changed;
+              _saveAll();
+            },
+            onDelete: Optional.empty()),
+        StringFormField(
+            initial: _provinceOrState,
+            title: "Province or State",
+            onSaved: (String changed) {
+              _provinceOrState = changed;
+              _saveAll();
+            },
+            onDelete: Optional.empty()),
+        StringFormField(
+            initial: _country,
+            title: "Country",
+            onSaved: (String changed) {
+              _country = changed;
+              _saveAll();
+            },
+            onDelete: Optional.empty()),
+        StringFormField(
+            initial: _postalCode,
+            title: "Postal Code",
+            onSaved: (String changed) {
+              _postalCode = changed;
+              _saveAll();
+            },
+            onDelete: Optional.empty()),
+      ]),
+    );
   }
 }

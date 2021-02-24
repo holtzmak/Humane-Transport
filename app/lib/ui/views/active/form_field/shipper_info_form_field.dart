@@ -1,112 +1,119 @@
+import 'package:app/core/models/address.dart';
 import 'package:app/core/models/shipper_info.dart';
+import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
 
 import 'address_form_field.dart';
-import 'group_form_field.dart';
 
-class ShipperInfoFormField extends GroupFormField<ShipperInfo> {
-  final _ShipperInfoFormFieldState _state = _ShipperInfoFormFieldState();
+class ShipperInfoFormField extends StatefulWidget {
   final Function(ShipperInfo info) onSaved;
   final ShipperInfo initialInfo;
+  final String title = "Shipper's Information";
+
+  // Use the form key to save all the fields of this form
+  final formKey = GlobalKey<FormState>();
 
   ShipperInfoFormField(
       {Key key, @required this.initialInfo, @required this.onSaved})
-      : super(key: key, formName: "Shipper's Information");
+      : super(key: key);
 
   @override
-  _ShipperInfoFormFieldState createState() => _state;
-
-  @override
-  void save() => _state.save();
+  _ShipperInfoFormFieldState createState() => _ShipperInfoFormFieldState();
 }
 
 class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
-  TextEditingController _nameController;
-  TextEditingController _isAnimalOwnerController;
-  TextEditingController _departureIdController;
-  TextEditingController _departureNameController;
-  AddressFormField _addressFormField;
-  TextEditingController _contactInfoController;
+  String _name;
+  String _isAnimalOwner;
+  String _departureId;
+  String _departureLocationName;
+  String _contactInfo;
+  Address _departureAddress;
+
+  AddressFormField _departureAddressFormField;
 
   @override
   void initState() {
-    _nameController =
-        TextEditingController(text: widget.initialInfo.shipperName);
-    _isAnimalOwnerController = TextEditingController(
-        text: widget.initialInfo.shipperIsAnimalOwner ? "Yes" : "No");
-    _departureIdController =
-        TextEditingController(text: widget.initialInfo.departureLocationId);
-    _departureNameController =
-        TextEditingController(text: widget.initialInfo.departureLocationName);
-    _addressFormField =
-        AddressFormField(initialAddr: widget.initialInfo.departureAddress);
-    _contactInfoController =
-        TextEditingController(text: widget.initialInfo.shipperContactInfo);
+    _name = widget.initialInfo.shipperName;
+    _isAnimalOwner = widget.initialInfo.shipperIsAnimalOwner ? "Yes" : "No";
+    _departureId = widget.initialInfo.departureLocationId;
+    _departureLocationName = widget.initialInfo.departureLocationName;
+    _contactInfo = widget.initialInfo.shipperContactInfo;
+    _departureAddress = widget.initialInfo.departureAddress;
+    _departureAddressFormField = AddressFormField(
+        initialAddr: widget.initialInfo.departureAddress,
+        onSaved: (Address changed) => _departureAddress = changed);
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _isAnimalOwnerController.dispose();
-    _departureIdController.dispose();
-    _departureNameController.dispose();
-    _contactInfoController.dispose();
-    super.dispose();
-  }
-
-  void save() {
+  void _saveAll() {
     widget.onSaved(ShipperInfo(
-        shipperName: _nameController.text,
-        shipperIsAnimalOwner:
-            _isAnimalOwnerController.text == "Yes" ? true : false,
-        departureLocationId: _departureIdController.text,
-        departureLocationName: _departureNameController.text,
-        departureAddress: _addressFormField.getAddress(),
-        shipperContactInfo: _contactInfoController.text));
+        shipperName: _name,
+        shipperIsAnimalOwner: _isAnimalOwner == "Yes" ? true : false,
+        departureLocationId: _departureId,
+        departureLocationName: _departureLocationName,
+        departureAddress: _departureAddress,
+        shipperContactInfo: _contactInfo));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      ListTile(
-          title: Text("Name"),
-          subtitle: TextFormField(
-            controller: _nameController,
-          )),
-      ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text(
-              "The shipper is the owner of the animals loaded in the vehicle?"),
-          subtitle: DropdownButtonFormField(
-            value: _isAnimalOwnerController.text,
-            items: ["Yes", "No"]
-                .map((label) => DropdownMenuItem(
-                      child: Text(label),
-                      value: label,
-                    ))
-                .toList(),
-            onChanged: (String value) => setState(() {
-              _isAnimalOwnerController.text = value;
-            }),
-          )),
-      ListTile(
-          title: Text("Departure Premises Identification number (PID)"),
-          subtitle: TextFormField(
-            controller: _departureIdController,
-          )),
-      ListTile(
-          title: Text("Name"),
-          subtitle: TextFormField(
-            controller: _departureNameController,
-          )),
-      ListTile(title: Text("Address"), subtitle: _addressFormField),
-      ListTile(
-          title: Text("Shipper’s Contact information in case of emergency"),
-          subtitle: TextFormField(
-            controller: _contactInfoController,
-          )),
-      RaisedButton(child: Text("Save"), onPressed: widget.save)
-    ]);
+    return Form(
+      key: widget.formKey,
+      child: Column(children: [
+        StringFormField(
+            initial: _name,
+            title: "Name",
+            onSaved: (String changed) {
+              _name = changed;
+              _saveAll();
+            },
+            onDelete: Optional.empty()),
+        ListTile(
+            visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+            title: Text(
+                "The shipper is the owner of the animals loaded in the vehicle?"),
+            subtitle: DropdownButtonFormField(
+              value: _isAnimalOwner,
+              items: ["Yes", "No"]
+                  .map((label) => DropdownMenuItem(
+                        child: Text(label),
+                        value: label,
+                      ))
+                  .toList(),
+              onChanged: (String changed) => setState(() {
+                _isAnimalOwner = changed;
+              }),
+            )),
+        StringFormField(
+            initial: _departureId,
+            title: "Departure Premises Identification number (PID)",
+            onSaved: (String changed) {
+              _departureId = changed;
+              _saveAll();
+            },
+            onDelete: Optional.empty()),
+        StringFormField(
+            initial: _departureLocationName,
+            title: "Departure Premises Name",
+            onSaved: (String changed) {
+              _departureLocationName = changed;
+              _saveAll();
+            },
+            onDelete: Optional.empty()),
+        ListTile(
+            title: Text("Departure Premises Address"),
+            subtitle: _departureAddressFormField),
+        StringFormField(
+            initial: _contactInfo,
+            title: "Shipper’s Contact information in case of emergency",
+            onSaved: (String changed) {
+              _contactInfo = changed;
+              _saveAll();
+            },
+            onDelete: Optional.empty()),
+        RaisedButton(child: Text("Save"), onPressed: _saveAll)
+      ]),
+    );
   }
 }

@@ -15,12 +15,7 @@ void main() {
 
   Future<void> pumpAddressFormField(
           WidgetTester tester, AddressFormField widget) async =>
-      tester.pumpWidget(MaterialApp(
-          home: Scaffold(
-              body: SingleChildScrollView(
-                  child: Container(
-        child: widget,
-      )))));
+      tester.pumpWidget(MaterialApp(home: Scaffold(body: widget)));
 
   group('Address Form Field', () {
     testWidgets('shows right information', (WidgetTester tester) async {
@@ -30,30 +25,33 @@ void main() {
           provinceOrState: "Some state",
           country: "Some country",
           postalCode: "ABCXYZ");
-      final widget = AddressFormField(initialAddr: testAddr);
+      final widget = AddressFormField(
+        initialAddr: testAddr,
+        onSaved: (Address _) {
+          // do nothing for test
+        },
+      );
       await pumpAddressFormField(tester, widget);
       verifyInformationIsShown(testAddr);
     });
 
-    testWidgets('getAddress with info', (WidgetTester tester) async {
-      final testAddr = testAddress();
-      final widget = AddressFormField(initialAddr: testAddr);
-      await pumpAddressFormField(tester, widget);
-      expect(testAddr, widget.getAddress());
-    });
-
-    testWidgets('getAddress with edited info', (WidgetTester tester) async {
+    testWidgets('onSaved called when info is edited',
+        (WidgetTester tester) async {
       final initialStreet = "ABC Street";
-      final editedStreet = "ABC St.";
+      final editedStreet = "Edited Street";
       final testAddr = testAddress(streetAddress: initialStreet);
-      final expectedEditedInfo = testAddress(streetAddress: editedStreet);
-      final streetAddressFinder =
-          find.widgetWithText(TextFormField, initialStreet);
-
-      final widget = AddressFormField(initialAddr: testAddr);
+      final editedAddr = testAddress(streetAddress: editedStreet);
+      Address callback;
+      final onSaved = (Address changed) => callback = changed;
+      final fieldFinder = find.text(initialStreet);
+      final widget = AddressFormField(
+        initialAddr: testAddr,
+        onSaved: onSaved,
+      );
       await pumpAddressFormField(tester, widget);
-      await tester.enterText(streetAddressFinder, editedStreet);
-      expect(expectedEditedInfo, widget.getAddress());
+      await tester.enterText(fieldFinder, editedStreet);
+      await tester.pumpAndSettle();
+      expect(callback, editedAddr);
     });
   });
 }
