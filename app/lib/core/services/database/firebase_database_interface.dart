@@ -95,7 +95,7 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
 
   @override
   Future<void> updateAtr(AtrIdentifier atr) async =>
-      _firestore.doc(atr.atrDocumentId).update(atr.toJSON());
+      _firestore.collection('atr').doc(atr.atrDocumentId).update(atr.toJSON());
 
   @override
   Future<void> removeAtr(String atrId) async =>
