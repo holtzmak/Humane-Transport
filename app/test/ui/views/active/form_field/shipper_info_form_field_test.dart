@@ -98,5 +98,32 @@ void main() {
       await tester.pumpAndSettle();
       expect(callbackInfo, expectedEditedInfo);
     });
+
+    testWidgets(
+        'calls onSaved with edited address info when save button pressed',
+        (WidgetTester tester) async {
+      final initialAddress = testAddress(streetAddress: "Street Test");
+      final editedAddress = testAddress(streetAddress: "Street Edited");
+      final testInfo = testShipperInfo(departureAddress: initialAddress);
+      final expectedEditedInfo =
+          testShipperInfo(departureAddress: editedAddress);
+
+      final saveButtonFinder = find.widgetWithText(RaisedButton, "Save");
+      final streetFieldFinder =
+          find.widgetWithText(TextFormField, initialAddress.streetAddress);
+
+      ShipperInfo callbackInfo;
+      final onSavedCallback = (ShipperInfo info) => callbackInfo = info;
+
+      await pumpShipperInfoFormField(tester, testInfo, onSavedCallback);
+      // Edit text
+      await tester.enterText(streetFieldFinder, "Street Edited");
+      await tester.pumpAndSettle();
+      // Save
+      await tester.ensureVisible(saveButtonFinder);
+      await tester.tap(saveButtonFinder);
+      await tester.pumpAndSettle();
+      expect(callbackInfo, expectedEditedInfo);
+    });
   });
 }

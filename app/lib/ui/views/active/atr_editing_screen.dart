@@ -4,7 +4,6 @@ import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
-import 'package:app/ui/views/active/form_field/group_form_field.dart';
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
 import 'package:app/ui/widgets/models/expansion_list_item.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
@@ -24,30 +23,34 @@ class ATREditingScreen extends StatefulWidget {
 }
 
 class _ATREditingScreenState extends State<ATREditingScreen> {
-  List<GroupFormField> atrFormFields = [];
-  List<ExpansionListItem> atrFormFieldsWrapper = [];
+  // Replacement ATR only used on submit
   AnimalTransportRecord _replacementAtr;
+
+  ShipperInfoFormField _shipperInfoField;
+  final List<ExpansionListItem> _atrFormFieldsWrapper = [];
 
   @override
   void initState() {
     super.initState();
     _replacementAtr = widget.atr;
-    atrFormFields = [
-      ShipperInfoFormField(
-          initialInfo: _replacementAtr.shipInfo,
-          onSaved: (ShipperInfo newInfo) =>
-              _replacementAtr = _replacementAtr.withShipInfo(newInfo))
-    ];
-    atrFormFieldsWrapper = atrFormFields
-        .map((field) => ExpansionListItem(
-            expandedValue: field, headerValue: field.formName))
-        .toList();
+    _shipperInfoField = ShipperInfoFormField(
+        initialInfo: _replacementAtr.shipInfo,
+        onSaved: (ShipperInfo newInfo) =>
+            _replacementAtr = _replacementAtr.withShipInfo(newInfo));
+    _atrFormFieldsWrapper.addAll([
+      ExpansionListItem(
+          expandedValue: _shipperInfoField,
+          headerValue: _shipperInfoField.title)
+    ]);
   }
 
-  void _submitATR(List<GroupFormField> fields) {
-    fields.forEach((groupField) => groupField.save());
+  void _saveATR() {
+    throw UnimplementedError(
+        "TODO: Do WillPopScope = false, and force the user to use back button and save then");
+  }
+
+  void _submitATR() {
     // TODO: Call service and submit the completed atr
-    // TODO: Call service and remove the incomplete atr
     widget._dialogService
         .showDialog(
             title: "Animal Transport Form Submitted",
@@ -76,14 +79,14 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                     child: buildExpansionPanelList(
                         expansionCallback: (int index, bool isExpanded) {
                           setState(() {
-                            atrFormFieldsWrapper[index].isExpanded =
+                            _atrFormFieldsWrapper[index].isExpanded =
                                 !isExpanded;
                           });
                         },
-                        items: atrFormFieldsWrapper)),
+                        items: _atrFormFieldsWrapper)),
                 RaisedButton(
                   child: Text("Submit"),
-                  onPressed: () => _submitATR(atrFormFields),
+                  onPressed: _submitATR,
                 ),
               ],
             ),
