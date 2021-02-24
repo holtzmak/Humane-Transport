@@ -1,3 +1,4 @@
+import 'package:app/core/models/atr_identifier.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'loading_vehicle_info.dart';
 
 @immutable
 class AnimalTransportRecord {
+  final AtrIdentifier identifier;
   final ShipperInfo shipInfo;
   final TransporterInfo tranInfo;
   final FeedWaterRestInfo fwrInfo;
@@ -16,8 +18,6 @@ class AnimalTransportRecord {
   final DeliveryInfo deliveryInfo;
   final AcknowledgementInfo ackInfo;
   final ContingencyPlanInfo contingencyInfo;
-  final String userId;
-  final bool isComplete;
 
   AnimalTransportRecord({
     @required this.shipInfo,
@@ -27,20 +27,19 @@ class AnimalTransportRecord {
     @required this.deliveryInfo,
     @required this.ackInfo,
     @required this.contingencyInfo,
-    @required this.userId,
-    this.isComplete = false,
+    @required this.identifier,
   });
 
-  AnimalTransportRecord.fromJSON(Map<String, dynamic> json)
-      : userId = json['userId'],
-        shipInfo = ShipperInfo.fromJSON(json['shipInfo']),
+  AnimalTransportRecord.fromJSON(
+      Map<String, dynamic> json, String atrDocumentId)
+      : shipInfo = ShipperInfo.fromJSON(json['shipInfo']),
         tranInfo = TransporterInfo.fromJSON(json['tranInfo']),
         fwrInfo = FeedWaterRestInfo.fromJSON(json['fwrInfo']),
         vehicleInfo = LoadingVehicleInfo.fromJSON(json['vehicleInfo']),
         deliveryInfo = DeliveryInfo.fromJSON(json['deliveryInfo']),
         ackInfo = AcknowledgementInfo.fromJSON(json['ackInfo']),
         contingencyInfo = ContingencyPlanInfo.fromJSON(json['contingencyInfo']),
-        isComplete = json['isComplete'];
+        identifier = AtrIdentifier.fromJSON(json['identifier'], atrDocumentId);
 
   Map<String, dynamic> toJSON() => {
         'shipInfo': shipInfo.toJSON(),
@@ -50,84 +49,91 @@ class AnimalTransportRecord {
         'deliveryInfo': deliveryInfo.toJSON(),
         'ackInfo': ackInfo.toJSON(),
         'contingencyInfo': ackInfo.toJSON(),
-        'userId': userId
+        'identifier': identifier.toJSON(),
       };
 
   AnimalTransportRecord withShipInfo(ShipperInfo newShipInfo) =>
       AnimalTransportRecord(
-          shipInfo: newShipInfo,
-          tranInfo: tranInfo,
-          fwrInfo: fwrInfo,
-          vehicleInfo: vehicleInfo,
-          deliveryInfo: deliveryInfo,
-          ackInfo: ackInfo,
-          contingencyInfo: contingencyInfo,
-          userId: userId);
+        shipInfo: newShipInfo,
+        tranInfo: tranInfo,
+        fwrInfo: fwrInfo,
+        vehicleInfo: vehicleInfo,
+        deliveryInfo: deliveryInfo,
+        ackInfo: ackInfo,
+        contingencyInfo: contingencyInfo,
+        identifier: identifier,
+      );
 
   AnimalTransportRecord withTransporterInfo(TransporterInfo newTranInfo) =>
       AnimalTransportRecord(
-          shipInfo: shipInfo,
-          tranInfo: newTranInfo,
-          fwrInfo: fwrInfo,
-          vehicleInfo: vehicleInfo,
-          deliveryInfo: deliveryInfo,
-          ackInfo: ackInfo,
-          contingencyInfo: contingencyInfo,
-          userId: userId);
+        shipInfo: shipInfo,
+        tranInfo: newTranInfo,
+        fwrInfo: fwrInfo,
+        vehicleInfo: vehicleInfo,
+        deliveryInfo: deliveryInfo,
+        ackInfo: ackInfo,
+        contingencyInfo: contingencyInfo,
+        identifier: identifier,
+      );
 
   AnimalTransportRecord withFwrInfo(FeedWaterRestInfo newFwrInfo) =>
       AnimalTransportRecord(
-          shipInfo: shipInfo,
-          tranInfo: tranInfo,
-          fwrInfo: newFwrInfo,
-          vehicleInfo: vehicleInfo,
-          deliveryInfo: deliveryInfo,
-          ackInfo: ackInfo,
-          contingencyInfo: contingencyInfo,
-          userId: userId);
+        shipInfo: shipInfo,
+        tranInfo: tranInfo,
+        fwrInfo: newFwrInfo,
+        vehicleInfo: vehicleInfo,
+        deliveryInfo: deliveryInfo,
+        ackInfo: ackInfo,
+        contingencyInfo: contingencyInfo,
+        identifier: identifier,
+      );
 
   AnimalTransportRecord withVehicleInfo(LoadingVehicleInfo newVehicleInfo) =>
       AnimalTransportRecord(
-          shipInfo: shipInfo,
-          tranInfo: tranInfo,
-          fwrInfo: fwrInfo,
-          vehicleInfo: newVehicleInfo,
-          deliveryInfo: deliveryInfo,
-          ackInfo: ackInfo,
-          contingencyInfo: contingencyInfo,
-          userId: userId);
+        shipInfo: shipInfo,
+        tranInfo: tranInfo,
+        fwrInfo: fwrInfo,
+        vehicleInfo: newVehicleInfo,
+        deliveryInfo: deliveryInfo,
+        ackInfo: ackInfo,
+        contingencyInfo: contingencyInfo,
+        identifier: identifier,
+      );
 
   AnimalTransportRecord withDeliveryInfo(DeliveryInfo newDeliveryInfo) =>
       AnimalTransportRecord(
-          shipInfo: shipInfo,
-          tranInfo: tranInfo,
-          fwrInfo: fwrInfo,
-          vehicleInfo: vehicleInfo,
-          deliveryInfo: newDeliveryInfo,
-          ackInfo: ackInfo,
-          contingencyInfo: contingencyInfo,
-          userId: userId);
+        shipInfo: shipInfo,
+        tranInfo: tranInfo,
+        fwrInfo: fwrInfo,
+        vehicleInfo: vehicleInfo,
+        deliveryInfo: newDeliveryInfo,
+        ackInfo: ackInfo,
+        contingencyInfo: contingencyInfo,
+        identifier: identifier,
+      );
 
   AnimalTransportRecord withAckInfo(AcknowledgementInfo newAckInfo) =>
       AnimalTransportRecord(
-          shipInfo: shipInfo,
-          tranInfo: tranInfo,
-          fwrInfo: fwrInfo,
-          vehicleInfo: vehicleInfo,
-          deliveryInfo: deliveryInfo,
-          ackInfo: newAckInfo,
-          contingencyInfo: contingencyInfo,
-          userId: userId);
+        shipInfo: shipInfo,
+        tranInfo: tranInfo,
+        fwrInfo: fwrInfo,
+        vehicleInfo: vehicleInfo,
+        deliveryInfo: deliveryInfo,
+        ackInfo: newAckInfo,
+        contingencyInfo: contingencyInfo,
+        identifier: identifier,
+      );
 
   AnimalTransportRecord withContingencyInfo(
           ContingencyPlanInfo newContingencyInfo) =>
       AnimalTransportRecord(
-          shipInfo: shipInfo,
-          tranInfo: tranInfo,
-          fwrInfo: fwrInfo,
-          vehicleInfo: vehicleInfo,
-          deliveryInfo: deliveryInfo,
-          ackInfo: ackInfo,
-          contingencyInfo: newContingencyInfo,
-          userId: userId);
+        shipInfo: shipInfo,
+        tranInfo: tranInfo,
+        fwrInfo: fwrInfo,
+        vehicleInfo: vehicleInfo,
+        deliveryInfo: deliveryInfo,
+        ackInfo: ackInfo,
+        contingencyInfo: newContingencyInfo,
+        identifier: identifier,
+      );
 }
