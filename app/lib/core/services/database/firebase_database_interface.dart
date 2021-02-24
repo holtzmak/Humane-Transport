@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:app/core/models/acknowledgement_info.dart';
+import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/atr_identifier.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/models/firestore_user.dart';
-import 'package:app/core/models/initial_atr.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
@@ -12,9 +13,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'database_interface.dart';
 
-// TODO: #130. Replace MySQL and SQLFLite with Firebase Database calls.
-// We also probably need a separate service for FireBaseAuthentication
-// Up to you if these are in the same file
 class FirebaseDatabaseInterface implements DatabaseInterface {
   final FirebaseFirestore _firestore;
   FirebaseDatabaseInterface(this._firestore);
@@ -53,7 +51,7 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .set(transporterInfo.toJSON(), SetOptions(merge: true));
 
   @override
-  Future<void> saveNewAtr(InitialAtr atr) async =>
+  Future<void> saveNewAtr(AtrIdentifier atr) async =>
       _firestore.collection('atr').add(atr.toJSON());
 
   @override
@@ -96,10 +94,16 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .set(vehicleInfo.toJSON(), SetOptions(merge: true));
 
   @override
-  Future<void> updateAtr(InitialAtr atr) async =>
+  Future<void> updateAtr(AtrIdentifier atr) async =>
       _firestore.doc(atr.atrDocumentId).update(atr.toJSON());
 
   @override
   Future<void> removeAtr(String atrId) async =>
       _firestore.collection('atr').doc(atrId).delete();
+
+  @override
+  Future<void> updateWholeAtr(AnimalTransportRecord atr) async => _firestore
+      .collection('atr')
+      .doc(atr.identifier.atrDocumentId)
+      .update(atr.toJSON());
 }

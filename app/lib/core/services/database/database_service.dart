@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:app/core/models/acknowledgement_info.dart';
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/atr_identifier.dart';
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/models/firestore_user.dart';
-import 'package:app/core/models/initial_atr.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
@@ -23,10 +23,13 @@ class DatabaseService {
       interface.newUser(newUser);
 
   // Note: If used in ViewModel, do not pass atrId to InitialAtr
-  Future<void> saveNewAtr(InitialAtr atr) async => interface.saveNewAtr(atr);
+  Future<void> saveNewAtr(AtrIdentifier atr) async => interface.saveNewAtr(atr);
 
   // Note: If used in ViewModel, pass an atrId to InitialAtr
-  Future<void> updateAtr(InitialAtr atr) async => interface.updateAtr(atr);
+  Future<void> updateAtr(AtrIdentifier atr) async => interface.updateAtr(atr);
+
+  Future<void> updateWholeAtr(AnimalTransportRecord atr) async =>
+      interface.updateWholeAtr(atr);
 
   Future<void> setShipperInfo(String atrId, ShipperInfo shipperInfo) async =>
       interface.setShipperInfo(atrId, shipperInfo);

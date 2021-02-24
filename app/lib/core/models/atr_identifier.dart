@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 
 @immutable
-class InitialAtr {
+class AtrIdentifier {
   final String userId;
   final String atrDocumentId;
   final bool isComplete;
 
-  InitialAtr({
+  AtrIdentifier({
     @required this.userId,
     this.atrDocumentId,
     this.isComplete = false,
   });
 
-  factory InitialAtr.fromJSON(Map<String, dynamic> json, String atrId) {
-    return InitialAtr(
+  factory AtrIdentifier.fromJSON(
+      Map<String, dynamic> json, String atrDocumentId) {
+    return AtrIdentifier(
       userId: json['userId'],
       isComplete: json['isComplete'],
-      atrDocumentId: atrId,
+      atrDocumentId: atrDocumentId,
     );
   }
 
@@ -30,7 +31,7 @@ class InitialAtr {
 
   @override
   bool operator ==(other) {
-    return (other is InitialAtr) &&
+    return (other is AtrIdentifier) &&
         other.userId == userId &&
         other.isComplete == isComplete;
   }

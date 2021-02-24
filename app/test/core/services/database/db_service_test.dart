@@ -1,13 +1,13 @@
+import 'package:app/core/models/atr_identifier.dart';
 import 'package:app/core/models/firestore_user.dart';
-import 'package:app/core/models/initial_atr.dart';
 import 'package:app/core/services/database/database_interface.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/database/firebase_database_interface.dart';
+import 'package:app/test/test_data.dart';
+import 'package:app/test/test_helper.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
-import 'test_data.dart';
-import 'test_helper.dart';
 
 final testLocator = GetIt.instance;
 void main() {
@@ -62,7 +62,7 @@ void main() {
     });
 
     test('should set new initial atr to firestore', () async {
-      final userModel = InitialAtr.fromJSON(_fakeInitialAtr, '123');
+      final userModel = AtrIdentifier.fromJSON(_fakeInitialAtr, '123');
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
       await dbService.saveNewAtr(userModel);
@@ -70,7 +70,7 @@ void main() {
     });
 
     test('should delete atr to firestore', () async {
-      final userModel = InitialAtr.fromJSON(_fakeInitialAtr, '123');
+      final userModel = AtrIdentifier.fromJSON(_fakeInitialAtr, '123');
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
@@ -81,7 +81,7 @@ void main() {
     });
 
     test('should not delete', () async {
-      final userModel = InitialAtr.fromJSON(_fakeInitialAtr, '123');
+      final userModel = AtrIdentifier.fromJSON(_fakeInitialAtr, '123');
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);

@@ -1,9 +1,10 @@
 import 'package:app/core/models/acknowledgement_info.dart';
+import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/atr_identifier.dart';
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/models/firestore_user.dart';
-import 'package:app/core/models/initial_atr.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
@@ -17,9 +18,11 @@ abstract class DatabaseInterface {
 
   Future<FirestoreUser> getUser(String userId);
 
-  Future<void> saveNewAtr(InitialAtr atr);
+  Future<void> saveNewAtr(AtrIdentifier atr);
 
-  Future<void> updateAtr(InitialAtr atr);
+  Future<void> updateAtr(AtrIdentifier atr);
+
+  Future<void> updateWholeAtr(AnimalTransportRecord atr);
 
   Future<void> setShipperInfo(String atrId, ShipperInfo shipperInfo);
 

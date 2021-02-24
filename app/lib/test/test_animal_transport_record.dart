@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:app/core/models/acknowledgement_info.dart';
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/atr_identifier.dart';
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
@@ -37,8 +37,7 @@ testAnimalTransportRecord(
         DeliveryInfo deliveryInfo,
         AcknowledgementInfo ackInfo,
         ContingencyPlanInfo contingencyInfo,
-        String atrId,
-        String userId}) =>
+        AtrIdentifier identifier}) =>
     AnimalTransportRecord(
       shipInfo: shipInfo ?? testShipperInfo(),
       tranInfo: tranInfo ?? testTransporterInfo(),
@@ -47,7 +46,7 @@ testAnimalTransportRecord(
       deliveryInfo: deliveryInfo ?? testDeliveryInfo(),
       ackInfo: ackInfo ?? testAckInfo(),
       contingencyInfo: contingencyInfo ?? testContingencyInfo(),
-      userId: userId ?? "some userId",
+      identifier: identifier ?? testAtrIdentifier(),
     );
 
 testShipperInfo(
@@ -231,3 +230,12 @@ testContingencyActivity(
         personContacted: personContacted ?? "Receiver",
         methodOfContact: methodOfContact ?? "Phone call",
         instructionsGiven: instructionsGiven ?? "Instructions");
+
+testAtrIdentifier({
+  String userId,
+  bool isComplete,
+}) =>
+    AtrIdentifier(
+      userId: userId ?? "Some Id",
+      isComplete: isComplete ?? false,
+    );
