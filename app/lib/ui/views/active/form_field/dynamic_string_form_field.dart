@@ -81,6 +81,8 @@ class _DynamicStringFormFieldState extends State<DynamicStringFormField> {
                     child: ListView.builder(
                         // Make the List take minimum possible space
                         shrinkWrap: true,
+                        // Intended to be used inside existing scrollables
+                        primary: false,
                         itemCount: _fields.length,
                         itemBuilder: (_, index) => _createField(index))),
             ListTile(

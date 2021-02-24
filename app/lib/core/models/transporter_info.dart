@@ -35,7 +35,7 @@ class TransporterInfo {
       @required this.trainingExpiryDate})
       : _driverNames = driverNames;
 
-  List<String> driverNames() => List.unmodifiable(_driverNames);
+  List<String> get driverNames => List.unmodifiable(_driverNames);
 
   TransporterInfo.fromJSON(Map<String, dynamic> json)
       : companyName = json['companyName'],
@@ -82,7 +82,7 @@ class TransporterInfo {
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("Driver(s) name(s)"),
-          subtitle: Text('${driverNames().join(",")}')),
+          subtitle: Text('${_driverNames.join(",")}')),
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text(

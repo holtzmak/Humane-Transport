@@ -1,10 +1,12 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/shipper_info.dart';
+import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
+import 'package:app/ui/views/active/form_field/transporter_info_form_field.dart';
 import 'package:app/ui/widgets/models/expansion_list_item.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
@@ -27,20 +29,30 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   AnimalTransportRecord _replacementAtr;
 
   ShipperInfoFormField _shipperInfoField;
+  TransporterInfoFormField _transporterInfoFormField;
   final List<ExpansionListItem> _atrFormFieldsWrapper = [];
 
   @override
   void initState() {
     super.initState();
     _replacementAtr = widget.atr;
+
     _shipperInfoField = ShipperInfoFormField(
         initialInfo: _replacementAtr.shipInfo,
         onSaved: (ShipperInfo newInfo) =>
             _replacementAtr = _replacementAtr.withShipInfo(newInfo));
+    _transporterInfoFormField = TransporterInfoFormField(
+        initialInfo: _replacementAtr.tranInfo,
+        onSaved: (TransporterInfo newInfo) =>
+            _replacementAtr = _replacementAtr.withTransporterInfo(newInfo));
+
     _atrFormFieldsWrapper.addAll([
       ExpansionListItem(
           expandedValue: _shipperInfoField,
-          headerValue: _shipperInfoField.title)
+          headerValue: _shipperInfoField.title),
+      ExpansionListItem(
+          expandedValue: _transporterInfoFormField,
+          headerValue: _transporterInfoFormField.title)
     ]);
   }
 
