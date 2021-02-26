@@ -1,4 +1,5 @@
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
@@ -11,6 +12,8 @@ import 'package:app/ui/widgets/models/expansion_list_item.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'form_field/fwr_info_form_field.dart';
 
 class ATREditingScreen extends StatefulWidget {
   final DialogService _dialogService = locator<DialogService>();
@@ -29,6 +32,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
 
   ShipperInfoFormField _shipperInfoField;
   TransporterInfoFormField _transporterInfoFormField;
+  FeedWaterRestInfoFormField _feedWaterRestInfoFormField;
   final List<ExpansionListItem> _atrFormFieldsWrapper = [];
 
   @override
@@ -44,6 +48,10 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
         initialInfo: _replacementAtr.tranInfo,
         onSaved: (TransporterInfo newInfo) =>
             _replacementAtr = _replacementAtr.withTransporterInfo(newInfo));
+    _feedWaterRestInfoFormField = FeedWaterRestInfoFormField(
+        initialInfo: _replacementAtr.fwrInfo,
+        onSaved: (FeedWaterRestInfo newInfo) =>
+            _replacementAtr = _replacementAtr.withFwrInfo(newInfo));
 
     _atrFormFieldsWrapper.addAll([
       ExpansionListItem(
@@ -51,7 +59,10 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
           headerValue: _shipperInfoField.title),
       ExpansionListItem(
           expandedValue: _transporterInfoFormField,
-          headerValue: _transporterInfoFormField.title)
+          headerValue: _transporterInfoFormField.title),
+      ExpansionListItem(
+          expandedValue: _feedWaterRestInfoFormField,
+          headerValue: _feedWaterRestInfoFormField.title)
     ]);
   }
 

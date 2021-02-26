@@ -15,7 +15,7 @@ class FeedWaterRestInfo {
       @required List<FeedWaterRestEvent> fwrEvents})
       : _fwrEvents = fwrEvents;
 
-  List<FeedWaterRestEvent> fwrEvents() => List.unmodifiable(_fwrEvents);
+  List<FeedWaterRestEvent> get fwrEvents => List.unmodifiable(_fwrEvents);
 
   FeedWaterRestInfo.fromJSON(Map<String, dynamic> json)
       : lastFwrDate = DateTime.parse(json['lastFwrDate'].toString()),
