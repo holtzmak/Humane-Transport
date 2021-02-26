@@ -3,6 +3,7 @@ import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/form_field/dynamic_string_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
+import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'address_form_field.dart';
@@ -150,7 +151,12 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
         ListTile(
             title: Text(
                 "Date and time conveyance or container last cleaned and disinfected"),
-            subtitle: Text("TODO: Date picker")),
+            subtitle: dateTimePicker(
+                initialDate: _dateLastCleaned,
+                onSaved: (String changed) {
+                  _dateLastCleaned = DateTime.parse(changed);
+                  _saveAll();
+                })),
         ListTile(
             title: Text(
                 "Address conveyance or container last cleaned and disinfected at"),
@@ -197,7 +203,12 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
             onDelete: Optional.empty()),
         ListTile(
             title: Text("Training expiry date"),
-            subtitle: Text("TODO: Date picker")),
+            subtitle: dateTimePicker(
+                initialDate: _trainingExpiryDate,
+                onSaved: (String changed) {
+                  _trainingExpiryDate = DateTime.parse(changed);
+                  _saveAll();
+                })),
         RaisedButton(child: Text("Save"), onPressed: _saveAll)
       ]),
     );
