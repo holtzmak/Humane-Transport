@@ -42,7 +42,10 @@ class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
     _departureAddress = widget.initialInfo.departureAddress;
     _departureAddressFormField = AddressFormField(
         initialAddr: widget.initialInfo.departureAddress,
-        onSaved: (Address changed) => _departureAddress = changed);
+        onSaved: (Address changed) {
+          _departureAddress = changed;
+          _saveAll();
+        });
     super.initState();
   }
 
@@ -83,6 +86,7 @@ class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
                   .toList(),
               onChanged: (String changed) => setState(() {
                 _isAnimalOwner = changed;
+                _saveAll();
               }),
             )),
         StringFormField(

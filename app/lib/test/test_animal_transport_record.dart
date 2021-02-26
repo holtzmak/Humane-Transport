@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:app/core/models/acknowledgement_info.dart';
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/animal_transport_record.dart';
@@ -86,19 +87,20 @@ testTransporterInfo(
         vehicleLicensePlate: vehicleLicensePlate ?? "ABC123",
         trailerProvince: trailerProvince ?? "Someplace",
         trailerLicensePlate: trailerLicensePlate ?? "ABC123",
-        dateLastCleaned: dateLastCleaned ?? DateTime.now(),
+        dateLastCleaned: dateLastCleaned ?? DateTime.parse("2021-02-03 13:01"),
         addressLastCleanedAt: addressLastCleanedAt ?? testAddress(),
         driversAreBriefed: driversAreBriefed ?? true,
         driversHaveTraining: driversHaveTraining ?? true,
         trainingType: trainingType ?? "Basic",
-        trainingExpiryDate: trainingExpiryDate ?? DateTime.now());
+        trainingExpiryDate:
+            trainingExpiryDate ?? DateTime.parse("2021-02-03 13:01"));
 
 testFwrInfo(
         {DateTime lastFwrDate,
         Address lastFwrLocation,
         FeedWaterRestEvent fwrEvents}) =>
     FeedWaterRestInfo(
-        lastFwrDate: lastFwrDate ?? DateTime.now(),
+        lastFwrDate: lastFwrDate ?? DateTime.parse("2021-02-03 13:01"),
         lastFwrLocation: lastFwrLocation ?? testAddress(),
         fwrEvents: fwrEvents ?? [testFwrEvent()]);
 
@@ -109,7 +111,7 @@ testFwrEvent(
         bool fwrProvidedOnboard}) =>
     FeedWaterRestEvent(
         animalsWereUnloaded: animalsWereUnloaded ?? true,
-        fwrTime: fwrTime ?? DateTime.now(),
+        fwrTime: fwrTime ?? DateTime.parse("2021-02-03 13:01"),
         lastFwrLocation: lastFwrLocation ?? testAddress(),
         fwrProvidedOnboard: fwrProvidedOnboard ?? false);
 
@@ -120,7 +122,8 @@ testVehicleInfo(
         int animalsPerLoadingArea,
         List<AnimalGroup> animalsLoaded}) =>
     LoadingVehicleInfo(
-        dateAndTimeLoaded: dateAndTimeLoaded ?? DateTime.now(),
+        dateAndTimeLoaded:
+            dateAndTimeLoaded ?? DateTime.parse("2021-02-03 13:01"),
         loadingArea: loadingArea ?? 1,
         loadingDensity: loadingDensity ?? 1,
         animalsPerLoadingArea: animalsPerLoadingArea ?? 1,
@@ -159,7 +162,7 @@ testDeliveryInfo(
         String additionalWelfareConcerns}) =>
     DeliveryInfo(
         recInfo: recInfo ?? testReceiverInfo(),
-        arrivalDateAndTime: arrivalDate ?? DateTime.now(),
+        arrivalDateAndTime: arrivalDate ?? DateTime.parse("2021-02-03 13:01"),
         compromisedAnimals: compromisedAnimals ?? List.empty(),
         additionalWelfareConcerns: additionalWelfareConcerns ?? "None");
 
@@ -212,7 +215,8 @@ testContingencyEvent(
         List<ContingencyActivity> activities,
         List<String> actionsTaken}) =>
     ContingencyPlanEvent(
-        eventDateAndTime: eventDateAndTime ?? DateTime.now(),
+        eventDateAndTime:
+            eventDateAndTime ?? DateTime.parse("2021-02-03 13:01"),
         producerContactsUsed: producerContactsUsed ?? ["John Smith"],
         receiverContactsUsed: receiverContactsUsed ?? ["Jane Doe"],
         disturbancesIdentified:

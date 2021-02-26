@@ -62,14 +62,23 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
 
     _companyAddressFormField = AddressFormField(
         initialAddr: _companyAddress,
-        onSaved: (Address changed) => _companyAddress = changed);
+        onSaved: (Address changed) {
+          _companyAddress = changed;
+          _saveAll();
+        });
     _addressLastCleanedAtFormField = AddressFormField(
         initialAddr: _addressLastCleanedAt,
-        onSaved: (Address changed) => _addressLastCleanedAt = changed);
+        onSaved: (Address changed) {
+          _addressLastCleanedAt = changed;
+          _saveAll();
+        });
     _driverNamesFormField = DynamicStringFormField(
         initialList: _driverNames,
         titles: "Driver Name",
-        onSaved: (List<String> changed) => _driverNames = changed);
+        onSaved: (List<String> changed) {
+          _driverNames = changed;
+          _saveAll();
+        });
     super.initState();
   }
 
@@ -159,6 +168,7 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
                   .toList(),
               onChanged: (String changed) => setState(() {
                 _driversAreBriefed = changed;
+                _saveAll();
               }),
             )),
         ListTile(
@@ -174,6 +184,7 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
                   .toList(),
               onChanged: (String changed) => setState(() {
                 _driversHaveTraining = changed;
+                _saveAll();
               }),
             )),
         StringFormField(

@@ -1,18 +1,11 @@
 import 'package:app/core/models/address.dart';
+import 'package:app/test/test_address_expectations.dart';
 import 'package:app/test/test_animal_transport_record.dart';
 import 'package:app/ui/views/active/form_field/address_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  void verifyInformationIsShown(Address infoExpected) {
-    expect(find.text(infoExpected.streetAddress), findsOneWidget);
-    expect(find.text(infoExpected.city), findsOneWidget);
-    expect(find.text(infoExpected.provinceOrState), findsOneWidget);
-    expect(find.text(infoExpected.country), findsOneWidget);
-    expect(find.text(infoExpected.postalCode), findsOneWidget);
-  }
-
   Future<void> pumpAddressFormField(
           WidgetTester tester, AddressFormField widget) async =>
       tester.pumpWidget(MaterialApp(home: Scaffold(body: widget)));
@@ -32,7 +25,7 @@ void main() {
         },
       );
       await pumpAddressFormField(tester, widget);
-      verifyInformationIsShown(testAddr);
+      verifyAddressIsShown(testAddr);
     });
 
     testWidgets('onSaved called when info is edited',
