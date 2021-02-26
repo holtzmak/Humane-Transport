@@ -3,6 +3,7 @@ import 'package:app/core/models/transporter_info.dart';
 import 'package:app/test/test_address_expectations.dart';
 import 'package:app/test/test_animal_transport_record.dart';
 import 'package:app/ui/views/active/form_field/transporter_info_form_field.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -24,6 +25,21 @@ void main() {
         findsNWidgets(2));
     expect(find.text(infoExpected.driversHaveTraining ? "Yes" : "No"),
         findsNWidgets(2));
+
+    // Date and time are in separate fields
+    expect(
+        find.text(
+            DateFormat('MMM d, yyyy').format(infoExpected.dateLastCleaned)),
+        findsOneWidget);
+    expect(find.text(DateFormat('HH:mm').format(infoExpected.dateLastCleaned)),
+        findsOneWidget);
+    expect(
+        find.text(
+            DateFormat('MMM d, yyyy').format(infoExpected.trainingExpiryDate)),
+        findsOneWidget);
+    expect(
+        find.text(DateFormat('HH:mm').format(infoExpected.trainingExpiryDate)),
+        findsOneWidget);
 
     expect(find.text(infoExpected.trainingType), findsOneWidget);
   }
