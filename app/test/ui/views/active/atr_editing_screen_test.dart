@@ -1,11 +1,12 @@
-import 'package:app/core/models/address.dart';
 import 'package:app/core/models/animal_transport_record.dart';
-import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
 import 'package:app/test/test_animal_transport_record.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
+import 'package:app/ui/views/active/form_field/fwr_info_form_field.dart';
+import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
+import 'package:app/ui/views/active/form_field/transporter_info_form_field.dart';
 import 'package:app/ui/widgets/utility/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,27 +25,6 @@ void main() {
   final mockNavService = MockNavigationService();
   final mockDialogService = MockDialogService();
 
-  /* At the time of writing, we're using ExpansionPanels. Despite the expanded
-     information not being visible initially, we don't need to expand the panel
-     to make sure the information is in the widget tree
-   */
-  void verifyShipperInfoIsShown(ShipperInfo infoExpected) {
-    expect(find.text(infoExpected.shipperName), findsOneWidget);
-    // TODO: will have to verify this another way as there is a number of widgets with Yes/N0
-    // expect(find.text(infoExpected.shipperIsAnimalOwner ? "Yes" : "No"),
-    //     findsOneWidget);
-    expect(find.text(infoExpected.departureLocationId), findsOneWidget);
-    expect(find.text(infoExpected.departureLocationName), findsOneWidget);
-    expect(
-        find.text(infoExpected.departureAddress.streetAddress), findsOneWidget);
-    expect(find.text(infoExpected.departureAddress.city), findsOneWidget);
-    expect(find.text(infoExpected.departureAddress.provinceOrState),
-        findsOneWidget);
-    expect(find.text(infoExpected.departureAddress.country), findsOneWidget);
-    expect(find.text(infoExpected.departureAddress.postalCode), findsOneWidget);
-    expect(find.text(infoExpected.shipperContactInfo), findsOneWidget);
-  }
-
   Future<void> pumpATREditingScreen(
           WidgetTester tester, AnimalTransportRecord initialATR) async =>
       tester.pumpWidget(MaterialApp(home: ATREditingScreen(atr: initialATR)));
@@ -58,22 +38,21 @@ void main() {
           () => MockActiveScreenViewModel());
     });
 
-    testWidgets('shows right shipping info', (WidgetTester tester) async {
-      final testShipperInfo = ShipperInfo(
-          shipperName: "Jackson Black",
-          shipperIsAnimalOwner: true,
-          departureLocationId: '67ag',
-          departureLocationName: "Home Base",
-          departureAddress: Address(
-              streetAddress: "Some st.",
-              city: "Some city",
-              provinceOrState: "Some state",
-              country: "Some country",
-              postalCode: "ABCXYZ"),
-          shipperContactInfo: "By phone");
-      final testATR = testAnimalTransportRecord(shipInfo: testShipperInfo);
-      await pumpATREditingScreen(tester, testATR);
-      verifyShipperInfoIsShown(testShipperInfo);
+    testWidgets('has shipping info form field', (WidgetTester tester) async {
+      await pumpATREditingScreen(tester, testAnimalTransportRecord());
+      expect(find.byType(ShipperInfoFormField), findsOneWidget);
+    });
+
+    testWidgets('has transporter info form field', (WidgetTester tester) async {
+      await pumpATREditingScreen(tester, testAnimalTransportRecord());
+      expect(find.byType(TransporterInfoFormField), findsOneWidget);
+    });
+
+    testWidgets('has feed, water, rest form field',
+        (WidgetTester tester) async {
+      await pumpATREditingScreen(
+          tester, testAnimalTransportRecord(shipInfo: testShipperInfo()));
+      expect(find.byType(FeedWaterRestInfoFormField), findsOneWidget);
     });
 
     testWidgets('shows submit button', (WidgetTester tester) async {
@@ -83,7 +62,8 @@ void main() {
       expect(submitButtonFinder, findsOneWidget);
     });
 
-    testWidgets('launches dialog on submit', (WidgetTester tester) async {
+    testWidgets('launches successful dialog on submit',
+        (WidgetTester tester) async {
       final testATR = testAnimalTransportRecord();
       final submitButtonFinder = find.widgetWithText(RaisedButton, "Submit");
       when(mockDialogService.showDialog(
@@ -106,8 +86,6 @@ void main() {
       verify(mockNavService.pop()).called(1);
     });
 
-    testWidgets(
-        'launches successful dialog on submit', (WidgetTester tester) async {});
     testWidgets(
         'launches failure dialog on submit', (WidgetTester tester) async {});
     testWidgets('gives completed ATR to database service on submit',
