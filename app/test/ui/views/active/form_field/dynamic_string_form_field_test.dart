@@ -11,14 +11,14 @@ void main() {
     });
   }
 
-  Future<void> pumpStringFormField(
+  Future<void> pumpDynamicStringFormField(
           WidgetTester tester, DynamicStringFormField widget) async =>
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
         body: widget,
       )));
 
-  group('Multi String Form Field', () {
+  group('Dynamic String Form Field', () {
     testWidgets('shows right information for multiple fields',
         (WidgetTester tester) async {
       final testItems = ["Test0", "Test1", "Test2"];
@@ -30,7 +30,7 @@ void main() {
           // do nothing for test
         },
       );
-      await pumpStringFormField(tester, widget);
+      await pumpDynamicStringFormField(tester, widget);
       await tester.pumpAndSettle();
       verifyNoDuplicateInfoShown(testTitle, testItems);
     });
@@ -44,7 +44,7 @@ void main() {
           // do nothing for test
         },
       );
-      await pumpStringFormField(tester, widget);
+      await pumpDynamicStringFormField(tester, widget);
       expect(find.text("No fields, try adding some!"), findsOneWidget);
     });
 
@@ -61,7 +61,7 @@ void main() {
         },
       );
 
-      await pumpStringFormField(tester, widget);
+      await pumpDynamicStringFormField(tester, widget);
       await tester.tap(firstItemDeleteButtonFinder);
       await tester.pumpAndSettle();
       expect(find.text("Test0"), findsNothing);
@@ -80,7 +80,7 @@ void main() {
           // do nothing for test
         },
       );
-      await pumpStringFormField(tester, widget);
+      await pumpDynamicStringFormField(tester, widget);
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
       expect(find.text("No fields, try adding some!"), findsOneWidget);
@@ -96,7 +96,7 @@ void main() {
           // do nothing for test
         },
       );
-      await pumpStringFormField(tester, widget);
+      await pumpDynamicStringFormField(tester, widget);
       final addButtonFinder = find.byIcon(Icons.add);
       await tester.tap(addButtonFinder);
       await tester.pumpAndSettle();
@@ -117,7 +117,7 @@ void main() {
         titles: testTitle,
         onSaved: onSaved,
       );
-      await pumpStringFormField(tester, widget);
+      await pumpDynamicStringFormField(tester, widget);
       await tester.enterText(fieldFinder, "Test3");
       await tester.pumpAndSettle();
       expect(callback, editedItems);
