@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -30,6 +31,18 @@ class FeedWaterRestInfo {
         'lastFwrLocation': lastFwrLocation.toJSON(),
         '_fwrEvents': _fwrEvents.map((fwrEvent) => fwrEvent.toJSON()).toList(),
       };
+
+  @override
+  int get hashCode =>
+      lastFwrDate.hashCode ^ lastFwrLocation.hashCode ^ _fwrEvents.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is FeedWaterRestInfo) &&
+        other.lastFwrDate == lastFwrDate &&
+        other.lastFwrLocation == lastFwrLocation &&
+        listEquals(other.fwrEvents, _fwrEvents);
+  }
 
   List<Widget> _fwrEventsToWidget() => _fwrEvents.isEmpty
       ? [
