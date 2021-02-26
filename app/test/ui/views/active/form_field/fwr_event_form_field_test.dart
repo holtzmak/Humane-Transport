@@ -1,29 +1,12 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
-import 'package:app/test/test_address_expectations.dart';
 import 'package:app/test/test_animal_transport_record.dart';
+import 'package:app/test/test_fwr_event_expectations.dart';
 import 'package:app/ui/views/active/form_field/fwr_event_form_field.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  void verifyInformationIsShown(FeedWaterRestEvent infoExpected) {
-    // DropDownButtonFormFields have the values offscreen, so both are present
-    expect(find.text(infoExpected.animalsWereUnloaded ? "Yes" : "No"),
-        findsNWidgets(2));
-    expect(find.text(infoExpected.fwrProvidedOnboard ? "Yes" : "No"),
-        findsNWidgets(2));
-
-    // Date and time are in separate fields
-    expect(find.text(DateFormat('MMM d, yyyy').format(infoExpected.fwrTime)),
-        findsOneWidget);
-    expect(find.text(DateFormat('HH:mm').format(infoExpected.fwrTime)),
-        findsOneWidget);
-
-    verifyAddressIsShown(infoExpected.lastFwrLocation);
-  }
-
   Future<void> pumpFwrEventFormField(
           WidgetTester tester,
           FeedWaterRestEvent initial,
@@ -54,7 +37,7 @@ void main() {
       }, () {
         // do nothing for test
       });
-      verifyInformationIsShown(feedWaterRestEvent);
+      verifyFwrEventInformationIsShown(feedWaterRestEvent);
     });
 
     testWidgets('calls onDelete when delete button pressed',

@@ -1,6 +1,6 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
-import 'package:app/ui/views/active/form_field/dynamic_fwr_events_form_field.dart';
+import 'package:app/ui/views/active/form_field/dynamic_fwr_event_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
