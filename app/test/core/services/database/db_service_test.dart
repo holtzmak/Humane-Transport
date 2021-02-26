@@ -74,8 +74,10 @@ void main() {
       final userModel = AtrIdentifier.fromJSON(testAtrIdJson, '123');
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
-      // await dbService.saveNewAtr(userModel);
-      // verify(mockCollectionReference.add(userModel.toJSON())).called(1);
+      when(mockCollectionReference.add(any))
+          .thenAnswer((_) async => mockDocumentReference);
+      await dbService.saveNewAtr(userModel.userId, userModel.isComplete);
+      verify(mockCollectionReference.add(userModel.toJSON())).called(1);
     });
 
     test('should delete atr to firestore', () async {

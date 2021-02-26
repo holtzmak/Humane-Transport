@@ -31,6 +31,7 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
   Future<void> setNewUser(FirestoreUser newUser) async =>
       _firestore.collection('users').doc(newUser.userId).set(newUser.toJSON());
 
+  @override
   Future<List<AnimalTransportRecord>> getCompleteRecords() async => _firestore
       .collection('atr')
       .where('isComplete', isEqualTo: true)
