@@ -89,6 +89,22 @@ class FeedWaterRestEvent {
         'fwrProvidedOnboard': fwrProvidedOnboard,
       };
 
+  @override
+  int get hashCode =>
+      animalsWereUnloaded.hashCode ^
+      fwrTime.hashCode ^
+      lastFwrLocation.hashCode ^
+      fwrProvidedOnboard.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is FeedWaterRestEvent) &&
+        other.animalsWereUnloaded == animalsWereUnloaded &&
+        other.fwrTime == fwrTime &&
+        other.lastFwrLocation == lastFwrLocation &&
+        other.fwrProvidedOnboard == fwrProvidedOnboard;
+  }
+
   Widget toWidget() {
     return Column(children: [
       ListTile(
