@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -36,6 +37,40 @@ class TransporterInfo {
       : _driverNames = driverNames;
 
   List<String> get driverNames => List.unmodifiable(_driverNames);
+
+  @override
+  int get hashCode =>
+      companyName.hashCode ^
+      companyAddress.hashCode ^
+      _driverNames.hashCode ^
+      vehicleProvince.hashCode ^
+      vehicleLicensePlate.hashCode ^
+      trailerProvince.hashCode ^
+      trailerLicensePlate.hashCode ^
+      dateLastCleaned.hashCode ^
+      addressLastCleanedAt.hashCode ^
+      driversAreBriefed.hashCode ^
+      driversHaveTraining.hashCode ^
+      trainingType.hashCode ^
+      trainingExpiryDate.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is TransporterInfo) &&
+        other.companyName == companyName &&
+        other.companyAddress == companyAddress &&
+        listEquals(other.driverNames, _driverNames) &&
+        other.vehicleProvince == vehicleProvince &&
+        other.vehicleLicensePlate == vehicleLicensePlate &&
+        other.trailerProvince == trailerProvince &&
+        other.trailerLicensePlate == trailerLicensePlate &&
+        other.dateLastCleaned == dateLastCleaned &&
+        other.addressLastCleanedAt == addressLastCleanedAt &&
+        other.driversAreBriefed == driversAreBriefed &&
+        other.driversHaveTraining == driversHaveTraining &&
+        other.trainingType == trainingType &&
+        other.trainingExpiryDate == trainingExpiryDate;
+  }
 
   TransporterInfo.fromJSON(Map<String, dynamic> json)
       : companyName = json['companyName'],

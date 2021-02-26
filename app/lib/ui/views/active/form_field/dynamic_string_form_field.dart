@@ -6,7 +6,9 @@ import 'package:uuid/uuid.dart';
 // TODO: #134. This class should offer validation for non-empty lists, if desired
 // Meaning that the validation function should have optional non-empty check
 // if at least one field should exist, and the first item should have no delete button
-/// A custom form field for List<String>
+/// A custom form field for List<String>.
+/// Due to it's dynamic nature this widget should only be used inside a grow-able
+/// widget, like column, and not inside static widgets like ListTiles.
 class DynamicStringFormField extends StatefulWidget {
   final List<String> initialList;
   final String titles;
@@ -81,7 +83,7 @@ class _DynamicStringFormFieldState extends State<DynamicStringFormField> {
                     child: ListView.builder(
                         // Make the List take minimum possible space
                         shrinkWrap: true,
-                        // Intended to be used inside existing scrollables
+                        // Intended to be used inside existing scroll-ables
                         primary: false,
                         itemCount: _fields.length,
                         itemBuilder: (_, index) => _createField(index))),

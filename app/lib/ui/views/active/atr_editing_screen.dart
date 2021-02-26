@@ -25,7 +25,6 @@ class ATREditingScreen extends StatefulWidget {
 }
 
 class _ATREditingScreenState extends State<ATREditingScreen> {
-  // Replacement ATR only used on submit
   AnimalTransportRecord _replacementAtr;
 
   ShipperInfoFormField _shipperInfoField;
@@ -56,11 +55,6 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     ]);
   }
 
-  void _saveATR() {
-    throw UnimplementedError(
-        "TODO: Do WillPopScope = false, and force the user to use back button and save then");
-  }
-
   void _submitATR() {
     // TODO: Call service and submit the completed atr
     widget._dialogService
@@ -80,6 +74,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
             title: Text("Animal Transport Form"),
             automaticallyImplyLeading: false,
             leading: new IconButton(
+              // TODO: Do WillPopScope = false, and force the user to use back button and save then
               icon: new Icon(Icons.arrow_back_ios),
               onPressed: model.navigateToActiveScreen,
             ),

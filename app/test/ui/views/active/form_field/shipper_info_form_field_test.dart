@@ -1,5 +1,6 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/shipper_info.dart';
+import 'package:app/test/test_address_expectations.dart';
 import 'package:app/test/test_animal_transport_record.dart';
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +13,7 @@ void main() {
         findsOneWidget);
     expect(find.text(infoExpected.departureLocationId), findsOneWidget);
     expect(find.text(infoExpected.departureLocationName), findsOneWidget);
-    expect(
-        find.text(infoExpected.departureAddress.streetAddress), findsOneWidget);
-    expect(find.text(infoExpected.departureAddress.city), findsOneWidget);
-    expect(find.text(infoExpected.departureAddress.provinceOrState),
-        findsOneWidget);
-    expect(find.text(infoExpected.departureAddress.country), findsOneWidget);
-    expect(find.text(infoExpected.departureAddress.postalCode), findsOneWidget);
+    verifyAddressIsShown(infoExpected.departureAddress);
     expect(find.text(infoExpected.shipperContactInfo), findsOneWidget);
   }
 
