@@ -80,13 +80,12 @@ class TransporterInfo {
         vehicleLicensePlate = json['vehicleLicensePlate'],
         trailerProvince = json['trailerProvince'],
         trailerLicensePlate = json['trailerLicensePlate'],
-        dateLastCleaned = DateTime.parse(json['dateLastCleaned'].toString()),
+        dateLastCleaned = json['dateLastCleaned'].toDate(),
         addressLastCleanedAt = Address.fromJSON(json['addressLastCleanedAt']),
         driversAreBriefed = json['driversAreBriefed'],
         driversHaveTraining = json['driversHaveTraining'],
         trainingType = json['trainingType'],
-        trainingExpiryDate =
-            DateTime.parse(json['trainingExpiryDate'].toString());
+        trainingExpiryDate = json['trainingExpiryDate'].toDate();
 
   Map<String, dynamic> toJSON() => {
         'companyName': companyName,

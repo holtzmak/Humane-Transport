@@ -1,8 +1,10 @@
 import 'package:app/core/services/authentication/auth_service.dart';
+import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
+import 'package:app/test/test_animal_transport_record.dart';
 import 'package:app/ui/views/new/test_screens/test_screen_three.dart';
 
 class NewScreenViewModel extends BaseViewModel {
@@ -10,6 +12,7 @@ class NewScreenViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
+  final DatabaseService _dbService = locator<DatabaseService>();
 
   void signOut() async {
     _authenticationService
@@ -19,6 +22,22 @@ class NewScreenViewModel extends BaseViewModel {
               title: 'Sign out failed',
               description: error.message,
             ));
+  }
+
+  void saveAtr() async {
+    final dummyId = await _dbService.saveNewAtr("dum-e", false);
+    final dumyAtr = testAnimalTransportRecord(identifier: dummyId);
+    await _dbService.updateWholeAtr(dumyAtr);
+  }
+
+  void getAtr() async {
+    final myRecs = await _dbService.getActiveRecords();
+    myRecs.forEach((element) {
+      print("${element.identifier.atrDocumentId}");
+      print("${element.identifier.userId}");
+      print("${element.shipInfo.shipperName}");
+      print("${element.identifier.isComplete}");
+    });
   }
 
   void navigateToTestScreenThree() =>

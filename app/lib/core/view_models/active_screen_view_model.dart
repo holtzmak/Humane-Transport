@@ -13,12 +13,11 @@ import 'package:flutter/cupertino.dart';
 class ActiveScreenViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
-  StreamSubscription<AnimalTransportRecord> previewSubscription;
+  StreamSubscription<List<AnimalTransportRecord>> previewSubscription;
 
   ActiveScreenViewModel() {
-    previewSubscription = _databaseService
-        .getUpdatedActiveATRs()
-        .listen((atr) => addAll([createPreview(atr)]));
+    previewSubscription = _databaseService.getUpdatedActiveATRs().listen(
+        (atr) => addAll(atr.map((element) => createPreview(element)).toList()));
   }
 
   @mustCallSuper

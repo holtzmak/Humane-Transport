@@ -8,19 +8,15 @@ import 'package:app/core/models/firestore_user.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class DatabaseInterface {
-  // TODO: #130. The return types on these functions should not be dynamic
-  // Make it explicit what each function returns, if anything
-
-  Future<void> newUser(FirestoreUser newUser);
+  Future<void> setNewUser(FirestoreUser newUser);
 
   Future<FirestoreUser> getUser(String userId);
 
-  Future<void> saveNewAtr(AtrIdentifier atr);
+  Future<AtrIdentifier> setNewAtr(String userId, bool isComplete);
 
-  Future<void> updateAtr(AtrIdentifier atr);
+  Future<void> updateAtrIdentifier(AtrIdentifier atr);
 
   Future<void> updateWholeAtr(AnimalTransportRecord atr);
 
@@ -44,5 +40,11 @@ abstract class DatabaseInterface {
 
   Future<void> removeAtr(String atrId);
 
-  Future<dynamic> getRecord(User user);
+  Future<List<AnimalTransportRecord>> getCompleteRecords();
+
+  Future<List<AnimalTransportRecord>> getActiveRecords();
+
+  Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs();
+
+  Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs();
 }

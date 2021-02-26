@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 Map<String, dynamic> testFireStoreUserJson() => {
       'firstName': 'clark',
       'lastName': 'sasa',
@@ -13,8 +15,6 @@ Map<String, dynamic> testAtrIdentifierJson() => {
     };
 
 Map<String, dynamic> testAtrJson() => {
-      "userId": "23512",
-      "isComplete": false,
       "shipInfo": {
         "shipperName": "Clark",
         "shipperIsAnimalOwner": false,
@@ -43,7 +43,8 @@ Map<String, dynamic> testAtrJson() => {
         "vehicleLicensePlate": "vehicleLicensePlate plate",
         "trailerProvince": "trailerProvince province",
         "trailerLicensePlate": "trailerLicensePlate plate",
-        "dateLastCleaned": "2020-01-29T18:39:51.396781283+01:00",
+        "dateLastCleaned": Timestamp.fromDate(
+            (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
         "addressLastCleanedAt": {
           "streetAddress": "Bruce",
           "city": "Regina",
@@ -54,10 +55,12 @@ Map<String, dynamic> testAtrJson() => {
         "driversAreBriefed": false,
         "driversHaveTraining": false,
         "trainingType": "trainingType type",
-        "trainingExpiryDate": "2020-01-29T18:39:51.396781283+01:00"
+        "trainingExpiryDate": Timestamp.fromDate(
+            (DateTime.parse("2020-01-29T18:39:51.396781283+01:00")))
       },
       "fwrInfo": {
-        "lastFwrDate": "2020-01-29T18:39:51.396781283+01:00",
+        "lastFwrDate": Timestamp.fromDate(
+            (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
         "lastFwrLocation": {
           "streetAddress": "Bruce",
           "city": "Regina",
@@ -68,7 +71,8 @@ Map<String, dynamic> testAtrJson() => {
         "_fwrEvents": [
           {
             "animalsWereUnloaded": false,
-            "fwrTime": "2020-01-29T18:39:51.396781283+01:00",
+            "fwrTime": Timestamp.fromDate(
+                (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
             "lastFwrLocation": {
               "streetAddress": "Bruce",
               "city": "Regina",
@@ -81,7 +85,8 @@ Map<String, dynamic> testAtrJson() => {
         ]
       },
       "vehicleInfo": {
-        "dateAndTimeLoaded": "2020-01-29T18:39:51.396781283+01:00",
+        "dateAndTimeLoaded": Timestamp.fromDate(
+            (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
         "loadingArea": 1,
         "loadingDensity": 2,
         "animalsPerLoadingArea": 3,
@@ -109,7 +114,7 @@ Map<String, dynamic> testAtrJson() => {
         ]
       },
       "deliveryInfo": {
-        "receiverInfo": {
+        "recInfo": {
           "receiverCompanyName": "receiverCompanyName a",
           "receiverName": "receiverName A",
           "accountId": null,
@@ -124,7 +129,8 @@ Map<String, dynamic> testAtrJson() => {
           },
           "receiverContactInfo": "receiverContactInfo"
         },
-        "arrivalDateAndTime": "2020-01-29T18:39:51.396781283+01:00",
+        "arrivalDateAndTime": Timestamp.fromDate(
+            (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
         "_compromisedAnimals": [
           {
             "animalDescription": "animalDescription",
@@ -148,13 +154,15 @@ Map<String, dynamic> testAtrJson() => {
         "_potentialSafetyActions": ["a", "b"],
         "_contingencyEvents": [
           {
-            "eventDateAndTime": "2020-01-29T18:39:51.396781283+01:00",
+            "eventDateAndTime": Timestamp.fromDate(
+                (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
             "_producerContactsUsed": ["a", "b"],
             "_receiverContactsUsed": ["a", "b"],
             "disturbancesIdentified": "disturbancesIdentified",
             "_activities": [
               {
-                "time": "2020-01-29T18:39:51.396781283+01:00",
+                "time": Timestamp.fromDate(
+                    (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
                 "personContacted": "personContacted",
                 "methodOfContact": "methodOfContact",
                 "instructionsGiven": "instructionsGiven"
@@ -163,5 +171,9 @@ Map<String, dynamic> testAtrJson() => {
             "_actionsTaken": ["a", "b"]
           }
         ]
-      }
+      },
+      "identifier": {
+        "userId": "23512",
+        "isComplete": false,
+      },
     };
