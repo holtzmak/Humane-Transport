@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class StringFormField extends StatefulWidget {
   final String initial;
   final String title;
+  final bool isMultiline;
   final FormFieldSetter<String> onSaved;
   final Optional<Function()> onDelete;
 
@@ -13,7 +14,8 @@ class StringFormField extends StatefulWidget {
       @required this.initial,
       @required this.title,
       @required this.onSaved,
-      @required this.onDelete})
+      @required this.onDelete,
+      this.isMultiline = false})
       : super(key: key);
 
   @override
@@ -41,6 +43,11 @@ class _StringFormFieldState extends State<StringFormField> {
         ? ListTile(
             title: Text(widget.title),
             subtitle: TextFormField(
+              keyboardType: widget.isMultiline
+                  ? TextInputType.multiline
+                  : TextInputType.text,
+              // Needed for the text field to expand
+              maxLines: null,
               controller: controller,
               // This is the same as onSaved, so we can avoid needing an
               // explicit save button in dynamic forms
@@ -55,6 +62,10 @@ class _StringFormFieldState extends State<StringFormField> {
         : ListTile(
             title: Text(widget.title),
             subtitle: TextFormField(
+              keyboardType: widget.isMultiline
+                  ? TextInputType.multiline
+                  : TextInputType.text,
+              maxLines: null,
               controller: controller,
               onSaved: widget.onSaved,
               onChanged: widget.onSaved,
