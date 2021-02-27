@@ -1,16 +1,11 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
+import 'package:app/test/helper/test_compromised_animal_expectations.dart';
 import 'package:app/test/test_animal_transport_record.dart';
 import 'package:app/ui/views/active/form_field/compromised_animal_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  void verifyInformationIsShown(CompromisedAnimal infoExpected) {
-    expect(find.text(infoExpected.animalDescription), findsOneWidget);
-    expect(
-        find.text(infoExpected.measuresTakenToCareForAnimal), findsOneWidget);
-  }
-
   Future<void> pumpCompromisedAnimalFormField(
           WidgetTester tester,
           CompromisedAnimal initial,
@@ -35,7 +30,7 @@ void main() {
       }, () {
         // do nothing for test
       });
-      verifyInformationIsShown(compromisedAnimal);
+      verifyCompromisedAnimalInfoIsShown(compromisedAnimal);
     });
 
     testWidgets('calls onDelete when delete button pressed',
