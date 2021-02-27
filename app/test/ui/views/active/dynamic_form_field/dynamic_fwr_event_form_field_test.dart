@@ -2,7 +2,7 @@ import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/test/test_animal_transport_record.dart';
 import 'package:app/test/test_fwr_event_expectations.dart';
-import 'package:app/ui/views/active/form_field/dynamic_fwr_event_form_field.dart';
+import 'package:app/ui/views/active/dynamic_form_field/dynamic_fwr_event_form_field.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -42,7 +42,7 @@ void main() {
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
         body: SingleChildScrollView(
-          child: DynamicFWREventFormField(
+          child: dynamicFWREventFormField(
             initialList: initialList,
             onSaved: onSaved,
           ),
@@ -96,7 +96,10 @@ void main() {
       await pumpDynamicFwrFormField(tester, <FeedWaterRestEvent>[], (_) {
         // do nothing for test
       });
-      expect(find.text("No events, try adding some!"), findsOneWidget);
+      expect(
+          find.text(
+              "No Feed, Water, and Rest event, add some using the + button"),
+          findsOneWidget);
     });
 
     testWidgets('delete button pressed removes field',
@@ -175,7 +178,10 @@ void main() {
       });
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
-      expect(find.text("No events, try adding some!"), findsOneWidget);
+      expect(
+          find.text(
+              "No Feed, Water, and Rest event, add some using the + button"),
+          findsOneWidget);
     });
 
     testWidgets('add button pressed adds empty field',
@@ -196,7 +202,10 @@ void main() {
               country: "",
               postalCode: ""),
           fwrProvidedOnboard: false));
-      expect(find.text("No events, try adding some!"), findsNothing);
+      expect(
+          find.text(
+              "No Feed, Water, and Rest event, add some using the + button"),
+          findsNothing);
     });
 
     testWidgets('onSaved called when info is edited',

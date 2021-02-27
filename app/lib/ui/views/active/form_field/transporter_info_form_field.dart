@@ -1,7 +1,8 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/utilities/optional.dart';
-import 'package:app/ui/views/active/form_field/dynamic_string_form_field.dart';
+import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
+import 'package:app/ui/views/active/dynamic_form_field/dynamic_string_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
 
   AddressFormField _companyAddressFormField;
   AddressFormField _addressLastCleanedAtFormField;
-  DynamicStringFormField _driverNamesFormField;
+  DynamicFormField<String, StringFormField> _driverNamesFormField;
 
   @override
   void initState() {
@@ -73,7 +74,7 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
           _addressLastCleanedAt = changed;
           _saveAll();
         });
-    _driverNamesFormField = DynamicStringFormField(
+    _driverNamesFormField = dynamicStringFormField(
         initialList: _driverNames,
         titles: "Driver Name",
         onSaved: (List<String> changed) {
