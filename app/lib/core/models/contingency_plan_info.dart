@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -26,6 +27,30 @@ class ContingencyPlanInfo {
         _potentialSafetyActions = potentialSafetyActions,
         _contingencyEvents = contingencyEvents;
 
+  @override
+  int get hashCode =>
+      goalStatement.hashCode ^
+      communicationPlan.hashCode ^
+      _crisisContacts.hashCode ^
+      expectedPrepProcess.hashCode ^
+      standardAnimalMonitoring.hashCode ^
+      _potentialHazards.hashCode ^
+      _potentialSafetyActions.hashCode ^
+      _contingencyEvents.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is ContingencyPlanInfo) &&
+        other.goalStatement == goalStatement &&
+        other.communicationPlan == communicationPlan &&
+        listEquals(other.crisisContacts, _crisisContacts) &&
+        other.expectedPrepProcess == expectedPrepProcess &&
+        other.standardAnimalMonitoring == standardAnimalMonitoring &&
+        listEquals(other.potentialHazards, _potentialHazards) &&
+        listEquals(other.potentialSafetyActions, _potentialSafetyActions) &&
+        listEquals(other.contingencyEvents, _contingencyEvents);
+  }
+
   ContingencyPlanInfo.fromJSON(Map<String, dynamic> json)
       : goalStatement = json['goalStatement'],
         communicationPlan = json['communicationPlan'],
@@ -52,14 +77,14 @@ class ContingencyPlanInfo {
             .toList()
       };
 
-  List<String> crisisContacts() => List.unmodifiable(_crisisContacts);
+  List<String> get crisisContacts => List.unmodifiable(_crisisContacts);
 
-  List<String> potentialHazards() => List.unmodifiable(_potentialHazards);
+  List<String> get potentialHazards => List.unmodifiable(_potentialHazards);
 
-  List<String> potentialSafetyActions() =>
+  List<String> get potentialSafetyActions =>
       List.unmodifiable(_potentialSafetyActions);
 
-  List<ContingencyPlanEvent> contingencyEvents() =>
+  List<ContingencyPlanEvent> get contingencyEvents =>
       List.unmodifiable(_contingencyEvents);
 
   List<Widget> _contingencyEventsToWidget() => _contingencyEvents.isEmpty
@@ -134,6 +159,26 @@ class ContingencyPlanEvent {
         _activities = activities,
         _actionsTaken = actionsTaken;
 
+  @override
+  int get hashCode =>
+      eventDateAndTime.hashCode ^
+      _producerContactsUsed.hashCode ^
+      _receiverContactsUsed.hashCode ^
+      disturbancesIdentified.hashCode ^
+      _activities.hashCode ^
+      _actionsTaken.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is ContingencyPlanEvent) &&
+        other.eventDateAndTime == eventDateAndTime &&
+        listEquals(other.producerContactsUsed, _producerContactsUsed) &&
+        listEquals(other.receiverContactsUsed, _receiverContactsUsed) &&
+        other.disturbancesIdentified == disturbancesIdentified &&
+        listEquals(other.activities, activities) &&
+        listEquals(other.actionsTaken, _actionsTaken);
+  }
+
   ContingencyPlanEvent.fromJSON(Map<String, dynamic> json)
       : eventDateAndTime = DateTime.parse(json['eventDateAndTime']),
         _producerContactsUsed = List.from(json['_producerContactsUsed']),
@@ -155,15 +200,15 @@ class ContingencyPlanEvent {
         '_actionsTaken': _actionsTaken,
       };
 
-  List<String> producerContactsUsed() =>
+  List<String> get producerContactsUsed =>
       List.unmodifiable(_producerContactsUsed);
 
-  List<String> receiverContactsUsed() =>
+  List<String> get receiverContactsUsed =>
       List.unmodifiable(_receiverContactsUsed);
 
-  List<ContingencyActivity> activities() => List.unmodifiable(_activities);
+  List<ContingencyActivity> get activities => List.unmodifiable(_activities);
 
-  List<String> actionsTaken() => List.unmodifiable(_actionsTaken);
+  List<String> get actionsTaken => List.unmodifiable(_actionsTaken);
 
   Widget toWidget() {
     final List<Widget> widgetFields = [
@@ -212,6 +257,22 @@ class ContingencyActivity {
       @required this.personContacted,
       @required this.methodOfContact,
       @required this.instructionsGiven});
+
+  @override
+  int get hashCode =>
+      time.hashCode ^
+      personContacted.hashCode ^
+      methodOfContact.hashCode ^
+      instructionsGiven.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is ContingencyActivity) &&
+        other.time == time &&
+        other.personContacted == personContacted &&
+        other.methodOfContact == methodOfContact &&
+        other.instructionsGiven == instructionsGiven;
+  }
 
   ContingencyActivity.fromJSON(Map<String, dynamic> json)
       : time = TimeOfDay.fromDateTime(DateTime.parse(json['time'])),
