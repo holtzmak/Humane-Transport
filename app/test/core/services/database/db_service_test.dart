@@ -3,36 +3,39 @@ import 'package:app/core/models/firestore_user.dart';
 import 'package:app/core/services/database/database_interface.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/database/firebase_database_interface.dart';
+import 'package:app/test/mock/test_mocks_for_firebase.dart';
 import 'package:app/test/test_json.dart';
-import 'package:app/test/test_mocks_for_firebase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
 final testLocator = GetIt.instance;
+
 void main() {
   final mockFirestoreInstance = MockFirestore();
   final mockCollectionReference = MockCollectionReference();
   final mockDocumentReference = MockDocumentReference();
   final mockDocumentSnapshot = MockDocumentSnapshot();
-  final _fakeResponse = fakeData();
-  final _fakeInitialAtr = fakeInitialAtr();
+  final testUserJson = testFireStoreUserJson();
+  final testAtrIdJson = testAtrIdentifierJson();
   DatabaseService dbService;
+
   group('Database Service -', () {
     setUpAll(() async {
       testLocator.registerFactory<DatabaseInterface>(
           () => FirebaseDatabaseInterface(mockFirestoreInstance));
       dbService = DatabaseService(testLocator<DatabaseInterface>());
     });
+
     test('Should get user from firestore', () async {
-      final userModel = FirestoreUser.fromJSON(_fakeResponse);
+      final userModel = FirestoreUser.fromJSON(testUserJson);
 
       when(mockFirestoreInstance.collection('users'))
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
       when(mockDocumentReference.get())
           .thenAnswer((_) async => mockDocumentSnapshot);
-      when(mockDocumentSnapshot.data()).thenReturn(_fakeResponse);
+      when(mockDocumentSnapshot.data()).thenReturn(testUserJson);
       final result = await dbService.getUser('userId');
 
       expect(result, userModel);
@@ -52,7 +55,7 @@ void main() {
     });
 
     test('should add new user to firestore', () async {
-      final userModel = FirestoreUser.fromJSON(_fakeResponse);
+      final userModel = FirestoreUser.fromJSON(testUserJson);
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.doc(userModel.userId))
@@ -62,7 +65,7 @@ void main() {
     });
 
     test('should set new initial atr to firestore', () async {
-      final userModel = AtrIdentifier.fromJSON(_fakeInitialAtr, '123');
+      final userModel = AtrIdentifier.fromJSON(testAtrIdJson, '123');
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
       await dbService.saveNewAtr(userModel);
@@ -70,7 +73,7 @@ void main() {
     });
 
     test('should delete atr to firestore', () async {
-      final userModel = AtrIdentifier.fromJSON(_fakeInitialAtr, '123');
+      final userModel = AtrIdentifier.fromJSON(testAtrIdJson, '123');
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
@@ -81,7 +84,7 @@ void main() {
     });
 
     test('should not delete', () async {
-      final userModel = AtrIdentifier.fromJSON(_fakeInitialAtr, '123');
+      final userModel = AtrIdentifier.fromJSON(testAtrIdJson, '123');
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
