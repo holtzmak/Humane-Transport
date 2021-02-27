@@ -1,35 +1,37 @@
-import 'package:app/core/utilities/optional.dart';
-import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 // TODO: #134. This class should offer validation for non-empty lists, if desired
 // Meaning that the validation function should have optional non-empty check
 // if at least one field should exist, and the first item should have no delete button
-/// A custom form field for List<String>.
+/// A custom form field for List<T>. Requires widget builder W.
 /// Due to it's dynamic nature this widget should only be used inside a grow-able
 /// widget, like column, and not inside static widgets like ListTiles.
-class DynamicStringFormField extends StatefulWidget {
-  final List<String> initialList;
+class DynamicFormField<T, W extends StatefulWidget> extends StatefulWidget {
+  final List<T> initialList;
   final String titles;
-  final Function(List<String>) onSaved;
+  final Function(List<T>) onSaved;
+  final T Function() blankFieldCreator;
+  final W Function(int, T, Function(int, T), Function(int)) fieldCreator;
 
   // Use the form key to save all the fields of this form
   final formKey = GlobalKey<FormState>();
 
-  DynamicStringFormField(
+  DynamicFormField(
       {Key key,
       @required this.initialList,
       @required this.titles,
+      @required this.blankFieldCreator,
+      @required this.fieldCreator,
       @required this.onSaved})
       : super(key: key);
 
   @override
-  _DynamicStringFormFieldState createState() => _DynamicStringFormFieldState();
+  _DynamicFormFieldState<T, W> createState() => _DynamicFormFieldState<T, W>();
 }
 
-class _DynamicStringFormFieldState extends State<DynamicStringFormField> {
-  final List<String> _fields = [];
+class _DynamicFormFieldState<T, W extends StatefulWidget>
+    extends State<DynamicFormField<T, W>> {
+  final List<T> _fields = [];
 
   void _saveAll() {
     if (widget.formKey.currentState.validate()) {
@@ -38,9 +40,9 @@ class _DynamicStringFormFieldState extends State<DynamicStringFormField> {
     }
   }
 
-  void _saveIndividual(int index, String field) {
+  void _saveIndividual(int index, T field) {
     _fields[index] = field;
-    // TODO: Trim empty strings from the saved list
+    // TODO: Trim empties from the saved list
     // but keep them in the widget's list to have open spots for new items
     widget.onSaved(_fields);
   }
@@ -52,22 +54,17 @@ class _DynamicStringFormFieldState extends State<DynamicStringFormField> {
 
   void _addField() => setState(() {
         _saveAll();
-        _fields.add("");
+        _fields.add(widget.blankFieldCreator());
       });
 
-  StringFormField _createField(int index) {
-    return StringFormField(
-        // Must have unique keys in rebuilding widget lists
-        key: ObjectKey(Uuid().v4()),
-        initial: _fields[index],
-        title: widget.titles,
-        onSaved: (String changed) => _saveIndividual(index, changed),
-        onDelete: Optional.of(() => _deleteField(index)));
+  W _createField(int index) {
+    return widget.fieldCreator(
+        index, _fields[index], _saveIndividual, _deleteField);
   }
 
   @override
   void initState() {
-    _fields.addAll(widget.initialList);
+    _fields.addAll(widget.initialList.cast<T>());
     super.initState();
   }
 
@@ -78,7 +75,7 @@ class _DynamicStringFormFieldState extends State<DynamicStringFormField> {
         child: Column(
           children: [
             _fields.isEmpty
-                ? Text("No fields, try adding some!")
+                ? Text("No ${widget.titles}, add some using the + button")
                 : Container(
                     child: ListView.builder(
                         // Make the List take minimum possible space

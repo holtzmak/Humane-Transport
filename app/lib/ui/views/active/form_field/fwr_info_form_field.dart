@@ -1,10 +1,12 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
-import 'package:app/ui/views/active/form_field/dynamic_fwr_event_form_field.dart';
+import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
+import 'package:app/ui/views/active/dynamic_form_field/dynamic_fwr_event_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'address_form_field.dart';
+import 'fwr_event_form_field.dart';
 
 class FeedWaterRestInfoFormField extends StatefulWidget {
   final Function(FeedWaterRestInfo info) onSaved;
@@ -30,7 +32,8 @@ class _FeedWaterRestInfoFormFieldState
   List<FeedWaterRestEvent> _fwrEvents;
 
   AddressFormField _lastFwrAddressFormField;
-  DynamicFWREventFormField _fwrEventFormField;
+  DynamicFormField<FeedWaterRestEvent, FeedWaterRestEventFormField>
+      _fwrEventFormField;
 
   @override
   void initState() {
@@ -43,7 +46,7 @@ class _FeedWaterRestInfoFormFieldState
           _lastFwrLocation = changed;
           _saveAll();
         });
-    _fwrEventFormField = DynamicFWREventFormField(
+    _fwrEventFormField = dynamicFWREventFormField(
         initialList: _fwrEvents,
         onSaved: (List<FeedWaterRestEvent> changed) {
           _fwrEvents = changed;
