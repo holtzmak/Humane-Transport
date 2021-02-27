@@ -31,6 +31,30 @@ class AnimalTransportRecord {
     @required this.identifier,
   });
 
+  @override
+  int get hashCode =>
+      shipInfo.hashCode ^
+      tranInfo.hashCode ^
+      fwrInfo.hashCode ^
+      vehicleInfo.hashCode ^
+      deliveryInfo.hashCode ^
+      ackInfo.hashCode ^
+      contingencyInfo.hashCode ^
+      identifier.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is AnimalTransportRecord) &&
+        other.shipInfo == shipInfo &&
+        other.tranInfo == tranInfo &&
+        other.fwrInfo == fwrInfo &&
+        other.vehicleInfo == vehicleInfo &&
+        other.deliveryInfo == deliveryInfo &&
+        other.ackInfo == ackInfo &&
+        other.contingencyInfo == contingencyInfo &&
+        other.identifier == identifier;
+  }
+
   AnimalTransportRecord.fromJSON(
       Map<String, dynamic> json, String atrDocumentId)
       : shipInfo = ShipperInfo.fromJSON(json['shipInfo']),
