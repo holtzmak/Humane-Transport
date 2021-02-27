@@ -2,6 +2,7 @@ import 'package:app/core/models/atr_identifier.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:flutter/material.dart';
+
 import 'acknowledgement_info.dart';
 import 'contingency_plan_info.dart';
 import 'delivery_info.dart';
@@ -51,6 +52,14 @@ class AnimalTransportRecord {
         'contingencyInfo': ackInfo.toJSON(),
         'identifier': identifier.toJSON(),
       };
+
+  String toString() => '''Shipper's Information: $shipInfo
+  Transporter's Information: $tranInfo
+  Feed, Water, and Rest Information: $fwrInfo
+  Loading Vehicle Information: $vehicleInfo
+  Delivery Information: $deliveryInfo
+  Acknowledgements: $ackInfo
+  Contingency Plan: $contingencyInfo''';
 
   AnimalTransportRecord withShipInfo(ShipperInfo newShipInfo) =>
       AnimalTransportRecord(

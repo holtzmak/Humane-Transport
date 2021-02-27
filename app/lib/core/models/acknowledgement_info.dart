@@ -38,6 +38,10 @@ class AcknowledgementInfo {
         'receiverAck': receiverAck
       };
 
+  // TODO: Resolve how to print ack info
+  String toString() =>
+      "Shipper acknowledgement: , Transporter acknowledgement: , Consignee acknowledgement: ";
+
   Widget toWidget() {
     return Column(children: [
       ListTile(

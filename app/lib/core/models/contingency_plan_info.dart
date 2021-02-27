@@ -87,6 +87,20 @@ class ContingencyPlanInfo {
   List<ContingencyPlanEvent> get contingencyEvents =>
       List.unmodifiable(_contingencyEvents);
 
+  String _contingencyEventsToString() => _contingencyEvents.isEmpty
+      ? 'No events occurred during transport'
+      : _contingencyEvents.map((event) => event.toString()).toList().join(",");
+
+  String toString() =>
+      '''Goal Statement (company’s goal and purpose of the plan i.e avoid animal suffering): $goalStatement
+      Communication Plan (who should be contacted and who will initiate or permit the process?): $communicationPlan
+      Crisis contacts and links( general helpline, industry related links and websites): ${_crisisContacts.join(',')}
+      Expected Preparation Process (what should be done prior to loading animals?): $expectedPrepProcess
+      Standard Animal Monitoring: $standardAnimalMonitoring
+      Potential Hazard/Events/Challenges: ${_potentialHazards.join(',')}
+      Potential Actions to Ensure Human or Animal Safety: ${_potentialSafetyActions.join(',')}
+      Event Specific Plan(s): ${_contingencyEventsToString()}''';
+
   List<Widget> _contingencyEventsToWidget() => _contingencyEvents.isEmpty
       ? [
           ListTile(
@@ -210,6 +224,14 @@ class ContingencyPlanEvent {
 
   List<String> get actionsTaken => List.unmodifiable(_actionsTaken);
 
+  String toString() =>
+      '''Date and time of event: ${DateFormat("yyyy-MM-dd hh:mm").format(eventDateAndTime)}
+      Producer's emergency contacts used: ${_producerContactsUsed.join(",")}
+      Receiver's emergency contacts used: ${_receiverContactsUsed.join(",")}
+      Disturbances identified: $disturbancesIdentified
+      List of animal welfare related measures and actions taken(specific to the event): ${_actionsTaken.join(",")}
+      Carrier's communication activities: ${_activities.map((activity) => activity.toString()).toList().join(',')}''';
+
   Widget toWidget() {
     final List<Widget> widgetFields = [
       ListTile(
@@ -286,6 +308,11 @@ class ContingencyActivity {
         'methodOfContact': methodOfContact,
         'instructionsGiven': instructionsGiven,
       };
+
+  String toString() => '''Time of communication: $time
+  Who was contacted: $personContacted
+  Communication method used: $methodOfContact
+  What instructions were given and decisions made with the guidance of emergency contacts reached: $instructionsGiven''';
 
   Widget toWidget() {
     return Column(children: [

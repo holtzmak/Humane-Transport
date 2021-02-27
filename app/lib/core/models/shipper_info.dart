@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'address.dart';
 
 @immutable
@@ -53,6 +54,12 @@ class ShipperInfo {
         other.departureAddress == departureAddress &&
         other.shipperContactInfo == shipperContactInfo;
   }
+
+  String toString() => '''Name: $shipperName
+  The shipper is the owner of the animals loaded in the vehicle?: ${shipperIsAnimalOwner ? 'Yes' : 'No'}
+  Departure Premises Identification number (PID): $departureLocationId, Name: $departureLocationName
+  Address: $departureAddress
+  Shipper’s Contact information in case of emergency: $shipperContactInfo''';
 
   Widget toWidget() {
     return Column(children: [
