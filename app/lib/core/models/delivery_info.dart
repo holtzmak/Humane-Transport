@@ -65,6 +65,19 @@ class DeliveryInfo {
         ]
       : _compromisedAnimals.map((animals) => animals.toWidget()).toList();
 
+  String _compromisedAnimalsToString() => _compromisedAnimals.isEmpty
+      ? 'N/A'
+      : _compromisedAnimals
+          .map((animal) => animal.toString())
+          .toList()
+          .join(",");
+
+  String toString() => '''$recInfo
+  Date and time of arrival: ${DateFormat("yyyy-MM-dd hh:mm").format(arrivalDateAndTime)}
+  All animals arrived in good condition?: ${_compromisedAnimals.isEmpty ? 'Yes' : 'No'}
+  Description of transport related conditions and actions taken to address prior to arrival: ${_compromisedAnimalsToString()}
+  Additional animal welfare concerns for the consignee to be aware of?: $additionalWelfareConcerns''';
+
   Widget toWidget() {
     final List<Widget> fields = [
       ListTile(

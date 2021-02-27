@@ -44,6 +44,15 @@ class FeedWaterRestInfo {
         listEquals(other.fwrEvents, _fwrEvents);
   }
 
+  String _fwrEventsToString() => _fwrEvents.isEmpty
+      ? 'No events occurred during transport'
+      : _fwrEvents.map((event) => event.toString()).toList().join(",");
+
+  String toString() =>
+      '''Last access to feed, water and rest (FWR) prior to loading:
+      Date and time: ${DateFormat("yyyy-MM-dd hh:mm").format(lastFwrDate)}, Place: $lastFwrLocation
+      If FWR was provided during transport: $_fwrEventsToString()''';
+
   List<Widget> _fwrEventsToWidget() => _fwrEvents.isEmpty
       ? [
           ListTile(
@@ -117,6 +126,11 @@ class FeedWaterRestEvent {
         other.lastFwrLocation == lastFwrLocation &&
         other.fwrProvidedOnboard == fwrProvidedOnboard;
   }
+
+  String toString() =>
+      '''Animals unloaded?: ${animalsWereUnloaded ? 'Yes' : 'No'}
+      Date and time: ${DateFormat("yyyy-MM-dd hh:mm").format(fwrTime)}, Place: $lastFwrLocation
+      Provided onboard?: ${fwrProvidedOnboard ? 'Yes' : 'No'}''';
 
   Widget toWidget() {
     return Column(children: [

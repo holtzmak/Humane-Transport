@@ -18,7 +18,7 @@ class ATRPreviewCard extends StatelessWidget {
       title:
           Text('Delivery for ${atr.deliveryInfo.recInfo.receiverCompanyName}'),
       subtitle: Text(
-          '${DateFormat("yyyy-MM-dd hh:mm").format(atr.vehicleInfo.dateAndTimeLoaded)} ${atr.vehicleInfo.animalSpeciesLoaded().join(',')}'),
+          '${DateFormat("yyyy-MM-dd hh:mm").format(atr.vehicleInfo.dateAndTimeLoaded)} ${atr.vehicleInfo.animalSpeciesLoaded.join(',')}'),
       onTap: onTap,
     )));
   }
