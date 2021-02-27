@@ -14,8 +14,6 @@ import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:flutter/material.dart';
 
-// Test tools intended to be used for convenience.
-
 testAddress(
         {String streetAddress,
         String city,
@@ -29,7 +27,6 @@ testAddress(
         country: country ?? "Somehow",
         postalCode: postalCode ?? "ABC123");
 
-// If you want to specify any info use AnimalTransportRecord.with()
 testAnimalTransportRecord(
         {ShipperInfo shipInfo,
         TransporterInfo tranInfo,
