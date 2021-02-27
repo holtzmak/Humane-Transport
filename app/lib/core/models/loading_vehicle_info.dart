@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -36,7 +37,26 @@ class LoadingVehicleInfo {
         '_animalsLoaded':
             _animalsLoaded.map((animalLoaded) => animalLoaded.toJSON()).toList()
       };
-  List<AnimalGroup> animalsLoaded() => List.unmodifiable(_animalsLoaded);
+
+  @override
+  int get hashCode =>
+      dateAndTimeLoaded.hashCode ^
+      loadingArea.hashCode ^
+      loadingDensity.hashCode ^
+      animalsPerLoadingArea.hashCode ^
+      _animalsLoaded.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is LoadingVehicleInfo) &&
+        other.dateAndTimeLoaded == dateAndTimeLoaded &&
+        other.loadingArea == loadingArea &&
+        other.loadingDensity == loadingDensity &&
+        other.animalsPerLoadingArea == animalsPerLoadingArea &&
+        other.animalsLoaded == _animalsLoaded;
+  }
+
+  List<AnimalGroup> get animalsLoaded => List.unmodifiable(_animalsLoaded);
 
   List<String> animalSpeciesLoaded() {
     return List.unmodifiable(
@@ -95,6 +115,30 @@ class AnimalGroup {
       : _compromisedAnimals = compromisedAnimals,
         _specialNeedsAnimals = specialNeedsAnimals;
 
+  @override
+  int get hashCode =>
+      species.hashCode ^
+      groupAge.hashCode ^
+      approximateWeight.hashCode ^
+      animalPurpose.hashCode ^
+      numberAnimals.hashCode ^
+      animalsFitForTransport.hashCode ^
+      _compromisedAnimals.hashCode ^
+      _specialNeedsAnimals.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is AnimalGroup) &&
+        other.species == species &&
+        other.groupAge == groupAge &&
+        other.approximateWeight == approximateWeight &&
+        other.animalPurpose == animalPurpose &&
+        other.numberAnimals == numberAnimals &&
+        other.animalsFitForTransport == animalsFitForTransport &&
+        listEquals(other.compromisedAnimals, _compromisedAnimals) &&
+        listEquals(other.specialNeedsAnimals, _specialNeedsAnimals);
+  }
+
   AnimalGroup.fromJSON(Map<String, dynamic> json)
       : species = json['species'],
         groupAge = json['groupAge'],
@@ -126,10 +170,10 @@ class AnimalGroup {
             .toList(),
       };
 
-  List<CompromisedAnimal> compromisedAnimals() =>
+  List<CompromisedAnimal> get compromisedAnimals =>
       List.unmodifiable(_compromisedAnimals);
 
-  List<CompromisedAnimal> specialNeedsAnimals() =>
+  List<CompromisedAnimal> get specialNeedsAnimals =>
       List.unmodifiable(_specialNeedsAnimals);
 
   List<Widget> _compromisedAnimalsToWidget() => _compromisedAnimals.isEmpty
@@ -212,6 +256,17 @@ class CompromisedAnimal {
   CompromisedAnimal(
       {@required this.animalDescription,
       @required this.measuresTakenToCareForAnimal});
+
+  @override
+  int get hashCode =>
+      animalDescription.hashCode ^ measuresTakenToCareForAnimal.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is CompromisedAnimal) &&
+        other.animalDescription == animalDescription &&
+        other.measuresTakenToCareForAnimal == measuresTakenToCareForAnimal;
+  }
 
   CompromisedAnimal.fromJSON(Map<String, dynamic> json)
       : animalDescription = json['animalDescription'],

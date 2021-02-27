@@ -1,4 +1,5 @@
 import 'package:app/core/models/receiver_info.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,6 +18,22 @@ class DeliveryInfo {
       @required List<CompromisedAnimal> compromisedAnimals,
       @required this.additionalWelfareConcerns})
       : _compromisedAnimals = compromisedAnimals;
+
+  @override
+  int get hashCode =>
+      recInfo.hashCode ^
+      arrivalDateAndTime.hashCode ^
+      _compromisedAnimals.hashCode ^
+      additionalWelfareConcerns.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is DeliveryInfo) &&
+        other.recInfo == recInfo &&
+        other.arrivalDateAndTime == arrivalDateAndTime &&
+        listEquals(other.compromisedAnimals, _compromisedAnimals) &&
+        other.additionalWelfareConcerns == additionalWelfareConcerns;
+  }
 
   DeliveryInfo.fromJSON(Map<String, dynamic> json)
       : recInfo = ReceiverInfo.fromJson(json['receiverInfo']),
@@ -37,7 +54,7 @@ class DeliveryInfo {
         'additionalWelfareConcerns': additionalWelfareConcerns,
       };
 
-  List<CompromisedAnimal> compromisedAnimals() =>
+  List<CompromisedAnimal> get compromisedAnimals =>
       List.unmodifiable(_compromisedAnimals);
 
   List<Widget> _compromisedAnimalsToWidget() => _compromisedAnimals.isEmpty
