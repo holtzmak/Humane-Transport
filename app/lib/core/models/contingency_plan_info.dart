@@ -94,7 +94,7 @@ class ContingencyPlanInfo {
   String toString() =>
       '''Goal Statement (company’s goal and purpose of the plan i.e avoid animal suffering): $goalStatement
       Communication Plan (who should be contacted and who will initiate or permit the process?): $communicationPlan
-      Crisis contacts and links( general helpline, industry related links and websites): ${_crisisContacts.join(',')}
+      Crisis contacts and links (general helpline, industry related links and websites): ${_crisisContacts.join(',')}
       Expected Preparation Process (what should be done prior to loading animals?): $expectedPrepProcess
       Standard Animal Monitoring: $standardAnimalMonitoring
       Potential Hazard/Events/Challenges: ${_potentialHazards.join(',')}
