@@ -1,5 +1,6 @@
 import 'package:app/core/models/acknowledgement_info.dart';
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
@@ -10,6 +11,7 @@ import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
 import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
+import 'package:app/ui/views/active/form_field/contingency_plan_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/delivery_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/loading_vehicle_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
@@ -43,6 +45,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   LoadingVehicleInfoFormField _loadingVehicleInfoFormField;
   DeliveryInfoFormField _deliveryInfoFormField;
   AcknowledgementInfoFormField _acknowledgementInfoFormField;
+  ContingencyPlanInfoFormField _contingencyPlanInfoFormField;
 
   @override
   void initState() {
@@ -75,6 +78,11 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
       onSaved: (AcknowledgementInfo newInfo) =>
           _replacementAtr = _replacementAtr.withAckInfo(newInfo),
     );
+    _contingencyPlanInfoFormField = ContingencyPlanInfoFormField(
+      initialInfo: _replacementAtr.contingencyInfo,
+      onSaved: (ContingencyPlanInfo newInfo) =>
+          _replacementAtr = _replacementAtr.withContingencyInfo(newInfo),
+    );
 
     _atrFormFieldsWrapper.addAll([
       ExpansionListItem(
@@ -94,12 +102,15 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
           headerValue: _deliveryInfoFormField.title),
       ExpansionListItem(
           expandedValue: _acknowledgementInfoFormField,
-          headerValue: _acknowledgementInfoFormField.title)
+          headerValue: _acknowledgementInfoFormField.title),
+      ExpansionListItem(
+          expandedValue: _contingencyPlanInfoFormField,
+          headerValue: _contingencyPlanInfoFormField.title)
     ]);
   }
 
   void _submitATR() {
-    // TODO: Call service and submit the completed atr
+    // TODO: #178. Call service and submit the completed atr
     widget._dialogService
         .showDialog(
             title: "Animal Transport Form Submitted",
