@@ -1,4 +1,5 @@
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/shipper_info.dart';
@@ -7,6 +8,7 @@ import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
+import 'package:app/ui/views/active/form_field/delivery_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/loading_vehicle_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/transporter_info_form_field.dart';
@@ -31,12 +33,13 @@ class ATREditingScreen extends StatefulWidget {
 
 class _ATREditingScreenState extends State<ATREditingScreen> {
   AnimalTransportRecord _replacementAtr;
+  final List<ExpansionListItem> _atrFormFieldsWrapper = [];
 
   ShipperInfoFormField _shipperInfoField;
   TransporterInfoFormField _transporterInfoFormField;
   FeedWaterRestInfoFormField _feedWaterRestInfoFormField;
   LoadingVehicleInfoFormField _loadingVehicleInfoFormField;
-  final List<ExpansionListItem> _atrFormFieldsWrapper = [];
+  DeliveryInfoFormField _deliveryInfoFormField;
 
   @override
   void initState() {
@@ -59,6 +62,11 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
         initialInfo: _replacementAtr.vehicleInfo,
         onSaved: (LoadingVehicleInfo newInfo) =>
             _replacementAtr = _replacementAtr.withVehicleInfo(newInfo));
+    _deliveryInfoFormField = DeliveryInfoFormField(
+      initialInfo: _replacementAtr.deliveryInfo,
+      onSaved: (DeliveryInfo newInfo) =>
+          _replacementAtr = _replacementAtr.withDeliveryInfo(newInfo),
+    );
 
     _atrFormFieldsWrapper.addAll([
       ExpansionListItem(
@@ -72,7 +80,10 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
           headerValue: _feedWaterRestInfoFormField.title),
       ExpansionListItem(
           expandedValue: _loadingVehicleInfoFormField,
-          headerValue: _loadingVehicleInfoFormField.title)
+          headerValue: _loadingVehicleInfoFormField.title),
+      ExpansionListItem(
+          expandedValue: _deliveryInfoFormField,
+          headerValue: _deliveryInfoFormField.title)
     ]);
   }
 
