@@ -11,3 +11,18 @@ DateTimePicker dateTimePicker(
       onSaved: onSaved,
       onChanged: onSaved,
     );
+
+DateTimePicker timePicker(
+        {@required TimeOfDay initialTime,
+        @required Function(String) onSaved}) =>
+    DateTimePicker(
+      type: DateTimePickerType.time,
+      initialValue: convertTimeOfDayToString(initialTime),
+      onSaved: onSaved,
+      onChanged: onSaved,
+    );
+
+/// The TimeOfDay toString() is not like DateTime toString()
+/// This function converts it to the expected string of HH:mm
+String convertTimeOfDayToString(TimeOfDay initialTime) =>
+    initialTime.toString().substring(10, 15);

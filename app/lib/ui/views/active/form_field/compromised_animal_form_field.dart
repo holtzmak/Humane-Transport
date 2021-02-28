@@ -45,6 +45,10 @@ class _CompromisedAnimalFormFieldState
       children: [
         ListTile(
           title: Text(widget.title),
+          trailing: IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: widget.onDelete,
+          ),
         ),
         StringFormField(
           initial: _animalDescription,
@@ -53,7 +57,7 @@ class _CompromisedAnimalFormFieldState
             _animalDescription = changed;
             _saveAll();
           },
-          onDelete: Optional.of(widget.onDelete),
+          onDelete: Optional.empty(),
           isMultiline: true,
         ),
         StringFormField(
