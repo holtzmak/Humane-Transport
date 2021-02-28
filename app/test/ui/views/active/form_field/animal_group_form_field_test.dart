@@ -25,13 +25,20 @@ void main() {
     });
   }
 
-  Future<void> pumpAnimalGroupFormField(WidgetTester tester,
-          AnimalGroup testInfo, Function(AnimalGroup) callback) async =>
+  Future<void> pumpAnimalGroupFormField(
+          WidgetTester tester,
+          AnimalGroup testInfo,
+          Function(AnimalGroup) onSaved,
+          Function() onDelete) async =>
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
               body: SingleChildScrollView(
                   child: Container(
-        child: AnimalGroupFormField(initialInfo: testInfo, onSaved: callback),
+        child: AnimalGroupFormField(
+          initialInfo: testInfo,
+          onSaved: onSaved,
+          onDelete: onDelete,
+        ),
       )))));
 
   group('Animal Group Form Field', () {
@@ -52,35 +59,28 @@ void main() {
           ]);
       await pumpAnimalGroupFormField(tester, testAnimalGroup, (_) {
         // Do nothing for test
+      }, () {
+        // Do nothing for test
       });
       verifyInformationIsShown(testAnimalGroup);
     });
 
-    testWidgets('shows save button', (WidgetTester tester) async {
-      final saveButtonFinder = find.widgetWithText(RaisedButton, "Save");
-      await pumpAnimalGroupFormField(tester, testAnimalGroup(), (_) {
-        // Do nothing for test
-      });
-      await tester.ensureVisible(saveButtonFinder);
-      expect(saveButtonFinder, findsOneWidget);
-    });
-
-    testWidgets('calls onSaved when save button pressed',
+    testWidgets('calls onDelete when delete button pressed',
         (WidgetTester tester) async {
-      final testInfo = testAnimalGroup();
-      final saveButtonFinder = find.widgetWithText(RaisedButton, "Save");
-      AnimalGroup callbackInfo;
-      final onSavedCallback = (AnimalGroup info) => callbackInfo = info;
-
-      await pumpAnimalGroupFormField(tester, testInfo, onSavedCallback);
-      await tester.ensureVisible(saveButtonFinder);
-      await tester.tap(saveButtonFinder);
+      bool callback;
+      final onDeleteCallback = () => callback = true;
+      final deleteButtonFinder = find.byIcon(Icons.delete);
+      await pumpAnimalGroupFormField(tester, testAnimalGroup(), (_) {
+        // do nothing for test
+      }, onDeleteCallback);
+      await tester.ensureVisible(deleteButtonFinder);
+      await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
-      expect(callbackInfo, testInfo);
+      expect(callback, isTrue);
     });
 
     testWidgets(
-        'calls onSaved with edited special needs animal info when save button pressed',
+        'onSaved called with edited special needs animal info when changed',
         (WidgetTester tester) async {
       final testDescription = "Small black horse";
       final editedDescription = "Piebald horse";
@@ -90,21 +90,15 @@ void main() {
       final editedInfo = testAnimalGroup(specialNeedsAnimals: [
         testCompromisedAnimal(animalDescription: editedDescription)
       ]);
-
       AnimalGroup callback;
       final onSaved = (AnimalGroup changed) => callback = changed;
-
       final fieldFinder = find.text(testDescription);
-      final saveButtonFinder = find.widgetWithText(RaisedButton, "Save");
 
-      await pumpAnimalGroupFormField(tester, testInfo, onSaved);
-      // Edit text
+      await pumpAnimalGroupFormField(tester, testInfo, onSaved, () {
+        // Do nothing for test
+      });
       await tester.ensureVisible(fieldFinder);
       await tester.enterText(fieldFinder, editedDescription);
-      await tester.pumpAndSettle();
-      // Save
-      await tester.ensureVisible(saveButtonFinder);
-      await tester.tap(saveButtonFinder);
       await tester.pumpAndSettle();
       expect(callback, editedInfo);
     });
