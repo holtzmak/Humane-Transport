@@ -10,13 +10,17 @@ import 'compromised_animal_form_field.dart';
 
 class AnimalGroupFormField extends StatefulWidget {
   final Function(AnimalGroup info) onSaved;
+  final Function() onDelete;
   final AnimalGroup initialInfo;
 
   // Use the form key to save all the fields of this form
   final formKey = GlobalKey<FormState>();
 
   AnimalGroupFormField(
-      {Key key, @required this.initialInfo, @required this.onSaved})
+      {Key key,
+      @required this.initialInfo,
+      @required this.onSaved,
+      @required this.onDelete})
       : super(key: key);
 
   @override
@@ -81,14 +85,24 @@ class _AnimalGroupFormFieldState extends State<AnimalGroupFormField> {
     return Form(
       key: widget.formKey,
       child: Column(children: [
-        StringFormField(
-            initial: _species,
-            title: "Species",
+        ListTile(
+          title: Text("Species"),
+          subtitle: TextFormField(
+            initialValue: _species,
+            onChanged: (String changed) {
+              _species = changed;
+              _saveAll();
+            },
             onSaved: (String changed) {
               _species = changed;
               _saveAll();
             },
-            onDelete: Optional.empty()),
+          ),
+          trailing: IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: widget.onDelete,
+          ),
+        ),
         IntFormField(
             initial: _groupAge,
             title: "Approximate group age",
@@ -136,7 +150,6 @@ class _AnimalGroupFormFieldState extends State<AnimalGroupFormField> {
             )),
         _compromisedAnimalsFormField,
         _specialNeedsAnimalsFormField,
-        RaisedButton(child: Text("Save"), onPressed: _saveAll)
       ]),
     );
   }
