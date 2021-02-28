@@ -22,6 +22,28 @@ class ReceiverInfo {
       @required this.destinationAddress,
       @required this.receiverContactInfo});
 
+  @override
+  int get hashCode =>
+      receiverCompanyName.hashCode ^
+      receiverName.hashCode ^
+      accountId.hashCode ^
+      destinationLocationId.hashCode ^
+      destinationLocationName.hashCode ^
+      destinationAddress.hashCode ^
+      receiverContactInfo.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is ReceiverInfo) &&
+        other.receiverCompanyName == receiverCompanyName &&
+        other.receiverName == receiverName &&
+        other.accountId == accountId &&
+        other.destinationLocationId == destinationLocationId &&
+        other.destinationLocationName == destinationLocationName &&
+        other.receiverContactInfo == receiverContactInfo &&
+        other.destinationAddress == destinationAddress;
+  }
+
   ReceiverInfo.fromJson(Map<String, dynamic> json)
       : receiverCompanyName = json['receiverCompanyName'],
         receiverName = json['receiverName'],
