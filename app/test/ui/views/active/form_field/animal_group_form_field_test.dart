@@ -1,30 +1,11 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
-import 'package:app/test/helper/test_compromised_animal_expectations.dart';
+import 'package:app/test/helper/test_animal_group_expectations.dart';
 import 'package:app/test/test_animal_transport_record.dart';
 import 'package:app/ui/views/active/form_field/animal_group_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  void verifyInformationIsShown(AnimalGroup infoExpected) {
-    expect(find.text(infoExpected.species), findsOneWidget);
-    expect(find.text(infoExpected.groupAge.toString()), findsOneWidget);
-    expect(
-        find.text(infoExpected.approximateWeight.toString()), findsOneWidget);
-    expect(find.text(infoExpected.animalPurpose), findsOneWidget);
-    expect(find.text(infoExpected.numberAnimals.toString()), findsOneWidget);
-    // DropDownButtonFormFields have the values offscreen, so both are present
-    expect(find.text(infoExpected.animalsFitForTransport ? "Yes" : "No"),
-        findsOneWidget);
-
-    infoExpected.compromisedAnimals.forEach((animal) {
-      verifyCompromisedAnimalInfoIsShown(animal);
-    });
-    infoExpected.specialNeedsAnimals.forEach((animal) {
-      verifyCompromisedAnimalInfoIsShown(animal);
-    });
-  }
-
   Future<void> pumpAnimalGroupFormField(
           WidgetTester tester,
           AnimalGroup testInfo,
@@ -62,7 +43,7 @@ void main() {
       }, () {
         // Do nothing for test
       });
-      verifyInformationIsShown(testAnimalGroup);
+      verifyAnimalGroupIsShown(testAnimalGroup);
     });
 
     testWidgets('calls onDelete when delete button pressed',
