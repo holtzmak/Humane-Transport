@@ -1,3 +1,4 @@
+import 'package:app/core/models/acknowledgement_info.dart';
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
@@ -8,6 +9,7 @@ import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
+import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/delivery_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/loading_vehicle_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
@@ -40,6 +42,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   FeedWaterRestInfoFormField _feedWaterRestInfoFormField;
   LoadingVehicleInfoFormField _loadingVehicleInfoFormField;
   DeliveryInfoFormField _deliveryInfoFormField;
+  AcknowledgementInfoFormField _acknowledgementInfoFormField;
 
   @override
   void initState() {
@@ -67,6 +70,11 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
       onSaved: (DeliveryInfo newInfo) =>
           _replacementAtr = _replacementAtr.withDeliveryInfo(newInfo),
     );
+    _acknowledgementInfoFormField = AcknowledgementInfoFormField(
+      initialInfo: _replacementAtr.ackInfo,
+      onSaved: (AcknowledgementInfo newInfo) =>
+          _replacementAtr = _replacementAtr.withAckInfo(newInfo),
+    );
 
     _atrFormFieldsWrapper.addAll([
       ExpansionListItem(
@@ -83,7 +91,10 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
           headerValue: _loadingVehicleInfoFormField.title),
       ExpansionListItem(
           expandedValue: _deliveryInfoFormField,
-          headerValue: _deliveryInfoFormField.title)
+          headerValue: _deliveryInfoFormField.title),
+      ExpansionListItem(
+          expandedValue: _acknowledgementInfoFormField,
+          headerValue: _acknowledgementInfoFormField.title)
     ]);
   }
 
