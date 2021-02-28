@@ -59,6 +59,13 @@ class _FeedWaterRestEventFormFieldState
     return Column(
       children: [
         ListTile(
+          title: Text("FWR Event"),
+          trailing: IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: widget.onDelete,
+          ),
+        ),
+        ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("Animals unloaded?"),
           subtitle: DropdownButtonFormField(
@@ -73,10 +80,6 @@ class _FeedWaterRestEventFormFieldState
               _animalsWereUnloaded = changed;
               _saveAll();
             }),
-          ),
-          trailing: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: widget.onDelete,
           ),
         ),
         ListTile(

@@ -14,10 +14,12 @@ void main() {
           Function() onDelete) async =>
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
-              body: FeedWaterRestEventFormField(
-        initial: initial,
-        onSaved: onSaved,
-        onDelete: onDelete,
+              body: SingleChildScrollView(
+        child: FeedWaterRestEventFormField(
+          initial: initial,
+          onSaved: onSaved,
+          onDelete: onDelete,
+        ),
       ))));
 
   group('Feed, Water, and Rest Event Form Field', () {

@@ -1,11 +1,13 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
+import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
+import 'package:app/ui/views/active/form_field/loading_vehicle_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/transporter_info_form_field.dart';
 import 'package:app/ui/widgets/models/expansion_list_item.dart';
@@ -33,6 +35,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   ShipperInfoFormField _shipperInfoField;
   TransporterInfoFormField _transporterInfoFormField;
   FeedWaterRestInfoFormField _feedWaterRestInfoFormField;
+  LoadingVehicleInfoFormField _loadingVehicleInfoFormField;
   final List<ExpansionListItem> _atrFormFieldsWrapper = [];
 
   @override
@@ -52,6 +55,10 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
         initialInfo: _replacementAtr.fwrInfo,
         onSaved: (FeedWaterRestInfo newInfo) =>
             _replacementAtr = _replacementAtr.withFwrInfo(newInfo));
+    _loadingVehicleInfoFormField = LoadingVehicleInfoFormField(
+        initialInfo: _replacementAtr.vehicleInfo,
+        onSaved: (LoadingVehicleInfo newInfo) =>
+            _replacementAtr = _replacementAtr.withVehicleInfo(newInfo));
 
     _atrFormFieldsWrapper.addAll([
       ExpansionListItem(
@@ -62,7 +69,10 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
           headerValue: _transporterInfoFormField.title),
       ExpansionListItem(
           expandedValue: _feedWaterRestInfoFormField,
-          headerValue: _feedWaterRestInfoFormField.title)
+          headerValue: _feedWaterRestInfoFormField.title),
+      ExpansionListItem(
+          expandedValue: _loadingVehicleInfoFormField,
+          headerValue: _loadingVehicleInfoFormField.title)
     ]);
   }
 

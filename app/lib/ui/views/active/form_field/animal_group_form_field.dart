@@ -86,23 +86,20 @@ class _AnimalGroupFormFieldState extends State<AnimalGroupFormField> {
       key: widget.formKey,
       child: Column(children: [
         ListTile(
-          title: Text("Species"),
-          subtitle: TextFormField(
-            initialValue: _species,
-            onChanged: (String changed) {
-              _species = changed;
-              _saveAll();
-            },
-            onSaved: (String changed) {
-              _species = changed;
-              _saveAll();
-            },
-          ),
+          title: Text("Animal Group"),
           trailing: IconButton(
             icon: Icon(Icons.delete),
             onPressed: widget.onDelete,
           ),
         ),
+        StringFormField(
+            initial: _species,
+            title: "Species",
+            onSaved: (String changed) {
+              _species = changed;
+              _saveAll();
+            },
+            onDelete: Optional.empty()),
         IntFormField(
             initial: _groupAge,
             title: "Approximate group age",

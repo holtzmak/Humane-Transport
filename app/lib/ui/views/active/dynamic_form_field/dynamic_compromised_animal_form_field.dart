@@ -25,6 +25,7 @@ dynamicCompromisedAnimalFormField(
             CompromisedAnimalFormField(
                 // Must have unique keys in rebuilding widget lists
                 key: ObjectKey(Uuid().v4()),
+                title: titles,
                 initial: it,
                 onSaved: (CompromisedAnimal changed) => onSaved(index, changed),
                 onDelete: () => onDelete(index)));
