@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 /// A custom form field with onSaved and onDelete callback
 class CompromisedAnimalFormField extends StatefulWidget {
   final CompromisedAnimal initial;
+  final String title;
   final Function(CompromisedAnimal) onSaved;
   final Function() onDelete;
 
   CompromisedAnimalFormField(
       {Key key,
       @required this.initial,
+      @required this.title,
       @required this.onSaved,
       @required this.onDelete})
       : super(key: key);
@@ -41,6 +43,9 @@ class _CompromisedAnimalFormFieldState
   Widget build(BuildContext context) {
     return Column(
       children: [
+        ListTile(
+          title: Text(widget.title),
+        ),
         StringFormField(
           initial: _animalDescription,
           title: "Animal description",

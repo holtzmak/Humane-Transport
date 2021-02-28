@@ -5,6 +5,7 @@ import 'package:app/core/view_models/active_screen_view_model.dart';
 import 'package:app/test/test_animal_transport_record.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
 import 'package:app/ui/views/active/form_field/fwr_info_form_field.dart';
+import 'package:app/ui/views/active/form_field/loading_vehicle_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/transporter_info_form_field.dart';
 import 'package:app/ui/widgets/utility/dialog.dart';
@@ -48,11 +49,16 @@ void main() {
       expect(find.byType(TransporterInfoFormField), findsOneWidget);
     });
 
-    testWidgets('has feed, water, rest form field',
+    testWidgets('has feed, water, rest info form field',
         (WidgetTester tester) async {
-      await pumpATREditingScreen(
-          tester, testAnimalTransportRecord(shipInfo: testShipperInfo()));
+      await pumpATREditingScreen(tester, testAnimalTransportRecord());
       expect(find.byType(FeedWaterRestInfoFormField), findsOneWidget);
+    });
+
+    testWidgets('has loading vehicle info form field',
+        (WidgetTester tester) async {
+      await pumpATREditingScreen(tester, testAnimalTransportRecord());
+      expect(find.byType(LoadingVehicleInfoFormField), findsOneWidget);
     });
 
     testWidgets('shows submit button', (WidgetTester tester) async {

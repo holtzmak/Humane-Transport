@@ -14,6 +14,7 @@ void main() {
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
               body: CompromisedAnimalFormField(
+        title: "Compromised Animal",
         initial: initial,
         onSaved: onSaved,
         onDelete: onDelete,
