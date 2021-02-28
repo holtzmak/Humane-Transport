@@ -19,4 +19,12 @@ class Optional<T> {
 
   T get() =>
       isPresent() ? _optional : throw Exception("The Optional value is null!");
+
+  @override
+  int get hashCode => _optional.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return (other is Optional) && other._optional == _optional;
+  }
 }
