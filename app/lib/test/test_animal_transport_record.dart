@@ -227,7 +227,8 @@ testContingencyActivity(
         String methodOfContact,
         String instructionsGiven}) =>
     ContingencyActivity(
-        time: time ?? TimeOfDay.now(),
+        time:
+            time ?? TimeOfDay.fromDateTime(DateTime.parse("2021-02-03 13:01")),
         personContacted: personContacted ?? "Receiver",
         methodOfContact: methodOfContact ?? "Phone call",
         instructionsGiven: instructionsGiven ?? "Instructions");
