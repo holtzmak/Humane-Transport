@@ -53,7 +53,7 @@ class LoadingVehicleInfo {
         other.loadingArea == loadingArea &&
         other.loadingDensity == loadingDensity &&
         other.animalsPerLoadingArea == animalsPerLoadingArea &&
-        other.animalsLoaded == _animalsLoaded;
+        listEquals(other.animalsLoaded, _animalsLoaded);
   }
 
   List<AnimalGroup> get animalsLoaded => List.unmodifiable(_animalsLoaded);
