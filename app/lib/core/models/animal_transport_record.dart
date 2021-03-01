@@ -73,7 +73,7 @@ class AnimalTransportRecord {
         'vehicleInfo': vehicleInfo.toJSON(),
         'deliveryInfo': deliveryInfo.toJSON(),
         'ackInfo': ackInfo.toJSON(),
-        'contingencyInfo': ackInfo.toJSON(),
+        'contingencyInfo': contingencyInfo.toJSON(),
         'identifier': identifier.toJSON(),
       };
 

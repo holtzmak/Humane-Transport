@@ -8,3 +8,11 @@ class MockCollectionReference extends Mock implements CollectionReference {}
 class MockDocumentReference extends Mock implements DocumentReference {}
 
 class MockDocumentSnapshot extends Mock implements DocumentSnapshot {}
+
+class MockQuerySnapshot extends Mock implements QuerySnapshot {}
+
+class MockDocSnap extends Mock implements QueryDocumentSnapshot {}
+
+class MockQuery extends Mock implements Query {}
+
+class MockStream extends Mock implements Stream<QuerySnapshot> {}

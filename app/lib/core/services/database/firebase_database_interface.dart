@@ -1,20 +1,22 @@
 import 'dart:async';
+
 import 'package:app/core/models/acknowledgement_info.dart';
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/atr_identifier.dart';
-import 'package:app/core/models/feed_water_rest_info.dart';
-import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/contingency_plan_info.dart';
+import 'package:app/core/models/delivery_info.dart';
+import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/models/firestore_user.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'database_interface.dart';
 
 class FirebaseDatabaseInterface implements DatabaseInterface {
   final FirebaseFirestore _firestore;
+
   FirebaseDatabaseInterface(this._firestore);
 
   @override
@@ -26,14 +28,46 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           FirestoreUser.fromJSON(snapshot.data()));
 
   @override
-  Future<void> newUser(FirestoreUser newUser) async =>
+  Future<void> setNewUser(FirestoreUser newUser) async =>
       _firestore.collection('users').doc(newUser.userId).set(newUser.toJSON());
 
   @override
-  Future getRecord(User user) {
-    // TODO: implement getRecord
-    throw UnimplementedError();
-  }
+  Future<List<AnimalTransportRecord>> getCompleteRecords() async => _firestore
+      .collection('atr')
+      .where('isComplete', isEqualTo: true)
+      .get()
+      .then((snapshot) => snapshot.docs
+          .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
+          .toList());
+
+  @override
+  Future<List<AnimalTransportRecord>> getActiveRecords() async => _firestore
+      .collection('atr')
+      .where('isComplete', isEqualTo: false)
+      .get()
+      .then((snapshot) => snapshot.docs
+          .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
+          .toList());
+
+  /// This returns the whole list of records in the database, not just updated ones
+  @override
+  Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs() => _firestore
+      .collection('atr')
+      .where('isComplete', isEqualTo: true)
+      .snapshots()
+      .map((snapshot) => snapshot.docs
+          .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
+          .toList());
+
+  /// This returns the whole list of records in the database, not just updated ones
+  @override
+  Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs() => _firestore
+      .collection('atr')
+      .where('isComplete', isEqualTo: false)
+      .snapshots()
+      .map((snapshot) => snapshot.docs
+          .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
+          .toList());
 
   @override
   Future<void> setShipperInfo(String atrId, ShipperInfo shipperInfo) async =>
@@ -51,8 +85,15 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .set(transporterInfo.toJSON(), SetOptions(merge: true));
 
   @override
-  Future<void> saveNewAtr(AtrIdentifier atr) async =>
-      _firestore.collection('atr').add(atr.toJSON());
+  Future<AtrIdentifier> setNewAtr(String userId, bool isComplete) async {
+    final Map<String, dynamic> placeholderJSON = {
+      'userId': userId,
+      'isComplete': isComplete,
+    };
+    return _firestore.collection('atr').add(placeholderJSON).then((docRef) =>
+        AtrIdentifier(
+            userId: userId, atrDocumentId: docRef.id, isComplete: isComplete));
+  }
 
   @override
   Future<void> setAckInfo(
@@ -94,7 +135,7 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .set(vehicleInfo.toJSON(), SetOptions(merge: true));
 
   @override
-  Future<void> updateAtr(AtrIdentifier atr) async =>
+  Future<void> updateAtrIdentifier(AtrIdentifier atr) async =>
       _firestore.collection('atr').doc(atr.atrDocumentId).update(atr.toJSON());
 
   @override

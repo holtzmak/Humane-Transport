@@ -14,12 +14,11 @@ import 'package:flutter/material.dart';
 class HistoryScreenViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
-  StreamSubscription<AnimalTransportRecord> previewSubscription;
+  StreamSubscription<List<AnimalTransportRecord>> previewSubscription;
 
   HistoryScreenViewModel() {
-    previewSubscription = _databaseService
-        .getUpdatedCompleteATRs()
-        .listen((atr) => addAll([createPreview(atr)]));
+    previewSubscription = _databaseService.getUpdatedCompleteATRs().listen(
+        (atr) => addAll(atr.map((element) => createPreview(element)).toList()));
   }
 
   @mustCallSuper

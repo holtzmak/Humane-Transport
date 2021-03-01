@@ -28,9 +28,12 @@ class AcknowledgementInfo {
   }
 
   AcknowledgementInfo.fromJSON(Map<String, dynamic> json)
-      : shipperAck = File(json['shipperAck']),
-        transporterAck = File(json['transporterAck']),
-        receiverAck = File(json['receiverAck']);
+      // : shipperAck = File(json['shipperAck']),
+      //   transporterAck = File(json['transporterAck']),
+      //   receiverAck = File(json['receiverAck']);
+      : shipperAck = null,
+        transporterAck = null,
+        receiverAck = null;
 
   Map<String, dynamic> toJSON() => {
         'shipperAck': shipperAck,

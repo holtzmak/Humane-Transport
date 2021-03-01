@@ -19,7 +19,7 @@ class FeedWaterRestInfo {
   List<FeedWaterRestEvent> get fwrEvents => List.unmodifiable(_fwrEvents);
 
   FeedWaterRestInfo.fromJSON(Map<String, dynamic> json)
-      : lastFwrDate = DateTime.parse(json['lastFwrDate'].toString()),
+      : lastFwrDate = json['lastFwrDate'].toDate(),
         lastFwrLocation = Address.fromJSON(json['lastFwrLocation']),
         _fwrEvents = json['_fwrEvents']
             .map<FeedWaterRestEvent>(
@@ -100,7 +100,7 @@ class FeedWaterRestEvent {
 
   FeedWaterRestEvent.fromJson(Map<String, dynamic> json)
       : animalsWereUnloaded = json['animalsWereUnloaded'],
-        fwrTime = DateTime.parse(json['fwrTime'].toString()),
+        fwrTime = json['fwrTime'].toDate(),
         lastFwrLocation = Address.fromJSON(json['lastFwrLocation']),
         fwrProvidedOnboard = json['fwrProvidedOnboard'];
 
