@@ -7,8 +7,7 @@ class TemplateBaseViewModel<T extends BaseViewModel> extends StatefulWidget {
   final Widget Function(BuildContext context, T model, Widget child) builder;
   final Function(T) onModelReady;
 
-  TemplateBaseViewModel(
-      {this.builder, this.onModelReady, GlobalKey<FormState> key});
+  TemplateBaseViewModel({this.builder, this.onModelReady});
 
   @override
   _TemplateBaseViewModelState<T> createState() =>
