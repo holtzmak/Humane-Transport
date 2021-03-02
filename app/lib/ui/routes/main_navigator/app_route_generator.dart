@@ -3,6 +3,7 @@ import 'package:app/ui/views/history/atr_display_screen.dart';
 import 'package:app/ui/views/home/home_screen.dart';
 import 'package:app/ui/views/new/test_screens/test_screen_three.dart';
 import 'package:app/ui/views/signin/sign_in_screen.dart';
+import 'package:app/ui/views/signup/sign_up_screen.dart';
 import 'package:app/ui/views/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,8 @@ class AppRouteGenerator {
             return WelcomeScreen();
           case SignInScreen.route:
             return SignInScreen();
+          case SignUpScreen.route:
+            return SignUpScreen();
           case HomeScreen.route:
             return HomeScreen();
           case TestScreenThree.route:

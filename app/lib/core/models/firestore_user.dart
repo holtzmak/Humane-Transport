@@ -13,6 +13,7 @@ class FirestoreUser {
       this.userPhoneNumber,
       this.userId,
       this.isAdmin});
+
   FirestoreUser.fromJSON(Map<String, dynamic> json)
       : firstName = json['firstName'],
         lastName = json['lastName'],
