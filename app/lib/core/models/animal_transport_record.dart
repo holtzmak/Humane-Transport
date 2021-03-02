@@ -31,6 +31,27 @@ class AnimalTransportRecord {
     @required this.identifier,
   });
 
+  factory AnimalTransportRecord.defaultAtr(
+          {ShipperInfo shipInfo,
+          TransporterInfo tranInfo,
+          FeedWaterRestInfo fwrInfo,
+          LoadingVehicleInfo vehicleInfo,
+          DeliveryInfo deliveryInfo,
+          AcknowledgementInfo ackInfo,
+          ContingencyPlanInfo contingencyInfo,
+          AtrIdentifier identifier}) =>
+      AnimalTransportRecord(
+        shipInfo: shipInfo ?? ShipperInfo.defaultShipperInfo(),
+        tranInfo: tranInfo ?? TransporterInfo.defaultTransporterInfo(),
+        fwrInfo: fwrInfo ?? FeedWaterRestInfo.defaultFwrInfo(),
+        vehicleInfo: vehicleInfo ?? LoadingVehicleInfo.defaultVehicleInfo(),
+        deliveryInfo: deliveryInfo ?? DeliveryInfo.defaultDeliveryInfo(),
+        ackInfo: ackInfo ?? AcknowledgementInfo.defaultAckInfo(),
+        contingencyInfo:
+            contingencyInfo ?? ContingencyPlanInfo.defaultContingencyInfo(),
+        identifier: identifier ?? AtrIdentifier.defaultAtrId(),
+      );
+
   @override
   int get hashCode =>
       shipInfo.hashCode ^
@@ -84,6 +105,16 @@ class AnimalTransportRecord {
   Delivery Information: $deliveryInfo
   Acknowledgements: $ackInfo
   Contingency Plan: $contingencyInfo''';
+
+  AnimalTransportRecord withDocId(String docId) => AnimalTransportRecord(
+      shipInfo: shipInfo,
+      tranInfo: tranInfo,
+      fwrInfo: fwrInfo,
+      vehicleInfo: vehicleInfo,
+      deliveryInfo: deliveryInfo,
+      ackInfo: ackInfo,
+      contingencyInfo: contingencyInfo,
+      identifier: AtrIdentifier(atrDocumentId: docId));
 
   AnimalTransportRecord withShipInfo(ShipperInfo newShipInfo) =>
       AnimalTransportRecord(

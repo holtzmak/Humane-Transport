@@ -12,6 +12,16 @@ class AtrIdentifier {
     this.isComplete = false,
   });
 
+  factory AtrIdentifier.defaultAtrId({
+    String userId,
+    bool isComplete,
+  }) =>
+      AtrIdentifier(
+        //TODO: assign current userId to userId
+        userId: userId ?? "",
+        isComplete: isComplete ?? false,
+      );
+
   factory AtrIdentifier.fromJSON(
       Map<String, dynamic> json, String atrDocumentId) {
     return AtrIdentifier(

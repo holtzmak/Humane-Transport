@@ -18,6 +18,20 @@ class LoadingVehicleInfo {
       @required List<AnimalGroup> animalsLoaded})
       : _animalsLoaded = animalsLoaded;
 
+  factory LoadingVehicleInfo.defaultVehicleInfo(
+          {DateTime dateAndTimeLoaded,
+          int loadingArea,
+          int loadingDensity,
+          int animalsPerLoadingArea,
+          List<AnimalGroup> animalsLoaded}) =>
+      LoadingVehicleInfo(
+          dateAndTimeLoaded:
+              dateAndTimeLoaded ?? DateTime.parse("2021-02-03 13:01"),
+          loadingArea: loadingArea ?? 0,
+          loadingDensity: loadingDensity ?? 0,
+          animalsPerLoadingArea: animalsPerLoadingArea ?? 0,
+          animalsLoaded: animalsLoaded ?? List.empty());
+
   LoadingVehicleInfo.fromJSON(Map<String, dynamic> json)
       : dateAndTimeLoaded = json['dateAndTimeLoaded'].toDate(),
         loadingArea = json['loadingArea'],
@@ -118,6 +132,25 @@ class AnimalGroup {
       @required List<CompromisedAnimal> specialNeedsAnimals})
       : _compromisedAnimals = compromisedAnimals,
         _specialNeedsAnimals = specialNeedsAnimals;
+
+  factory AnimalGroup.defaultAnimalGroup(
+          {String species,
+          int groupAge,
+          int approximateWeight,
+          String animalPurpose,
+          int numberAnimals,
+          bool animalsFitForTransport,
+          List<CompromisedAnimal> compromisedAnimals,
+          List<CompromisedAnimal> specialNeedsAnimals}) =>
+      AnimalGroup(
+          species: species ?? "",
+          groupAge: groupAge ?? 0,
+          approximateWeight: approximateWeight ?? 0,
+          animalPurpose: animalPurpose ?? "",
+          numberAnimals: numberAnimals ?? 0,
+          animalsFitForTransport: animalsFitForTransport ?? false,
+          compromisedAnimals: compromisedAnimals ?? List.empty(),
+          specialNeedsAnimals: specialNeedsAnimals ?? List.empty());
 
   @override
   int get hashCode =>
@@ -283,6 +316,12 @@ class CompromisedAnimal {
   CompromisedAnimal(
       {@required this.animalDescription,
       @required this.measuresTakenToCareForAnimal});
+
+  factory CompromisedAnimal.defaultCompromisedAnimal(
+          {String animalDescription, String measuresTakenToCareForAnimal}) =>
+      CompromisedAnimal(
+          animalDescription: animalDescription ?? "",
+          measuresTakenToCareForAnimal: measuresTakenToCareForAnimal ?? "");
 
   @override
   int get hashCode =>

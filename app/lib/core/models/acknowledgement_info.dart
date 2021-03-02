@@ -15,6 +15,12 @@ class AcknowledgementInfo {
       @required this.transporterAck,
       @required this.receiverAck});
 
+  // TODO: Add mock files or something, we're not likely to use this
+  factory AcknowledgementInfo.defaultAckInfo(
+          {File shipperAck, File transporterAck, File receiverAck}) =>
+      AcknowledgementInfo(
+          shipperAck: null, transporterAck: null, receiverAck: null);
+
   @override
   int get hashCode =>
       shipperAck.hashCode ^ transporterAck.hashCode ^ receiverAck.hashCode;

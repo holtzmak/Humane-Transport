@@ -38,6 +38,38 @@ class TransporterInfo {
 
   List<String> get driverNames => List.unmodifiable(_driverNames);
 
+  factory TransporterInfo.defaultTransporterInfo(
+          {String companyName,
+          Address companyAddress,
+          List<String> driverNames,
+          String vehicleProvince,
+          String vehicleLicensePlate,
+          String trailerProvince,
+          String trailerLicensePlate,
+          DateTime dateLastCleaned,
+          Address addressLastCleanedAt,
+          bool driversAreBriefed,
+          bool driversHaveTraining,
+          String trainingType,
+          DateTime trainingExpiryDate}) =>
+      TransporterInfo(
+          companyName: companyName ?? "",
+          companyAddress: companyAddress ?? Address.defaultAddress(),
+          driverNames: driverNames ?? [""],
+          vehicleProvince: vehicleProvince ?? "",
+          vehicleLicensePlate: vehicleLicensePlate ?? "",
+          trailerProvince: trailerProvince ?? "",
+          trailerLicensePlate: trailerLicensePlate ?? "",
+          dateLastCleaned:
+              dateLastCleaned ?? DateTime.parse("2021-02-03 13:01"),
+          addressLastCleanedAt:
+              addressLastCleanedAt ?? Address.defaultAddress(),
+          driversAreBriefed: driversAreBriefed ?? false,
+          driversHaveTraining: driversHaveTraining ?? false,
+          trainingType: trainingType ?? "",
+          trainingExpiryDate:
+              trainingExpiryDate ?? DateTime.parse("2021-02-03 13:01"));
+
   @override
   int get hashCode =>
       companyName.hashCode ^

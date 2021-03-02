@@ -19,6 +19,17 @@ class DeliveryInfo {
       @required this.additionalWelfareConcerns})
       : _compromisedAnimals = compromisedAnimals;
 
+  factory DeliveryInfo.defaultDeliveryInfo(
+          {ReceiverInfo recInfo,
+          DateTime arrivalDate,
+          List<CompromisedAnimal> compromisedAnimals,
+          String additionalWelfareConcerns}) =>
+      DeliveryInfo(
+          recInfo: recInfo ?? ReceiverInfo.defaultReceiverInfo(),
+          arrivalDateAndTime: arrivalDate ?? DateTime.parse("2021-02-03 13:01"),
+          compromisedAnimals: compromisedAnimals ?? List.empty(),
+          additionalWelfareConcerns: additionalWelfareConcerns ?? "");
+
   @override
   int get hashCode =>
       recInfo.hashCode ^

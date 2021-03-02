@@ -17,6 +17,19 @@ class Address {
       @required this.country,
       @required this.postalCode});
 
+  factory Address.defaultAddress(
+          {String streetAddress,
+          String city,
+          String provinceOrState,
+          String country,
+          String postalCode}) =>
+      Address(
+          streetAddress: streetAddress ?? "",
+          city: city ?? "",
+          provinceOrState: provinceOrState ?? "",
+          country: country ?? "",
+          postalCode: postalCode ?? "");
+
   Address.fromJSON(Map<String, dynamic> json)
       : streetAddress = json['streetAddress'],
         city = json['city'],

@@ -34,7 +34,7 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
   @override
   Future<List<AnimalTransportRecord>> getCompleteRecords() async => _firestore
       .collection('atr')
-      .where('isComplete', isEqualTo: true)
+      .where('identifier.isComplete', isEqualTo: true)
       .get()
       .then((snapshot) => snapshot.docs
           .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
@@ -43,7 +43,7 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
   @override
   Future<List<AnimalTransportRecord>> getActiveRecords() async => _firestore
       .collection('atr')
-      .where('isComplete', isEqualTo: false)
+      .where('identifier.isComplete', isEqualTo: false)
       .get()
       .then((snapshot) => snapshot.docs
           .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
@@ -53,7 +53,7 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
   @override
   Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs() => _firestore
       .collection('atr')
-      .where('isComplete', isEqualTo: true)
+      .where('identifier.isComplete', isEqualTo: true)
       .snapshots()
       .map((snapshot) => snapshot.docs
           .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
@@ -63,7 +63,7 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
   @override
   Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs() => _firestore
       .collection('atr')
-      .where('isComplete', isEqualTo: false)
+      .where('identifier.isComplete', isEqualTo: false)
       .snapshots()
       .map((snapshot) => snapshot.docs
           .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
@@ -85,14 +85,13 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .set(transporterInfo.toJSON(), SetOptions(merge: true));
 
   @override
-  Future<AtrIdentifier> setNewAtr(String userId, bool isComplete) async {
-    final Map<String, dynamic> placeholderJSON = {
-      'userId': userId,
-      'isComplete': isComplete,
-    };
-    return _firestore.collection('atr').add(placeholderJSON).then((docRef) =>
-        AtrIdentifier(
-            userId: userId, atrDocumentId: docRef.id, isComplete: isComplete));
+  Future<AnimalTransportRecord> setNewAtr(
+      String userId, bool isComplete) async {
+    final defaultAtrAsPlaceholder = AnimalTransportRecord.defaultAtr();
+    return _firestore
+        .collection('atr')
+        .add(defaultAtrAsPlaceholder.toJSON())
+        .then((docRef) => defaultAtrAsPlaceholder.withDocId(docRef.id));
   }
 
   @override

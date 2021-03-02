@@ -1,30 +1,40 @@
+import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/history_screen_view_model.dart';
-import 'package:app/ui/widgets/utility/pdf_screen.dart';
+import 'package:app/ui/widgets/atr_preview_card.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
-class HistoryScreen extends StatelessWidget {
+import 'atr_display_screen.dart';
+
+class HistoryScreen extends StatefulWidget {
   static const route = '/history';
+  final NavigationService _navigationService = locator<NavigationService>();
+
+  _HistoryScreenState createState() => _HistoryScreenState();
+}
+
+class _HistoryScreenState extends State<HistoryScreen> {
+  ATRPreviewCard createPreview(AnimalTransportRecord atr) => ATRPreviewCard(
+      key: ObjectKey(Uuid().v4()),
+      atr: atr,
+      onTap: () => widget._navigationService
+          .navigateTo(ATRDisplayScreen.route, arguments: atr));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('History Screen'),
         automaticallyImplyLeading: false,
       ),
       body: TemplateBaseViewModel<HistoryScreenViewModel>(
         builder: (context, model, _) => ListView.builder(
-          itemCount: model.animalTransportPreviews.length,
-          itemBuilder: (context, index) => model.animalTransportPreviews[index],
-        ),
-      ),
-      // TODO: Make PDF from selected ATRPreview, need to make cards selectable
-      floatingActionButton: FloatingActionButton(
-        /* The navigator for the floating action button is not the same as our app navigator
-           https://stackoverflow.com/questions/60872579/navigating-inside-a-floating-action-button\
-         */
-        onPressed: () => Navigator.of(context).pushNamed(PDFScreen.route),
-        child: Icon(Icons.save),
+            itemCount: model.animalTransportRecords.length,
+            itemBuilder: (_, index) => createPreview(
+                model.animalTransportRecords[index])), // should call creator
       ),
     );
   }

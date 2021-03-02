@@ -1,5 +1,4 @@
 import 'package:app/ui/views/history/history_screen.dart';
-import 'package:app/ui/widgets/utility/pdf_screen.dart';
 import 'package:flutter/material.dart';
 
 /// The inner [Navigator] for History
@@ -10,8 +9,6 @@ class HistoryRouteGenerator {
       builder: (BuildContext context) {
         // These routes contain a bottom nav
         switch (settings.name) {
-          case PDFScreen.route:
-            return PDFScreen();
           case HistoryScreen.route:
             return HistoryScreen();
 
