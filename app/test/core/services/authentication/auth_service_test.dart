@@ -1,5 +1,5 @@
 import 'package:app/core/services/authentication/auth_service.dart';
-import 'package:app/test/test_mocks_for_firebase.dart';
+import 'package:app/test/mock/test_mocks_for_firebase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
