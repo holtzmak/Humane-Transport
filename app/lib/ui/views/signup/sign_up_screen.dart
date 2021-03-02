@@ -51,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } else if (value.length < 6) {
       return "Password should be at least 6 characters";
     } else if (value.length > 10) {
-      return "Password should not be greater than 15 characters";
+      return "Password should not be greater than 10 characters";
     } else
       return null;
   }

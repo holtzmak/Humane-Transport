@@ -194,7 +194,7 @@ void main() {
       await tester.pump(Duration(milliseconds: 1));
 
       final validatorTextFinder =
-          find.text("Password should not be greater than 15 characters");
+          find.text("Password should not be greater than 10 characters");
       expect(validatorTextFinder, findsNWidgets(1));
 
       verifyNever(mockSignUpViewModel.signUp(
