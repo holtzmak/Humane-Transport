@@ -109,6 +109,11 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     ]);
   }
 
+  // TODO: #178. Make saves occur on screen exit.
+  // Also need to update FormField to stop using onChanged. Save CPU use.
+  // Also need to add the "new" atr button in meantime on NewScreen until
+  // #119 is addressed
+
   void _submitATR() {
     // TODO: #178. Call service and submit the completed atr
     widget._dialogService
