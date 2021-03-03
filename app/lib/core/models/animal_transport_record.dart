@@ -114,7 +114,10 @@ class AnimalTransportRecord {
       deliveryInfo: deliveryInfo,
       ackInfo: ackInfo,
       contingencyInfo: contingencyInfo,
-      identifier: AtrIdentifier(atrDocumentId: docId));
+      identifier: AtrIdentifier(
+          userId: identifier.userId,
+          isComplete: identifier.isComplete,
+          atrDocumentId: docId));
 
   AnimalTransportRecord withShipInfo(ShipperInfo newShipInfo) =>
       AnimalTransportRecord(

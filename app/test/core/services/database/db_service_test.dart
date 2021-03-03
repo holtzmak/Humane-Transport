@@ -76,8 +76,7 @@ void main() {
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.add(any))
           .thenAnswer((_) async => mockDocumentReference);
-      await dbService.saveNewAtr(
-          userModel.identifier.userId, userModel.identifier.isComplete);
+      await dbService.saveNewAtr(userModel.identifier.userId);
       verify(mockCollectionReference.add(userModel.toJSON())).called(1);
     });
 

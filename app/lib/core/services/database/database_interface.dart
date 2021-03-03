@@ -14,7 +14,7 @@ abstract class DatabaseInterface {
 
   Future<FirestoreUser> getUser(String userId);
 
-  Future<AnimalTransportRecord> setNewAtr(String userId, bool isComplete);
+  Future<AnimalTransportRecord> setNewAtr(String userId);
 
   Future<void> updateAtrIdentifier(AtrIdentifier atr);
 

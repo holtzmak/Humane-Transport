@@ -24,9 +24,8 @@ class DatabaseService {
       interface.setNewUser(newUser);
 
   // TODO: Remove isComplete, a new ATR is always not complete lol
-  Future<AnimalTransportRecord> saveNewAtr(
-          String userId, bool isComplete) async =>
-      interface.setNewAtr(userId, isComplete);
+  Future<AnimalTransportRecord> saveNewAtr(String userId) async =>
+      interface.setNewAtr(userId);
 
   Future<void> updateAtr(AtrIdentifier atr) async =>
       interface.updateAtrIdentifier(atr);

@@ -25,7 +25,7 @@ class NewScreenViewModel extends BaseViewModel {
   }
 
   void saveAtr() async {
-    final dumy = await _dbService.saveNewAtr("dum-e", false);
+    final dumy = await _dbService.saveNewAtr("dum-e");
     final dumyAtr = testAnimalTransportRecord(
         shipInfo: dumy.shipInfo,
         tranInfo: dumy.tranInfo,

@@ -85,8 +85,7 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .set(transporterInfo.toJSON(), SetOptions(merge: true));
 
   @override
-  Future<AnimalTransportRecord> setNewAtr(
-      String userId, bool isComplete) async {
+  Future<AnimalTransportRecord> setNewAtr(String userId) async {
     final defaultAtrAsPlaceholder = AnimalTransportRecord.defaultAtr();
     return _firestore
         .collection('atr')
