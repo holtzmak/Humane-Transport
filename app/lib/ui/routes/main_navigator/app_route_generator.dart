@@ -17,6 +17,9 @@ class AppRouteGenerator {
            These routes will be pushed on top of the root route.
          */
         switch (settings.name) {
+          // TODO: #186. Prevent routing to certain screens when not logged in
+          // Each screen could also listen to auth changes and boot bad Users
+          // That's could be excessive, however.
           case WelcomeScreen.route:
             return WelcomeScreen();
           case SignInScreen.route:
