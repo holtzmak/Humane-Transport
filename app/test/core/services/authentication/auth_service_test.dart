@@ -33,8 +33,29 @@ void main() {
     when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
   }
 
+  void setUpAuthChangesMockUser() {
+    // Mock stream
+    Stream<User> authStateChanges() async* {
+      yield mockUser;
+    }
+
+    when(mockFirebaseAuth.authStateChanges())
+        .thenAnswer((_) => authStateChanges());
+  }
+
+  void setUpAuthChangesMockEmpty() {
+    // Mock stream
+    Stream<User> authStateChanges() async* {
+      yield null;
+    }
+
+    when(mockFirebaseAuth.authStateChanges())
+        .thenAnswer((_) => authStateChanges());
+  }
+
   group('Authentication Service', () {
     test('sign up successful', () async {
+      setUpAuthChangesMockEmpty(); // Ignore for this test
       setUpMockExpectations();
       when(mockDocumentReference.set(any)).thenAnswer((_) async {
         // Successful void return
@@ -55,7 +76,33 @@ void main() {
       }
     });
 
+    test('sign up success updates current user', () async {
+      setUpAuthChangesMockUser();
+      setUpMockExpectations();
+      when(mockDocumentReference.set(any)).thenAnswer((_) async {
+        // Successful void return
+      });
+      final authService = AuthenticationService(
+          firebaseAuth: mockFirebaseAuth,
+          firebaseFirestore: mockFirebaseFirestore);
+
+      try {
+        await authService.signUp(
+            firstName: firstName,
+            lastName: lastName,
+            userEmailAddress: userEmailAddress,
+            userPhoneNumber: userPhoneNumber,
+            password: password);
+      } catch (e) {
+        // This test should pass
+        fail(e);
+      }
+      expect(true, authService.currentUser.isPresent());
+      expect(mockUser, authService.currentUser.get());
+    });
+
     test('sign up failed, create user failed', () async {
+      setUpAuthChangesMockEmpty(); // Ignore for this test
       when(mockFirebaseAuth.createUserWithEmailAndPassword(
               email: userEmailAddress, password: password))
           .thenAnswer((_) async => Future.error('Error Here'));
@@ -75,6 +122,7 @@ void main() {
     });
 
     test('sign up failed, add user failed', () async {
+      setUpAuthChangesMockEmpty(); // Ignore for this test
       setUpMockExpectations();
       when(mockDocumentReference.set(any))
           .thenAnswer((_) async => Future.error('Error Here'));
