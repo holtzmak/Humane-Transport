@@ -5,13 +5,11 @@ import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
-import 'package:app/ui/views/history/history_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// This ViewModel will only view complete ATR models
 class HistoryScreenViewModel extends BaseViewModel {
-  final historyScreen = HistoryScreen();
   final NavigationService _navigationService = locator<NavigationService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
   StreamSubscription<List<AnimalTransportRecord>> previewSubscription;

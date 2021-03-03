@@ -133,25 +133,6 @@ class AnimalGroup {
       : _compromisedAnimals = compromisedAnimals,
         _specialNeedsAnimals = specialNeedsAnimals;
 
-  factory AnimalGroup.defaultAnimalGroup(
-          {String species,
-          int groupAge,
-          int approximateWeight,
-          String animalPurpose,
-          int numberAnimals,
-          bool animalsFitForTransport,
-          List<CompromisedAnimal> compromisedAnimals,
-          List<CompromisedAnimal> specialNeedsAnimals}) =>
-      AnimalGroup(
-          species: species ?? "",
-          groupAge: groupAge ?? 0,
-          approximateWeight: approximateWeight ?? 0,
-          animalPurpose: animalPurpose ?? "",
-          numberAnimals: numberAnimals ?? 0,
-          animalsFitForTransport: animalsFitForTransport ?? false,
-          compromisedAnimals: compromisedAnimals ?? List.empty(),
-          specialNeedsAnimals: specialNeedsAnimals ?? List.empty());
-
   @override
   int get hashCode =>
       species.hashCode ^
@@ -316,12 +297,6 @@ class CompromisedAnimal {
   CompromisedAnimal(
       {@required this.animalDescription,
       @required this.measuresTakenToCareForAnimal});
-
-  factory CompromisedAnimal.defaultCompromisedAnimal(
-          {String animalDescription, String measuresTakenToCareForAnimal}) =>
-      CompromisedAnimal(
-          animalDescription: animalDescription ?? "",
-          measuresTakenToCareForAnimal: measuresTakenToCareForAnimal ?? "");
 
   @override
   int get hashCode =>

@@ -23,7 +23,6 @@ class DatabaseService {
   Future<void> newUser(FirestoreUser newUser) async =>
       interface.setNewUser(newUser);
 
-  // TODO: Remove isComplete, a new ATR is always not complete lol
   Future<AnimalTransportRecord> saveNewAtr(String userId) async =>
       interface.setNewAtr(userId);
 
