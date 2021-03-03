@@ -6,9 +6,9 @@ import 'package:app/core/models/atr_identifier.dart';
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
-import 'package:app/core/models/firestore_user.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/shipper_info.dart';
+import 'package:app/core/models/transporter.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -20,16 +20,15 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
   FirebaseDatabaseInterface(this._firestore);
 
   @override
-  Future<FirestoreUser> getUser(String userId) async => _firestore
-      .collection('users')
-      .doc(userId)
-      .get()
-      .then((DocumentSnapshot snapshot) =>
-          FirestoreUser.fromJSON(snapshot.data()));
+  Future<Transporter> getTransporter(String userId) async =>
+      _firestore.collection('transporter').doc(userId).get().then(
+          (DocumentSnapshot snapshot) => Transporter.fromJSON(snapshot.data()));
 
   @override
-  Future<void> setNewUser(FirestoreUser newUser) async =>
-      _firestore.collection('users').doc(newUser.userId).set(newUser.toJSON());
+  Future<void> setNewTransporter(Transporter newTransporter) async => _firestore
+      .collection('transporter')
+      .doc(newTransporter.userId)
+      .set(newTransporter.toJSON());
 
   @override
   Future<List<AnimalTransportRecord>> getCompleteRecords() async => _firestore

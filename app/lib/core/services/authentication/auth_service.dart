@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app/core/models/firestore_user.dart';
+import 'package:app/core/models/transporter.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,7 +49,7 @@ class AuthenticationService {
             email: userEmailAddress,
             password: password,
           )
-          .then((authResult) => addUserToFirestore(FirestoreUser(
+          .then((authResult) => addTransporterToFirestore(Transporter(
                 userId: authResult.user.uid,
                 firstName: firstName,
                 lastName: lastName,
@@ -59,7 +59,7 @@ class AuthenticationService {
                 isAdmin: false,
               )));
 
-  Future<void> addUserToFirestore(FirestoreUser user) async =>
+  Future<void> addTransporterToFirestore(Transporter user) async =>
       firebaseFirestore.collection('users').doc(user.userId).set(user.toJSON());
 
   Future<void> signOut() async => firebaseAuth.signOut();

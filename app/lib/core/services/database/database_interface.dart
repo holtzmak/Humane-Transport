@@ -4,15 +4,15 @@ import 'package:app/core/models/atr_identifier.dart';
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
-import 'package:app/core/models/firestore_user.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/shipper_info.dart';
+import 'package:app/core/models/transporter.dart';
 import 'package:app/core/models/transporter_info.dart';
 
 abstract class DatabaseInterface {
-  Future<void> setNewUser(FirestoreUser newUser);
+  Future<void> setNewTransporter(Transporter newTransporter);
 
-  Future<FirestoreUser> getUser(String userId);
+  Future<Transporter> getTransporter(String userId);
 
   Future<AnimalTransportRecord> setNewAtr(String userId);
 
