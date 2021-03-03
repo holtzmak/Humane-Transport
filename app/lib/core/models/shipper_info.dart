@@ -19,6 +19,21 @@ class ShipperInfo {
       @required this.departureAddress,
       @required this.shipperContactInfo});
 
+  factory ShipperInfo.defaultShipperInfo(
+          {String shipperName,
+          bool shipperIsAnimalOwner,
+          String departureLocationId,
+          String departureLocationName,
+          Address departureAddress,
+          String shipperContactInfo}) =>
+      ShipperInfo(
+          shipperName: shipperName ?? "",
+          shipperIsAnimalOwner: shipperIsAnimalOwner ?? false,
+          departureLocationId: departureLocationId ?? "",
+          departureLocationName: departureLocationName ?? "",
+          departureAddress: departureAddress ?? Address.defaultAddress(),
+          shipperContactInfo: shipperContactInfo ?? "");
+
   ShipperInfo.fromJSON(Map<String, dynamic> json)
       : shipperName = json['shipperName'],
         shipperIsAnimalOwner = json['shipperIsAnimalOwner'],

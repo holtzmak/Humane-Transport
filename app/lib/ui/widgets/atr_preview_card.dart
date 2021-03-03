@@ -2,24 +2,30 @@ import 'package:app/core/models/animal_transport_record.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ATRPreviewCard extends StatelessWidget {
+class ATRPreviewCard extends StatefulWidget {
   final AnimalTransportRecord atr;
 
   final GestureTapCallback onTap;
 
-  ATRPreviewCard({@required this.atr, @required this.onTap});
+  ATRPreviewCard({Key key, @required this.atr, @required this.onTap})
+      : super(key: key);
 
+  @override
+  _AtrPreviewState createState() => _AtrPreviewState();
+}
+
+class _AtrPreviewState extends State<ATRPreviewCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
         child: Material(
             child: ListTile(
       leading: Icon(Icons.local_shipping),
-      title:
-          Text('Delivery for ${atr.deliveryInfo.recInfo.receiverCompanyName}'),
+      title: Text(
+          'Delivery for ${widget.atr.deliveryInfo.recInfo.receiverCompanyName}'),
       subtitle: Text(
-          '${DateFormat("yyyy-MM-dd hh:mm").format(atr.vehicleInfo.dateAndTimeLoaded)} ${atr.vehicleInfo.animalSpeciesLoaded.join(',')}'),
-      onTap: onTap,
+          '${DateFormat("yyyy-MM-dd hh:mm").format(widget.atr.vehicleInfo.dateAndTimeLoaded)} ${widget.atr.vehicleInfo.animalSpeciesLoaded.join(',')}'),
+      onTap: widget.onTap,
     )));
   }
 }

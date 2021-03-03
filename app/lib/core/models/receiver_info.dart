@@ -22,6 +22,23 @@ class ReceiverInfo {
       @required this.destinationAddress,
       @required this.receiverContactInfo});
 
+  factory ReceiverInfo.defaultReceiverInfo(
+          {String receiverCompanyName,
+          String receiverName,
+          Optional<String> accountId,
+          String destinationLocationId,
+          String destinationLocationName,
+          Address destinationAddress,
+          String receiverContactInfo}) =>
+      ReceiverInfo(
+          receiverCompanyName: receiverCompanyName ?? "",
+          receiverName: receiverName ?? "",
+          accountId: accountId ?? Optional.empty(),
+          destinationLocationId: destinationLocationId ?? "",
+          destinationLocationName: destinationLocationName ?? "",
+          destinationAddress: destinationAddress ?? Address.defaultAddress(),
+          receiverContactInfo: receiverContactInfo ?? "");
+
   @override
   int get hashCode =>
       receiverCompanyName.hashCode ^

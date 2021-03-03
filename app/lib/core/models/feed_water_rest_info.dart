@@ -18,6 +18,15 @@ class FeedWaterRestInfo {
 
   List<FeedWaterRestEvent> get fwrEvents => List.unmodifiable(_fwrEvents);
 
+  factory FeedWaterRestInfo.defaultFwrInfo(
+          {DateTime lastFwrDate,
+          Address lastFwrLocation,
+          FeedWaterRestEvent fwrEvents}) =>
+      FeedWaterRestInfo(
+          lastFwrDate: lastFwrDate ?? DateTime.parse("2021-02-03 13:01"),
+          lastFwrLocation: lastFwrLocation ?? Address.defaultAddress(),
+          fwrEvents: fwrEvents ?? []);
+
   FeedWaterRestInfo.fromJSON(Map<String, dynamic> json)
       : lastFwrDate = json['lastFwrDate'].toDate(),
         lastFwrLocation = Address.fromJSON(json['lastFwrLocation']),

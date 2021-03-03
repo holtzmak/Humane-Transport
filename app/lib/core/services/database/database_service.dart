@@ -23,11 +23,9 @@ class DatabaseService {
   Future<void> newUser(FirestoreUser newUser) async =>
       interface.setNewUser(newUser);
 
-  // Note: If used in ViewModel, do not pass atrId to InitialAtr
-  Future<AtrIdentifier> saveNewAtr(String userId, bool isComplete) async =>
-      interface.setNewAtr(userId, isComplete);
+  Future<AnimalTransportRecord> saveNewAtr(String userId) async =>
+      interface.setNewAtr(userId);
 
-  // Note: If used in ViewModel, pass an atrId to InitialAtr
   Future<void> updateAtr(AtrIdentifier atr) async =>
       interface.updateAtrIdentifier(atr);
 
@@ -69,9 +67,6 @@ class DatabaseService {
   Future<List<AnimalTransportRecord>> getCompleteRecords() async =>
       interface.getCompleteRecords();
 
-  // TODO: #130. Replace these functions with the Firestore provider pattern equivalent
-  // Meaning, this function may stay but it needs the "real" implementation
-  // where we listen to Firestore for changes and get them
   Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs() =>
       interface.getUpdatedCompleteATRs();
 

@@ -71,12 +71,12 @@ void main() {
     });
 
     test('should set new initial atr to firestore', () async {
-      final userModel = AtrIdentifier.fromJSON(testAtrIdJson, '123');
+      final userModel = AnimalTransportRecord.defaultAtr();
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.add(any))
           .thenAnswer((_) async => mockDocumentReference);
-      await dbService.saveNewAtr(userModel.userId, userModel.isComplete);
+      await dbService.saveNewAtr(userModel.identifier.userId);
       verify(mockCollectionReference.add(userModel.toJSON())).called(1);
     });
 
@@ -108,7 +108,8 @@ void main() {
       ];
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('isComplete', isEqualTo: false))
+      when(mockCollectionReference.where('identifier.isComplete',
+              isEqualTo: false))
           .thenReturn(mockQuery);
       when(mockQuery.get()).thenAnswer((_) async => (mockQuerySnapshot));
       when(mockQuerySnapshot.docs).thenAnswer((_) => [mockDocSnap]);
@@ -121,7 +122,8 @@ void main() {
     test('Should not get active ATRs', () async {
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('isComplete', isEqualTo: false))
+      when(mockCollectionReference.where('identifier.isComplete',
+              isEqualTo: false))
           .thenReturn(mockQuery);
       when(mockQuery.get()).thenAnswer((_) async => Future.error('Error here'));
       try {
@@ -137,7 +139,8 @@ void main() {
       ];
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('isComplete', isEqualTo: true))
+      when(mockCollectionReference.where('identifier.isComplete',
+              isEqualTo: true))
           .thenReturn(mockQuery);
       when(mockQuery.get()).thenAnswer((_) async => (mockQuerySnapshot));
       when(mockQuerySnapshot.docs).thenAnswer((_) => [mockDocSnap]);
@@ -150,7 +153,8 @@ void main() {
     test('Should not get complete ATRs', () async {
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('isComplete', isEqualTo: false))
+      when(mockCollectionReference.where('identifier.isComplete',
+              isEqualTo: false))
           .thenReturn(mockQuery);
       when(mockQuery.get()).thenAnswer((_) async => Future.error('Error here'));
       try {
@@ -166,7 +170,8 @@ void main() {
       ];
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('isComplete', isEqualTo: false))
+      when(mockCollectionReference.where('identifier.isComplete',
+              isEqualTo: false))
           .thenReturn(mockQuery);
 
       // Mock stream and stream map return
@@ -190,7 +195,8 @@ void main() {
       final testRecords = [];
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('isComplete', isEqualTo: true))
+      when(mockCollectionReference.where('identifier.isComplete',
+              isEqualTo: true))
           .thenReturn(mockQuery);
 
       // Mock stream and stream map return

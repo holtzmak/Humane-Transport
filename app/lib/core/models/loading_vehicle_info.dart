@@ -18,6 +18,20 @@ class LoadingVehicleInfo {
       @required List<AnimalGroup> animalsLoaded})
       : _animalsLoaded = animalsLoaded;
 
+  factory LoadingVehicleInfo.defaultVehicleInfo(
+          {DateTime dateAndTimeLoaded,
+          int loadingArea,
+          int loadingDensity,
+          int animalsPerLoadingArea,
+          List<AnimalGroup> animalsLoaded}) =>
+      LoadingVehicleInfo(
+          dateAndTimeLoaded:
+              dateAndTimeLoaded ?? DateTime.parse("2021-02-03 13:01"),
+          loadingArea: loadingArea ?? 0,
+          loadingDensity: loadingDensity ?? 0,
+          animalsPerLoadingArea: animalsPerLoadingArea ?? 0,
+          animalsLoaded: animalsLoaded ?? List.empty());
+
   LoadingVehicleInfo.fromJSON(Map<String, dynamic> json)
       : dateAndTimeLoaded = json['dateAndTimeLoaded'].toDate(),
         loadingArea = json['loadingArea'],

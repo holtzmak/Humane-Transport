@@ -25,8 +25,16 @@ class NewScreenViewModel extends BaseViewModel {
   }
 
   void saveAtr() async {
-    final dummyId = await _dbService.saveNewAtr("dum-e", false);
-    final dumyAtr = testAnimalTransportRecord(identifier: dummyId);
+    final dumy = await _dbService.saveNewAtr("dum-e");
+    final dumyAtr = testAnimalTransportRecord(
+        shipInfo: dumy.shipInfo,
+        tranInfo: dumy.tranInfo,
+        deliveryInfo: dumy.deliveryInfo,
+        ackInfo: dumy.ackInfo,
+        contingencyInfo: dumy.contingencyInfo,
+        fwrInfo: dumy.fwrInfo,
+        vehicleInfo: dumy.vehicleInfo,
+        identifier: dumy.identifier);
     await _dbService.updateWholeAtr(dumyAtr);
   }
 

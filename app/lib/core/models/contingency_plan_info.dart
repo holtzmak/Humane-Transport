@@ -27,6 +27,25 @@ class ContingencyPlanInfo {
         _potentialSafetyActions = potentialSafetyActions,
         _contingencyEvents = contingencyEvents;
 
+  factory ContingencyPlanInfo.defaultContingencyInfo(
+          {String goalStatement,
+          String communicationPlan,
+          List<String> crisisContacts,
+          String expectedPrepProcess,
+          String standardAnimalMonitoring,
+          List<String> potentialHazards,
+          List<String> potentialSafetyActions,
+          List<ContingencyPlanEvent> contingencyEvents}) =>
+      ContingencyPlanInfo(
+          goalStatement: goalStatement ?? "",
+          communicationPlan: communicationPlan ?? "",
+          crisisContacts: crisisContacts ?? [""],
+          expectedPrepProcess: expectedPrepProcess ?? "",
+          standardAnimalMonitoring: standardAnimalMonitoring ?? "",
+          potentialHazards: potentialHazards ?? [""],
+          potentialSafetyActions: potentialSafetyActions ?? [""],
+          contingencyEvents: contingencyEvents ?? List.empty());
+
   @override
   int get hashCode =>
       goalStatement.hashCode ^
