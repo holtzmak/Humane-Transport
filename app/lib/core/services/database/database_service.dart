@@ -6,9 +6,9 @@ import 'package:app/core/models/atr_identifier.dart';
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
-import 'package:app/core/models/firestore_user.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/shipper_info.dart';
+import 'package:app/core/models/transporter.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/services/database/database_interface.dart';
 
@@ -17,11 +17,11 @@ class DatabaseService {
 
   DatabaseService(this.interface);
 
-  Future<FirestoreUser> getUser(String userId) async =>
-      interface.getUser(userId);
+  Future<Transporter> getTransporter(String userId) async =>
+      interface.getTransporter(userId);
 
-  Future<void> newUser(FirestoreUser newUser) async =>
-      interface.setNewUser(newUser);
+  Future<void> newTransporter(Transporter newUser) async =>
+      interface.setNewTransporter(newUser);
 
   Future<AnimalTransportRecord> saveNewAtr(String userId) async =>
       interface.setNewAtr(userId);
@@ -58,8 +58,7 @@ class DatabaseService {
           String atrId, AcknowledgementInfo acknowledgementInfo) async =>
       interface.setAckInfo(atrId, acknowledgementInfo);
 
-  Future<bool> removeAtr(String atrId) async =>
-      interface.removeAtr(atrId).then((_) => true).catchError((_) => false);
+  Future<void> removeAtr(String atrId) async => interface.removeAtr(atrId);
 
   Future<List<AnimalTransportRecord>> getActiveRecords() async =>
       interface.getActiveRecords();

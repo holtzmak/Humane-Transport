@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-Map<String, dynamic> testFireStoreUserJson() => {
+Map<String, dynamic> testTransporterJson() => {
       'firstName': 'clark',
       'lastName': 'sasa',
       'userEmailAddress': 'sasasass',

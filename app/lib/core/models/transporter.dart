@@ -1,12 +1,14 @@
-class FirestoreUser {
+class Transporter {
   final String firstName;
   final String lastName;
   final String userEmailAddress;
   final String userPhoneNumber;
+
+  // The user ID should be the same as the current User of the app
   final String userId;
   final bool isAdmin;
 
-  FirestoreUser(
+  Transporter(
       {this.firstName,
       this.lastName,
       this.userEmailAddress,
@@ -14,7 +16,7 @@ class FirestoreUser {
       this.userId,
       this.isAdmin});
 
-  FirestoreUser.fromJSON(Map<String, dynamic> json)
+  Transporter.fromJSON(Map<String, dynamic> json)
       : firstName = json['firstName'],
         lastName = json['lastName'],
         userEmailAddress = json['userEmailAddress'],
@@ -42,7 +44,7 @@ class FirestoreUser {
 
   @override
   bool operator ==(other) {
-    return (other is FirestoreUser) &&
+    return (other is Transporter) &&
         other.firstName == firstName &&
         other.lastName == lastName &&
         other.userEmailAddress == userEmailAddress &&
