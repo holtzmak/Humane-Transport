@@ -28,7 +28,7 @@ void main() {
         .thenAnswer((_) async => mockUserCredential);
     when(mockUserCredential.user).thenReturn(mockUser);
     when(mockUser.uid).thenReturn(testUserId);
-    when(mockFirebaseFirestore.collection('users'))
+    when(mockFirebaseFirestore.collection('transporter'))
         .thenReturn(mockCollectionReference);
     when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
   }

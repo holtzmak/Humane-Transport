@@ -59,8 +59,11 @@ class AuthenticationService {
                 isAdmin: false,
               )));
 
-  Future<void> addTransporterToFirestore(Transporter user) async =>
-      firebaseFirestore.collection('users').doc(user.userId).set(user.toJSON());
+  Future<void> addTransporterToFirestore(Transporter transporter) async =>
+      firebaseFirestore
+          .collection('transporter')
+          .doc(transporter.userId)
+          .set(transporter.toJSON());
 
   Future<void> signOut() async => firebaseAuth.signOut();
 }
