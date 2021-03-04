@@ -9,14 +9,11 @@ void main() {
     testWidgets('shows right information', (WidgetTester tester) async {
       final testDate = DateTime.parse("2021-01-01 01:01");
       final testCompany = "Test Company";
-      final testSpecies = "Cows";
       final testRecWithDelInfo = testAnimalTransportRecord().withDeliveryInfo(
           testDeliveryInfo(
               recInfo: testReceiverInfo(receiverCompanyName: testCompany)));
-      final testRecWithInfo = testRecWithDelInfo.withVehicleInfo(
-          testVehicleInfo(
-              dateAndTimeLoaded: testDate,
-              animalsLoaded: [testAnimalGroup(species: testSpecies)]));
+      final testRecWithInfo = testRecWithDelInfo
+          .withVehicleInfo(testVehicleInfo(dateAndTimeLoaded: testDate));
 
       await tester.pumpWidget(new MaterialApp(
           home: ATRPreviewCard(
@@ -26,11 +23,27 @@ void main() {
         },
       )));
 
-      expect(find.text("Delivery for $testCompany"), findsOneWidget);
-      expect(
-          find.text(
-              "${DateFormat("yyyy-MM-dd hh:mm").format(testDate)} $testSpecies"),
+      expect(find.byIcon(Icons.folder), findsOneWidget);
+      expect(find.text("Transport for $testCompany"), findsOneWidget);
+      expect(find.text("${DateFormat("yyyy-MM-dd hh:mm").format(testDate)}"),
           findsOneWidget);
+    });
+
+    testWidgets('calls function on tap', (WidgetTester tester) async {
+      final testCompany = "Test Company";
+      final testRecWithDelInfo = testAnimalTransportRecord().withDeliveryInfo(
+          testDeliveryInfo(
+              recInfo: testReceiverInfo(receiverCompanyName: testCompany)));
+      bool callback;
+      final testCallback = () => callback = true;
+      final widget = ATRPreviewCard(
+        atr: testRecWithDelInfo,
+        onTap: testCallback,
+      );
+      await tester.pumpWidget(new MaterialApp(home: widget));
+      await tester.tap(find.text("Transport for $testCompany"));
+      await tester.pumpAndSettle();
+      expect(callback, true);
     });
   });
 }
