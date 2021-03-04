@@ -18,6 +18,7 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   ATRPreviewCard createPreview(AnimalTransportRecord atr) => ATRPreviewCard(
+      // Must have unique keys in rebuilding widget lists
       key: ObjectKey(Uuid().v4()),
       atr: atr,
       onTap: () => widget._navigationService

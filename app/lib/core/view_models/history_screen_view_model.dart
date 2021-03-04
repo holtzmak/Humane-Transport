@@ -13,11 +13,18 @@ import 'package:flutter/material.dart';
 class HistoryScreenViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
+  final List<AnimalTransportRecord> _animalTransportRecords = [];
   StreamSubscription<List<AnimalTransportRecord>> previewSubscription;
+
+  List<AnimalTransportRecord> get animalTransportRecords =>
+      List.unmodifiable(_animalTransportRecords);
 
   HistoryScreenViewModel() {
     previewSubscription =
-        _databaseService.getUpdatedCompleteATRs().listen((atr) => addAll(atr));
+        _databaseService.getUpdatedCompleteATRs().listen((atrs) {
+      removeAll();
+      addAll(atrs);
+    });
   }
 
   @mustCallSuper
@@ -26,14 +33,8 @@ class HistoryScreenViewModel extends BaseViewModel {
     super.dispose();
   }
 
-  final List<AnimalTransportRecord> _animalTransportRecords = [];
-
-  List<AnimalTransportRecord> get animalTransportRecords =>
-      List.unmodifiable(_animalTransportRecords);
-
-  void addAll(List<AnimalTransportRecord> animalTransportPreviews) {
-    removeAll();
-    _animalTransportRecords.addAll(animalTransportPreviews);
+  void addAll(List<AnimalTransportRecord> atrs) {
+    _animalTransportRecords.addAll(atrs);
     notifyListeners();
   }
 

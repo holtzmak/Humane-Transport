@@ -7,8 +7,6 @@ import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
-import 'package:app/ui/views/active/atr_editing_screen.dart';
-import 'package:app/ui/widgets/atr_preview_card.dart';
 import 'package:flutter/cupertino.dart';
 
 /// This ViewModel will only view active ATR models
@@ -16,11 +14,18 @@ class ActiveScreenViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
   final DialogService _dialogService = locator<DialogService>();
+  final List<AnimalTransportRecord> _animalTransportRecords = [];
   StreamSubscription<List<AnimalTransportRecord>> previewSubscription;
 
+  List<AnimalTransportRecord> get animalTransportRecords =>
+      List.unmodifiable(_animalTransportRecords);
+
   ActiveScreenViewModel() {
-    previewSubscription = _databaseService.getUpdatedActiveATRs().listen(
-        (atr) => addAll(atr.map((element) => createPreview(element)).toList()));
+    previewSubscription =
+        _databaseService.getUpdatedActiveATRs().listen((atrs) {
+      removeAll();
+      addAll(atrs);
+    });
   }
 
   @mustCallSuper
@@ -29,23 +34,13 @@ class ActiveScreenViewModel extends BaseViewModel {
     super.dispose();
   }
 
-  final List<ATRPreviewCard> _animalTransportPreviews = [];
-
-  List<ATRPreviewCard> get animalTransportPreviews =>
-      List.unmodifiable(_animalTransportPreviews);
-
-  ATRPreviewCard createPreview(AnimalTransportRecord atr) => ATRPreviewCard(
-      atr: atr,
-      onTap: () => _navigationService.navigateTo(ATREditingScreen.route,
-          arguments: atr));
-
-  void addAll(List<ATRPreviewCard> animalTransportPreviews) {
-    _animalTransportPreviews.addAll(animalTransportPreviews);
+  void addAll(List<AnimalTransportRecord> atrs) {
+    _animalTransportRecords.addAll(atrs);
     notifyListeners();
   }
 
   void removeAll() {
-    _animalTransportPreviews.clear();
+    _animalTransportRecords.clear();
     notifyListeners();
   }
 
