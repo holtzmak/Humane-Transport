@@ -18,14 +18,23 @@ class _AtrPreviewState extends State<ATRPreviewCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-        child: Material(
-            child: ListTile(
-      leading: Icon(Icons.local_shipping),
-      title: Text(
-          'Delivery for ${widget.atr.deliveryInfo.recInfo.receiverCompanyName}'),
-      subtitle: Text(
-          '${DateFormat("yyyy-MM-dd hh:mm").format(widget.atr.vehicleInfo.dateAndTimeLoaded)} ${widget.atr.vehicleInfo.animalSpeciesLoaded.join(',')}'),
-      onTap: widget.onTap,
+        child: GridTile(
+            child: Column(
+      children: [
+        Padding(padding: EdgeInsets.only(bottom: 5)),
+        Icon(Icons.folder),
+        ListTile(
+          title: Text(
+            'Delivery for ${widget.atr.deliveryInfo.recInfo.receiverCompanyName}',
+            textAlign: TextAlign.center,
+          ),
+          subtitle: Text(
+            '${DateFormat("yyyy-MM-dd hh:mm").format(widget.atr.vehicleInfo.dateAndTimeLoaded)}',
+            textAlign: TextAlign.center,
+          ),
+          onTap: widget.onTap,
+        )
+      ],
     )));
   }
 }

@@ -32,10 +32,16 @@ class _ActiveScreenState extends State<ActiveScreen> {
         automaticallyImplyLeading: false,
       ),
       body: TemplateBaseViewModel<ActiveScreenViewModel>(
-        builder: (context, model, _) => ListView.builder(
-            itemCount: model.animalTransportRecords.length,
-            itemBuilder: (context, index) =>
-                createPreview(model.animalTransportRecords[index])),
+        builder: (context, model, _) => GridView.builder(
+          itemCount: model.animalTransportRecords.length,
+          itemBuilder: (context, index) =>
+              createPreview(model.animalTransportRecords[index]),
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
+              childAspectRatio: 3 / 2,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20),
+        ),
       ),
     );
   }
