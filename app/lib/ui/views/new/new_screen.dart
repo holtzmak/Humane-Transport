@@ -41,12 +41,8 @@ class NewScreen extends StatelessWidget {
               ),
               Padding(padding: EdgeInsets.all(10.0)),
               RaisedButton(
-                onPressed: () => model.saveAtr(),
-                child: Text('Save test atr'),
-              ),
-              RaisedButton(
-                onPressed: () => model.getAtr(),
-                child: Text('Get test atr'),
+                onPressed: model.startNewAtr,
+                child: Text('New'),
               ),
               RaisedButton(
                 onPressed: () => model.signOut(),
