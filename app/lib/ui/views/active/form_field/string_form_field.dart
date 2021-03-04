@@ -49,6 +49,7 @@ class _StringFormFieldState extends State<StringFormField> {
               // Needed for the text field to expand
               maxLines: null,
               controller: controller,
+              // TODO: This is intensive to do, and should be refactored sometime
               // This is the same as onSaved, so we can avoid needing an
               // explicit save button in dynamic forms
               onChanged: widget.onSaved,

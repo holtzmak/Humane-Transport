@@ -39,6 +39,7 @@ class _IntFormFieldState extends State<IntFormField> {
       subtitle: TextFormField(
         keyboardType: TextInputType.number,
         controller: controller,
+        // TODO: This is intensive to do, and should be refactored sometime
         // This is the same as onSaved, so we can avoid needing an
         // explicit save button in dynamic forms
         onChanged: (String changed) => widget.onSaved(int.parse(changed)),
