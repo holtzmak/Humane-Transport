@@ -111,7 +111,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     ]);
   }
 
-  bool _saveATR() {
+  void _save() {
     // TODO: Validate forms before save
     _shipperInfoField.formKey.currentState.save();
     _transporterInfoFormField.formKey.currentState.save();
@@ -120,27 +120,33 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     _deliveryInfoFormField.formKey.currentState.save();
     _acknowledgementInfoFormField.formKey.currentState.save();
     _contingencyPlanInfoFormField.formKey.currentState.save();
-    // TODO: #178 Call ViewModel
-    return true;
   }
 
-  void _submitATR() {
-    _saveATR();
-    // TODO: #178. Call ViewModel. Move the below into ViewModel
-    widget._dialogService
+  Future<bool> _saveATR(ActiveScreenViewModel model) async {
+    _save();
+    return model
+        .saveEditedAtr(_replacementAtr)
+        .then((_) => true) // was success
+        .catchError((_) => false); // had failed
+  }
+
+  void _submitATR(ActiveScreenViewModel model) {
+    _save();
+    model.saveCompletedAtr(_replacementAtr).then((value) => widget
+        ._dialogService
         .showDialog(
             title: "Animal Transport Form Submitted",
             description:
                 '${DateFormat("yyyy-MM-dd hh:mm").format(_replacementAtr.vehicleInfo.dateAndTimeLoaded)}',
             buttonText: "Ok")
-        .then((_) => widget._navigationService.pop());
+        .then((_) => widget._navigationService.pop()));
   }
 
   @override
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<ActiveScreenViewModel>(
         builder: (context, model, child) => WillPopScope(
-              onWillPop: () => Future.value(_saveATR()),
+              onWillPop: () => Future.value(_saveATR(model)),
               child: BusyOverlayScreen(
                 show: model.state == ViewState.Busy,
                 child: Scaffold(
@@ -150,7 +156,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                       leading: new IconButton(
                         icon: new Icon(Icons.arrow_back_ios),
                         onPressed: () {
-                          _saveATR();
+                          _saveATR(model);
                           model.navigateToActiveScreen();
                         },
                       ),
@@ -170,7 +176,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                                   items: _atrFormFieldsWrapper)),
                           RaisedButton(
                             child: Text("Submit"),
-                            onPressed: _submitATR,
+                            onPressed: () => _submitATR(model),
                           ),
                         ],
                       ),
