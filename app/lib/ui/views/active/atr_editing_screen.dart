@@ -111,7 +111,8 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     ]);
   }
 
-  void _saveATR() {
+  bool _saveATR() {
+    // TODO: Validate forms before save
     _shipperInfoField.formKey.currentState.save();
     _transporterInfoFormField.formKey.currentState.save();
     _feedWaterRestInfoFormField.formKey.currentState.save();
@@ -120,6 +121,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     _acknowledgementInfoFormField.formKey.currentState.save();
     _contingencyPlanInfoFormField.formKey.currentState.save();
     // TODO: #178 Call ViewModel
+    return true;
   }
 
   void _submitATR() {
@@ -138,7 +140,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<ActiveScreenViewModel>(
         builder: (context, model, child) => WillPopScope(
-              onWillPop: _saveATR,
+              onWillPop: () => Future.value(_saveATR()),
               child: BusyOverlayScreen(
                 show: model.state == ViewState.Busy,
                 child: Scaffold(
