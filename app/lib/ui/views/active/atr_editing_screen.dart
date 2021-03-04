@@ -155,8 +155,8 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                       automaticallyImplyLeading: false,
                       leading: new IconButton(
                         icon: new Icon(Icons.arrow_back_ios),
-                        onPressed: () {
-                          _saveATR(model);
+                        onPressed: () async {
+                          await _saveATR(model);
                           model.navigateToActiveScreen();
                         },
                       ),
