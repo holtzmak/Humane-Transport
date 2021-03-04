@@ -60,7 +60,7 @@ class FeedWaterRestInfo {
   String toString() =>
       '''Last access to feed, water and rest (FWR) prior to loading:
       Date and time: ${DateFormat("yyyy-MM-dd hh:mm").format(lastFwrDate)}, Place: $lastFwrLocation
-      If FWR was provided during transport: $_fwrEventsToString()''';
+      If FWR was provided during transport: ${_fwrEventsToString()}''';
 
   List<Widget> _fwrEventsToWidget() => _fwrEvents.isEmpty
       ? [
