@@ -13,8 +13,8 @@ class NavigationViewModel extends BaseViewModel {
 
   List<NavigationItemModel> _navigationItems = [
     NavigationItemModel(
-      label: 'New',
-      icon: Icons.add_circle_outline,
+      label: 'Home',
+      icon: Icons.home,
       initialRoute: NewScreen.route,
       onGenerateRoute: NewRouteGenerator.onGenerateRoute,
       navigatorState: GlobalKey<NavigatorState>(),

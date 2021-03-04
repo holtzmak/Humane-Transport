@@ -11,7 +11,6 @@ import 'package:app/ui/views/active/form_field/fwr_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/loading_vehicle_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/transporter_info_form_field.dart';
-import 'package:app/ui/widgets/utility/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -26,8 +25,9 @@ class MockActiveScreenViewModel extends Mock implements ActiveScreenViewModel {}
 final testLocator = GetIt.instance;
 
 void main() {
-  final mockNavService = MockNavigationService();
+  final mockNavigationService = MockNavigationService();
   final mockDialogService = MockDialogService();
+  final mockActiveScreenViewModel = MockActiveScreenViewModel();
 
   Future<void> pumpATREditingScreen(
           WidgetTester tester, AnimalTransportRecord initialATR) async =>
@@ -35,11 +35,11 @@ void main() {
 
   group('ATR Editing Screen', () {
     setUpAll(() async {
-      testLocator
-          .registerLazySingleton<NavigationService>(() => mockNavService);
+      testLocator.registerLazySingleton<NavigationService>(
+          () => mockNavigationService);
       testLocator.registerLazySingleton<DialogService>(() => mockDialogService);
       testLocator.registerLazySingleton<ActiveScreenViewModel>(
-          () => MockActiveScreenViewModel());
+          () => mockActiveScreenViewModel);
     });
 
     testWidgets('has shipping info form field', (WidgetTester tester) async {
@@ -88,38 +88,43 @@ void main() {
       expect(submitButtonFinder, findsOneWidget);
     });
 
-    testWidgets('launches successful dialog on submit',
+    testWidgets('gives completed ATR to view model on submit',
         (WidgetTester tester) async {
       final testATR = testAnimalTransportRecord();
       final submitButtonFinder = find.widgetWithText(RaisedButton, "Submit");
-      when(mockDialogService.showDialog(
-              title: anyNamed("title"),
-              description: anyNamed("description"),
-              buttonText: anyNamed("buttonText")))
-          .thenAnswer((_) => Future.value(DialogResponse(confirmed: true)));
-      when(mockNavService.pop()).thenAnswer((_) {
-        // Do nothing for test
-      });
+      when(mockActiveScreenViewModel.saveCompletedAtr(testATR))
+          .thenAnswer((_) => Future.value()); // do nothing for test
       await pumpATREditingScreen(tester, testATR);
       await tester.ensureVisible(submitButtonFinder);
       await tester.tap(submitButtonFinder);
-      await tester.pumpAndSettle();
-      verify(mockDialogService.showDialog(
-              title: anyNamed("title"),
-              description: anyNamed("description"),
-              buttonText: anyNamed("buttonText")))
-          .called(1);
-      verify(mockNavService.pop()).called(1);
+      await tester.pump(Duration(milliseconds: 1));
+      verify(mockActiveScreenViewModel.saveCompletedAtr(testATR)).called(1);
     });
 
-    testWidgets(
-        'launches failure dialog on submit', (WidgetTester tester) async {});
-    testWidgets('gives completed ATR to database service on submit',
+    testWidgets('edited completed ATR is given to view model on submission',
         (WidgetTester tester) async {});
-    testWidgets('gives edited, completed ATR to database service on submit',
+
+    testWidgets('gives saved ATR to view model on exit, then exits',
+        (WidgetTester tester) async {
+      final testATR = testAnimalTransportRecord();
+      final backButtonFinder = find.byIcon(Icons.arrow_back_ios);
+      when(mockActiveScreenViewModel.saveEditedAtr(testATR))
+          .thenAnswer((_) => Future.value()); // do nothing for test
+      when(mockNavigationService.pop()).thenAnswer((_) {
+        // Do nothing for test
+      });
+      await pumpATREditingScreen(tester, testATR);
+      await tester.ensureVisible(backButtonFinder);
+      await tester.tap(backButtonFinder);
+      await tester.pump(Duration(milliseconds: 1));
+      verify(mockActiveScreenViewModel.saveEditedAtr(testATR)).called(1);
+      verify(mockNavigationService.pop()).called(1);
+    });
+
+    testWidgets('edited ATR is given to view model on exit, then exits',
         (WidgetTester tester) async {});
-    testWidgets(
-        'closes on submit (prevent completed ATR from being edited further)',
+
+    testWidgets('invalid form blocks completion submission',
         (WidgetTester tester) async {});
   });
 }

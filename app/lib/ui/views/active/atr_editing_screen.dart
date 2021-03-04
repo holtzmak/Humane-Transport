@@ -111,42 +111,52 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     ]);
   }
 
-  void _save() {
-    // TODO: Validate forms before save
-    _shipperInfoField.formKey.currentState.save();
-    _transporterInfoFormField.formKey.currentState.save();
-    _feedWaterRestInfoFormField.formKey.currentState.save();
-    _loadingVehicleInfoFormField.formKey.currentState.save();
-    _deliveryInfoFormField.formKey.currentState.save();
-    _acknowledgementInfoFormField.formKey.currentState.save();
-    _contingencyPlanInfoFormField.formKey.currentState.save();
+  bool _formIsValid() =>
+      _shipperInfoField.formKey.currentState.validate() &&
+      _transporterInfoFormField.formKey.currentState.validate() &&
+      _feedWaterRestInfoFormField.formKey.currentState.validate() &&
+      _loadingVehicleInfoFormField.formKey.currentState.validate() &&
+      _deliveryInfoFormField.formKey.currentState.validate() &&
+      _acknowledgementInfoFormField.formKey.currentState.validate() &&
+      _contingencyPlanInfoFormField.formKey.currentState.validate();
+
+  bool _canAndDidFormSave() {
+    if (_formIsValid()) {
+      _shipperInfoField.formKey.currentState.save();
+      _transporterInfoFormField.formKey.currentState.save();
+      _feedWaterRestInfoFormField.formKey.currentState.save();
+      _loadingVehicleInfoFormField.formKey.currentState.save();
+      _deliveryInfoFormField.formKey.currentState.save();
+      _acknowledgementInfoFormField.formKey.currentState.save();
+      _contingencyPlanInfoFormField.formKey.currentState.save();
+      return true;
+    }
+    return false;
   }
 
-  Future<bool> _saveATR(ActiveScreenViewModel model) async {
-    _save();
-    return model
-        .saveEditedAtr(_replacementAtr)
-        .then((_) => true) // was success
-        .catchError((_) => false); // had failed
-  }
+  Future<bool> _saveATR(ActiveScreenViewModel model) async =>
+      Future.value(_canAndDidFormSave())
+          .then((_) => model.saveEditedAtr(_replacementAtr))
+          .then((_) => true)
+          .catchError((_) => false);
 
-  void _submitATR(ActiveScreenViewModel model) {
-    _save();
-    model.saveCompletedAtr(_replacementAtr).then((value) => widget
-        ._dialogService
-        .showDialog(
-            title: "Animal Transport Form Submitted",
-            description:
-                '${DateFormat("yyyy-MM-dd hh:mm").format(_replacementAtr.vehicleInfo.dateAndTimeLoaded)}',
-            buttonText: "Ok")
-        .then((_) => widget._navigationService.pop()));
-  }
+  Future<void> _submitATR(ActiveScreenViewModel model) async => Future.value(
+          _canAndDidFormSave())
+      .then((_) => model.saveCompletedAtr(_replacementAtr))
+      // TODO: Dialog and navigation should be done in ViewModel
+      // Fix this when fixing the database interface functions
+      .then((_) => widget._dialogService.showDialog(
+          title: "Animal Transport Form Submitted",
+          description:
+              '${DateFormat("yyyy-MM-dd hh:mm").format(_replacementAtr.vehicleInfo.dateAndTimeLoaded)}',
+          buttonText: "OK"))
+      .then((_) => widget._navigationService.pop());
 
   @override
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<ActiveScreenViewModel>(
         builder: (context, model, child) => WillPopScope(
-              onWillPop: () => Future.value(_saveATR(model)),
+              onWillPop: () => _saveATR(model),
               child: BusyOverlayScreen(
                 show: model.state == ViewState.Busy,
                 child: Scaffold(
@@ -155,10 +165,8 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                       automaticallyImplyLeading: false,
                       leading: new IconButton(
                         icon: new Icon(Icons.arrow_back_ios),
-                        onPressed: () async {
-                          await _saveATR(model);
-                          model.navigateToActiveScreen();
-                        },
+                        onPressed: () async => _saveATR(model)
+                            .then((value) => model.navigateToActiveScreen()),
                       ),
                     ),
                     body: SingleChildScrollView(
@@ -176,7 +184,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                                   items: _atrFormFieldsWrapper)),
                           RaisedButton(
                             child: Text("Submit"),
-                            onPressed: () => _submitATR(model),
+                            onPressed: () async => _submitATR(model),
                           ),
                         ],
                       ),
