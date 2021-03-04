@@ -25,7 +25,7 @@ class _AtrPreviewState extends State<ATRPreviewCard> {
         Icon(Icons.folder),
         ListTile(
           title: Text(
-            'Delivery for ${widget.atr.deliveryInfo.recInfo.receiverCompanyName}',
+            'Transport for ${widget.atr.deliveryInfo.recInfo.receiverCompanyName}',
             textAlign: TextAlign.center,
           ),
           subtitle: Text(
