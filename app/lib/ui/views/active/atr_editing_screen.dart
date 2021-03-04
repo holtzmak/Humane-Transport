@@ -112,7 +112,19 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   // TODO: #178. Make saves occur on screen exit.
   // Also need to update FormField to stop using onChanged. Save CPU use.
   // Also need to add the "new" atr button in meantime on NewScreen until
-  // #119 is addressed
+  // #119 is addressedo
+
+  void _saveATR() {
+    _shipperInfoField.formKey.currentState.save();
+    _transporterInfoFormField.formKey.currentState.save();
+    _feedWaterRestInfoFormField.formKey.currentState.save();
+    _loadingVehicleInfoFormField.formKey.currentState.save();
+    _deliveryInfoFormField.formKey.currentState.save();
+    _acknowledgementInfoFormField.formKey.currentState.save();
+    _contingencyPlanInfoFormField.formKey.currentState.save();
+    print("Saved the ATR!!!");
+    debugPrint(_replacementAtr.toString(), wrapWidth: 1024);
+  }
 
   void _submitATR() {
     // TODO: #178. Call service and submit the completed atr
@@ -153,6 +165,10 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                 RaisedButton(
                   child: Text("Submit"),
                   onPressed: _submitATR,
+                ),
+                RaisedButton(
+                  child: Text("Save"),
+                  onPressed: _saveATR,
                 ),
               ],
             ),
