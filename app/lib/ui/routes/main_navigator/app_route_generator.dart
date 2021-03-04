@@ -5,6 +5,7 @@ import 'package:app/ui/views/new/test_screens/test_screen_three.dart';
 import 'package:app/ui/views/signin/sign_in_screen.dart';
 import 'package:app/ui/views/signup/sign_up_screen.dart';
 import 'package:app/ui/views/welcome/welcome_screen.dart';
+import 'package:app/ui/widgets/utility/pdf_screen.dart';
 import 'package:flutter/material.dart';
 
 /// The main route generator for routes since app main
@@ -34,6 +35,8 @@ class AppRouteGenerator {
             return ATRDisplayScreen(atr: settings.arguments);
           case ATREditingScreen.route:
             return ATREditingScreen(atr: settings.arguments);
+          case PDFScreen.route:
+            return PDFScreen();
 
           default:
             throw Exception('Invalid route: ${settings.name}');

@@ -5,6 +5,7 @@ import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
+import 'package:app/ui/widgets/utility/pdf_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,10 @@ class HistoryScreenViewModel extends BaseViewModel {
   void removeAll() {
     _animalTransportRecords.clear();
     notifyListeners();
+  }
+
+  void navigateToPDFScreen() {
+    _navigationService.navigateTo(PDFScreen.route);
   }
 
   void navigateToHistoryScreen() {

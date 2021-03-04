@@ -1,7 +1,6 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/view_models/history_screen_view_model.dart';
 import 'package:app/ui/widgets/models/expansion_list_item.dart';
-import 'package:app/ui/widgets/utility/pdf_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -48,10 +47,7 @@ class _ATRDisplayScreenState extends State<ATRDisplayScreen> {
               appBar: AppBar(
                 actions: [
                   OutlinedButton.icon(
-                      onPressed: () =>
-
-                          ///TODO: Fix Navigation to PDF Screen
-                          Navigator.of(context).pushNamed(PDFScreen.route),
+                      onPressed: model.navigateToPDFScreen,
                       icon: Icon(Icons.share_outlined, color: Colors.white),
                       label: Text(
                         'Share as PDF',

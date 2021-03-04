@@ -23,7 +23,6 @@ class NewScreen extends StatelessWidget {
               Text('Testing feature for uploading image'),
               RaisedButton(
                 onPressed: () =>
-                    // TODO: Need another NavService for inner navigation
                     Navigator.of(context).pushNamed(ImageScreen.route),
                 child: Text('Upload Image'),
               ),
