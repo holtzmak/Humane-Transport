@@ -10,6 +10,7 @@ import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
+import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/contingency_plan_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/delivery_info_form_field.dart';
@@ -17,6 +18,7 @@ import 'package:app/ui/views/active/form_field/loading_vehicle_info_form_field.d
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/transporter_info_form_field.dart';
 import 'package:app/ui/widgets/models/expansion_list_item.dart';
+import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -109,11 +111,6 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     ]);
   }
 
-  // TODO: #178. Make saves occur on screen exit.
-  // Also need to update FormField to stop using onChanged. Save CPU use.
-  // Also need to add the "new" atr button in meantime on NewScreen until
-  // #119 is addressedo
-
   void _saveATR() {
     _shipperInfoField.formKey.currentState.save();
     _transporterInfoFormField.formKey.currentState.save();
@@ -122,12 +119,12 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     _deliveryInfoFormField.formKey.currentState.save();
     _acknowledgementInfoFormField.formKey.currentState.save();
     _contingencyPlanInfoFormField.formKey.currentState.save();
-    print("Saved the ATR!!!");
-    debugPrint(_replacementAtr.toString(), wrapWidth: 1024);
+    // TODO: #178 Call ViewModel
   }
 
   void _submitATR() {
-    // TODO: #178. Call service and submit the completed atr
+    _saveATR();
+    // TODO: #178. Call ViewModel. Move the below into ViewModel
     widget._dialogService
         .showDialog(
             title: "Animal Transport Form Submitted",
@@ -140,39 +137,43 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   @override
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<ActiveScreenViewModel>(
-      builder: (context, model, child) => Scaffold(
-          appBar: AppBar(
-            title: Text("Animal Transport Form"),
-            automaticallyImplyLeading: false,
-            leading: new IconButton(
-              // TODO: Do WillPopScope = false, and force the user to use back button and save then
-              icon: new Icon(Icons.arrow_back_ios),
-              onPressed: model.navigateToActiveScreen,
-            ),
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                    child: buildExpansionPanelList(
-                        expansionCallback: (int index, bool isExpanded) {
-                          setState(() {
-                            _atrFormFieldsWrapper[index].isExpanded =
-                                !isExpanded;
-                          });
+        builder: (context, model, child) => WillPopScope(
+              onWillPop: _saveATR,
+              child: BusyOverlayScreen(
+                show: model.state == ViewState.Busy,
+                child: Scaffold(
+                    appBar: AppBar(
+                      title: Text("Animal Transport Form"),
+                      automaticallyImplyLeading: false,
+                      leading: new IconButton(
+                        icon: new Icon(Icons.arrow_back_ios),
+                        onPressed: () {
+                          _saveATR();
+                          model.navigateToActiveScreen();
                         },
-                        items: _atrFormFieldsWrapper)),
-                RaisedButton(
-                  child: Text("Submit"),
-                  onPressed: _submitATR,
-                ),
-                RaisedButton(
-                  child: Text("Save"),
-                  onPressed: _saveATR,
-                ),
-              ],
-            ),
-          )),
-    );
+                      ),
+                    ),
+                    body: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                              child: buildExpansionPanelList(
+                                  expansionCallback:
+                                      (int index, bool isExpanded) {
+                                    setState(() {
+                                      _atrFormFieldsWrapper[index].isExpanded =
+                                          !isExpanded;
+                                    });
+                                  },
+                                  items: _atrFormFieldsWrapper)),
+                          RaisedButton(
+                            child: Text("Submit"),
+                            onPressed: _submitATR,
+                          ),
+                        ],
+                      ),
+                    )),
+              ),
+            ));
   }
 }
