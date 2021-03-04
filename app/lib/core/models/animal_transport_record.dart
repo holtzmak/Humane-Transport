@@ -119,6 +119,19 @@ class AnimalTransportRecord {
           isComplete: identifier.isComplete,
           atrDocumentId: docId));
 
+  AnimalTransportRecord asComplete() => AnimalTransportRecord(
+      shipInfo: shipInfo,
+      tranInfo: tranInfo,
+      fwrInfo: fwrInfo,
+      vehicleInfo: vehicleInfo,
+      deliveryInfo: deliveryInfo,
+      ackInfo: ackInfo,
+      contingencyInfo: contingencyInfo,
+      identifier: AtrIdentifier(
+          userId: identifier.userId,
+          isComplete: true,
+          atrDocumentId: identifier.atrDocumentId));
+
   AnimalTransportRecord withShipInfo(ShipperInfo newShipInfo) =>
       AnimalTransportRecord(
         shipInfo: newShipInfo,

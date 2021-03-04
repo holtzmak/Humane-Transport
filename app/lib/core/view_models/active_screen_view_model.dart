@@ -52,7 +52,7 @@ class ActiveScreenViewModel extends BaseViewModel {
     setState(ViewState.Busy);
     return _databaseService
         .updateWholeAtr(atr)
-        .then((value) => setState(ViewState.Idle))
+        .then((_) => setState(ViewState.Idle))
         .catchError((e) {
       setState(ViewState.Idle);
       _dialogService.showDialog(
@@ -64,15 +64,14 @@ class ActiveScreenViewModel extends BaseViewModel {
 
   Future<void> saveCompletedAtr(AnimalTransportRecord atr) async {
     setState(ViewState.Busy);
-    saveEditedAtr(atr).then((_) => _databaseService
-            .updateAtr(atr.identifier)
-            .then((value) => setState(ViewState.Idle))
-            .catchError((e) {
-          setState(ViewState.Idle);
-          _dialogService.showDialog(
-            title: 'Submission of the Animal Transport Record failed',
-            description: e.message,
-          );
-        }));
+    saveEditedAtr(atr.asComplete())
+        .then((_) => setState(ViewState.Idle))
+        .catchError((e) {
+      setState(ViewState.Idle);
+      _dialogService.showDialog(
+        title: 'Submission of the Animal Transport Record failed',
+        description: e.message,
+      );
+    });
   }
 }
