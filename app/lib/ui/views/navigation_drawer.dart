@@ -18,7 +18,7 @@ class NavigationDrawer extends StatelessWidget {
           ),
           DrawerListTile(
             icon: Icons.home_outlined,
-            text: 'New',
+            text: 'Home',
             textStyle: Theme.of(context).textTheme.bodyText1,
             selectedIndex: 0,
           ),
