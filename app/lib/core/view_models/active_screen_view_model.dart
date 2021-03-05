@@ -9,6 +9,7 @@ import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
+import 'package:app/ui/views/active/atr_editing_screen.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,6 +64,10 @@ class ActiveScreenViewModel extends BaseViewModel {
 
   void navigateToActiveScreen() {
     _navigationService.pop();
+  }
+
+  void navigateToEditingScreen(AnimalTransportRecord atr) {
+    _navigationService.navigateTo(ATREditingScreen.route, arguments: atr);
   }
 
   Future<void> saveEditedAtr(AnimalTransportRecord atr) async {
