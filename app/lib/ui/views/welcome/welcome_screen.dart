@@ -26,11 +26,6 @@ class WelcomeScreen extends StatelessWidget {
                 onPressed: model.navigateToSignUpScreen,
                 child: Text('Register'),
               ),
-              // TODO: Remove eventually, useful for testing now
-              RaisedButton(
-                onPressed: model.navigateToHomeScreen,
-                child: Text('Skip sign in'),
-              )
             ],
           ),
         ),
