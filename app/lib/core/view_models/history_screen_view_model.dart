@@ -5,8 +5,10 @@ import 'package:app/core/services/authentication/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/widgets/utility/pdf_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,31 +19,33 @@ class HistoryScreenViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final List<AnimalTransportRecord> _animalTransportRecords = [];
-  StreamSubscription<List<AnimalTransportRecord>> previewSubscription;
+  StreamSubscription<List<AnimalTransportRecord>> atrSubscription;
+  StreamSubscription<Optional<User>> userSubscription;
 
   List<AnimalTransportRecord> get animalTransportRecords =>
       List.unmodifiable(_animalTransportRecords);
 
   HistoryScreenViewModel() {
-    _authenticationService.currentUserChanges().listen((user) =>
-        user.isPresent()
-            ? previewSubscription = _databaseService
+    userSubscription = _authenticationService.currentUserChanges().listen(
+        (user) => user.isPresent()
+            ? atrSubscription = _databaseService
                 .getUpdatedCompleteATRs(user.get().uid)
                 .listen((atrs) {
                 removeAll();
                 addAll(atrs);
               })
-            : _cancelSubscription());
+            : _cancelAtrSubscription());
   }
 
-  void _cancelSubscription() {
+  void _cancelAtrSubscription() {
     removeAll();
-    previewSubscription.cancel();
+    atrSubscription.cancel();
   }
 
   @mustCallSuper
   void dispose() {
-    _cancelSubscription();
+    userSubscription.cancel();
+    _cancelAtrSubscription();
     super.dispose();
   }
 

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 /*
-    The padding property can be added to style.dart,
-    but doing so would be an overkill.
-    Source: https://stackoverflow.com/questions/44053363/flutter-padding-for-all-widgets
+    The padding property can be added to style.dart, but doing so would be overkill:
+    https://stackoverflow.com/questions/44053363/flutter-padding-for-all-widgets
   */
 const SmallTextSize = 14.0;
 const BodyTextSize = 16.0;
