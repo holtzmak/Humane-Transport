@@ -1,5 +1,5 @@
 import 'package:app/core/models/acknowledgement_info.dart';
-import 'package:app/test/test_animal_transport_record.dart';
+import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

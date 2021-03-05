@@ -1,6 +1,6 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/test/helper/test_compromised_animal_expectations.dart';
-import 'package:app/test/test_animal_transport_record.dart';
+import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/active/form_field/compromised_animal_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -15,7 +15,7 @@ Map<String, dynamic> testAtrIdentifierJson() => {
     };
 
 Map<String, dynamic> testAtrJson() => {
-      "shipInfo": {
+      "shipperInfo": {
         "shipperName": "Clark",
         "shipperIsAnimalOwner": false,
         "departureLocationId": "123",
@@ -29,7 +29,7 @@ Map<String, dynamic> testAtrJson() => {
           "country": "Canada"
         }
       },
-      "tranInfo": {
+      "transportInfo": {
         "companyName": "Company A",
         "companyAddress": {
           "streetAddress": "Bruce",
@@ -38,7 +38,7 @@ Map<String, dynamic> testAtrJson() => {
           "postalCode": "dfsdf",
           "country": "Canada"
         },
-        "_driverNames": ["Name 1", "Name 2"],
+        "driverNames": ["Name 1", "Name 2"],
         "vehicleProvince": "vehicleProvince Name",
         "vehicleLicensePlate": "vehicleLicensePlate plate",
         "trailerProvince": "trailerProvince province",
@@ -58,39 +58,39 @@ Map<String, dynamic> testAtrJson() => {
         "trainingExpiryDate": Timestamp.fromDate(
             (DateTime.parse("2020-01-29T18:39:51.396781283+01:00")))
       },
-      "fwrInfo": {
-        "lastFwrDate": Timestamp.fromDate(
+      "feedWaterRestInfo": {
+        "lastFeedWaterRestDate": Timestamp.fromDate(
             (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
-        "lastFwrLocation": {
+        "lastFeedWaterRestLocation": {
           "streetAddress": "Bruce",
           "city": "Regina",
           "provinceOrState": "some state",
           "postalCode": "dfsdf",
           "country": "Canada"
         },
-        "_fwrEvents": [
+        "feedWaterRestEvents": [
           {
             "animalsWereUnloaded": false,
-            "fwrTime": Timestamp.fromDate(
+            "feedWaterRestTime": Timestamp.fromDate(
                 (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
-            "lastFwrLocation": {
+            "lastFeedWaterRestLocation": {
               "streetAddress": "Bruce",
               "city": "Regina",
               "provinceOrState": "some state",
               "postalCode": "dfsdf",
               "country": "Canada"
             },
-            "fwrProvidedOnboard": false
+            "feedWaterRestProvidedOnboard": false
           }
         ]
       },
-      "vehicleInfo": {
+      "loadingVehicleInfo": {
         "dateAndTimeLoaded": Timestamp.fromDate(
             (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
         "loadingArea": 1,
         "loadingDensity": 2,
         "animalsPerLoadingArea": 3,
-        "_animalsLoaded": [
+        "animalsLoaded": [
           {
             "species": "species A",
             "groupAge": 1,
@@ -98,13 +98,13 @@ Map<String, dynamic> testAtrJson() => {
             "animalPurpose": "hello",
             "numberAnimals": 2,
             "animalsFitForTransport": false,
-            "_compromisedAnimals": [
+            "compromisedAnimals": [
               {
                 "animalDescription": "animalDescription",
                 "measuresTakenToCareForAnimal": "measuresTakenToCareForAnimal"
               }
             ],
-            "_specialNeedsAnimals": [
+            "specialNeedsAnimals": [
               {
                 "animalDescription": "animalDescription",
                 "measuresTakenToCareForAnimal": "measuresTakenToCareForAnimal"
@@ -114,7 +114,7 @@ Map<String, dynamic> testAtrJson() => {
         ]
       },
       "deliveryInfo": {
-        "recInfo": {
+        "receiverInfo": {
           "receiverCompanyName": "receiverCompanyName a",
           "receiverName": "receiverName A",
           "accountId": null,
@@ -131,7 +131,7 @@ Map<String, dynamic> testAtrJson() => {
         },
         "arrivalDateAndTime": Timestamp.fromDate(
             (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
-        "_compromisedAnimals": [
+        "compromisedAnimals": [
           {
             "animalDescription": "animalDescription",
             "measuresTakenToCareForAnimal": "measuresTakenToCareForAnimal"
@@ -139,27 +139,27 @@ Map<String, dynamic> testAtrJson() => {
         ],
         "additionalWelfareConcerns": "additionalWelfareConcerns"
       },
-      "ackInfo": {
-        "shipperAck": "file",
-        "transporterAck": "file",
-        "receiverAck": "file"
+      "acknowledgementInfo": {
+        "shipperAck": null,
+        "transporterAck": null,
+        "receiverAck": null
       },
-      "contingencyInfo": {
+      "contingencyPlanInfo": {
         "goalStatement": "goalStatement",
         "communicationPlan": "communicationPlan",
-        "_crisisContacts": ["a", "b"],
+        "crisisContacts": ["a", "b"],
         "expectedPrepProcess": "expectedPrepProcess",
         "standardAnimalMonitoring": "standardAnimalMonitoring",
-        "_potentialHazards": ["a", "b"],
-        "_potentialSafetyActions": ["a", "b"],
-        "_contingencyEvents": [
+        "potentialHazards": ["a", "b"],
+        "potentialSafetyActions": ["a", "b"],
+        "contingencyEvents": [
           {
             "eventDateAndTime": Timestamp.fromDate(
                 (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
-            "_producerContactsUsed": ["a", "b"],
-            "_receiverContactsUsed": ["a", "b"],
+            "producerContactsUsed": ["a", "b"],
+            "receiverContactsUsed": ["a", "b"],
             "disturbancesIdentified": "disturbancesIdentified",
-            "_activities": [
+            "activities": [
               {
                 "time": Timestamp.fromDate(
                     (DateTime.parse("2020-01-29T18:39:51.396781283+01:00"))),
@@ -168,7 +168,7 @@ Map<String, dynamic> testAtrJson() => {
                 "instructionsGiven": "instructionsGiven"
               }
             ],
-            "_actionsTaken": ["a", "b"]
+            "actionsTaken": ["a", "b"]
           }
         ]
       },

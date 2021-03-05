@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/services/authentication/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
@@ -13,6 +14,8 @@ import 'package:flutter/material.dart';
 class HistoryScreenViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
   final List<AnimalTransportRecord> _animalTransportRecords = [];
   StreamSubscription<List<AnimalTransportRecord>> previewSubscription;
 
@@ -20,16 +23,25 @@ class HistoryScreenViewModel extends BaseViewModel {
       List.unmodifiable(_animalTransportRecords);
 
   HistoryScreenViewModel() {
-    previewSubscription =
-        _databaseService.getUpdatedCompleteATRs().listen((atrs) {
-      removeAll();
-      addAll(atrs);
-    });
+    _authenticationService.currentUserChanges().listen((user) =>
+        user.isPresent()
+            ? previewSubscription = _databaseService
+                .getUpdatedCompleteATRs(user.get().uid)
+                .listen((atrs) {
+                removeAll();
+                addAll(atrs);
+              })
+            : _cancelSubscription());
+  }
+
+  void _cancelSubscription() {
+    removeAll();
+    previewSubscription.cancel();
   }
 
   @mustCallSuper
   void dispose() {
-    previewSubscription.cancel();
+    _cancelSubscription();
     super.dispose();
   }
 

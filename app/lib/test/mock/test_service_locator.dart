@@ -9,6 +9,9 @@ import 'package:get_it/get_it.dart';
 void addLazySingletonForTest<T>(GetIt testLocator, T Function() service) =>
     testLocator.registerLazySingleton<T>(() => service());
 
+/* If you want to use a mock, you have to use:
+   testLocator.registerFactory<T>(MockT())
+*/
 void addFactoryForTest<T>(GetIt testLocator, T Function() factory) =>
     testLocator.registerFactory(() => factory());
 

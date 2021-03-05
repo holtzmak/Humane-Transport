@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/services/authentication/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
@@ -14,6 +15,8 @@ class ActiveScreenViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
   final DialogService _dialogService = locator<DialogService>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
   final List<AnimalTransportRecord> _animalTransportRecords = [];
   StreamSubscription<List<AnimalTransportRecord>> previewSubscription;
 
@@ -21,16 +24,25 @@ class ActiveScreenViewModel extends BaseViewModel {
       List.unmodifiable(_animalTransportRecords);
 
   ActiveScreenViewModel() {
-    previewSubscription =
-        _databaseService.getUpdatedActiveATRs().listen((atrs) {
-      removeAll();
-      addAll(atrs);
-    });
+    _authenticationService.currentUserChanges().listen((user) =>
+        user.isPresent()
+            ? previewSubscription = _databaseService
+                .getUpdatedActiveATRs(user.get().uid)
+                .listen((atrs) {
+                removeAll();
+                addAll(atrs);
+              })
+            : _cancelSubscription());
+  }
+
+  void _cancelSubscription() {
+    removeAll();
+    previewSubscription.cancel();
   }
 
   @mustCallSuper
   void dispose() {
-    previewSubscription.cancel();
+    _cancelSubscription();
     super.dispose();
   }
 

@@ -2,7 +2,7 @@ import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
-import 'package:app/test/test_animal_transport_record.dart';
+import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
 import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/contingency_plan_info_form_field.dart';

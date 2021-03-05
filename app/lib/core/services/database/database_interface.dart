@@ -14,11 +14,11 @@ abstract class DatabaseInterface {
 
   Future<void> removeAtr(String atrId);
 
-  Future<List<AnimalTransportRecord>> getCompleteRecords();
+  Future<List<AnimalTransportRecord>> getCompleteRecords(String userId);
 
-  Future<List<AnimalTransportRecord>> getActiveRecords();
+  Future<List<AnimalTransportRecord>> getActiveRecords(String userId);
 
-  Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs();
+  Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId);
 
-  Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs();
+  Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs(String userId);
 }
