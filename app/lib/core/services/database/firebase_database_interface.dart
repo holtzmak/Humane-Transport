@@ -46,40 +46,48 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
       _firestore.collection('atr').doc(atrDocumentId).delete();
 
   @override
-  Future<List<AnimalTransportRecord>> getCompleteRecords() async => _firestore
-      .collection('atr')
-      .where('identifier.isComplete', isEqualTo: true)
-      .get()
-      .then((snapshot) => snapshot.docs
-          .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
-          .toList());
+  Future<List<AnimalTransportRecord>> getCompleteRecords(String userId) async =>
+      _firestore
+          .collection('atr')
+          .where('identifier.userId', isEqualTo: userId)
+          .where('identifier.isComplete', isEqualTo: true)
+          .get()
+          .then((snapshot) => snapshot.docs
+              .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
+              .toList());
 
   @override
-  Future<List<AnimalTransportRecord>> getActiveRecords() async => _firestore
-      .collection('atr')
-      .where('identifier.isComplete', isEqualTo: false)
-      .get()
-      .then((snapshot) => snapshot.docs
-          .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
-          .toList());
-
-  /// This returns the whole list of records in the database, not just updated ones
-  @override
-  Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs() => _firestore
-      .collection('atr')
-      .where('identifier.isComplete', isEqualTo: true)
-      .snapshots()
-      .map((snapshot) => snapshot.docs
-          .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
-          .toList());
+  Future<List<AnimalTransportRecord>> getActiveRecords(String userId) async =>
+      _firestore
+          .collection('atr')
+          .where('identifier.userId', isEqualTo: userId)
+          .where('identifier.isComplete', isEqualTo: false)
+          .get()
+          .then((snapshot) => snapshot.docs
+              .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
+              .toList());
 
   /// This returns the whole list of records in the database, not just updated ones
   @override
-  Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs() => _firestore
-      .collection('atr')
-      .where('identifier.isComplete', isEqualTo: false)
-      .snapshots()
-      .map((snapshot) => snapshot.docs
-          .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
-          .toList());
+  Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId) =>
+      _firestore
+          .collection('atr')
+          .where('identifier.userId', isEqualTo: userId)
+          .where('identifier.isComplete', isEqualTo: true)
+          .snapshots()
+          .map((snapshot) => snapshot.docs
+              .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
+              .toList());
+
+  /// This returns the whole list of records in the database, not just updated ones
+  @override
+  Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs(String userId) =>
+      _firestore
+          .collection('atr')
+          .where('identifier.userId', isEqualTo: userId)
+          .where('identifier.isComplete', isEqualTo: false)
+          .snapshots()
+          .map((snapshot) => snapshot.docs
+              .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
+              .toList());
 }

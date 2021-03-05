@@ -26,15 +26,15 @@ class DatabaseService {
 
   Future<void> removeAtr(String atrId) async => interface.removeAtr(atrId);
 
-  Future<List<AnimalTransportRecord>> getActiveRecords() async =>
-      interface.getActiveRecords();
+  Future<List<AnimalTransportRecord>> getActiveRecords(String userId) async =>
+      interface.getActiveRecords(userId);
 
-  Future<List<AnimalTransportRecord>> getCompleteRecords() async =>
-      interface.getCompleteRecords();
+  Future<List<AnimalTransportRecord>> getCompleteRecords(String userId) async =>
+      interface.getCompleteRecords(userId);
 
-  Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs() =>
-      interface.getUpdatedCompleteATRs();
+  Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId) =>
+      interface.getUpdatedCompleteATRs(userId);
 
-  Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs() =>
-      interface.getUpdatedActiveATRs();
+  Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs(String userId) =>
+      interface.getUpdatedActiveATRs(userId);
 }

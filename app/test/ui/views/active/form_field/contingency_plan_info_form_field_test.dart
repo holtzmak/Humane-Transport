@@ -1,6 +1,6 @@
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/test/helper/test_contingency_plan_event_expectations.dart';
-import 'package:app/test/test_animal_transport_record.dart';
+import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/active/form_field/contingency_plan_info_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

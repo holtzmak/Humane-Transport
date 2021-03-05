@@ -24,16 +24,20 @@ class NewScreenViewModel extends BaseViewModel {
             ));
   }
 
-  Future<void> startNewAtr() async {
-    _databaseService
-        .saveNewAtr(_authenticationService.currentUser.get().uid)
-        .then((atr) => _navigationService.navigateTo(ATREditingScreen.route,
-            arguments: atr))
-        .catchError((e) => _dialogService.showDialog(
+  Future<void> startNewAtr() async =>
+      _authenticationService.currentUser.isPresent()
+          ? _databaseService
+              .saveNewAtr(_authenticationService.currentUser.get().uid)
+              .then((atr) => _navigationService
+                  .navigateTo(ATREditingScreen.route, arguments: atr))
+              .catchError((e) => _dialogService.showDialog(
+                    title: 'Starting a new Animal Transport Record failed',
+                    description: e.message,
+                  ))
+          : _dialogService.showDialog(
               title: 'Starting a new Animal Transport Record failed',
-              description: e.message,
-            ));
-  }
+              description: "You are not logged in!",
+            );
 
   void navigateToTestScreenThree() =>
       _navigationService.navigateTo(TestScreenThree.route);
