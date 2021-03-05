@@ -51,7 +51,7 @@ class ActiveScreenViewModel extends BaseViewModel {
   Future<void> saveEditedAtr(AnimalTransportRecord atr) async {
     setState(ViewState.Busy);
     return _databaseService
-        .updateWholeAtr(atr)
+        .saveUpdatedAtr(atr)
         .then((_) => setState(ViewState.Idle))
         .catchError((e) {
       setState(ViewState.Idle);

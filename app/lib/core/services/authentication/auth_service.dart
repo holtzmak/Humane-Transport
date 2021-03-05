@@ -1,35 +1,45 @@
 import 'dart:async';
 
 import 'package:app/core/models/transporter.dart';
+import 'package:app/core/services/database/database_service.dart';
+import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 /// A service wrapping FirebaseAuth
 /// Sign in persistence is guaranteed default as per https://firebase.flutter.dev/docs/auth/usage/#persisting-authentication-state
 class AuthenticationService {
+  final databaseService = locator<DatabaseService>();
   final FirebaseAuth firebaseAuth;
-  final FirebaseFirestore firebaseFirestore;
 
   // The logged in user information is the same as the Transporter information
   // but separate for Firebase Authentication
   Optional<User> _currentUser;
+  Optional<Transporter> _currentTransporter;
 
   Optional<User> get currentUser => _currentUser;
 
-  // Stream available to any class needing to listen actively to changes
+  Optional<Transporter> get currentTransporter => _currentTransporter;
+
   Stream<Optional<User>> currentUserChanges() => firebaseAuth
       .authStateChanges()
       .map((User user) => _currentUser = Optional.of(user));
 
-  AuthenticationService(
-      {@required this.firebaseAuth, @required this.firebaseFirestore}) {
+  Stream<Optional<Transporter>> currentTransporterChanges() =>
+      currentUserChanges().map((_) => _currentTransporter);
+
+  AuthenticationService({@required this.firebaseAuth}) {
     // Internal stream to update the one-time get currentUser
-    firebaseAuth
-        .authStateChanges()
-        .listen((User user) => _currentUser = Optional.of(user));
+    firebaseAuth.authStateChanges().listen((User user) async {
+      _currentUser = Optional.of(user);
+      _currentTransporter = _currentUser.isPresent()
+          ? Optional.of(await databaseService.getTransporter(user.uid))
+          : Optional.empty();
+    });
   }
+
+  Future<void> signOut() async => firebaseAuth.signOut();
 
   Future<UserCredential> signIn({
     @required String email,
@@ -49,7 +59,7 @@ class AuthenticationService {
             email: userEmailAddress,
             password: password,
           )
-          .then((authResult) => addTransporterToFirestore(Transporter(
+          .then((authResult) => databaseService.addTransporter(Transporter(
                 userId: authResult.user.uid,
                 firstName: firstName,
                 lastName: lastName,
@@ -59,11 +69,9 @@ class AuthenticationService {
                 isAdmin: false,
               )));
 
-  Future<void> addTransporterToFirestore(Transporter transporter) async =>
-      firebaseFirestore
-          .collection('transporter')
-          .doc(transporter.userId)
-          .set(transporter.toJSON());
-
-  Future<void> signOut() async => firebaseAuth.signOut();
+  Future<void> deleteAccount() async => _currentUser.isPresent()
+      ? databaseService
+          .removeTransporter(_currentUser.get().uid)
+          .then((_) => firebaseAuth.currentUser.delete())
+      : Future.error("No user is logged in to delete their account");
 }

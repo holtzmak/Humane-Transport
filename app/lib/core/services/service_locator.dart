@@ -21,13 +21,10 @@ final locator = GetIt.instance;
 void setUpLocator() {
   locator.registerFactory<DatabaseInterface>(
       () => FirebaseDatabaseInterface(FirebaseFirestore.instance));
-
   locator.registerLazySingleton<DatabaseService>(
       () => DatabaseService(locator<DatabaseInterface>()));
-  locator.registerLazySingleton<AuthenticationService>(() =>
-      AuthenticationService(
-          firebaseAuth: FirebaseAuth.instance,
-          firebaseFirestore: FirebaseFirestore.instance));
+  locator.registerLazySingleton<AuthenticationService>(
+      () => AuthenticationService(firebaseAuth: FirebaseAuth.instance));
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<DialogService>(() => DialogService());
 

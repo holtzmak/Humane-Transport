@@ -61,7 +61,7 @@ void main() {
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.doc(transporterModel.userId))
           .thenReturn(mockDocumentReference);
-      await dbService.newTransporter(transporterModel);
+      await dbService.addTransporter(transporterModel);
       verify(mockDocumentReference.set(transporterModel.toJSON())).called(1);
     });
 
