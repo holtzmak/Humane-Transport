@@ -31,25 +31,16 @@ class AnimalTransportRecord {
     @required this.identifier,
   });
 
-  factory AnimalTransportRecord.defaultAtr(
-          {ShipperInfo shipInfo,
-          TransporterInfo tranInfo,
-          FeedWaterRestInfo fwrInfo,
-          LoadingVehicleInfo vehicleInfo,
-          DeliveryInfo deliveryInfo,
-          AcknowledgementInfo ackInfo,
-          ContingencyPlanInfo contingencyInfo,
-          AtrIdentifier identifier}) =>
+  factory AnimalTransportRecord.defaultAtr(String userId) =>
       AnimalTransportRecord(
-        shipInfo: shipInfo ?? ShipperInfo.defaultShipperInfo(),
-        tranInfo: tranInfo ?? TransporterInfo.defaultTransporterInfo(),
-        fwrInfo: fwrInfo ?? FeedWaterRestInfo.defaultFwrInfo(),
-        vehicleInfo: vehicleInfo ?? LoadingVehicleInfo.defaultVehicleInfo(),
-        deliveryInfo: deliveryInfo ?? DeliveryInfo.defaultDeliveryInfo(),
-        ackInfo: ackInfo ?? AcknowledgementInfo.defaultAckInfo(),
-        contingencyInfo:
-            contingencyInfo ?? ContingencyPlanInfo.defaultContingencyInfo(),
-        identifier: identifier ?? AtrIdentifier.defaultAtrId(),
+        shipInfo: ShipperInfo.defaultShipperInfo(),
+        tranInfo: TransporterInfo.defaultTransporterInfo(),
+        fwrInfo: FeedWaterRestInfo.defaultFwrInfo(),
+        vehicleInfo: LoadingVehicleInfo.defaultVehicleInfo(),
+        deliveryInfo: DeliveryInfo.defaultDeliveryInfo(),
+        ackInfo: AcknowledgementInfo.defaultAckInfo(),
+        contingencyInfo: ContingencyPlanInfo.defaultContingencyInfo(),
+        identifier: AtrIdentifier.defaultAtrIdentifier(userId),
       );
 
   @override
@@ -78,23 +69,24 @@ class AnimalTransportRecord {
 
   AnimalTransportRecord.fromJSON(
       Map<String, dynamic> json, String atrDocumentId)
-      : shipInfo = ShipperInfo.fromJSON(json['shipInfo']),
-        tranInfo = TransporterInfo.fromJSON(json['tranInfo']),
-        fwrInfo = FeedWaterRestInfo.fromJSON(json['fwrInfo']),
-        vehicleInfo = LoadingVehicleInfo.fromJSON(json['vehicleInfo']),
+      : shipInfo = ShipperInfo.fromJSON(json['shipperInfo']),
+        tranInfo = TransporterInfo.fromJSON(json['transportInfo']),
+        fwrInfo = FeedWaterRestInfo.fromJSON(json['feedWaterRestInfo']),
+        vehicleInfo = LoadingVehicleInfo.fromJSON(json['loadingVehicleInfo']),
         deliveryInfo = DeliveryInfo.fromJSON(json['deliveryInfo']),
-        ackInfo = AcknowledgementInfo.fromJSON(json['ackInfo']),
-        contingencyInfo = ContingencyPlanInfo.fromJSON(json['contingencyInfo']),
+        ackInfo = AcknowledgementInfo.fromJSON(json['acknowledgementInfo']),
+        contingencyInfo =
+            ContingencyPlanInfo.fromJSON(json['contingencyPlanInfo']),
         identifier = AtrIdentifier.fromJSON(json['identifier'], atrDocumentId);
 
   Map<String, dynamic> toJSON() => {
-        'shipInfo': shipInfo.toJSON(),
-        'tranInfo': tranInfo.toJSON(),
-        'fwrInfo': fwrInfo.toJSON(),
-        'vehicleInfo': vehicleInfo.toJSON(),
+        'shipperInfo': shipInfo.toJSON(),
+        'transportInfo': tranInfo.toJSON(),
+        'feedWaterRestInfo': fwrInfo.toJSON(),
+        'loadingVehicleInfo': vehicleInfo.toJSON(),
         'deliveryInfo': deliveryInfo.toJSON(),
-        'ackInfo': ackInfo.toJSON(),
-        'contingencyInfo': contingencyInfo.toJSON(),
+        'acknowledgementInfo': ackInfo.toJSON(),
+        'contingencyPlanInfo': contingencyInfo.toJSON(),
         'identifier': identifier.toJSON(),
       };
 

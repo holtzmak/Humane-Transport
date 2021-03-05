@@ -18,27 +18,24 @@ class FeedWaterRestInfo {
 
   List<FeedWaterRestEvent> get fwrEvents => List.unmodifiable(_fwrEvents);
 
-  factory FeedWaterRestInfo.defaultFwrInfo(
-          {DateTime lastFwrDate,
-          Address lastFwrLocation,
-          FeedWaterRestEvent fwrEvents}) =>
-      FeedWaterRestInfo(
-          lastFwrDate: lastFwrDate ?? DateTime.parse("2021-02-03 13:01"),
-          lastFwrLocation: lastFwrLocation ?? Address.defaultAddress(),
-          fwrEvents: fwrEvents ?? []);
+  factory FeedWaterRestInfo.defaultFwrInfo() => FeedWaterRestInfo(
+      lastFwrDate: DateTime.now(),
+      lastFwrLocation: Address.defaultAddress(),
+      fwrEvents: []);
 
   FeedWaterRestInfo.fromJSON(Map<String, dynamic> json)
-      : lastFwrDate = json['lastFwrDate'].toDate(),
-        lastFwrLocation = Address.fromJSON(json['lastFwrLocation']),
-        _fwrEvents = json['_fwrEvents']
+      : lastFwrDate = json['lastFeedWaterRestDate'].toDate(),
+        lastFwrLocation = Address.fromJSON(json['lastFeedWaterRestLocation']),
+        _fwrEvents = json['feedWaterRestEvents']
             .map<FeedWaterRestEvent>(
                 (fwrEvent) => FeedWaterRestEvent.fromJson(fwrEvent))
             .toList();
 
   Map<String, dynamic> toJSON() => {
-        'lastFwrDate': lastFwrDate,
-        'lastFwrLocation': lastFwrLocation.toJSON(),
-        '_fwrEvents': _fwrEvents.map((fwrEvent) => fwrEvent.toJSON()).toList(),
+        'lastFeedWaterRestDate': lastFwrDate,
+        'lastFeedWaterRestLocation': lastFwrLocation.toJSON(),
+        'feedWaterRestEvents':
+            _fwrEvents.map((fwrEvent) => fwrEvent.toJSON()).toList(),
       };
 
   @override
@@ -109,15 +106,15 @@ class FeedWaterRestEvent {
 
   FeedWaterRestEvent.fromJson(Map<String, dynamic> json)
       : animalsWereUnloaded = json['animalsWereUnloaded'],
-        fwrTime = json['fwrTime'].toDate(),
-        lastFwrLocation = Address.fromJSON(json['lastFwrLocation']),
-        fwrProvidedOnboard = json['fwrProvidedOnboard'];
+        fwrTime = json['feedWaterRestTime'].toDate(),
+        lastFwrLocation = Address.fromJSON(json['lastFeedWaterRestLocation']),
+        fwrProvidedOnboard = json['feedWaterRestProvidedOnboard'];
 
   Map<String, dynamic> toJSON() => {
         'animalsWereUnloaded': animalsWereUnloaded,
-        'fwrTime': fwrTime,
-        'lastFwrLocation': lastFwrLocation.toJSON(),
-        'fwrProvidedOnboard': fwrProvidedOnboard,
+        'feedWaterRestTime': fwrTime,
+        'lastFeedWaterRestLocation': lastFwrLocation.toJSON(),
+        'feedWaterRestProvidedOnboard': fwrProvidedOnboard,
       };
 
   @override

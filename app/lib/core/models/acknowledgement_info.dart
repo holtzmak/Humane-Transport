@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 
 @immutable
 class AcknowledgementInfo {
-  // TODO: Resolve how to display ack info, if it's an image or w/e
-  // The File type is temporary until we have a ack type
+  // TODO: Resolve ack info images. There's nulls here we don't want.
   final File shipperAck;
   final File transporterAck;
   final File receiverAck;
@@ -15,11 +14,8 @@ class AcknowledgementInfo {
       @required this.transporterAck,
       @required this.receiverAck});
 
-  // TODO: Add mock files or something, we're not likely to use this
-  factory AcknowledgementInfo.defaultAckInfo(
-          {File shipperAck, File transporterAck, File receiverAck}) =>
-      AcknowledgementInfo(
-          shipperAck: null, transporterAck: null, receiverAck: null);
+  factory AcknowledgementInfo.defaultAckInfo() => AcknowledgementInfo(
+      shipperAck: null, transporterAck: null, receiverAck: null);
 
   @override
   int get hashCode =>
@@ -47,7 +43,6 @@ class AcknowledgementInfo {
         'receiverAck': receiverAck
       };
 
-  // TODO: Resolve how to print ack info
   String toString() =>
       "Shipper acknowledgement: , Transporter acknowledgement: , Consignee acknowledgement: ";
 
