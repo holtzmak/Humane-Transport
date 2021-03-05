@@ -38,37 +38,20 @@ class TransporterInfo {
 
   List<String> get driverNames => List.unmodifiable(_driverNames);
 
-  factory TransporterInfo.defaultTransporterInfo(
-          {String companyName,
-          Address companyAddress,
-          List<String> driverNames,
-          String vehicleProvince,
-          String vehicleLicensePlate,
-          String trailerProvince,
-          String trailerLicensePlate,
-          DateTime dateLastCleaned,
-          Address addressLastCleanedAt,
-          bool driversAreBriefed,
-          bool driversHaveTraining,
-          String trainingType,
-          DateTime trainingExpiryDate}) =>
-      TransporterInfo(
-          companyName: companyName ?? "",
-          companyAddress: companyAddress ?? Address.defaultAddress(),
-          driverNames: driverNames ?? [""],
-          vehicleProvince: vehicleProvince ?? "",
-          vehicleLicensePlate: vehicleLicensePlate ?? "",
-          trailerProvince: trailerProvince ?? "",
-          trailerLicensePlate: trailerLicensePlate ?? "",
-          dateLastCleaned:
-              dateLastCleaned ?? DateTime.parse("2021-02-03 13:01"),
-          addressLastCleanedAt:
-              addressLastCleanedAt ?? Address.defaultAddress(),
-          driversAreBriefed: driversAreBriefed ?? false,
-          driversHaveTraining: driversHaveTraining ?? false,
-          trainingType: trainingType ?? "",
-          trainingExpiryDate:
-              trainingExpiryDate ?? DateTime.parse("2021-02-03 13:01"));
+  factory TransporterInfo.defaultTransporterInfo() => TransporterInfo(
+      companyName: "",
+      companyAddress: Address.defaultAddress(),
+      driverNames: [],
+      vehicleProvince: "",
+      vehicleLicensePlate: "",
+      trailerProvince: "",
+      trailerLicensePlate: "",
+      dateLastCleaned: DateTime.now(),
+      addressLastCleanedAt: Address.defaultAddress(),
+      driversAreBriefed: false,
+      driversHaveTraining: false,
+      trainingType: "",
+      trainingExpiryDate: DateTime.now());
 
   @override
   int get hashCode =>
@@ -107,7 +90,7 @@ class TransporterInfo {
   TransporterInfo.fromJSON(Map<String, dynamic> json)
       : companyName = json['companyName'],
         companyAddress = Address.fromJSON(json['companyAddress']),
-        _driverNames = List.from(json['_driverNames']),
+        _driverNames = List.from(json['driverNames']),
         vehicleProvince = json['vehicleProvince'],
         vehicleLicensePlate = json['vehicleLicensePlate'],
         trailerProvince = json['trailerProvince'],
@@ -122,7 +105,7 @@ class TransporterInfo {
   Map<String, dynamic> toJSON() => {
         'companyName': companyName,
         'companyAddress': companyAddress.toJSON(),
-        '_driverNames': _driverNames,
+        'driverNames': _driverNames,
         'vehicleProvince': vehicleProvince,
         'vehicleLicensePlate': vehicleLicensePlate,
         'trailerProvince': trailerProvince,

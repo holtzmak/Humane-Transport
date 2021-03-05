@@ -19,16 +19,11 @@ class DeliveryInfo {
       @required this.additionalWelfareConcerns})
       : _compromisedAnimals = compromisedAnimals;
 
-  factory DeliveryInfo.defaultDeliveryInfo(
-          {ReceiverInfo recInfo,
-          DateTime arrivalDate,
-          List<CompromisedAnimal> compromisedAnimals,
-          String additionalWelfareConcerns}) =>
-      DeliveryInfo(
-          recInfo: recInfo ?? ReceiverInfo.defaultReceiverInfo(),
-          arrivalDateAndTime: arrivalDate ?? DateTime.parse("2021-02-03 13:01"),
-          compromisedAnimals: compromisedAnimals ?? List.empty(),
-          additionalWelfareConcerns: additionalWelfareConcerns ?? "");
+  factory DeliveryInfo.defaultDeliveryInfo() => DeliveryInfo(
+      recInfo: ReceiverInfo.defaultReceiverInfo(),
+      arrivalDateAndTime: DateTime.now(),
+      compromisedAnimals: [],
+      additionalWelfareConcerns: "");
 
   @override
   int get hashCode =>
@@ -47,18 +42,18 @@ class DeliveryInfo {
   }
 
   DeliveryInfo.fromJSON(Map<String, dynamic> json)
-      : recInfo = ReceiverInfo.fromJson(json['recInfo']),
+      : recInfo = ReceiverInfo.fromJson(json['receiverInfo']),
         arrivalDateAndTime = json['arrivalDateAndTime'].toDate(),
-        _compromisedAnimals = json['_compromisedAnimals']
+        _compromisedAnimals = json['compromisedAnimals']
             .map<CompromisedAnimal>(
                 (compAnimal) => CompromisedAnimal.fromJSON(compAnimal))
             .toList(),
         additionalWelfareConcerns = json['additionalWelfareConcerns'];
 
   Map<String, dynamic> toJSON() => {
-        'recInfo': recInfo.toJSON(),
+        'receiverInfo': recInfo.toJSON(),
         'arrivalDateAndTime': arrivalDateAndTime,
-        '_compromisedAnimals': _compromisedAnimals
+        'compromisedAnimals': _compromisedAnimals
             .map((compAnimal) => compAnimal.toJSON())
             .toList(),
         'additionalWelfareConcerns': additionalWelfareConcerns,

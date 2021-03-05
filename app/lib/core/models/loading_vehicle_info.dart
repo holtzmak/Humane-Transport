@@ -18,26 +18,19 @@ class LoadingVehicleInfo {
       @required List<AnimalGroup> animalsLoaded})
       : _animalsLoaded = animalsLoaded;
 
-  factory LoadingVehicleInfo.defaultVehicleInfo(
-          {DateTime dateAndTimeLoaded,
-          int loadingArea,
-          int loadingDensity,
-          int animalsPerLoadingArea,
-          List<AnimalGroup> animalsLoaded}) =>
-      LoadingVehicleInfo(
-          dateAndTimeLoaded:
-              dateAndTimeLoaded ?? DateTime.parse("2021-02-03 13:01"),
-          loadingArea: loadingArea ?? 0,
-          loadingDensity: loadingDensity ?? 0,
-          animalsPerLoadingArea: animalsPerLoadingArea ?? 0,
-          animalsLoaded: animalsLoaded ?? List.empty());
+  factory LoadingVehicleInfo.defaultVehicleInfo() => LoadingVehicleInfo(
+      dateAndTimeLoaded: DateTime.now(),
+      loadingArea: 0,
+      loadingDensity: 0,
+      animalsPerLoadingArea: 0,
+      animalsLoaded: []);
 
   LoadingVehicleInfo.fromJSON(Map<String, dynamic> json)
       : dateAndTimeLoaded = json['dateAndTimeLoaded'].toDate(),
         loadingArea = json['loadingArea'],
         loadingDensity = json['loadingDensity'],
         animalsPerLoadingArea = json['animalsPerLoadingArea'],
-        _animalsLoaded = json['_animalsLoaded']
+        _animalsLoaded = json['animalsLoaded']
             .map<AnimalGroup>(
                 (animalLoaded) => AnimalGroup.fromJSON(animalLoaded))
             .toList();
@@ -47,7 +40,7 @@ class LoadingVehicleInfo {
         'loadingArea': loadingArea,
         'loadingDensity': loadingDensity,
         'animalsPerLoadingArea': animalsPerLoadingArea,
-        '_animalsLoaded':
+        'animalsLoaded':
             _animalsLoaded.map((animalLoaded) => animalLoaded.toJSON()).toList()
       };
 
@@ -164,11 +157,11 @@ class AnimalGroup {
         animalPurpose = json['animalPurpose'],
         numberAnimals = json['numberAnimals'],
         animalsFitForTransport = json['animalsFitForTransport'],
-        _compromisedAnimals = json['_compromisedAnimals']
+        _compromisedAnimals = json['compromisedAnimals']
             .map<CompromisedAnimal>(
                 (compAnimal) => CompromisedAnimal.fromJSON(compAnimal))
             .toList(),
-        _specialNeedsAnimals = json['_specialNeedsAnimals']
+        _specialNeedsAnimals = json['specialNeedsAnimals']
             .map<CompromisedAnimal>(
                 (specialAnimal) => CompromisedAnimal.fromJSON(specialAnimal))
             .toList();
@@ -180,10 +173,10 @@ class AnimalGroup {
         'animalPurpose': animalPurpose,
         'numberAnimals': numberAnimals,
         'animalsFitForTransport': animalsFitForTransport,
-        '_compromisedAnimals': _compromisedAnimals
+        'compromisedAnimals': _compromisedAnimals
             .map((compAnimal) => compAnimal.toJSON())
             .toList(),
-        '_specialNeedsAnimals': _specialNeedsAnimals
+        'specialNeedsAnimals': _specialNeedsAnimals
             .map((specialAnimal) => specialAnimal.toJSON())
             .toList(),
       };

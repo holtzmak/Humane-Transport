@@ -12,14 +12,9 @@ class AtrIdentifier {
     this.isComplete = false,
   });
 
-  factory AtrIdentifier.defaultAtrId({
-    String userId,
-    bool isComplete,
-  }) =>
-      AtrIdentifier(
-        //TODO: assign current userId to userId
-        userId: userId ?? "",
-        isComplete: isComplete ?? false,
+  factory AtrIdentifier.defaultAtrIdentifier(String userId) => AtrIdentifier(
+        userId: userId,
+        isComplete: false,
       );
 
   factory AtrIdentifier.fromJSON(
@@ -31,18 +26,22 @@ class AtrIdentifier {
     );
   }
 
+  // The document ID is only used in the app for database communication purposes
+  // DO NOT store the ID in the JSON
   Map<String, dynamic> toJSON() => {
         'userId': userId,
         'isComplete': isComplete,
       };
 
   @override
-  int get hashCode => userId.hashCode ^ isComplete.hashCode;
+  int get hashCode =>
+      userId.hashCode ^ isComplete.hashCode ^ atrDocumentId.hashCode;
 
   @override
   bool operator ==(other) {
     return (other is AtrIdentifier) &&
         other.userId == userId &&
-        other.isComplete == isComplete;
+        other.isComplete == isComplete &&
+        other.atrDocumentId == atrDocumentId;
   }
 }

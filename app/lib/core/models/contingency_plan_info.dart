@@ -27,24 +27,15 @@ class ContingencyPlanInfo {
         _potentialSafetyActions = potentialSafetyActions,
         _contingencyEvents = contingencyEvents;
 
-  factory ContingencyPlanInfo.defaultContingencyInfo(
-          {String goalStatement,
-          String communicationPlan,
-          List<String> crisisContacts,
-          String expectedPrepProcess,
-          String standardAnimalMonitoring,
-          List<String> potentialHazards,
-          List<String> potentialSafetyActions,
-          List<ContingencyPlanEvent> contingencyEvents}) =>
-      ContingencyPlanInfo(
-          goalStatement: goalStatement ?? "",
-          communicationPlan: communicationPlan ?? "",
-          crisisContacts: crisisContacts ?? [""],
-          expectedPrepProcess: expectedPrepProcess ?? "",
-          standardAnimalMonitoring: standardAnimalMonitoring ?? "",
-          potentialHazards: potentialHazards ?? [""],
-          potentialSafetyActions: potentialSafetyActions ?? [""],
-          contingencyEvents: contingencyEvents ?? List.empty());
+  factory ContingencyPlanInfo.defaultContingencyInfo() => ContingencyPlanInfo(
+      goalStatement: "",
+      communicationPlan: "",
+      crisisContacts: [],
+      expectedPrepProcess: "",
+      standardAnimalMonitoring: "",
+      potentialHazards: [],
+      potentialSafetyActions: [],
+      contingencyEvents: []);
 
   @override
   int get hashCode =>
@@ -73,12 +64,12 @@ class ContingencyPlanInfo {
   ContingencyPlanInfo.fromJSON(Map<String, dynamic> json)
       : goalStatement = json['goalStatement'],
         communicationPlan = json['communicationPlan'],
-        _crisisContacts = List.from(json['_crisisContacts']),
+        _crisisContacts = List.from(json['crisisContacts']),
         expectedPrepProcess = json['expectedPrepProcess'],
         standardAnimalMonitoring = json['standardAnimalMonitoring'],
-        _potentialHazards = List.from(json['_potentialHazards']),
-        _potentialSafetyActions = List.from(json['_potentialSafetyActions']),
-        _contingencyEvents = json['_contingencyEvents']
+        _potentialHazards = List.from(json['potentialHazards']),
+        _potentialSafetyActions = List.from(json['potentialSafetyActions']),
+        _contingencyEvents = json['contingencyEvents']
             .map<ContingencyPlanEvent>((contingencyEvent) =>
                 ContingencyPlanEvent.fromJSON(contingencyEvent))
             .toList();
@@ -86,12 +77,12 @@ class ContingencyPlanInfo {
   Map<String, dynamic> toJSON() => {
         'goalStatement': goalStatement,
         'communicationPlan': communicationPlan,
-        '_crisisContacts': _crisisContacts,
+        'crisisContacts': _crisisContacts,
         'expectedPrepProcess': expectedPrepProcess,
         'standardAnimalMonitoring': standardAnimalMonitoring,
-        '_potentialHazards': _potentialHazards,
-        '_potentialSafetyActions': _potentialSafetyActions,
-        '_contingencyEvents': _contingencyEvents
+        'potentialHazards': _potentialHazards,
+        'potentialSafetyActions': _potentialSafetyActions,
+        'contingencyEvents': _contingencyEvents
             .map((contingencyEvent) => contingencyEvent.toJSON())
             .toList()
       };
@@ -214,23 +205,22 @@ class ContingencyPlanEvent {
 
   ContingencyPlanEvent.fromJSON(Map<String, dynamic> json)
       : eventDateAndTime = json['eventDateAndTime'].toDate(),
-        _producerContactsUsed = List.from(json['_producerContactsUsed']),
-        _receiverContactsUsed = List.from(json['_receiverContactsUsed']),
+        _producerContactsUsed = List.from(json['producerContactsUsed']),
+        _receiverContactsUsed = List.from(json['receiverContactsUsed']),
         disturbancesIdentified = json['disturbancesIdentified'],
-        _activities = json['_activities']
+        _activities = json['activities']
             .map<ContingencyActivity>(
                 (compAnimal) => ContingencyActivity.fromJSON(compAnimal))
             .toList(),
-        _actionsTaken = List.from(json['_actionsTaken']);
+        _actionsTaken = List.from(json['actionsTaken']);
 
   Map<String, dynamic> toJSON() => {
         'eventDateAndTime': eventDateAndTime,
-        '_producerContactsUsed': _producerContactsUsed,
-        '_receiverContactsUsed': _receiverContactsUsed,
+        'producerContactsUsed': _producerContactsUsed,
+        'receiverContactsUsed': _receiverContactsUsed,
         'disturbancesIdentified': disturbancesIdentified,
-        '_activities':
-            _activities.map((activity) => activity.toJSON()).toList(),
-        '_actionsTaken': _actionsTaken,
+        'activities': _activities.map((activity) => activity.toJSON()).toList(),
+        'actionsTaken': _actionsTaken,
       };
 
   List<String> get producerContactsUsed =>
