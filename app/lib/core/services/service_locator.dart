@@ -19,7 +19,8 @@ import 'navigation/nav_service.dart';
 final locator = GetIt.instance;
 
 void setUpLocator() {
-  locator.registerFactory<DatabaseInterface>(
+  // Singletons
+  locator.registerLazySingleton<DatabaseInterface>(
       () => FirebaseDatabaseInterface(FirebaseFirestore.instance));
   locator.registerLazySingleton<DatabaseService>(
       () => DatabaseService(locator<DatabaseInterface>()));
@@ -27,7 +28,7 @@ void setUpLocator() {
       () => AuthenticationService(firebaseAuth: FirebaseAuth.instance));
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<DialogService>(() => DialogService());
-
+  // Factories
   locator
       .registerFactory<WelcomeScreenViewModel>(() => WelcomeScreenViewModel());
   locator.registerFactory<SignInViewModel>(() => SignInViewModel());

@@ -1,10 +1,10 @@
-// Followed tutorial: https://www.filledstacks.com/post/manager-your-flutter-dialogs-with-a-dialog-manager/
 import 'dart:async';
 
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/widgets/utility/dialog.dart';
 import 'package:flutter/material.dart';
 
+/// A userful service created by FilledStacks: https://www.filledstacks.com/post/manager-your-flutter-dialogs-with-a-dialog-manager/
 class DialogService {
   final _dialogNavigationKey = GlobalKey<NavigatorState>();
   Function(DialogRequest) _showDialogListener;
