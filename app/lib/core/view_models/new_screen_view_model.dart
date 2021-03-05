@@ -5,7 +5,6 @@ import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
-import 'package:app/ui/views/new/test_screens/test_screen_three.dart';
 
 class NewScreenViewModel extends BaseViewModel {
   final DialogService _dialogService = locator<DialogService>();
@@ -38,9 +37,6 @@ class NewScreenViewModel extends BaseViewModel {
               title: 'Starting a new Animal Transport Record failed',
               description: "You are not logged in!",
             );
-
-  void navigateToTestScreenThree() =>
-      _navigationService.navigateTo(TestScreenThree.route);
 
   void navigateToNewScreen() => _navigationService.pop();
 }
