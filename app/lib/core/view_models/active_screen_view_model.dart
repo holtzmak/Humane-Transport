@@ -6,8 +6,11 @@ import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
+import 'package:date_time_picker/date_time_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 /// This ViewModel will only view active ATR models
@@ -18,31 +21,33 @@ class ActiveScreenViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final List<AnimalTransportRecord> _animalTransportRecords = [];
-  StreamSubscription<List<AnimalTransportRecord>> previewSubscription;
+  StreamSubscription<List<AnimalTransportRecord>> _atrSubscription;
+  StreamSubscription<Optional<User>> _userSubscription;
 
   List<AnimalTransportRecord> get animalTransportRecords =>
       List.unmodifiable(_animalTransportRecords);
 
   ActiveScreenViewModel() {
-    _authenticationService.currentUserChanges().listen((user) =>
-        user.isPresent()
-            ? previewSubscription = _databaseService
+    _userSubscription = _authenticationService.currentUserChanges().listen(
+        (user) => user.isPresent()
+            ? _atrSubscription = _databaseService
                 .getUpdatedActiveATRs(user.get().uid)
                 .listen((atrs) {
                 removeAll();
                 addAll(atrs);
               })
-            : _cancelSubscription());
+            : _cancelAtrSubscription());
   }
 
-  void _cancelSubscription() {
+  void _cancelAtrSubscription() {
     removeAll();
-    previewSubscription.cancel();
+    _atrSubscription.cancel();
   }
 
   @mustCallSuper
   void dispose() {
-    _cancelSubscription();
+    _userSubscription.cancel();
+    _cancelAtrSubscription();
     super.dispose();
   }
 
@@ -78,6 +83,11 @@ class ActiveScreenViewModel extends BaseViewModel {
     setState(ViewState.Busy);
     saveEditedAtr(atr.asComplete())
         .then((_) => setState(ViewState.Idle))
+        .then((_) => _dialogService.showDialog(
+            title: "Animal Transport Form Submitted",
+            description:
+                '${DateFormat("yyyy-MM-dd hh:mm").format(atr.vehicleInfo.dateAndTimeLoaded)}'))
+        .then((_) => _navigationService.pop())
         .catchError((e) {
       setState(ViewState.Idle);
       _dialogService.showDialog(
