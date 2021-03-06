@@ -27,4 +27,6 @@ class Optional<T> {
   bool operator ==(other) {
     return (other is Optional) && other._optional == _optional;
   }
+
+  String toString() => "Optional(${isPresent() ? _optional : null})";
 }

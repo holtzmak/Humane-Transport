@@ -15,27 +15,28 @@ class AuthenticationService {
 
   // The logged in user information is the same as the Transporter information
   // but separate for Firebase Authentication
-  Optional<User> _currentUser;
-  Optional<Transporter> _currentTransporter;
+  Optional<User> _currentUser = Optional.empty();
+  Optional<Transporter> _currentTransporter = Optional.empty();
 
   Optional<User> get currentUser => _currentUser;
 
   Optional<Transporter> get currentTransporter => _currentTransporter;
 
-  Stream<Optional<User>> currentUserChanges() => firebaseAuth
-      .authStateChanges()
-      .map((User user) => _currentUser = Optional.of(user));
-
-  Stream<Optional<Transporter>> currentTransporterChanges() =>
-      currentUserChanges().map((_) => _currentTransporter);
+  Stream<Optional<User>> currentUserChanges;
+  Stream<Future<Optional<Transporter>>> currentTransporterChanges;
 
   AuthenticationService({@required this.firebaseAuth}) {
-    // Internal stream to update the one-time get currentUser
-    firebaseAuth.authStateChanges().listen((User user) async {
+    currentUserChanges = firebaseAuth.authStateChanges().map((User user) {
       _currentUser = Optional.of(user);
-      _currentTransporter = _currentUser.isPresent()
+      return _currentUser;
+    });
+    currentTransporterChanges =
+        firebaseAuth.authStateChanges().map((User user) async {
+      print(user);
+      _currentTransporter = user != null
           ? Optional.of(await databaseService.getTransporter(user.uid))
           : Optional.empty();
+      return _currentTransporter;
     });
   }
 

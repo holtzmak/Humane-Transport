@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Transporter {
   final String firstName;
   final String lastName;
@@ -9,12 +11,12 @@ class Transporter {
   final bool isAdmin;
 
   Transporter(
-      {this.firstName,
-      this.lastName,
-      this.userEmailAddress,
-      this.userPhoneNumber,
-      this.userId,
-      this.isAdmin});
+      {@required this.firstName,
+      @required this.lastName,
+      @required this.userEmailAddress,
+      @required this.userPhoneNumber,
+      @required this.userId,
+      @required this.isAdmin});
 
   Transporter.fromJSON(Map<String, dynamic> json)
       : firstName = json['firstName'],
@@ -52,4 +54,7 @@ class Transporter {
         other.userId == userId &&
         other.isAdmin == isAdmin;
   }
+
+  String toString() =>
+      "Transporter(firstName: $firstName, lastName: $lastName, userEmailAddress: $userEmailAddress,, userPhoneNumber: $userPhoneNumber, userId: $userId, isAdmin: $isAdmin)";
 }

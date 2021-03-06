@@ -29,7 +29,7 @@ class ActiveScreenViewModel extends BaseViewModel {
       List.unmodifiable(_animalTransportRecords);
 
   ActiveScreenViewModel() {
-    _userSubscription = _authenticationService.currentUserChanges().listen(
+    _userSubscription = _authenticationService.currentUserChanges.listen(
         (user) => user.isPresent()
             ? _atrSubscription = _databaseService
                 .getUpdatedActiveATRs(user.get().uid)

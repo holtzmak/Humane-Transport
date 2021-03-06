@@ -26,7 +26,7 @@ class HistoryScreenViewModel extends BaseViewModel {
       List.unmodifiable(_animalTransportRecords);
 
   HistoryScreenViewModel() {
-    userSubscription = _authenticationService.currentUserChanges().listen(
+    userSubscription = _authenticationService.currentUserChanges.listen(
         (user) => user.isPresent()
             ? atrSubscription = _databaseService
                 .getUpdatedCompleteATRs(user.get().uid)

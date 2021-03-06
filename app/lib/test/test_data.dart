@@ -10,6 +10,7 @@ import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/receiver_info.dart';
 import 'package:app/core/models/shipper_info.dart';
+import 'package:app/core/models/transporter.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:flutter/material.dart';
@@ -241,3 +242,18 @@ testAtrIdentifier({
       userId: userId ?? "Some Id",
       isComplete: isComplete ?? false,
     );
+
+testTransporter({
+  String userId,
+  String firstName,
+  String lastName,
+  String userEmailAddress,
+  String userPhoneNumber,
+}) =>
+    Transporter(
+        firstName: firstName ?? "test first name",
+        lastName: lastName ?? "test last name",
+        userEmailAddress: userEmailAddress ?? "test@gmail.com",
+        userPhoneNumber: userPhoneNumber ?? "test phone number",
+        userId: userId ?? "Some id",
+        isAdmin: false);
