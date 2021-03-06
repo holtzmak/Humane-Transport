@@ -23,7 +23,7 @@ class HistoryScreenViewModel extends BaseViewModel {
       List.unmodifiable(_animalTransportRecords);
 
   HistoryScreenViewModel() {
-    _databaseService
+    _atrSubscription = _databaseService
         .getUpdatedCompleteATRs(_authenticationService.currentUser.get().uid)
         .listen((atrs) {
       removeAll();
