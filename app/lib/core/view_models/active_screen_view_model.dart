@@ -80,11 +80,11 @@ class ActiveScreenViewModel extends BaseViewModel {
   Future<void> saveCompletedAtr(AnimalTransportRecord atr) async {
     setState(ViewState.Busy);
     saveEditedAtr(atr.asComplete())
-        .then((_) => setState(ViewState.Idle))
         .then((_) => _dialogService.showDialog(
             title: "Animal Transport Form Submitted",
             description:
-                '${DateFormat("yyyy-MM-dd hh:mm").format(atr.vehicleInfo.dateAndTimeLoaded)}'))
+                '${DateFormat("yyyy-MM-dd hh:mm").format(DateTime.now())}'))
+        .then((_) => setState(ViewState.Idle))
         .then((_) => _navigationService.pop())
         .catchError((e) {
       setState(ViewState.Idle);
