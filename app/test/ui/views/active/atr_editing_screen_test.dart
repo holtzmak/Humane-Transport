@@ -25,8 +25,6 @@ class MockActiveScreenViewModel extends Mock implements ActiveScreenViewModel {}
 final testLocator = GetIt.instance;
 
 void main() {
-  final mockNavigationService = MockNavigationService();
-  final mockDialogService = MockDialogService();
   final mockActiveScreenViewModel = MockActiveScreenViewModel();
 
   Future<void> pumpATREditingScreen(
@@ -35,9 +33,6 @@ void main() {
 
   group('ATR Editing Screen', () {
     setUpAll(() async {
-      testLocator.registerLazySingleton<NavigationService>(
-          () => mockNavigationService);
-      testLocator.registerLazySingleton<DialogService>(() => mockDialogService);
       testLocator.registerLazySingleton<ActiveScreenViewModel>(
           () => mockActiveScreenViewModel);
     });
@@ -97,12 +92,33 @@ void main() {
       await pumpATREditingScreen(tester, testATR);
       await tester.ensureVisible(submitButtonFinder);
       await tester.tap(submitButtonFinder);
+      // Non-standard submission time
       await tester.pump(Duration(milliseconds: 1));
       verify(mockActiveScreenViewModel.saveCompletedAtr(testATR)).called(1);
     });
 
     testWidgets('edited completed ATR is given to view model on submission',
-        (WidgetTester tester) async {});
+        (WidgetTester tester) async {
+      final testATR = testAnimalTransportRecord(
+          shipInfo: testShipperInfo(shipperName: "Ali Rae"));
+      final editedATR = testAnimalTransportRecord(
+          shipInfo: testShipperInfo(shipperName: "Alicia Rae"));
+      final submitButtonFinder = find.widgetWithText(RaisedButton, "Submit");
+      final fieldFinder = find.widgetWithText(TextFormField, "Ali Rae");
+      when(mockActiveScreenViewModel.saveCompletedAtr(testATR))
+          .thenAnswer((_) => Future.value()); // do nothing for test
+
+      await pumpATREditingScreen(tester, testATR);
+      // Edit
+      await tester.ensureVisible(fieldFinder);
+      await tester.enterText(fieldFinder, "Alicia Rae");
+      // Submit
+      await tester.ensureVisible(submitButtonFinder);
+      await tester.tap(submitButtonFinder);
+      // Non-standard submission time
+      await tester.pump(Duration(milliseconds: 1));
+      verify(mockActiveScreenViewModel.saveCompletedAtr(editedATR)).called(1);
+    });
 
     testWidgets('gives saved ATR to view model on exit, then exits',
         (WidgetTester tester) async {
@@ -110,21 +126,43 @@ void main() {
       final backButtonFinder = find.byIcon(Icons.arrow_back_ios);
       when(mockActiveScreenViewModel.saveEditedAtr(testATR))
           .thenAnswer((_) => Future.value()); // do nothing for test
-      when(mockNavigationService.pop()).thenAnswer((_) {
-        // Do nothing for test
-      });
+
       await pumpATREditingScreen(tester, testATR);
       await tester.ensureVisible(backButtonFinder);
       await tester.tap(backButtonFinder);
+      // Non-standard save time
       await tester.pump(Duration(milliseconds: 1));
       verify(mockActiveScreenViewModel.saveEditedAtr(testATR)).called(1);
-      verify(mockNavigationService.pop()).called(1);
     });
 
     testWidgets('edited ATR is given to view model on exit, then exits',
-        (WidgetTester tester) async {});
+        (WidgetTester tester) async {
+      final testATR = testAnimalTransportRecord(
+          fwrInfo:
+              testFwrInfo(lastFwrLocation: testAddress(city: "Yellowknife")));
+      final editedATR = testAnimalTransportRecord(
+          fwrInfo: testFwrInfo(lastFwrLocation: testAddress(city: "Iqaluit")));
+      final backButtonFinder = find.byIcon(Icons.arrow_back_ios);
+      final fieldFinder = find.widgetWithText(TextFormField, "Yellowknife");
+      when(mockActiveScreenViewModel.saveEditedAtr(testATR))
+          .thenAnswer((_) => Future.value()); // do nothing for test
+
+      await pumpATREditingScreen(tester, testATR);
+      // Edit
+      await tester.ensureVisible(fieldFinder);
+      await tester.enterText(fieldFinder, "Iqaluit");
+      // Exit and save
+      await tester.ensureVisible(backButtonFinder);
+      await tester.tap(backButtonFinder);
+      // Non-standard save time
+      await tester.pump(Duration(milliseconds: 1));
+      verify(mockActiveScreenViewModel.saveEditedAtr(editedATR)).called(1);
+    });
 
     testWidgets('invalid form blocks completion submission',
-        (WidgetTester tester) async {});
+        (WidgetTester tester) async {
+      // TODO: Complete with form validation
+      // Maybe also add different tests for the upcoming progress bar tied to validation
+    });
   });
 }
