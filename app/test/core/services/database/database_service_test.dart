@@ -34,18 +34,20 @@ void main() {
       final transporterModel = Transporter.fromJSON(testTransporterJson());
       when(mockFirestoreInstance.collection('transporter'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockCollectionReference.doc(transporterModel.userId))
+          .thenReturn(mockDocumentReference);
       when(mockDocumentReference.get())
           .thenAnswer((_) async => mockDocumentSnapshot);
       when(mockDocumentSnapshot.data()).thenReturn(testTransporterJson());
-      final result = await dbService.getTransporter('userId');
+      final result = await dbService.getTransporter(transporterModel.userId);
       expect(result, transporterModel);
     });
 
-    test('Should not get transporter from firestore', () async {
+    test('Failed get transporter from firestore', () async {
       when(mockFirestoreInstance.collection('transporter'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockCollectionReference.doc('userId'))
+          .thenReturn(mockDocumentReference);
       when(mockDocumentReference.get())
           .thenAnswer((_) async => Future.error('Error here'));
       try {
@@ -55,9 +57,9 @@ void main() {
       }
     });
 
-    test('should add new transporter to firestore', () async {
+    test('Should add new transporter to firestore', () async {
       final transporterModel = Transporter.fromJSON(testTransporterJson());
-      when(mockFirestoreInstance.collection(any))
+      when(mockFirestoreInstance.collection('transporter'))
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.doc(transporterModel.userId))
           .thenReturn(mockDocumentReference);
@@ -65,44 +67,56 @@ void main() {
       verify(mockDocumentReference.set(transporterModel.toJSON())).called(1);
     });
 
-    test('should set new initial atr to firestore', () async {
-      final atr = AnimalTransportRecord.defaultAtr();
-      when(mockFirestoreInstance.collection(any))
+    test('Should delete transporter from firestore', () async {
+      when(mockFirestoreInstance.collection('transporter'))
+          .thenReturn(mockCollectionReference);
+      when(mockCollectionReference.doc("test ID"))
+          .thenReturn(mockDocumentReference);
+      when(mockDocumentReference.delete())
+          .thenAnswer((_) async => Future.value());
+      await dbService.removeTransporter("test ID");
+      verify(mockDocumentReference.delete()).called(1);
+    });
+
+    test('Should set new default ATR to firestore', () async {
+      when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.add(any))
           .thenAnswer((_) async => mockDocumentReference);
-      await dbService.saveNewAtr(atr.identifier.userId);
-      verify(mockCollectionReference.add(atr.toJSON())).called(1);
+      await dbService.saveNewAtr("test ID");
+      verify(mockCollectionReference.add(any)).called(1);
     });
 
-    test('should delete atr in firestore', () async {
+    test('Should delete ATR in firestore', () async {
       final atrIdentifier =
           AtrIdentifier.fromJSON(testAtrIdentifierJson(), '123');
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockCollectionReference.doc(atrIdentifier.atrDocumentId))
+          .thenReturn(mockDocumentReference);
       when(mockDocumentReference.delete())
           .thenAnswer((_) async => Future.value());
       try {
-        await dbService.removeAtr(atrIdentifier.atrDocumentId);
+        await dbService.removeAtr("123");
       } catch (e) {
-        // Test should succeed
+        // Test Should succeed
         fail(e);
       }
     });
 
-    test('should not delete in firestore', () async {
+    test('Failed delete ATR in firestore', () async {
       final atrIdentifier =
-          AtrIdentifier.fromJSON(testAtrIdentifierJson(), '123');
+          AtrIdentifier.fromJSON(testAtrIdentifierJson(), "123");
       when(mockFirestoreInstance.collection(any))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockCollectionReference.doc(atrIdentifier.atrDocumentId))
+          .thenReturn(mockDocumentReference);
       when(mockDocumentReference.delete())
           .thenAnswer((_) async => Future.error('Could not be deleted'));
       try {
-        await dbService.removeAtr(atrIdentifier.atrDocumentId);
+        await dbService.removeAtr("123");
       } catch (e) {
-        // Test should succeed
+        // Test Should succeed
         expect(e, 'Could not be deleted');
       }
     });
@@ -113,26 +127,29 @@ void main() {
       ];
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('identifier.isComplete',
-              isEqualTo: false))
+      when(mockCollectionReference.where('identifier.userId', isEqualTo: "123"))
+          .thenReturn(mockQuery);
+      when(mockQuery.where('identifier.isComplete', isEqualTo: false))
           .thenReturn(mockQuery);
       when(mockQuery.get()).thenAnswer((_) async => (mockQuerySnapshot));
       when(mockQuerySnapshot.docs).thenAnswer((_) => [mockDocSnap]);
       when(mockDocSnap.id).thenReturn("123");
       when(mockDocSnap.data()).thenReturn(testAtrJson());
-      final result = await dbService.getActiveRecords();
+      final result = await dbService.getActiveRecords("123");
       expect(result, transporterModel);
     });
 
-    test('Should not get active ATRs', () async {
+    test('Failed get active ATRs', () async {
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('identifier.isComplete',
-              isEqualTo: false))
+      when(mockCollectionReference.where('identifier.userId',
+              isEqualTo: "test ID"))
+          .thenReturn(mockQuery);
+      when(mockQuery.where('identifier.isComplete', isEqualTo: false))
           .thenReturn(mockQuery);
       when(mockQuery.get()).thenAnswer((_) async => Future.error('Error here'));
       try {
-        await dbService.getActiveRecords();
+        await dbService.getActiveRecords("test ID");
       } catch (e) {
         expect(e, 'Error here');
       }
@@ -144,39 +161,43 @@ void main() {
       ];
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('identifier.isComplete',
-              isEqualTo: true))
+      when(mockCollectionReference.where('identifier.userId', isEqualTo: "123"))
+          .thenReturn(mockQuery);
+      when(mockQuery.where('identifier.isComplete', isEqualTo: true))
           .thenReturn(mockQuery);
       when(mockQuery.get()).thenAnswer((_) async => (mockQuerySnapshot));
       when(mockQuerySnapshot.docs).thenAnswer((_) => [mockDocSnap]);
       when(mockDocSnap.id).thenReturn("123");
       when(mockDocSnap.data()).thenReturn(testAtrJson());
-      final result = await dbService.getCompleteRecords();
+      final result = await dbService.getCompleteRecords("123");
       expect(result, transporterModel);
     });
 
-    test('Should not get complete ATRs', () async {
+    test('Failed get complete ATRs', () async {
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('identifier.isComplete',
-              isEqualTo: false))
+      when(mockCollectionReference.where('identifier.userId',
+              isEqualTo: "test ID"))
+          .thenReturn(mockQuery);
+      when(mockQuery.where('identifier.isComplete', isEqualTo: true))
           .thenReturn(mockQuery);
       when(mockQuery.get()).thenAnswer((_) async => Future.error('Error here'));
       try {
-        await dbService.getCompleteRecords();
+        await dbService.getCompleteRecords("test ID");
       } catch (e) {
         expect(e, 'Error here');
       }
     });
 
-    test('get active ATRs stream', () async {
+    test('Should get active ATRs stream', () async {
       final testRecords = [
         AnimalTransportRecord.fromJSON(testAtrJson(), "123")
       ];
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('identifier.isComplete',
-              isEqualTo: false))
+      when(mockCollectionReference.where('identifier.userId', isEqualTo: "123"))
+          .thenReturn(mockQuery);
+      when(mockQuery.where('identifier.isComplete', isEqualTo: false))
           .thenReturn(mockQuery);
 
       // Mock stream and stream map return
@@ -187,19 +208,20 @@ void main() {
       when(mockQuery.snapshots()).thenAnswer((_) => mockStream);
       when(mockStream.map(any)).thenAnswer((_) => myStream());
 
-      final stream = dbService.getUpdatedActiveATRs();
+      final stream = dbService.getUpdatedActiveATRs("123");
       stream.listen(expectAsync1<void, List<AnimalTransportRecord>>((records) {
         expect(records, testRecords);
       }));
     });
 
-    test('get complete ATRs stream with no records', () async {
-      // Expect no records for test
-      final testRecords = [];
+    test('Should get complete ATRs stream with no records', () async {
+      final testRecords = []; // Expect no records for test
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
-      when(mockCollectionReference.where('identifier.isComplete',
-              isEqualTo: true))
+      when(mockCollectionReference.where('identifier.userId',
+              isEqualTo: "test ID"))
+          .thenReturn(mockQuery);
+      when(mockQuery.where('identifier.isComplete', isEqualTo: true))
           .thenReturn(mockQuery);
 
       // Mock stream and stream map return
@@ -210,7 +232,7 @@ void main() {
       when(mockQuery.snapshots()).thenAnswer((_) => mockStream);
       when(mockStream.map(any)).thenAnswer((_) => myStream());
 
-      final stream = dbService.getUpdatedCompleteATRs();
+      final stream = dbService.getUpdatedCompleteATRs("test ID");
       stream.listen(expectAsync1<void, List<AnimalTransportRecord>>((records) {
         expect(records, testRecords);
       }));
