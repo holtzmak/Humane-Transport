@@ -85,8 +85,6 @@ void main() {
       verify(mockFirebaseAuth.createUserWithEmailAndPassword(
               email: userEmailAddress, password: password))
           .called(1);
-      verify(mockUserCredential.user).called(1);
-      verify(mockUser.uid).called(1);
       verify(mockDatabaseService.addTransporter(any)).called(1);
     });
 

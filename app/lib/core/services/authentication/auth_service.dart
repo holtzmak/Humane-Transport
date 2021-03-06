@@ -22,21 +22,12 @@ class AuthenticationService {
 
   Optional<Transporter> get currentTransporter => _currentTransporter;
 
-  Stream<Optional<User>> currentUserChanges;
-  Stream<Future<Optional<Transporter>>> currentTransporterChanges;
-
   AuthenticationService({@required this.firebaseAuth}) {
-    currentUserChanges = firebaseAuth.authStateChanges().map((User user) {
+    firebaseAuth.authStateChanges().listen((User user) async {
       _currentUser = Optional.of(user);
-      return _currentUser;
-    });
-    currentTransporterChanges =
-        firebaseAuth.authStateChanges().map((User user) async {
-      print(user);
       _currentTransporter = user != null
           ? Optional.of(await databaseService.getTransporter(user.uid))
           : Optional.empty();
-      return _currentTransporter;
     });
   }
 
