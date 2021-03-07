@@ -6,13 +6,15 @@ abstract class DatabaseInterface {
 
   Future<Transporter> getTransporter(String userId);
 
+  Future<void> updateTransporter(Transporter transporter);
+
   Future<void> removeTransporter(String userId);
+
+  Stream<Transporter> getUpdatedTransporter(String userId);
 
   Future<AnimalTransportRecord> setNewAtr(String userId);
 
   Future<void> updateAtr(AnimalTransportRecord atr);
-
-  Future<void> updateTransporter(Transporter transporter);
 
   Future<void> removeAtr(String atrId);
 
@@ -23,6 +25,4 @@ abstract class DatabaseInterface {
   Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId);
 
   Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs(String userId);
-
-  Stream<Transporter> getUpdatedTransporter(String userId);
 }
