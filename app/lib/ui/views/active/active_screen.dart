@@ -28,16 +28,20 @@ class _ActiveScreenState extends State<ActiveScreen> {
         automaticallyImplyLeading: false,
       ),
       body: TemplateBaseViewModel<ActiveScreenViewModel>(
-        builder: (context, model, _) => GridView.builder(
-          itemCount: model.animalTransportRecords.length,
-          itemBuilder: (context, index) =>
-              createPreview(model, model.animalTransportRecords[index]),
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 3 / 2,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20),
-        ),
+        builder: (context, model, _) => model.animalTransportRecords.isEmpty
+            ? ListTile(
+                title: Text("No active Animal Transport Records"),
+                subtitle: Text("You can add some using the \"New\" button"))
+            : GridView.builder(
+                itemCount: model.animalTransportRecords.length,
+                itemBuilder: (context, index) =>
+                    createPreview(model, model.animalTransportRecords[index]),
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 3 / 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20),
+              ),
       ),
     );
   }

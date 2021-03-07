@@ -32,16 +32,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
         automaticallyImplyLeading: false,
       ),
       body: TemplateBaseViewModel<HistoryScreenViewModel>(
-          builder: (context, model, _) => GridView.builder(
-                itemCount: model.animalTransportRecords.length,
-                itemBuilder: (_, index) =>
-                    createPreview(model.animalTransportRecords[index]),
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    childAspectRatio: 3 / 2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20),
-              )),
+          builder: (context, model, _) => model.animalTransportRecords.isEmpty
+              ? ListTile(
+                  title: Text("No completed Animal Transport Records"),
+                  subtitle:
+                      Text("Submitted completed records will appear here"))
+              : GridView.builder(
+                  itemCount: model.animalTransportRecords.length,
+                  itemBuilder: (_, index) =>
+                      createPreview(model.animalTransportRecords[index]),
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 3 / 2,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20),
+                )),
     );
   }
 }
