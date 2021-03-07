@@ -20,7 +20,7 @@ class AuthenticationService {
 
   // The logged in user information is the same as the Transporter information
   // but separate for Firebase Authentication
-  Optional<User> _currentUser = Optional.empty();
+  Optional<User> _currentUser;
 
   Optional<User> get currentUser => _currentUser;
 
@@ -36,6 +36,7 @@ class AuthenticationService {
   }
 
   AuthenticationService({@required this.firebaseAuth}) {
+    _currentUser = Optional.of(firebaseAuth.currentUser);
     currentUserChanges = _currentUserChangesStream.stream;
     _authStateChanges =
         firebaseAuth.authStateChanges().listen((User userMaybe) async {

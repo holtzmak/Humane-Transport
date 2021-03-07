@@ -54,6 +54,7 @@ void main() {
     test('sign up successful calls add transporter', () async {
       setUpAuthChangesMockUser();
       setUpFirebaseAuthMock();
+      when(mockFirebaseAuth.currentUser).thenReturn(null);
       when(mockDatabaseService.addTransporter(any))
           .thenAnswer((_) => Future.value()); // do nothing for test
       final authService = AuthenticationService(firebaseAuth: mockFirebaseAuth);
@@ -77,6 +78,7 @@ void main() {
 
     test('sign up failed, create user failed', () async {
       setUpAuthChangesMockUser();
+      when(mockFirebaseAuth.currentUser).thenReturn(null);
       when(mockFirebaseAuth.createUserWithEmailAndPassword(
               email: userEmailAddress, password: password))
           .thenAnswer((_) async => Future.error('Error Here'));
@@ -94,6 +96,7 @@ void main() {
 
     test('delete account failed, not logged in', () async {
       setUpAuthChangesMockUser();
+      when(mockFirebaseAuth.currentUser).thenReturn(null);
       try {
         await AuthenticationService(firebaseAuth: mockFirebaseAuth)
             .deleteAccount();
@@ -106,10 +109,18 @@ void main() {
         'current user stream updates when current user changes, getCurrentUser updates too',
         () async {
       setUpAuthChangesMockUser();
+      when(mockFirebaseAuth.currentUser).thenReturn(null);
       final authService = AuthenticationService(firebaseAuth: mockFirebaseAuth);
 
-      expectLater(authService.currentUserChanges,
-          emitsInOrder([Optional.of(mockUser), Optional.empty()]));
+      expectLater(
+          authService.currentUserChanges,
+          emitsInOrder(
+              [Optional.empty(), Optional.of(mockUser), Optional.empty()]));
+
+      // Start state
+      mockAuthStateChangesController.add(null);
+      // Let changes propagate
+      await Future.value(Duration(milliseconds: 1));
 
       mockAuthStateChangesController.add(mockUser);
       // Let changes propagate
