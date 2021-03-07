@@ -1,6 +1,8 @@
-import 'package:app/core/models/transporter.dart';
+import 'dart:async';
+
 import 'package:app/core/services/authentication/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:app/test/mock/test_mocks_for_firebase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,17 +24,11 @@ void main() {
   final userPhoneNumber = "ABC123";
   final password = "ABCD";
   final testUserId = "testID";
-  final testTransporter = Transporter(
-      firstName: firstName,
-      lastName: lastName,
-      userEmailAddress: userEmailAddress,
-      userPhoneNumber: userPhoneNumber,
-      userId: testUserId,
-      isAdmin: false);
   final mockDatabaseService = MockDatabaseService();
   final mockFirebaseAuth = MockFirebaseAuth();
   final mockUserCredential = MockUserCredential();
   final mockUser = MockUser();
+  final mockAuthStateChangesController = StreamController<User>.broadcast();
 
   void setUpFirebaseAuthMock() {
     when(mockFirebaseAuth.createUserWithEmailAndPassword(
@@ -42,19 +38,10 @@ void main() {
     when(mockUser.uid).thenReturn(testUserId);
   }
 
-  void setUpDatabaseServiceMock() {
-    when(mockDatabaseService.getTransporter(testUserId))
-        .thenAnswer((_) => Future.value(testTransporter));
-  }
-
   void setUpAuthChangesMockUser() {
     // Mock stream
-    Stream<User> authStateChanges() async* {
-      yield mockUser;
-    }
-
     when(mockFirebaseAuth.authStateChanges())
-        .thenAnswer((_) => authStateChanges());
+        .thenAnswer((_) => mockAuthStateChangesController.stream);
   }
 
   group('Authentication Service', () {
@@ -62,11 +49,11 @@ void main() {
       testLocator
           .registerLazySingleton<DatabaseService>(() => mockDatabaseService);
     });
+    tearDownAll(() async => mockAuthStateChangesController.close());
 
     test('sign up successful calls add transporter', () async {
       setUpAuthChangesMockUser();
       setUpFirebaseAuthMock();
-      setUpDatabaseServiceMock();
       when(mockDatabaseService.addTransporter(any))
           .thenAnswer((_) => Future.value()); // do nothing for test
       final authService = AuthenticationService(firebaseAuth: mockFirebaseAuth);
@@ -113,6 +100,26 @@ void main() {
       } catch (e) {
         expect(e, "No user is logged in to delete their account");
       }
+    });
+
+    test(
+        'current user stream updates when current user changes, getCurrentUser updates too',
+        () async {
+      setUpAuthChangesMockUser();
+      final authService = AuthenticationService(firebaseAuth: mockFirebaseAuth);
+
+      expectLater(authService.currentUserChanges,
+          emitsInOrder([Optional.of(mockUser), Optional.empty()]));
+
+      mockAuthStateChangesController.add(mockUser);
+      // Let changes propagate
+      await Future.value(Duration(milliseconds: 1));
+      expect(authService.currentUser, Optional.of(mockUser));
+
+      mockAuthStateChangesController.add(null);
+      // Let changes propagate
+      await Future.value(Duration(milliseconds: 1));
+      expect(authService.currentUser, Optional.empty());
     });
   });
 }
