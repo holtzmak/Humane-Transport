@@ -13,21 +13,34 @@ class AuthenticationService {
   final databaseService = locator<DatabaseService>();
   final FirebaseAuth firebaseAuth;
 
+  // Not disposed of in destructor because AuthService goes out of scope when
+  // app is destroyed. The disposal is handled by garbage cleanup. Also, Dart
+  // does not define destructors https://github.com/dart-lang/sdk/issues/3691
+  StreamSubscription<User> _authStateChanges;
+
   // The logged in user information is the same as the Transporter information
   // but separate for Firebase Authentication
   Optional<User> _currentUser = Optional.empty();
-  Optional<Transporter> _currentTransporter = Optional.empty();
 
   Optional<User> get currentUser => _currentUser;
 
-  Optional<Transporter> get currentTransporter => _currentTransporter;
+  Stream<Optional<User>> currentUserChanges;
+
+  // Also not truly disposed of. See above comment.
+  final StreamController<Optional<User>> _currentUserChangesStream =
+      StreamController<Optional<User>>.broadcast();
+
+  void dispose() async {
+    _currentUserChangesStream.close();
+    _authStateChanges.cancel();
+  }
 
   AuthenticationService({@required this.firebaseAuth}) {
-    firebaseAuth.authStateChanges().listen((User user) async {
-      _currentUser = Optional.of(user);
-      _currentTransporter = user != null
-          ? Optional.of(await databaseService.getTransporter(user.uid))
-          : Optional.empty();
+    currentUserChanges = _currentUserChangesStream.stream;
+    _authStateChanges =
+        firebaseAuth.authStateChanges().listen((User userMaybe) async {
+      _currentUser = Optional.of(userMaybe);
+      _currentUserChangesStream.add(Optional.of(userMaybe));
     });
   }
 
