@@ -16,6 +16,7 @@ class NewScreenViewModel extends BaseViewModel {
   void signOut() async {
     _authenticationService
         .signOut()
+        // TODO: Navigate to the welcome screen and pop other screens along the way
         .then((_) => _navigationService.pop())
         .catchError((error) => _dialogService.showDialog(
               title: 'Sign out failed',

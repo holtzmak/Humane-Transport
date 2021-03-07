@@ -11,7 +11,10 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<WelcomeScreenViewModel>(
-      builder: (context, model, child) => Scaffold(
+        builder: (context, model, child) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => model.skipToHomeScreenIfLoggedIn());
+      return Scaffold(
         appBar: AppBar(),
         body: Center(
           child: Column(
@@ -29,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
