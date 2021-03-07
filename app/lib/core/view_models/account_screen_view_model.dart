@@ -1,12 +1,9 @@
 import 'package:app/core/models/transporter.dart';
 import 'package:app/core/services/authentication/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
-import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/ui/views/account/account_editing_screen.dart';
-import 'package:app/ui/views/account/account_screen.dart';
-
 import 'base_view_model.dart';
 
 class AccountScreenViewModel extends BaseViewModel {

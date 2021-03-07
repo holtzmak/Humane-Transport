@@ -1,10 +1,6 @@
 import 'package:app/core/models/transporter.dart';
-import 'package:app/core/services/navigation/nav_service.dart';
-import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/account_edit_view_model.dart';
-import 'package:app/core/view_models/signup_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
-import 'package:app/ui/views/signin/sign_in_screen.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +8,6 @@ import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 
 class AccountEditingScreen extends StatefulWidget {
   static const route = '/accountEditingScreen';
-  final NavigationService _navigationService = locator<NavigationService>();
   final formKey = GlobalKey<FormState>();
   final Transporter account;
 

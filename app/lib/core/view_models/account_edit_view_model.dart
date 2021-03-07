@@ -1,5 +1,4 @@
 import 'package:app/core/models/transporter.dart';
-import 'package:app/core/services/authentication/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
@@ -9,8 +8,6 @@ import 'package:app/ui/common/view_state.dart';
 import 'package:flutter/material.dart';
 
 class AccountEditViewModel extends BaseViewModel {
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
