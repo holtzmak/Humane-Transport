@@ -23,20 +23,22 @@ class NewScreenViewModel extends BaseViewModel {
             ));
   }
 
-  Future<void> startNewAtr() async =>
-      _authenticationService.currentUser.isPresent()
-          ? _databaseService
-              .saveNewAtr(_authenticationService.currentUser.get().uid)
-              .then((atr) => _navigationService
-                  .navigateTo(ATREditingScreen.route, arguments: atr))
-              .catchError((e) => _dialogService.showDialog(
-                    title: 'Starting a new Animal Transport Record failed',
-                    description: e.message,
-                  ))
-          : _dialogService.showDialog(
-              title: 'Starting a new Animal Transport Record failed',
-              description: "You are not logged in!",
-            );
+  Future<void> startNewAtr() async {
+    final currentUser = _authenticationService.currentUser;
+    currentUser.isPresent()
+        ? _databaseService
+            .saveNewAtr(currentUser.get().uid)
+            .then((atr) => _navigationService.navigateTo(ATREditingScreen.route,
+                arguments: atr))
+            .catchError((e) => _dialogService.showDialog(
+                  title: 'Starting a new Animal Transport Record failed',
+                  description: e.message,
+                ))
+        : _dialogService.showDialog(
+            title: 'Starting a new Animal Transport Record failed',
+            description: "You are not logged in!",
+          );
+  }
 
   void navigateToNewScreen() => _navigationService.pop();
 }
