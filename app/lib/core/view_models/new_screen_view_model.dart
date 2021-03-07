@@ -4,6 +4,7 @@ import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
+import 'package:app/ui/views/account/account_screen.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
 
 class NewScreenViewModel extends BaseViewModel {
@@ -42,4 +43,7 @@ class NewScreenViewModel extends BaseViewModel {
   }
 
   void navigateToNewScreen() => _navigationService.pop();
+
+  void navigateToAccountScreen() =>
+      _navigationService.navigateTo(AccountScreen.route);
 }

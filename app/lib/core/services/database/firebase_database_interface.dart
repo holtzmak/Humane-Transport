@@ -23,6 +23,11 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           (DocumentSnapshot snapshot) => Transporter.fromJSON(snapshot.data()));
 
   @override
+  Stream<Transporter> getUserInRealTime(String userId) =>
+      _firestore.collection('transporter').doc(userId).snapshots().map(
+          (DocumentSnapshot snapshot) => Transporter.fromJSON(snapshot.data()));
+
+  @override
   Future<void> removeTransporter(String userId) async =>
       _firestore.collection('transporter').doc(userId).delete();
 

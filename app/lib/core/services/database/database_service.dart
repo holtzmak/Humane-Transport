@@ -37,4 +37,7 @@ class DatabaseService {
 
   Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs(String userId) =>
       interface.getUpdatedActiveATRs(userId);
+
+  Stream<Transporter> getUserInRealTime(String userId) =>
+      interface.getUserInRealTime(userId);
 }

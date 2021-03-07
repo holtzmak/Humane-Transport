@@ -21,4 +21,6 @@ abstract class DatabaseInterface {
   Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId);
 
   Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs(String userId);
+
+  Stream<Transporter> getUserInRealTime(String userId);
 }

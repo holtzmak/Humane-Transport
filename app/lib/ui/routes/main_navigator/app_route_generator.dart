@@ -1,3 +1,5 @@
+import 'package:app/ui/views/account/account_editing_screen.dart';
+import 'package:app/ui/views/account/account_screen.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
 import 'package:app/ui/views/history/atr_display_screen.dart';
 import 'package:app/ui/views/home/home_screen.dart';
@@ -28,6 +30,10 @@ class AppRouteGenerator {
             return SignUpScreen();
           case HomeScreen.route:
             return HomeScreen();
+          case AccountScreen.route:
+            return AccountScreen();
+          case AccountEditingScreen.route:
+            return AccountEditingScreen(account: settings.arguments);
           case ATRDisplayScreen.route:
             return ATRDisplayScreen(atr: settings.arguments);
           case ATREditingScreen.route:

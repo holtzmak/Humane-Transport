@@ -52,7 +52,7 @@ class NewScreen extends StatelessWidget {
                       child: IconButton(
                         icon: Icon(Icons.edit),
                         color: Colors.blueGrey,
-                        onPressed: () {},
+                        onPressed: model.navigateToAccountScreen,
                       )),
                   Positioned(
                       child: CircleAvatar(
