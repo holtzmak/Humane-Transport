@@ -12,6 +12,8 @@ abstract class DatabaseInterface {
 
   Future<void> updateAtr(AnimalTransportRecord atr);
 
+  Future<void> updateTransporter(Transporter transporter);
+
   Future<void> removeAtr(String atrId);
 
   Future<List<AnimalTransportRecord>> getCompleteRecords(String userId);
@@ -22,5 +24,5 @@ abstract class DatabaseInterface {
 
   Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs(String userId);
 
-  Stream<Transporter> getUserInRealTime(String userId);
+  Stream<Transporter> getUpdatedTransporter(String userId);
 }

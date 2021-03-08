@@ -29,7 +29,7 @@ class AccountEditViewModel extends BaseViewModel {
       userId: _account.userId,
       userPhoneNumber: userPhoneNumber,
     );
-    _databaseService.addTransporter(updateTransporterAccount).then((_) =>
+    _databaseService.updateTransporter(updateTransporterAccount).then((_) =>
         _dialogService
             .showDialog(
                 title: 'Transporter Account',

@@ -23,7 +23,7 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           (DocumentSnapshot snapshot) => Transporter.fromJSON(snapshot.data()));
 
   @override
-  Stream<Transporter> getUserInRealTime(String userId) =>
+  Stream<Transporter> getUpdatedTransporter(String userId) =>
       _firestore.collection('transporter').doc(userId).snapshots().map(
           (DocumentSnapshot snapshot) => Transporter.fromJSON(snapshot.data()));
 
@@ -95,4 +95,10 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .map((snapshot) => snapshot.docs
               .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
               .toList());
+
+  @override
+  Future<void> updateTransporter(Transporter transporter) => _firestore
+      .collection('transporter')
+      .doc(transporter.userId)
+      .update(transporter.toJSON());
 }

@@ -11,7 +11,7 @@ class AccountEditingScreen extends StatefulWidget {
   final formKey = GlobalKey<FormState>();
   final Transporter account;
 
-  AccountEditingScreen({Key key, this.account}) : super(key: key);
+  AccountEditingScreen({Key key, @required this.account}) : super(key: key);
 
   @override
   _AccountEditingScreenState createState() => _AccountEditingScreenState();
