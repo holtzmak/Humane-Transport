@@ -147,7 +147,7 @@ class NewScreen extends StatelessWidget {
                     ),
                     color: Colors.orange,
                     label: Text(
-                      'Log Out',
+                      'Sign Out',
                       style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 20.0,
