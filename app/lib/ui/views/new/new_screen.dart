@@ -13,17 +13,6 @@ class NewScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Home Screen'),
         automaticallyImplyLeading: false,
-        actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: IconButton(
-              icon: Icon(
-                Icons.logout,
-                size: 26.0,
-              ),
-            ),
-          )
-        ],
       ),
       body: Center(
         child: TemplateBaseViewModel<NewScreenViewModel>(
