@@ -1,6 +1,6 @@
-import 'package:app/core/services/authentication/auth_service.dart';
-import 'package:app/core/services/dialog/dialog_service.dart';
-import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/services/auth_service.dart';
+import 'package:app/core/services/dialog_service.dart';
+import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/view_models/signup_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';

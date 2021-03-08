@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:app/core/models/transporter.dart';
-import 'package:app/core/services/authentication/auth_service.dart';
+import 'package:app/core/services/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
-import 'package:app/core/services/dialog/dialog_service.dart';
-import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/services/dialog_service.dart';
+import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/account/account_editing_screen.dart';

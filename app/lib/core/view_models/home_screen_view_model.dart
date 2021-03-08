@@ -1,24 +1,35 @@
-import 'package:app/core/services/authentication/auth_service.dart';
+import 'package:app/core/services/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
-import 'package:app/core/services/dialog/dialog_service.dart';
-import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/services/dialog_service.dart';
+import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/views/account/account_screen.dart';
+import 'package:app/ui/views/active/active_screen.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
+import 'package:app/ui/views/history/history_screen.dart';
+import 'package:app/ui/views/welcome_screen.dart';
 
-class NewScreenViewModel extends BaseViewModel {
+class HomeScreenViewModel extends BaseViewModel {
   final DialogService _dialogService = locator<DialogService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
 
+  void navigateToActiveScreen() =>
+      _navigationService.navigateTo(ActiveScreen.route);
+
+  void navigateToHistoryScreen() =>
+      _navigationService.navigateTo(HistoryScreen.route);
+
+  void navigateToAccountScreen() =>
+      _navigationService.navigateTo(AccountScreen.route);
+
   void signOut() async {
     _authenticationService
         .signOut()
-        // TODO: #162.  to the welcome screen and pop other screens along the way
-        .then((_) => _navigationService.pop())
+        .then((_) => _navigationService.navigateBackUntil(WelcomeScreen.route))
         .catchError((error) => _dialogService.showDialog(
               title: 'Sign out failed',
               description: error.message,
@@ -41,9 +52,4 @@ class NewScreenViewModel extends BaseViewModel {
             description: "You are not logged in!",
           );
   }
-
-  void navigateToNewScreen() => _navigationService.pop();
-
-  void navigateToAccountScreen() =>
-      _navigationService.navigateTo(AccountScreen.route);
 }

@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:app/ui/common/style/style.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+// TODO: Revisit and refactor. Use services!
 class ImageScreen extends StatefulWidget {
   const ImageScreen({Key key}) : super(key: key);
   static const route = '/image_upload';

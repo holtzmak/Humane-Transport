@@ -1,10 +1,10 @@
-import 'package:app/ui/common/style/style.dart';
-import 'package:app/ui/routes/main_navigator/app_route_generator.dart';
-import 'package:app/ui/views/welcome/welcome_screen.dart';
+import 'package:app/ui/common/style.dart';
+import 'package:app/ui/routes/app_route_generator.dart';
+import 'package:app/ui/views/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'core/services/dialog/dialog_service.dart';
-import 'core/services/navigation/nav_service.dart';
+import 'core/services/dialog_service.dart';
+import 'core/services/nav_service.dart';
 import 'core/services/service_locator.dart';
 import 'ui/widgets/utility/dialog_screen.dart';
 

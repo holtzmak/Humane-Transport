@@ -1,5 +1,5 @@
 import 'package:app/core/models/animal_transport_record.dart';
-import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/view_models/history_screen_view_model.dart';
 import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/history/atr_display_screen.dart';

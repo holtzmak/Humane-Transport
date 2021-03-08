@@ -1,4 +1,4 @@
-import 'package:app/ui/common/style/style.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/material.dart';
 
 class BusyOverlayScreen extends StatelessWidget {

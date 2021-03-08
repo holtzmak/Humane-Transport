@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app/core/services/authentication/auth_service.dart';
+import 'package:app/core/services/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/test/mock/test_mocks_for_firebase.dart';

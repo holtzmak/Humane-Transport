@@ -1,7 +1,5 @@
-import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/view_models/signup_view_model.dart';
-import 'package:app/ui/views/signin/sign_in_screen.dart';
-import 'package:app/ui/views/signup/sign_up_screen.dart';
+import 'package:app/ui/views/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -9,11 +7,8 @@ import 'package:mockito/mockito.dart';
 
 class MockSignUpViewModel extends Mock implements SignUpViewModel {}
 
-class MockNavigationService extends Mock implements NavigationService {}
-
 final GetIt testLocator = GetIt.instance;
 final mockSignUpViewModel = MockSignUpViewModel();
-final mockNavigationService = MockNavigationService();
 final mockSignInRoute = '/signIn';
 
 void main() {
@@ -25,8 +20,6 @@ void main() {
 
   group('Sign up screen', () {
     setUpAll(() async {
-      testLocator.registerLazySingleton<NavigationService>(
-          () => mockNavigationService);
       testLocator.registerFactory<SignUpViewModel>(() => mockSignUpViewModel);
     });
 
@@ -96,7 +89,7 @@ void main() {
       await tester.tap(alreadyHaveAnAccountButtonFinder);
       // Non-standard animation time due to decoration
       await tester.pump(Duration(milliseconds: 1));
-      verify(mockNavigationService.navigateTo(SignInScreen.route)).called(1);
+      verify(mockSignUpViewModel.navigateToSignInScreen()).called(1);
     });
 
     testWidgets('empty field validators appears on empty fields',

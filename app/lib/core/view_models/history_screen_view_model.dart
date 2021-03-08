@@ -1,13 +1,16 @@
 import 'dart:async';
 
 import 'package:app/core/models/animal_transport_record.dart';
-import 'package:app/core/services/authentication/auth_service.dart';
+import 'package:app/core/services/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
-import 'package:app/core/services/dialog/dialog_service.dart';
-import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/services/dialog_service.dart';
+import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/core/view_models/base_view_model.dart';
+import 'package:app/ui/views/history/atr_display_screen.dart';
+import 'package:app/ui/views/history/history_screen.dart';
+import 'package:app/ui/views/home_screen.dart';
 import 'package:app/ui/widgets/utility/pdf_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,11 +75,14 @@ class HistoryScreenViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void navigateToPDFScreen() {
-    _navigationService.navigateTo(PDFScreen.route);
-  }
+  void navigateToDisplayScreen(AnimalTransportRecord atr) =>
+      _navigationService.navigateTo(ATRDisplayScreen.route, arguments: atr);
 
-  void navigateToHistoryScreen() {
-    _navigationService.pop();
-  }
+  void navigateToPDFScreen() => _navigationService.navigateTo(PDFScreen.route);
+
+  void navigateToHomeScreen() =>
+      _navigationService.navigateBackUntil(HomeScreen.route);
+
+  void navigateToHistoryScreen() =>
+      _navigationService.navigateBackUntil(HistoryScreen.route);
 }
