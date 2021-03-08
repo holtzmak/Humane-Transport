@@ -4,6 +4,8 @@
 
 A [Flutter](https://flutter.dev/) and [Firebase](https://firebase.google.com/) mobile application to record Canadian animal transport and transfer of care documentation, meeting the [requirements and regulations](https://www.inspection.gc.ca/animal-health/humane-transport/eng/1300460032193/1300460096845) set out by the Canadian Food Inspection Agency (CFIA).
 
+For an interactable mock-up of the application, see [our Adobe XD Prototype](https://xd.adobe.com/view/9a6f1910-d3ac-4fdf-b051-c2c78510ba32-cf3c/). You can leave feedback if you like!
+
 **This project's main source of information is the [Wiki](https://github.com/holtzmak/Humane-Transport/wiki).** See our Wiki for the following information and more:
 1. Team meeting minutes (Scrum dates and discussion minutes)
 2. Our breakdown of the Animal Transport Record into a digital-friendly format and process, including [User Story/Journey Maps](https://www.nngroup.com/articles/user-story-mapping/)
