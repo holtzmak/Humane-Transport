@@ -6,7 +6,7 @@ class WelcomeScreen extends StatelessWidget {
   final String title;
 
   WelcomeScreen({Key key, this.title}) : super(key: key);
-  static const route = '/';
+  static const route = '/welcome';
 
   @override
   Widget build(BuildContext context) {

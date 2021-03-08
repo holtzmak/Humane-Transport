@@ -9,6 +9,7 @@ import 'package:app/ui/views/history/history_screen.dart';
 import 'package:app/ui/views/home_screen.dart';
 import 'package:app/ui/views/sign_in_screen.dart';
 import 'package:app/ui/views/sign_up_screen.dart';
+import 'package:app/ui/views/splash/splash_screen.dart';
 import 'package:app/ui/views/welcome_screen.dart';
 import 'package:app/ui/widgets/utility/image_screen.dart';
 import 'package:app/ui/widgets/utility/pdf_screen.dart';
@@ -24,6 +25,8 @@ class AppRouteGenerator {
       settings: RouteSettings(name: settings.name),
       builder: (BuildContext context) {
         switch (settings.name) {
+          case SplashScreen.route:
+            return SplashScreen();
           // Welcome screens, available anytime
           case WelcomeScreen.route:
             return WelcomeScreen();
