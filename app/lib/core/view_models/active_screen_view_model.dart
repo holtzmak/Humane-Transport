@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:app/core/models/animal_transport_record.dart';
-import 'package:app/core/services/authentication/auth_service.dart';
+import 'package:app/core/services/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
-import 'package:app/core/services/dialog/dialog_service.dart';
-import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/services/dialog_service.dart';
+import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
+import 'package:app/ui/views/home_screen.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,9 +74,11 @@ class ActiveScreenViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void navigateToActiveScreen() {
-    _navigationService.pop();
-  }
+  // May have come from Home screen or Active screen
+  void navigateBack() => _navigationService.pop();
+
+  void navigateToHomeScreen() =>
+      _navigationService.navigateBackUntil(HomeScreen.route);
 
   void navigateToEditingScreen(AnimalTransportRecord atr) {
     _navigationService.navigateTo(ATREditingScreen.route, arguments: atr);
@@ -103,7 +106,8 @@ class ActiveScreenViewModel extends BaseViewModel {
             description:
                 '${DateFormat("yyyy-MM-dd hh:mm").format(DateTime.now())}'))
         .then((_) => setState(ViewState.Idle))
-        .then((_) => _navigationService.pop())
+        .then((_) =>
+            navigateBack()) // May have come from Home screen or Active screen
         .catchError((e) {
       setState(ViewState.Idle);
       _dialogService.showDialog(

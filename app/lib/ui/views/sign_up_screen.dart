@@ -1,15 +1,11 @@
-import 'package:app/core/services/navigation/nav_service.dart';
-import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/signup_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
-import 'package:app/ui/views/signin/sign_in_screen.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const route = '/signup';
-  final NavigationService _navigationService = locator<NavigationService>();
   final formKey = GlobalKey<FormState>();
 
   SignUpScreen({
@@ -163,8 +159,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             TextButton(
                               child: Text('Already have an account?'),
-                              onPressed: () => widget._navigationService
-                                  .navigateTo(SignInScreen.route),
+                              onPressed: () => model.navigateToSignInScreen(),
                             ),
                             Padding(
                               padding: EdgeInsets.only(

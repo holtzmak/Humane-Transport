@@ -1,13 +1,11 @@
 import 'package:app/core/services/database/database_interface.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/database/firebase_database_interface.dart';
-import 'package:app/core/services/dialog/dialog_service.dart';
 import 'package:app/core/view_models/account_edit_view_model.dart';
 import 'package:app/core/view_models/account_screen_view_model.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
 import 'package:app/core/view_models/history_screen_view_model.dart';
-import 'package:app/core/view_models/nav_view_model.dart';
-import 'package:app/core/view_models/new_screen_view_model.dart';
+import 'package:app/core/view_models/home_screen_view_model.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
 import 'package:app/core/view_models/signup_view_model.dart';
 import 'package:app/core/view_models/welcome_screen_view_model.dart';
@@ -15,8 +13,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 
-import 'authentication/auth_service.dart';
-import 'navigation/nav_service.dart';
+import 'auth_service.dart';
+import 'dialog_service.dart';
+import 'nav_service.dart';
 
 final locator = GetIt.instance;
 
@@ -38,8 +37,7 @@ void setUpLocator() {
   locator
       .registerFactory<AccountScreenViewModel>(() => AccountScreenViewModel());
   locator.registerFactory<AccountEditViewModel>(() => AccountEditViewModel());
-  locator.registerFactory<NewScreenViewModel>(() => NewScreenViewModel());
-  locator.registerFactory<NavigationViewModel>(() => NavigationViewModel());
+  locator.registerFactory<HomeScreenViewModel>(() => HomeScreenViewModel());
   locator
       .registerFactory<HistoryScreenViewModel>(() => HistoryScreenViewModel());
   locator.registerFactory<ActiveScreenViewModel>(() => ActiveScreenViewModel());

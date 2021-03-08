@@ -152,7 +152,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                       leading: new IconButton(
                         icon: new Icon(Icons.arrow_back_ios),
                         onPressed: () async => _saveATR(model)
-                            .then((value) => model.navigateToActiveScreen()),
+                            .then((value) => model.navigateBack()),
                       ),
                     ),
                     body: SingleChildScrollView(

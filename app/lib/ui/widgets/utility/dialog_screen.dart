@@ -1,4 +1,4 @@
-import 'package:app/core/services/dialog/dialog_service.dart';
+import 'package:app/core/services/dialog_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/widgets/utility/dialog.dart';

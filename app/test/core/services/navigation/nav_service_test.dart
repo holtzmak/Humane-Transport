@@ -1,4 +1,4 @@
-import 'package:app/core/services/navigation/nav_service.dart';
+import 'package:app/core/services/nav_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

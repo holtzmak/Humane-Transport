@@ -22,13 +22,17 @@ class _ActiveScreenState extends State<ActiveScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Active Screen'),
-        automaticallyImplyLeading: false,
-      ),
-      body: TemplateBaseViewModel<ActiveScreenViewModel>(
-        builder: (context, model, _) => model.animalTransportRecords.isEmpty
+    return TemplateBaseViewModel<ActiveScreenViewModel>(
+      builder: (context, model, _) => Scaffold(
+        appBar: AppBar(
+          title: Text('Active Screen'),
+          automaticallyImplyLeading: false,
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back_ios),
+            onPressed: model.navigateToHomeScreen,
+          ),
+        ),
+        body: model.animalTransportRecords.isEmpty
             ? ListTile(
                 title: Text("No active Animal Transport Records"),
                 subtitle: Text("You can add some using the \"New\" button"))

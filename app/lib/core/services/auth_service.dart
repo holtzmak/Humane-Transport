@@ -8,7 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 /// A service wrapping FirebaseAuth
-/// Sign in persistence is guaranteed default as per https://firebase.flutter.dev/docs/auth/usage/#persisting-authentication-state
+/// Sign in persistence is guaranteed default as per
+/// https://firebase.flutter.dev/docs/auth/usage/#persisting-authentication-state
 class AuthenticationService {
   final databaseService = locator<DatabaseService>();
   final FirebaseAuth firebaseAuth;

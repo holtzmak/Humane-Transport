@@ -1,8 +1,5 @@
-import 'package:app/core/services/navigation/nav_service.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
-import 'package:app/ui/views/signin/sign_in_screen.dart';
-import 'package:app/ui/views/signup/sign_up_screen.dart';
-import 'package:app/ui/views/welcome/welcome_screen.dart';
+import 'package:app/ui/views/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -10,11 +7,8 @@ import 'package:mockito/mockito.dart';
 
 class MockSignInViewModel extends Mock implements SignInViewModel {}
 
-class MockNavigationService extends Mock implements NavigationService {}
-
 final GetIt testLocator = GetIt.instance;
 final mockSignInViewModel = MockSignInViewModel();
-final mockNavigationService = MockNavigationService();
 final userEmailAddress = "testemail@mail.com";
 final password = "ABC123";
 final mockSignInRoute = '/signIn';
@@ -28,8 +22,6 @@ void main() {
 
   group('Sign in screen', () {
     setUpAll(() async {
-      testLocator.registerLazySingleton<NavigationService>(
-          () => mockNavigationService);
       testLocator.registerFactory<SignInViewModel>(() => mockSignInViewModel);
     });
 
@@ -74,7 +66,7 @@ void main() {
       await tester.tap(goBackButtonFinder);
       // Non-standard animation time due to decoration
       await tester.pump(Duration(milliseconds: 1));
-      verify(mockNavigationService.navigateTo(WelcomeScreen.route)).called(1);
+      verify(mockSignInViewModel.navigateToWelcomeScreen()).called(1);
     });
 
     testWidgets('navigate to sign up screen on button clicked',
@@ -87,7 +79,7 @@ void main() {
       await tester.tap(dontHaveAnAccountButtonFinder);
       // Non-standard animation time due to decoration
       await tester.pump(Duration(milliseconds: 1));
-      verify(mockNavigationService.navigateTo(SignUpScreen.route)).called(1);
+      verify(mockSignInViewModel.navigateToSignUpScreen()).called(1);
     });
 
     testWidgets('empty field validators appears on empty fields',

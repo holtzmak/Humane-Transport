@@ -1,7 +1,8 @@
 import 'package:app/core/utilities/optional.dart';
 import 'package:flutter/material.dart';
 
-/// The Navigation Service which simplifies using the main navigator
+/// The Navigation Service which wraps application navigation so it may be
+/// used outside a widget's context
 class NavigationService {
   GlobalKey<NavigatorState> _navigationKey = GlobalKey<NavigatorState>();
 
