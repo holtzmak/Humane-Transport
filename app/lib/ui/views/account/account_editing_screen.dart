@@ -67,12 +67,10 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<AccountEditViewModel>(
         onModelReady: (model) {
-          _firstNameController.text = widget.account?.firstName ?? '';
-          _lastNameController.text = widget.account?.lastName ?? '';
-          _emailController.text = widget.account?.userEmailAddress ?? '';
-          _userPhoneNumberController.text =
-              widget.account?.userPhoneNumber ?? '';
-
+          _firstNameController.text = widget.account.firstName;
+          _lastNameController.text = widget.account.lastName;
+          _emailController.text = widget.account.userEmailAddress;
+          _userPhoneNumberController.text = widget.account.userPhoneNumber;
           model.setTransporterAccount(widget.account);
         },
         builder: (context, model, child) => BusyOverlayScreen(
@@ -174,7 +172,7 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                           color: Colors.green,
                         ),
                         TextButton(
-                          child: Text('Cancel and go back to your acount'),
+                          child: Text('Cancel and go back to your account'),
                           onPressed: () => model.navigateToAccount(),
                         ),
                       ],

@@ -39,7 +39,7 @@ class AccountEditViewModel extends BaseViewModel {
             .catchError((e) {
           setState(ViewState.Idle);
           _dialogService.showDialog(
-            title: 'Submission of the Animal Transport Record failed',
+            title: 'Saving changes to your account failed',
             description: e.message,
           );
         }));

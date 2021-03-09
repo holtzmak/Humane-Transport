@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class AccountScreen extends StatelessWidget {
   static const route = '/accountScreen';
+
   @override
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<AccountScreenViewModel>(
@@ -81,7 +82,7 @@ class AccountScreen extends StatelessWidget {
                         color: Colors.black12,
                       ),
                       ElevatedButton(
-                        onPressed: () => model.editTransporterAccount(),
+                        onPressed: () => model.navigateToAccountEditingScreen(),
                         child: Text('Edit'),
                       )
                     ],
