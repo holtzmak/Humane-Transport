@@ -15,8 +15,14 @@ class DatabaseService {
   Future<void> addTransporter(Transporter newUser) async =>
       interface.setNewTransporter(newUser);
 
+  Future<void> updateTransporter(Transporter transporter) =>
+      interface.updateTransporter(transporter);
+
   Future<void> removeTransporter(String userId) async =>
       interface.removeTransporter(userId);
+
+  Stream<Transporter> getUpdatedTransporter(String userId) =>
+      interface.getUpdatedTransporter(userId);
 
   Future<AnimalTransportRecord> saveNewAtr(String userId) async =>
       interface.setNewAtr(userId);

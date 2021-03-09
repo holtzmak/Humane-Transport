@@ -2,6 +2,8 @@ import 'package:app/core/services/database/database_interface.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/database/firebase_database_interface.dart';
 import 'package:app/core/services/dialog/dialog_service.dart';
+import 'package:app/core/view_models/account_edit_view_model.dart';
+import 'package:app/core/view_models/account_screen_view_model.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
 import 'package:app/core/view_models/history_screen_view_model.dart';
 import 'package:app/core/view_models/nav_view_model.dart';
@@ -33,6 +35,9 @@ void setUpLocator() {
       .registerFactory<WelcomeScreenViewModel>(() => WelcomeScreenViewModel());
   locator.registerFactory<SignInViewModel>(() => SignInViewModel());
   locator.registerFactory<SignUpViewModel>(() => SignUpViewModel());
+  locator
+      .registerFactory<AccountScreenViewModel>(() => AccountScreenViewModel());
+  locator.registerFactory<AccountEditViewModel>(() => AccountEditViewModel());
   locator.registerFactory<NewScreenViewModel>(() => NewScreenViewModel());
   locator.registerFactory<NavigationViewModel>(() => NavigationViewModel());
   locator

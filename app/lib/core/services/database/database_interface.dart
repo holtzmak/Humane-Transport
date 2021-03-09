@@ -6,7 +6,11 @@ abstract class DatabaseInterface {
 
   Future<Transporter> getTransporter(String userId);
 
+  Future<void> updateTransporter(Transporter transporter);
+
   Future<void> removeTransporter(String userId);
+
+  Stream<Transporter> getUpdatedTransporter(String userId);
 
   Future<AnimalTransportRecord> setNewAtr(String userId);
 
