@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
     return TemplateBaseViewModel<SplashScreenViewModel>(
       onModelReady: (model) => model.handleStartLogic(),
       builder: (context, model, child) => Scaffold(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.white,
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -28,9 +28,7 @@ class SplashScreen extends StatelessWidget {
               ),
               CircularProgressIndicator(
                 strokeWidth: 4,
-                valueColor: AlwaysStoppedAnimation(
-                  Theme.of(context).buttonColor,
-                ),
+                valueColor: AlwaysStoppedAnimation(Colors.green),
               ),
             ],
           ),

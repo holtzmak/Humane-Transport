@@ -18,8 +18,6 @@ class MockAuthenticationService extends Mock implements AuthenticationService {}
 final testLocator = GetIt.instance;
 
 void main() {
-  final mockAuthService = MockAuthenticationService();
-
   group('Application main', () {
     tearDown(() async => resetForTest(testLocator));
 
