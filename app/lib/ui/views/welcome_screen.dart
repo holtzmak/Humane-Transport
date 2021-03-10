@@ -13,7 +13,9 @@ class WelcomeScreen extends StatelessWidget {
     return TemplateBaseViewModel<WelcomeScreenViewModel>(
         builder: (context, model, child) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
