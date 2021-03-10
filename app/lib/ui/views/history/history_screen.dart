@@ -27,11 +27,26 @@ class _HistoryScreenState extends State<HistoryScreen> {
           appBar: AppBar(
             title: Text('History Screen'),
             automaticallyImplyLeading: false,
-            leading: new IconButton(
-              icon: new Icon(Icons.arrow_back_ios),
-              onPressed: model.navigateToHomeScreen,
-            ),
           ),
+          bottomNavigationBar: BottomNavigationBar(
+              onTap: (int item) async {
+                switch (item) {
+                  case 0:
+                    return model.navigateToHomeScreen();
+                  case 1:
+                    return model.navigateToActiveScreen();
+                }
+              },
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.arrow_back),
+                  label: "Back",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.directions_car),
+                  label: "Active",
+                ),
+              ]),
           body: model.animalTransportRecords.isEmpty
               ? ListTile(
                   title: Text("No completed Animal Transport Records"),

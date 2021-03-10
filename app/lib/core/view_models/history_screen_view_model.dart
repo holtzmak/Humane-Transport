@@ -8,6 +8,7 @@ import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/core/view_models/base_view_model.dart';
+import 'package:app/ui/views/active/active_screen.dart';
 import 'package:app/ui/views/history/atr_display_screen.dart';
 import 'package:app/ui/views/history/history_screen.dart';
 import 'package:app/ui/views/home_screen.dart';
@@ -85,4 +86,7 @@ class HistoryScreenViewModel extends BaseViewModel {
 
   void navigateToHistoryScreen() =>
       _navigationService.navigateBackUntil(HistoryScreen.route);
+
+  void navigateToActiveScreen() =>
+      _navigationService.navigateAndReplace(ActiveScreen.route);
 }

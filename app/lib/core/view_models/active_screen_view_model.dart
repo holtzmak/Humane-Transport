@@ -10,6 +10,7 @@ import 'package:app/core/utilities/optional.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
+import 'package:app/ui/views/history/history_screen.dart';
 import 'package:app/ui/views/home_screen.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -80,8 +81,27 @@ class ActiveScreenViewModel extends BaseViewModel {
   void navigateToHomeScreen() =>
       _navigationService.navigateBackUntil(HomeScreen.route);
 
+  void navigateToHistoryScreen() =>
+      _navigationService.navigateAndReplace(HistoryScreen.route);
+
   void navigateToEditingScreen(AnimalTransportRecord atr) {
     _navigationService.navigateTo(ATREditingScreen.route, arguments: atr);
+  }
+
+  Future<void> startNewAtr() async {
+    final currentUser = _authenticationService.currentUser;
+    currentUser.isPresent()
+        ? _databaseService
+            .saveNewAtr(currentUser.get().uid)
+            .then((atr) => navigateToEditingScreen(atr))
+            .catchError((e) => _dialogService.showDialog(
+                  title: 'Starting a new Animal Transport Record failed',
+                  description: e.message,
+                ))
+        : _dialogService.showDialog(
+            title: 'Starting a new Animal Transport Record failed',
+            description: "You are not logged in!",
+          );
   }
 
   Future<void> saveEditedAtr(AnimalTransportRecord atr) async {

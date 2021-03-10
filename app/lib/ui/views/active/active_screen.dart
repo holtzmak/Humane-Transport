@@ -27,11 +27,32 @@ class _ActiveScreenState extends State<ActiveScreen> {
         appBar: AppBar(
           title: Text('Active Screen'),
           automaticallyImplyLeading: false,
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back_ios),
-            onPressed: model.navigateToHomeScreen,
-          ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+            onTap: (int item) async {
+              switch (item) {
+                case 0:
+                  return model.navigateToHomeScreen();
+                case 1:
+                  return model.navigateToHistoryScreen();
+                case 2:
+                  return model.startNewAtr();
+              }
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.arrow_back),
+                label: "Back",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.access_time),
+                label: "History",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.add_circle),
+                label: "Add New",
+              )
+            ]),
         body: model.animalTransportRecords.isEmpty
             ? ListTile(
                 title: Text("No active Animal Transport Records"),
