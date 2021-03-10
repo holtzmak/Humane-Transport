@@ -12,8 +12,6 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<WelcomeScreenViewModel>(
         builder: (context, model, child) {
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => model.skipToHomeScreenIfLoggedIn());
       return Scaffold(
         appBar: AppBar(),
         body: Center(
