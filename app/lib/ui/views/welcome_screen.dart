@@ -6,14 +6,12 @@ class WelcomeScreen extends StatelessWidget {
   final String title;
 
   WelcomeScreen({Key key, this.title}) : super(key: key);
-  static const route = '/';
+  static const route = '/welcome';
 
   @override
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<WelcomeScreenViewModel>(
         builder: (context, model, child) {
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => model.skipToHomeScreenIfLoggedIn());
       return Scaffold(
         appBar: AppBar(),
         body: Center(

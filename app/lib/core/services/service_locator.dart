@@ -8,6 +8,7 @@ import 'package:app/core/view_models/history_screen_view_model.dart';
 import 'package:app/core/view_models/home_screen_view_model.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
 import 'package:app/core/view_models/signup_view_model.dart';
+import 'package:app/core/view_models/splash_screen_view_model.dart';
 import 'package:app/core/view_models/welcome_screen_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +30,9 @@ void setUpLocator() {
       () => AuthenticationService(firebaseAuth: FirebaseAuth.instance));
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<DialogService>(() => DialogService());
+
   // Factories
+  locator.registerFactory<SplashScreenViewModel>(() => SplashScreenViewModel());
   locator
       .registerFactory<WelcomeScreenViewModel>(() => WelcomeScreenViewModel());
   locator.registerFactory<SignInViewModel>(() => SignInViewModel());
