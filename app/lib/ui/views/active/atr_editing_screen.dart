@@ -150,7 +150,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                       title: Text("Animal Transport Form"),
                       automaticallyImplyLeading: false,
                       leading: new IconButton(
-                        icon: new Icon(Icons.arrow_back_ios),
+                        icon: new Icon(Icons.arrow_back),
                         onPressed: () async => _saveATR(model)
                             .then((value) => model.navigateBack()),
                       ),
