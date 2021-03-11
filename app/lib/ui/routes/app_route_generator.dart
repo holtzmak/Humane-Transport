@@ -4,6 +4,8 @@ import 'package:app/ui/views/account/account_editing_screen.dart';
 import 'package:app/ui/views/account/account_screen.dart';
 import 'package:app/ui/views/active/active_screen.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
+import 'package:app/ui/views/check_your_email_account_screen.dart';
+import 'package:app/ui/views/forgot_password_screen.dart';
 import 'package:app/ui/views/history/atr_display_screen.dart';
 import 'package:app/ui/views/history/history_screen.dart';
 import 'package:app/ui/views/home_screen.dart';
@@ -32,6 +34,10 @@ class AppRouteGenerator {
             return WelcomeScreen();
           case SignInScreen.route:
             return SignInScreen();
+          case ForgotPasswordScreen.route:
+            return ForgotPasswordScreen();
+          case ConfirmationMessageScreen.route:
+            return ConfirmationMessageScreen();
           case SignUpScreen.route:
             return SignUpScreen();
           // Main screens, only available if logged in

@@ -8,6 +8,8 @@ import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/view_models/account_edit_view_model.dart';
 import 'package:app/core/view_models/account_screen_view_model.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
+import 'package:app/core/view_models/check_your_email_account_view_model.dart';
+import 'package:app/core/view_models/forgot_password_view_model.dart';
 import 'package:app/core/view_models/history_screen_view_model.dart';
 import 'package:app/core/view_models/home_screen_view_model.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
@@ -38,6 +40,10 @@ void setUpLocator() {
       .registerFactory<WelcomeScreenViewModel>(() => WelcomeScreenViewModel());
   locator.registerFactory<SignInViewModel>(() => SignInViewModel());
   locator.registerFactory<SignUpViewModel>(() => SignUpViewModel());
+  locator.registerFactory<ForgotPasswordViewModel>(
+      () => ForgotPasswordViewModel());
+  locator.registerFactory<ConfirmationMessageModel>(
+      () => ConfirmationMessageModel());
   locator
       .registerFactory<AccountScreenViewModel>(() => AccountScreenViewModel());
   locator.registerFactory<AccountEditViewModel>(() => AccountEditViewModel());
