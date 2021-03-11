@@ -123,7 +123,7 @@ void main() {
     testWidgets('gives saved ATR to view model on exit, then exits',
         (WidgetTester tester) async {
       final testATR = testAnimalTransportRecord();
-      final backButtonFinder = find.byIcon(Icons.arrow_back_ios);
+      final backButtonFinder = find.byIcon(Icons.arrow_back);
       when(mockActiveScreenViewModel.saveEditedAtr(testATR))
           .thenAnswer((_) => Future.value()); // do nothing for test
 
@@ -142,7 +142,7 @@ void main() {
               testFwrInfo(lastFwrLocation: testAddress(city: "Yellowknife")));
       final editedATR = testAnimalTransportRecord(
           fwrInfo: testFwrInfo(lastFwrLocation: testAddress(city: "Iqaluit")));
-      final backButtonFinder = find.byIcon(Icons.arrow_back_ios);
+      final backButtonFinder = find.byIcon(Icons.arrow_back);
       final fieldFinder = find.widgetWithText(TextFormField, "Yellowknife");
       when(mockActiveScreenViewModel.saveEditedAtr(testATR))
           .thenAnswer((_) => Future.value()); // do nothing for test
