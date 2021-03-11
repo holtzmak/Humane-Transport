@@ -50,7 +50,7 @@ class _ActiveScreenState extends State<ActiveScreen> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.add_circle),
-                label: "Add New",
+                label: "New Form",
               )
             ]),
         body: model.animalTransportRecords.isEmpty

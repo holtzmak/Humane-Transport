@@ -56,7 +56,7 @@ class _ATRDisplayScreenState extends State<ATRDisplayScreen> {
                 ],
                 automaticallyImplyLeading: false,
                 leading: new IconButton(
-                  icon: new Icon(Icons.arrow_back_ios),
+                  icon: new Icon(Icons.arrow_back),
                   onPressed: model.navigateToHistoryScreen,
                 ),
               ),
