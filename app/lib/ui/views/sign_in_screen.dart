@@ -87,12 +87,14 @@ class _SignInScreenState extends State<SignInScreen> {
                               top: 20.0,
                             ),
                           ),
-                          Text('Forgot Password?',
-                              style: TextStyle(
-                                  color: HexColor('#8C8146'),
-                                  fontSize: BodyTextSize,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.end),
+                          TextButton(
+                              child: Text('Forgot Password?',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.green,
+                                  )),
+                              onPressed: () =>
+                                  model.navigateToForgotPasswordScreen()),
                           Padding(
                             padding: EdgeInsets.only(
                               top: 50.0,

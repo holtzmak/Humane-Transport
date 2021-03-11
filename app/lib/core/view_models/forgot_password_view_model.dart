@@ -4,39 +4,30 @@ import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
-import 'package:app/ui/views/forgot_password_screen.dart';
-import 'package:app/ui/views/home_screen.dart';
-import 'package:app/ui/views/sign_up_screen.dart';
-import 'package:app/ui/views/welcome_screen.dart';
+import 'package:app/ui/views/check_your_email_account_screen.dart';
+import 'package:app/ui/views/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 
-class SignInViewModel extends BaseViewModel {
+class ForgotPasswordViewModel extends BaseViewModel {
   final DialogService _dialogService = locator<DialogService>();
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
 
-  void navigateToWelcomeScreen() =>
-      _navigationService.navigateBackUntil(WelcomeScreen.route);
+  void navigateToSignInScreen() =>
+      _navigationService.navigateAndReplace(SignInScreen.route);
 
-  void navigateToForgotPasswordScreen() =>
-      _navigationService.navigateAndReplace(ForgotPasswordScreen.route);
-
-  void navigateToSignUpScreen() =>
-      _navigationService.navigateAndReplace(SignUpScreen.route);
-
-  Future<void> signIn({
+  Future<void> resetPassword({
     @required String email,
-    @required String password,
   }) async {
     setState(ViewState.Busy);
-    _authenticationService.signIn(email: email, password: password).then((_) {
-      _navigationService.navigateTo(HomeScreen.route);
+    _authenticationService.resetPassword(userEmailAddress: email).then((_) {
+      _navigationService.navigateTo(ConfirmationMessageScreen.route);
       setState(ViewState.Idle);
     }).catchError((error) {
       setState(ViewState.Idle);
       _dialogService.showDialog(
-        title: 'Sign in failed',
+        title: 'Reset Password failed',
         description: error.message,
       );
     });
