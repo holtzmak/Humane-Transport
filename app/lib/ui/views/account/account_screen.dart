@@ -17,74 +17,56 @@ class AccountScreen extends StatelessWidget {
                   margin: EdgeInsets.all(20.0),
                   child: Column(
                     children: [
-                      Row(
+                      ListTile(
+                        leading: Icon(
+                          Icons.account_circle_sharp,
+                          size: 30.0,
+                          color: Colors.green[400],
+                        ),
+                        title: Text(
+                          '${model.transporter.firstName} ${model.transporter.lastName}',
+                          style: TextStyle(fontSize: 15.0),
+                        ),
+                        trailing: ElevatedButton(
+                          onPressed: () =>
+                              model.navigateToAccountEditingScreen(),
+                          child: Text('Edit'),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0),
+                      ),
+                      Table(
+                        border: TableBorder.all(color: Colors.black12),
                         children: [
-                          Container(
-                            child: Icon(
-                              Icons.account_circle_sharp,
-                              size: 30.0,
-                              color: Colors.green[400],
+                          TableRow(children: [
+                            ListTile(
+                              leading: Icon(
+                                Icons.call,
+                                size: 30.0,
+                                color: Colors.green[400],
+                              ),
+                              title: Text(
+                                '${model.transporter.userPhoneNumber}',
+                                style: TextStyle(fontSize: 15.0),
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 30.0),
-                          Text(
-                            '${model.transporter.firstName} ${model.transporter.lastName}',
-                            style: TextStyle(fontSize: 15.0),
-                          ),
-                          SizedBox(width: 100.0),
+                          ]),
+                          TableRow(children: [
+                            ListTile(
+                              leading: Icon(
+                                Icons.markunread,
+                                size: 30.0,
+                                color: Colors.green[400],
+                              ),
+                              title: Text(
+                                '${model.transporter.userEmailAddress} ',
+                                style: TextStyle(fontSize: 15.0),
+                              ),
+                            ),
+                          ])
                         ],
                       ),
-                      Divider(
-                        height: 40,
-                        thickness: 2,
-                        color: Colors.black12,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            child: Icon(
-                              Icons.call,
-                              size: 30.0,
-                              color: Colors.green[400],
-                            ),
-                          ),
-                          SizedBox(width: 30.0),
-                          Text(
-                            '${model.transporter.userPhoneNumber}',
-                            style: TextStyle(fontSize: 15.0),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        height: 40,
-                        thickness: 2,
-                        color: Colors.black12,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            child: Icon(
-                              Icons.markunread,
-                              size: 30.0,
-                              color: Colors.green[400],
-                            ),
-                          ),
-                          SizedBox(width: 30.0),
-                          Text(
-                            '${model.transporter.userEmailAddress} ',
-                            style: TextStyle(fontSize: 15.0),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        height: 40,
-                        thickness: 2,
-                        color: Colors.black12,
-                      ),
-                      ElevatedButton(
-                        onPressed: () => model.navigateToAccountEditingScreen(),
-                        child: Text('Edit'),
-                      )
                     ],
                   ),
                 ),
