@@ -41,7 +41,10 @@ void main() {
           findsOneWidget);
       // The splash screen appears for 3 seconds only
       await tester.pump(Duration(seconds: 3));
-      expect(find.widgetWithText(WelcomeScreen, 'Welcome!'), findsOneWidget);
+      expect(
+          find.widgetWithText(
+              WelcomeScreen, 'Welcome to Humane Transport Mobile Application'),
+          findsOneWidget);
     });
   });
 }
