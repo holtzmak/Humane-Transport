@@ -9,6 +9,8 @@ const BodyTextSize = 16.0;
 const MediumTextSize = 20.0;
 const LargeTextSize = 23.0;
 
+const buttonColor = Color.fromRGBO(20, 57, 89, 1);
+
 const MainAppColor = Color(0xff66bb6a);
 
 const BottomBorderStyle = BorderSide(
@@ -33,7 +35,7 @@ const BodyTextStyle = TextStyle(
 );
 
 const DefaultRaisedButtonStyle = ButtonThemeData(
-  buttonColor: Colors.green,
+  buttonColor: buttonColor,
 );
 
 const OverlayColor = Color.fromRGBO(0, 0, 0, 0.5);
