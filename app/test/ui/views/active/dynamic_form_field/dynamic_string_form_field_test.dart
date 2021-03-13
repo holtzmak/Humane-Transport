@@ -1,6 +1,5 @@
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_string_form_field.dart';
-import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -13,8 +12,8 @@ void main() {
     });
   }
 
-  Future<void> pumpDynamicStringFormField(WidgetTester tester,
-          DynamicFormField<String, StringFormField> widget) async =>
+  Future<void> pumpDynamicStringFormField(
+          WidgetTester tester, DynamicFormField<String> widget) async =>
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
         body: widget,
@@ -47,8 +46,7 @@ void main() {
         },
       );
       await pumpDynamicStringFormField(tester, widget);
-      expect(find.text("No Test Title, add some using the + button"),
-          findsOneWidget);
+      expect(find.text("No Test Title"), findsOneWidget);
     });
 
     testWidgets('delete button pressed removes field',
@@ -86,8 +84,7 @@ void main() {
       await pumpDynamicStringFormField(tester, widget);
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
-      expect(find.text("No $testTitle, add some using the + button"),
-          findsOneWidget);
+      expect(find.text("No $testTitle"), findsOneWidget);
     });
 
     testWidgets('add button pressed adds empty field',
@@ -101,15 +98,14 @@ void main() {
         },
       );
       await pumpDynamicStringFormField(tester, widget);
-      final addButtonFinder = find.byIcon(Icons.add);
+      final addButtonFinder = find.byIcon(Icons.add_circle);
       await tester.tap(addButtonFinder);
       await tester.pumpAndSettle();
       verifyNoDuplicateInfoShown(testTitle, [""]);
-      expect(find.text("No $testTitle, add some using the + button"),
-          findsNothing);
+      expect(find.text("No $testTitle"), findsNothing);
     });
 
-    testWidgets('onSaved called when info is edited',
+    testWidgets('onSaved called when info is edited then saved',
         (WidgetTester tester) async {
       final testTitle = "Test Title";
       final testItems = ["Test0", "Test1", "Test2"];
@@ -117,7 +113,7 @@ void main() {
       List<String> callback;
       final onSaved = (List<String> changed) => callback = changed;
       final fieldFinder = find.text("Test0");
-      final widget = dynamicStringFormField(
+      final DynamicFormField<String> widget = dynamicStringFormField(
         initialList: testItems,
         titles: testTitle,
         onSaved: onSaved,
@@ -125,6 +121,7 @@ void main() {
       await pumpDynamicStringFormField(tester, widget);
       await tester.enterText(fieldFinder, "Test3");
       await tester.pumpAndSettle();
+      widget.save();
       expect(callback, editedItems);
     });
   });

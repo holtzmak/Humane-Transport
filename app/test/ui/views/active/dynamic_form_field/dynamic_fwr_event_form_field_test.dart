@@ -36,17 +36,10 @@ void main() {
   }
 
   Future<void> pumpDynamicFwrFormField(
-          WidgetTester tester,
-          List<FeedWaterRestEvent> initialList,
-          Function(List<FeedWaterRestEvent>) onSaved) async =>
+          WidgetTester tester, Widget widget) async =>
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
-        body: SingleChildScrollView(
-          child: dynamicFWREventFormField(
-            initialList: initialList,
-            onSaved: onSaved,
-          ),
-        ),
+        body: SingleChildScrollView(child: widget),
       )));
 
   group('Dynamic FWR Form Field', () {
@@ -84,22 +77,27 @@ void main() {
                 postalCode: "789hjk"),
             fwrProvidedOnboard: false)
       ];
-      await pumpDynamicFwrFormField(tester, testItems, (_) {
-        // do nothing for test
-      });
+      final widget = dynamicFWREventFormField(
+        initialList: testItems,
+        onSaved: (_) {
+          // do nothing for test
+        },
+      );
+      await pumpDynamicFwrFormField(tester, widget);
       await tester.pumpAndSettle();
       verifyNoDuplicateInfoShown(testItems);
     });
 
     testWidgets('shows no information when no fields',
         (WidgetTester tester) async {
-      await pumpDynamicFwrFormField(tester, <FeedWaterRestEvent>[], (_) {
-        // do nothing for test
-      });
-      expect(
-          find.text(
-              "No Feed, Water, and Rest event, add some using the + button"),
-          findsOneWidget);
+      final widget = dynamicFWREventFormField(
+        initialList: [],
+        onSaved: (_) {
+          // do nothing for test
+        },
+      );
+      await pumpDynamicFwrFormField(tester, widget);
+      expect(find.text("No Feed, Water, and Rest event"), findsOneWidget);
     });
 
     testWidgets('delete button pressed removes field',
@@ -138,9 +136,13 @@ void main() {
                 postalCode: "789hjk"),
             fwrProvidedOnboard: false)
       ];
-      await pumpDynamicFwrFormField(tester, testItems, (_) {
-        // do nothing for test
-      });
+      final widget = dynamicFWREventFormField(
+        initialList: testItems,
+        onSaved: (_) {
+          // do nothing for test
+        },
+      );
+      await pumpDynamicFwrFormField(tester, widget);
       await tester.tap(firstItemDeleteButtonFinder);
       await tester.pumpAndSettle();
       verifyInfoNotShown(itemToDelete);
@@ -173,23 +175,28 @@ void main() {
         (WidgetTester tester) async {
       final testItemToDelete = testFwrEvent();
       final deleteButtonFinder = find.byIcon(Icons.delete);
-      await pumpDynamicFwrFormField(tester, [testItemToDelete], (_) {
-        // do nothing for test
-      });
+      final widget = dynamicFWREventFormField(
+        initialList: [testItemToDelete],
+        onSaved: (_) {
+          // do nothing for test
+        },
+      );
+      await pumpDynamicFwrFormField(tester, widget);
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
-      expect(
-          find.text(
-              "No Feed, Water, and Rest event, add some using the + button"),
-          findsOneWidget);
+      expect(find.text("No Feed, Water, and Rest event"), findsOneWidget);
     });
 
     testWidgets('add button pressed adds empty field',
         (WidgetTester tester) async {
-      await pumpDynamicFwrFormField(tester, <FeedWaterRestEvent>[], (_) {
-        // do nothing for test
-      });
-      final addButtonFinder = find.byIcon(Icons.add);
+      final widget = dynamicFWREventFormField(
+        initialList: [],
+        onSaved: (_) {
+          // do nothing for test
+        },
+      );
+      await pumpDynamicFwrFormField(tester, widget);
+      final addButtonFinder = find.byIcon(Icons.add_circle);
       await tester.tap(addButtonFinder);
       await tester.pumpAndSettle();
       verifyOneEmptyFwrEventShown(FeedWaterRestEvent(
@@ -208,7 +215,7 @@ void main() {
           findsNothing);
     });
 
-    testWidgets('onSaved called when info is edited',
+    testWidgets('onSaved called when info is edited and saved',
         (WidgetTester tester) async {
       final testItems = [
         FeedWaterRestEvent(
@@ -246,10 +253,16 @@ void main() {
       List<FeedWaterRestEvent> callback;
       final onSaved = (List<FeedWaterRestEvent> changed) => callback = changed;
       final fieldFinder = find.text("FWR location 2");
-      await pumpDynamicFwrFormField(tester, testItems, onSaved);
+      final widget = dynamicFWREventFormField(
+        initialList: testItems,
+        onSaved: onSaved,
+      );
+      await pumpDynamicFwrFormField(tester, widget);
       await tester.ensureVisible(fieldFinder);
       await tester.enterText(fieldFinder, "FWR location for resting");
       await tester.pumpAndSettle();
+      // Save the form
+      widget.save();
 
       expect(callback, [
         FeedWaterRestEvent(

@@ -13,7 +13,6 @@ import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/utilities/optional.dart';
-import 'package:flutter/material.dart';
 
 testAddress(
         {String streetAddress,
@@ -223,13 +222,12 @@ testContingencyEvent(
         actionsTaken: actionsTaken ?? ["Wrapped in available bandages"]);
 
 testContingencyActivity(
-        {TimeOfDay time,
+        {DateTime time,
         String personContacted,
         String methodOfContact,
         String instructionsGiven}) =>
     ContingencyActivity(
-        time:
-            time ?? TimeOfDay.fromDateTime(DateTime.parse("2021-02-03 13:01")),
+        time: time ?? DateTime.parse("2021-02-03 13:01"),
         personContacted: personContacted ?? "Receiver",
         methodOfContact: methodOfContact ?? "Phone call",
         instructionsGiven: instructionsGiven ?? "Instructions");

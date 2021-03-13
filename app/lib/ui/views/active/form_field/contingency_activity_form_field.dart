@@ -5,12 +5,31 @@ import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 /// A custom form field with onSaved and onDelete callback
-class ContingencyActivityFormField extends StatefulWidget {
+class ContingencyActivityFormField extends FormField<ContingencyActivity> {
+  ContingencyActivityFormField(
+      {Key key,
+      @required ContingencyActivity initial,
+      @required FormFieldSetter<ContingencyActivity> onSaved,
+      @required Function() onDelete})
+      : super(
+            key: key,
+            onSaved: onSaved,
+            initialValue: initial,
+            builder: (FormFieldState<ContingencyActivity> state) {
+              return _ContingencyActivityFormFieldInner(
+                initial: state.value,
+                onSaved: onSaved,
+                onDelete: onDelete,
+              );
+            });
+}
+
+class _ContingencyActivityFormFieldInner extends StatefulWidget {
   final ContingencyActivity initial;
   final Function(ContingencyActivity) onSaved;
   final Function() onDelete;
 
-  ContingencyActivityFormField(
+  _ContingencyActivityFormFieldInner(
       {Key key,
       @required this.initial,
       @required this.onSaved,
@@ -23,8 +42,8 @@ class ContingencyActivityFormField extends StatefulWidget {
 }
 
 class _ContingencyActivityFormFieldState
-    extends State<ContingencyActivityFormField> {
-  TimeOfDay _time;
+    extends State<_ContingencyActivityFormFieldInner> {
+  DateTime _time;
   String _personContacted;
   String _methodOfContact;
   String _instructionsGiven;
@@ -60,7 +79,7 @@ class _ContingencyActivityFormFieldState
           subtitle: timePicker(
               initialTime: _time,
               onSaved: (String changed) {
-                _time = TimeOfDay.fromDateTime(DateTime.parse(changed));
+                _time = DateTime.parse(changed);
                 _saveAll();
               }),
         ),

@@ -7,18 +7,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Future<void> pumpCompromisedAnimalFormField(
-          WidgetTester tester,
-          CompromisedAnimal initial,
-          Function(CompromisedAnimal) onSaved,
-          Function() onDelete) async =>
-      tester.pumpWidget(MaterialApp(
-          home: Scaffold(
-              body: CompromisedAnimalFormField(
-        title: "Compromised Animal",
-        initial: initial,
-        onSaved: onSaved,
-        onDelete: onDelete,
-      ))));
+          WidgetTester tester, Widget widget) async =>
+      tester.pumpWidget(MaterialApp(home: Scaffold(body: widget)));
 
   group('Compromised Animal Form Field', () {
     testWidgets('shows right information', (WidgetTester tester) async {
@@ -26,11 +16,16 @@ void main() {
           animalDescription: "Chicken with bad leg",
           measuresTakenToCareForAnimal:
               "Wrapped the leg in bandages and stint");
-      await pumpCompromisedAnimalFormField(tester, compromisedAnimal, (_) {
-        // do nothing for test
-      }, () {
-        // do nothing for test
-      });
+      final widget = CompromisedAnimalFormField(
+          title: "Compromised Animal",
+          initial: compromisedAnimal,
+          onSaved: (_) {
+            // do nothing for test
+          },
+          onDelete: () {
+            // do nothing for test
+          });
+      await pumpCompromisedAnimalFormField(tester, widget);
       verifyCompromisedAnimalInfoIsShown(compromisedAnimal);
     });
 
@@ -39,17 +34,22 @@ void main() {
       bool callback;
       final onDeleteCallback = () => callback = true;
       final deleteButtonFinder = find.byIcon(Icons.delete);
-      await pumpCompromisedAnimalFormField(tester, testCompromisedAnimal(),
-          (_) {
-        // do nothing for test
-      }, onDeleteCallback);
+      final widget = CompromisedAnimalFormField(
+          title: "Compromised Animal",
+          initial: testCompromisedAnimal(),
+          onSaved: (_) {
+            // do nothing for test
+          },
+          onDelete: onDeleteCallback);
+      await pumpCompromisedAnimalFormField(tester, widget);
       await tester.ensureVisible(deleteButtonFinder);
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
       expect(callback, isTrue);
     });
 
-    testWidgets('onSaved called when edited', (WidgetTester tester) async {
+    testWidgets('onSaved called when edited and saved',
+        (WidgetTester tester) async {
       final testDescription = "Chicken bad leg";
       final editedDescription = "Turkey bad leg";
       CompromisedAnimal callback;
@@ -61,13 +61,21 @@ void main() {
           testCompromisedAnimal(animalDescription: testDescription);
       final editedCompromisedAnimal =
           testCompromisedAnimal(animalDescription: editedDescription);
-
-      await pumpCompromisedAnimalFormField(tester, testAnimal, onSavedCallback,
-          () {
-        // do nothing for test
-      });
+      final formKey = GlobalKey<FormState>();
+      final widget = Form(
+        key: formKey,
+        child: CompromisedAnimalFormField(
+            title: "Compromised Animal",
+            initial: testAnimal,
+            onSaved: onSavedCallback,
+            onDelete: () {
+              // do nothing for test
+            }),
+      );
+      await pumpCompromisedAnimalFormField(tester, widget);
       await tester.enterText(fieldFinder, editedDescription);
       await tester.pumpAndSettle();
+      formKey.currentState.save();
       // expect was saved
       expect(callback, editedCompromisedAnimal);
       // expect edited text visible

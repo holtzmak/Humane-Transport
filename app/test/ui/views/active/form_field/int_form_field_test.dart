@@ -9,8 +9,7 @@ void main() {
     expect(find.widgetWithText(ListTile, titleExpected), findsOneWidget);
   }
 
-  Future<void> pumpIntFormField(
-          WidgetTester tester, IntFormField widget) async =>
+  Future<void> pumpIntFormField(WidgetTester tester, Widget widget) async =>
       tester.pumpWidget(MaterialApp(home: Scaffold(body: widget)));
 
   group('Integer Form Field', () {
@@ -37,15 +36,19 @@ void main() {
           find.widgetWithText(TextFormField, testInfo.toString());
       final editedFieldFinder =
           find.widgetWithText(TextFormField, editedInfo.toString());
-      final widget = IntFormField(
-        initial: testInfo,
-        title: "Test Title",
-        onSaved: onSavedCallback,
-      );
+      final formKey = GlobalKey<FormState>();
+      final widget = Form(
+          key: formKey,
+          child: IntFormField(
+            initial: testInfo,
+            title: "Test Title",
+            onSaved: onSavedCallback,
+          ));
 
       await pumpIntFormField(tester, widget);
       await tester.enterText(fieldFinder, editedInfo.toString());
       await tester.pumpAndSettle();
+      formKey.currentState.save();
       // expect was saved
       expect(callback, editedInfo);
       // expect edited text visible

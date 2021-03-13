@@ -7,30 +7,26 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Future<void> pumpContingencyActivityFormField(
-          WidgetTester tester,
-          ContingencyActivity initial,
-          Function(ContingencyActivity) onSaved,
-          Function() onDelete) async =>
-      tester.pumpWidget(MaterialApp(
-          home: Scaffold(
-              body: ContingencyActivityFormField(
-        initial: initial,
-        onSaved: onSaved,
-        onDelete: onDelete,
-      ))));
+          WidgetTester tester, Widget widget) async =>
+      tester.pumpWidget(MaterialApp(home: Scaffold(body: widget)));
 
   group('Contingency Activity Form Field', () {
     testWidgets('shows right information', (WidgetTester tester) async {
       final contingencyActivity = ContingencyActivity(
-          time: TimeOfDay.fromDateTime(DateTime.parse("0000-01-01 19:22")),
+          time: DateTime.parse("1970-01-01 19:22"),
           personContacted: "Jamie Hill",
           methodOfContact: "Phone call",
           instructionsGiven: "Wait for authorities to arrive");
-      await pumpContingencyActivityFormField(tester, contingencyActivity, (_) {
-        // do nothing for test
-      }, () {
-        // do nothing for test
-      });
+      final widget = ContingencyActivityFormField(
+        initial: contingencyActivity,
+        onSaved: (_) {
+          // do nothing for test
+        },
+        onDelete: () {
+          // do nothing for test
+        },
+      );
+      await pumpContingencyActivityFormField(tester, widget);
       verifyContingencyActivityShown(contingencyActivity);
     });
 
@@ -39,17 +35,22 @@ void main() {
       bool callback;
       final onDeleteCallback = () => callback = true;
       final deleteButtonFinder = find.byIcon(Icons.delete);
-      await pumpContingencyActivityFormField(tester, testContingencyActivity(),
-          (_) {
-        // do nothing for test
-      }, onDeleteCallback);
+      final widget = ContingencyActivityFormField(
+        initial: testContingencyActivity(),
+        onSaved: (_) {
+          // do nothing for test
+        },
+        onDelete: onDeleteCallback,
+      );
+      await pumpContingencyActivityFormField(tester, widget);
       await tester.ensureVisible(deleteButtonFinder);
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
       expect(callback, isTrue);
     });
 
-    testWidgets('onSaved called when edited', (WidgetTester tester) async {
+    testWidgets('onSaved called when edited and saved',
+        (WidgetTester tester) async {
       final testContact = "Jamie Foxx";
       final editedContact = "Meghan Foxx";
       ContingencyActivity callback;
@@ -62,13 +63,20 @@ void main() {
           testContingencyActivity(personContacted: testContact);
       final editedActivity =
           testContingencyActivity(personContacted: editedContact);
-
-      await pumpContingencyActivityFormField(
-          tester, testActivity, onSavedCallback, () {
-        // do nothing for test
-      });
+      final formKey = GlobalKey<FormState>();
+      final widget = Form(
+          key: formKey,
+          child: ContingencyActivityFormField(
+            initial: testActivity,
+            onSaved: onSavedCallback,
+            onDelete: () {
+              // do nothing for test
+            },
+          ));
+      await pumpContingencyActivityFormField(tester, widget);
       await tester.enterText(fieldFinder, editedContact);
       await tester.pumpAndSettle();
+      formKey.currentState.save();
       // expect was saved
       expect(callback, editedActivity);
       // expect edited text visible

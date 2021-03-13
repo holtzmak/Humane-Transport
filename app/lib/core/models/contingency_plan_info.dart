@@ -278,7 +278,7 @@ class ContingencyPlanEvent {
 
 @immutable
 class ContingencyActivity {
-  final TimeOfDay time;
+  final DateTime time;
   final String personContacted;
   final String methodOfContact;
   final String instructionsGiven;
@@ -299,14 +299,15 @@ class ContingencyActivity {
   @override
   bool operator ==(other) {
     return (other is ContingencyActivity) &&
-        other.time == time &&
+        DateFormat("hh:mm").format(other.time) ==
+            DateFormat("hh:mm").format(time) &&
         other.personContacted == personContacted &&
         other.methodOfContact == methodOfContact &&
         other.instructionsGiven == instructionsGiven;
   }
 
   ContingencyActivity.fromJSON(Map<String, dynamic> json)
-      : time = TimeOfDay.fromDateTime(json['time'].toDate()),
+      : time = json['time'].toDate(),
         personContacted = json['personContacted'],
         methodOfContact = json['methodOfContact'],
         instructionsGiven = json['instructionsGiven'];
@@ -318,7 +319,8 @@ class ContingencyActivity {
         'instructionsGiven': instructionsGiven,
       };
 
-  String toString() => '''Time of communication: $time
+  String toString() =>
+      '''Time of communication: ${DateFormat("hh:mm").format(time)}
   Who was contacted: $personContacted
   Communication method used: $methodOfContact
   What instructions were given and decisions made with the guidance of emergency contacts reached: $instructionsGiven''';
@@ -328,7 +330,7 @@ class ContingencyActivity {
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("Time of communication"),
-          subtitle: Text('$time')),
+          subtitle: Text('${DateFormat("hh:mm").format(time)}')),
       ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("Who was contacted"),

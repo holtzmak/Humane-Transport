@@ -1,10 +1,9 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
+import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/form_field/fwr_event_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-
-import 'dynamic_form_field.dart';
 
 /// A custom form field for FeedWaterRestEvents.
 /// Due to it's dynamic nature this widget should only be used inside a grow-able
@@ -12,7 +11,7 @@ import 'dynamic_form_field.dart';
 dynamicFWREventFormField(
         {@required List<FeedWaterRestEvent> initialList,
         @required Function(List<FeedWaterRestEvent>) onSaved}) =>
-    DynamicFormField<FeedWaterRestEvent, FeedWaterRestEventFormField>(
+    DynamicFormField<FeedWaterRestEvent>(
         initialList: initialList,
         titles: "Feed, Water, and Rest event",
         onSaved: onSaved,

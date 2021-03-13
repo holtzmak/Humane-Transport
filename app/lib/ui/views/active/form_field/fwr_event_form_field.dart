@@ -1,17 +1,35 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
+import 'package:app/ui/views/active/form_field/address_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
-import 'address_form_field.dart';
-
 /// A custom form field with onSaved and onDelete callback
-class FeedWaterRestEventFormField extends StatefulWidget {
+class FeedWaterRestEventFormField extends FormField<FeedWaterRestEvent> {
+  FeedWaterRestEventFormField(
+      {Key key,
+      @required FeedWaterRestEvent initial,
+      @required FormFieldSetter<FeedWaterRestEvent> onSaved,
+      @required Function() onDelete})
+      : super(
+            key: key,
+            onSaved: onSaved,
+            initialValue: initial,
+            builder: (FormFieldState<FeedWaterRestEvent> state) {
+              return _FeedWaterRestEventFormFieldInner(
+                initial: state.value,
+                onSaved: onSaved,
+                onDelete: onDelete,
+              );
+            });
+}
+
+class _FeedWaterRestEventFormFieldInner extends StatefulWidget {
   final FeedWaterRestEvent initial;
-  final Function(FeedWaterRestEvent) onSaved;
+  final FormFieldSetter<FeedWaterRestEvent> onSaved;
   final Function() onDelete;
 
-  FeedWaterRestEventFormField(
+  _FeedWaterRestEventFormFieldInner(
       {Key key,
       @required this.initial,
       @required this.onSaved,
@@ -24,7 +42,7 @@ class FeedWaterRestEventFormField extends StatefulWidget {
 }
 
 class _FeedWaterRestEventFormFieldState
-    extends State<FeedWaterRestEventFormField> {
+    extends State<_FeedWaterRestEventFormFieldInner> {
   String _animalsWereUnloaded;
   DateTime _fwrTime;
   Address _lastFwrLocation;
@@ -66,9 +84,9 @@ class _FeedWaterRestEventFormFieldState
           ),
         ),
         ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Animals unloaded?"),
-          subtitle: DropdownButtonFormField(
+          title: DropdownButtonFormField(
+            decoration: InputDecoration(
+                border: OutlineInputBorder(), labelText: "Animals unloaded?"),
             value: _animalsWereUnloaded,
             items: ["Yes", "No"]
                 .map((label) => DropdownMenuItem(
@@ -92,21 +110,22 @@ class _FeedWaterRestEventFormFieldState
                 })),
         ListTile(title: Text("Address"), subtitle: _lastFwrAddressFormField),
         ListTile(
-            visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-            title: Text("Feed, water, and rest provided onboard?"),
-            subtitle: DropdownButtonFormField(
-              value: _fwrProvidedOnboard,
-              items: ["Yes", "No"]
-                  .map((label) => DropdownMenuItem(
-                        child: Text(label),
-                        value: label,
-                      ))
-                  .toList(),
-              onChanged: (String changed) => setState(() {
-                _fwrProvidedOnboard = changed;
-                _saveAll();
-              }),
-            )),
+            title: DropdownButtonFormField(
+          decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: "Feed, water, and rest provided onboard?"),
+          value: _fwrProvidedOnboard,
+          items: ["Yes", "No"]
+              .map((label) => DropdownMenuItem(
+                    child: Text(label),
+                    value: label,
+                  ))
+              .toList(),
+          onChanged: (String changed) => setState(() {
+            _fwrProvidedOnboard = changed;
+            _saveAll();
+          }),
+        )),
       ],
     );
   }

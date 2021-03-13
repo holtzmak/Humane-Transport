@@ -7,19 +7,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Future<void> pumpAnimalGroupFormField(
-          WidgetTester tester,
-          AnimalGroup testInfo,
-          Function(AnimalGroup) onSaved,
-          Function() onDelete) async =>
+          WidgetTester tester, Widget widget) async =>
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
               body: SingleChildScrollView(
                   child: Container(
-        child: AnimalGroupFormField(
-          initialInfo: testInfo,
-          onSaved: onSaved,
-          onDelete: onDelete,
-        ),
+        child: widget,
       )))));
 
   group('Animal Group Form Field', () {
@@ -38,11 +31,16 @@ void main() {
                 measuresTakenToCareForAnimal:
                     "Rendered cow unconscious for travel")
           ]);
-      await pumpAnimalGroupFormField(tester, testAnimalGroup, (_) {
-        // Do nothing for test
-      }, () {
-        // Do nothing for test
-      });
+      final widget = AnimalGroupFormField(
+        initial: testAnimalGroup,
+        onSaved: (_) {
+          // Do nothing for test
+        },
+        onDelete: () {
+          // Do nothing for test
+        },
+      );
+      await pumpAnimalGroupFormField(tester, widget);
       verifyAnimalGroupIsShown(testAnimalGroup);
     });
 
@@ -51,9 +49,14 @@ void main() {
       bool callback;
       final onDeleteCallback = () => callback = true;
       final deleteButtonFinder = find.byIcon(Icons.delete);
-      await pumpAnimalGroupFormField(tester, testAnimalGroup(), (_) {
-        // do nothing for test
-      }, onDeleteCallback);
+      final widget = AnimalGroupFormField(
+        initial: testAnimalGroup(),
+        onSaved: (_) {
+          // Do nothing for test
+        },
+        onDelete: onDeleteCallback,
+      );
+      await pumpAnimalGroupFormField(tester, widget);
       await tester.ensureVisible(deleteButtonFinder);
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
@@ -74,13 +77,21 @@ void main() {
       AnimalGroup callback;
       final onSaved = (AnimalGroup changed) => callback = changed;
       final fieldFinder = find.text(testDescription);
-
-      await pumpAnimalGroupFormField(tester, testInfo, onSaved, () {
-        // Do nothing for test
-      });
+      final formKey = GlobalKey<FormState>();
+      final widget = Form(
+          key: formKey,
+          child: AnimalGroupFormField(
+            initial: testInfo,
+            onSaved: onSaved,
+            onDelete: () {
+              // Do nothing for test
+            },
+          ));
+      await pumpAnimalGroupFormField(tester, widget);
       await tester.ensureVisible(fieldFinder);
       await tester.enterText(fieldFinder, editedDescription);
       await tester.pumpAndSettle();
+      formKey.currentState.save();
       expect(callback, editedInfo);
     });
   });

@@ -1,49 +1,58 @@
 import 'package:flutter/material.dart';
 
-/// A custom form field with onSaved and onDelete callback
-class IntFormField extends StatefulWidget {
-  final int initial;
-  final String title;
-  final Function(int) onSaved;
-
-  IntFormField(
-      {Key key,
-      @required this.initial,
-      @required this.title,
-      @required this.onSaved})
-      : super(key: key);
-
-  @override
-  _IntFormFieldState createState() => _IntFormFieldState();
+// TODO: Extract validators into their own service
+String emptyFieldValidation(int value) {
+  if (value == null || value == 0) {
+    return "* Required";
+  } else {
+    return null;
+  }
 }
 
-class _IntFormFieldState extends State<IntFormField> {
-  TextEditingController controller;
+/// A custom form field with onSaved and onDelete callback
+class IntFormField extends FormField<int> {
+  IntFormField(
+      {Key key,
+      @required int initial,
+      @required String title,
+      @required FormFieldSetter<int> onSaved,
+      FormFieldValidator<int> validator = emptyFieldValidation})
+      : super(
+            key: key,
+            initialValue: initial,
+            builder: (FormFieldState<int> state) {
+              return _IntFormFieldState(
+                state: state,
+                title: title,
+                onSaved: onSaved,
+                validator: validator,
+              );
+            });
+}
 
-  @override
-  void initState() {
-    controller = TextEditingController(text: widget.initial.toString());
-    super.initState();
-  }
+class _IntFormFieldState extends StatelessWidget {
+  final FormFieldState<int> state;
+  final String title;
+  final FormFieldSetter<int> onSaved;
+  final FormFieldValidator<int> validator;
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  _IntFormFieldState({
+    @required this.state,
+    @required this.title,
+    @required this.onSaved,
+    @required this.validator,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(widget.title),
-      subtitle: TextFormField(
+      title: TextFormField(
+        initialValue: state.value.toString(),
+        validator: (String field) => validator(int.tryParse(field)),
+        decoration:
+            InputDecoration(border: OutlineInputBorder(), labelText: title),
         keyboardType: TextInputType.number,
-        controller: controller,
-        // TODO: This is intensive to do, and should be refactored sometime
-        // This is the same as onSaved, so we can avoid needing an
-        // explicit save button in dynamic forms
-        onChanged: (String changed) => widget.onSaved(int.parse(changed)),
-        onSaved: (String changed) => widget.onSaved(int.parse(changed)),
+        onSaved: (String changed) => onSaved(int.parse(changed)),
       ),
     );
   }

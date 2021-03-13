@@ -1,17 +1,18 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/receiver_info.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/views/active/form_field/address_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
 
-import 'address_form_field.dart';
+// TODO: Extract validators into their own service
+String canBeEmptyFieldValidation(String value) {
+  return null;
+}
 
 class ReceiverInfoFormField extends StatefulWidget {
   final Function(ReceiverInfo info) onSaved;
   final ReceiverInfo initialInfo;
-
-  // Use the form key to save all the fields of this form
-  final formKey = GlobalKey<FormState>();
 
   ReceiverInfoFormField(
       {Key key, @required this.initialInfo, @required this.onSaved})
@@ -61,64 +62,62 @@ class _ReceiverInfoFormFieldState extends State<ReceiverInfoFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: widget.formKey,
-      child: Column(children: [
-        StringFormField(
-            initial: _receiverCompanyName,
-            title: "Receiving company name",
-            onSaved: (String changed) {
-              _receiverCompanyName = changed;
-              _saveAll();
-            },
-            onDelete: Optional.empty()),
-        StringFormField(
-            initial: _receiverName,
-            title: "Representative name",
-            onSaved: (String changed) {
-              _receiverName = changed;
-              _saveAll();
-            },
-            onDelete: Optional.empty()),
-        StringFormField(
-            initial: _accountId.isPresent() ? _accountId.get() : "",
-            title:
-                "Account identification number of the consignee in the database of the responsible administrator (Optional)",
-            onSaved: (String changed) {
-              _accountId =
-                  changed == "" ? Optional.empty() : Optional.of(changed);
-              _saveAll();
-            },
-            onDelete: Optional.empty()),
-        StringFormField(
-            initial: _destinationLocationId,
-            title: "Destination and Premises Identification number (PID)",
-            onSaved: (String changed) {
-              _destinationLocationId = changed;
-              _saveAll();
-            },
-            onDelete: Optional.empty()),
-        StringFormField(
-            initial: _destinationLocationName,
-            title: "Destination and Premises name",
-            onSaved: (String changed) {
-              _destinationLocationName = changed;
-              _saveAll();
-            },
-            onDelete: Optional.empty()),
-        ListTile(
-          title: Text("Destination and Premises address"),
-          subtitle: _destinationAddressFormField,
-        ),
-        StringFormField(
-            initial: _receiverContactInfo,
-            title: "Receiver’s Contact number in case of emergency",
-            onSaved: (String changed) {
-              _receiverContactInfo = changed;
-              _saveAll();
-            },
-            onDelete: Optional.empty()),
-      ]),
-    );
+    return Column(children: [
+      StringFormField(
+          initial: _receiverCompanyName,
+          title: "Receiving company name",
+          onSaved: (String changed) {
+            _receiverCompanyName = changed;
+            _saveAll();
+          },
+          onDelete: Optional.empty()),
+      StringFormField(
+          initial: _receiverName,
+          title: "Representative name",
+          onSaved: (String changed) {
+            _receiverName = changed;
+            _saveAll();
+          },
+          onDelete: Optional.empty()),
+      StringFormField(
+          initial: _accountId.isPresent() ? _accountId.get() : "",
+          validator: canBeEmptyFieldValidation,
+          title:
+              "Account identification number of the consignee in the database of the responsible administrator (Optional)",
+          onSaved: (String changed) {
+            _accountId =
+                changed == "" ? Optional.empty() : Optional.of(changed);
+            _saveAll();
+          },
+          onDelete: Optional.empty()),
+      StringFormField(
+          initial: _destinationLocationId,
+          title: "Destination and Premises Identification number (PID)",
+          onSaved: (String changed) {
+            _destinationLocationId = changed;
+            _saveAll();
+          },
+          onDelete: Optional.empty()),
+      StringFormField(
+          initial: _destinationLocationName,
+          title: "Destination and Premises name",
+          onSaved: (String changed) {
+            _destinationLocationName = changed;
+            _saveAll();
+          },
+          onDelete: Optional.empty()),
+      ListTile(
+        title: Text("Destination and Premises address"),
+        subtitle: _destinationAddressFormField,
+      ),
+      StringFormField(
+          initial: _receiverContactInfo,
+          title: "Receiver’s Contact number in case of emergency",
+          onSaved: (String changed) {
+            _receiverContactInfo = changed;
+            _saveAll();
+          },
+          onDelete: Optional.empty()),
+    ]);
   }
 }

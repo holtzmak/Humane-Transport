@@ -3,18 +3,44 @@ import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_contingency_activity_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_string_form_field.dart';
-import 'package:app/ui/views/active/form_field/contingency_activity_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
+// TODO: Extract validators into their own service
+String emptyFieldValidation(String value) {
+  if (value.isEmpty) {
+    return "* Required";
+  } else
+    return null;
+}
+
 /// A custom form field with onSaved and onDelete callback
-class ContingencyPlanEventFormField extends StatefulWidget {
+class ContingencyPlanEventFormField extends FormField<ContingencyPlanEvent> {
+  ContingencyPlanEventFormField(
+      {Key key,
+      @required ContingencyPlanEvent initial,
+      @required FormFieldSetter<ContingencyPlanEvent> onSaved,
+      @required Function() onDelete})
+      : super(
+            key: key,
+            onSaved: onSaved,
+            initialValue: initial,
+            builder: (FormFieldState<ContingencyPlanEvent> state) {
+              return _ContingencyPlanEventFormFieldInner(
+                initial: state.value,
+                onSaved: onSaved,
+                onDelete: onDelete,
+              );
+            });
+}
+
+class _ContingencyPlanEventFormFieldInner extends StatefulWidget {
   final ContingencyPlanEvent initial;
   final Function(ContingencyPlanEvent) onSaved;
   final Function() onDelete;
 
-  ContingencyPlanEventFormField(
+  _ContingencyPlanEventFormFieldInner(
       {Key key,
       @required this.initial,
       @required this.onSaved,
@@ -27,7 +53,7 @@ class ContingencyPlanEventFormField extends StatefulWidget {
 }
 
 class _ContingencyPlanEventFormFieldState
-    extends State<ContingencyPlanEventFormField> {
+    extends State<_ContingencyPlanEventFormFieldInner> {
   DateTime _eventDateAndTime;
   List<String> _producerContactsUsed;
   List<String> _receiverContactsUsed;
@@ -35,11 +61,10 @@ class _ContingencyPlanEventFormFieldState
   List<ContingencyActivity> _activities;
   List<String> _actionsTaken;
 
-  DynamicFormField<String, StringFormField> _producerContactsUsedFormField;
-  DynamicFormField<String, StringFormField> _receiverContactsUsedFormField;
-  DynamicFormField<String, StringFormField> _actionsTakenFormField;
-  DynamicFormField<ContingencyActivity, ContingencyActivityFormField>
-      _contingencyActivitiesFormField;
+  DynamicFormField<String> _producerContactsUsedFormField;
+  DynamicFormField<String> _receiverContactsUsedFormField;
+  DynamicFormField<String> _actionsTakenFormField;
+  DynamicFormField<ContingencyActivity> _contingencyActivitiesFormField;
 
   @override
   void initState() {
@@ -80,13 +105,33 @@ class _ContingencyPlanEventFormFieldState
     super.initState();
   }
 
-  void _saveAll() => widget.onSaved(ContingencyPlanEvent(
-      eventDateAndTime: _eventDateAndTime,
-      producerContactsUsed: _producerContactsUsed,
-      receiverContactsUsed: _receiverContactsUsed,
-      disturbancesIdentified: _disturbancesIdentified,
-      activities: _activities,
-      actionsTaken: _actionsTaken));
+  void _saveAll() {
+    widget.onSaved(ContingencyPlanEvent(
+        eventDateAndTime: _eventDateAndTime,
+        producerContactsUsed: _producerContactsUsed,
+        receiverContactsUsed: _receiverContactsUsed,
+        disturbancesIdentified: _disturbancesIdentified,
+        activities: _activities,
+        actionsTaken: _actionsTaken));
+  }
+
+  // As the forms are nested, they need to be told to validate
+  // Only one call to validate them is needed as this form's fields are validated together
+  void _validateNestedForms() {
+    _producerContactsUsedFormField.validate();
+    _receiverContactsUsedFormField.validate();
+    _actionsTakenFormField.validate();
+    _contingencyActivitiesFormField.validate();
+  }
+
+  // As the forms are nested, they need to be told to saved
+  // Only one call to save them is needed as this form's fields are saved together
+  void _saveNestedForms() {
+    _producerContactsUsedFormField.save();
+    _receiverContactsUsedFormField.save();
+    _actionsTakenFormField.save();
+    _contingencyActivitiesFormField.save();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,14 +165,19 @@ class _ContingencyPlanEventFormFieldState
             initial: _disturbancesIdentified,
             isMultiline: true,
             title: "Disturbances identified",
+            validator: (String field) {
+              _validateNestedForms();
+              return emptyFieldValidation(field);
+            },
             onSaved: (String changed) {
               _disturbancesIdentified = changed;
+              _saveNestedForms();
               _saveAll();
             },
             onDelete: Optional.empty()),
         ListTile(
           title: Text(
-              "List of animal welfare related measures and actions taken(specific to the event)"),
+              "List of animal welfare related measures and actions taken (specific to the event)"),
         ),
         _actionsTakenFormField,
         ListTile(

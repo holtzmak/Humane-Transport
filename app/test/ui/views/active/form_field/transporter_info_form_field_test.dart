@@ -142,7 +142,7 @@ void main() {
       final testInfo = testTransporterInfo(driverNames: initialNames);
       final expectedEditedInfo = testTransporterInfo(driverNames: editedNames);
 
-      final addButtonFinder = find.byIcon(Icons.add);
+      final addButtonFinder = find.byIcon(Icons.add_circle);
       final saveButtonFinder = find.widgetWithText(RaisedButton, "Save");
       final emptyDriverNameFieldFinder = find.widgetWithText(TextFormField, "");
 

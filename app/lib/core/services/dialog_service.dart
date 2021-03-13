@@ -18,8 +18,8 @@ class DialogService {
   }
 
   Future<DialogResponse> showDialog({
-    String title,
-    String description,
+    @required String title,
+    @required String description,
     String buttonText = 'Ok',
   }) {
     _dialogCompleter = Optional(Completer<DialogResponse>());
@@ -32,8 +32,8 @@ class DialogService {
   }
 
   Future<DialogResponse> showConfirmationDialog(
-      {String title,
-      String description,
+      {@required String title,
+      @required String description,
       String confirmationText = 'Ok',
       String cancelText = 'Cancel'}) {
     _dialogCompleter = Optional(Completer<DialogResponse>());
