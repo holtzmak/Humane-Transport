@@ -3,7 +3,6 @@ import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_contingency_plan_event_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_string_form_field.dart';
-import 'package:app/ui/views/active/form_field/contingency_plan_event_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +10,13 @@ class ContingencyPlanInfoFormField extends StatefulWidget {
   final Function(ContingencyPlanInfo info) onSaved;
   final ContingencyPlanInfo initialInfo;
   final String title = "Contingency Plan";
+  final _innerFormKey = GlobalKey<FormState>();
 
-  // Use the form key to save all the fields of this form
-  final formKey = GlobalKey<FormState>();
+  void save() => _innerFormKey.currentState.save();
+
+  // This function does not change the state of the widget
+  // Must call validate within widget for error text to appear
+  bool validate() => _innerFormKey.currentState.validate();
 
   ContingencyPlanInfoFormField(
       {Key key, @required this.initialInfo, @required this.onSaved})
@@ -35,11 +38,10 @@ class _ContingencyPlanInfoFormFieldState
   List<String> _potentialSafetyActions;
   List<ContingencyPlanEvent> _contingencyEvents;
 
-  DynamicFormField<String, StringFormField> _crisisContactsFormField;
-  DynamicFormField<String, StringFormField> _potentialHazardsFormField;
-  DynamicFormField<String, StringFormField> _potentialSafetyActionsFormField;
-  DynamicFormField<ContingencyPlanEvent, ContingencyPlanEventFormField>
-      _contingencyEventsFormField;
+  DynamicFormField<String> _crisisContactsFormField;
+  DynamicFormField<String> _potentialHazardsFormField;
+  DynamicFormField<String> _potentialSafetyActionsFormField;
+  DynamicFormField<ContingencyPlanEvent> _contingencyEventsFormField;
 
   @override
   void initState() {
@@ -82,6 +84,15 @@ class _ContingencyPlanInfoFormFieldState
     super.initState();
   }
 
+  // As the forms are nested, they need to be told to save
+  // Only one call to saved them is needed as this form's fields are saved together
+  void _saveNestedForms() {
+    _crisisContactsFormField.save();
+    _potentialHazardsFormField.save();
+    _potentialSafetyActionsFormField.save();
+    _contingencyEventsFormField.save();
+  }
+
   void _saveAll() => widget.onSaved(ContingencyPlanInfo(
       goalStatement: _goalStatement,
       communicationPlan: _communicationPlan,
@@ -92,10 +103,27 @@ class _ContingencyPlanInfoFormFieldState
       potentialSafetyActions: _potentialSafetyActions,
       contingencyEvents: _contingencyEvents));
 
+  void _validateAndSaveAll() {
+    // Do not short-circuit the validation calls using &&
+    final isFormValid = widget._innerFormKey.currentState.validate();
+    final areCrisisContactsValid = _crisisContactsFormField.validate();
+    final areContingencyPlanEventsValid =
+        _contingencyEventsFormField.validate();
+    final arePotentialHazardsValid = _potentialHazardsFormField.validate();
+    final areSafetyActionsValid = _potentialSafetyActionsFormField.validate();
+    if (isFormValid &&
+        areCrisisContactsValid &&
+        areContingencyPlanEventsValid &&
+        arePotentialHazardsValid &&
+        areSafetyActionsValid) {
+      widget.save();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.formKey,
+      key: widget._innerFormKey,
       child: Column(children: [
         StringFormField(
             initial: _goalStatement,
@@ -104,6 +132,7 @@ class _ContingencyPlanInfoFormFieldState
                 "Goal Statement (company’s goal and purpose of the plan i.e avoid animal suffering)",
             onSaved: (String changed) {
               _goalStatement = changed;
+              _saveNestedForms();
               _saveAll();
             },
             onDelete: Optional.empty()),
@@ -153,7 +182,7 @@ class _ContingencyPlanInfoFormFieldState
           title: Text("Event Specific Plan(s)"),
         ),
         _contingencyEventsFormField,
-        RaisedButton(child: Text("Save"), onPressed: _saveAll)
+        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
       ]),
     );
   }

@@ -4,7 +4,6 @@ import 'package:app/core/models/receiver_info.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_compromised_animal_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
-import 'package:app/ui/views/active/form_field/compromised_animal_form_field.dart';
 import 'package:app/ui/views/active/form_field/receiver_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
@@ -14,9 +13,13 @@ class DeliveryInfoFormField extends StatefulWidget {
   final Function(DeliveryInfo info) onSaved;
   final DeliveryInfo initialInfo;
   final String title = "Delivery Information";
+  final _innerFormKey = GlobalKey<FormState>();
 
-  // Use the form key to save all the fields of this form
-  final formKey = GlobalKey<FormState>();
+  void save() => _innerFormKey.currentState.save();
+
+  // This function does not change the state of the widget
+  // Must call validate within widget for error text to appear
+  bool validate() => _innerFormKey.currentState.validate();
 
   DeliveryInfoFormField(
       {Key key, @required this.initialInfo, @required this.onSaved})
@@ -33,8 +36,7 @@ class _DeliveryInfoFormFieldState extends State<DeliveryInfoFormField> {
   String _additionalWelfareConcerns;
 
   ReceiverInfoFormField _receiverInfoFormField;
-  DynamicFormField<CompromisedAnimal, CompromisedAnimalFormField>
-      _compromisedAnimalsFormField;
+  DynamicFormField<CompromisedAnimal> _compromisedAnimalsFormField;
 
   @override
   void initState() {
@@ -58,16 +60,27 @@ class _DeliveryInfoFormFieldState extends State<DeliveryInfoFormField> {
     super.initState();
   }
 
+  // As the forms are nested, they need to be told to save
+  // Only one call to saved them is needed as this form's fields are saved together
+  void _saveNestedForms() => _compromisedAnimalsFormField.save();
+
   void _saveAll() => widget.onSaved(DeliveryInfo(
       recInfo: _receiverInfo,
       arrivalDateAndTime: _arrivalDateAndTime,
       compromisedAnimals: _compromisedAnimals,
       additionalWelfareConcerns: _additionalWelfareConcerns));
 
+  void _validateAndSaveAll() {
+    // Do not short-circuit the validation calls using &&
+    final isFormValid = widget._innerFormKey.currentState.validate();
+    final isInnerFormValid = _compromisedAnimalsFormField.validate();
+    if (isFormValid && isInnerFormValid) widget.save();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.formKey,
+      key: widget._innerFormKey,
       child: Column(children: [
         ListTile(
           title: Text("Receiver Info"),
@@ -83,7 +96,7 @@ class _DeliveryInfoFormFieldState extends State<DeliveryInfoFormField> {
                 })),
         ListTile(
             title: Text(
-                "If any animals did not arrive in good condition\nDescription of transport related conditions and actions taken to address prior to arrival")),
+                "If any animals did not arrive in good condition\n\nAdd the description of transport related conditions and actions taken to address prior to arrival")),
         _compromisedAnimalsFormField,
         StringFormField(
             initial: _additionalWelfareConcerns,
@@ -92,10 +105,11 @@ class _DeliveryInfoFormFieldState extends State<DeliveryInfoFormField> {
                 "Additional animal welfare concerns for the consignee to be aware of?",
             onSaved: (String changed) {
               _additionalWelfareConcerns = changed;
+              _saveNestedForms();
               _saveAll();
             },
             onDelete: Optional.empty()),
-        RaisedButton(child: Text("Save"), onPressed: _saveAll)
+        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
       ]),
     );
   }

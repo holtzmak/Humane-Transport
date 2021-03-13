@@ -1,7 +1,6 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_animal_group_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
-import 'package:app/ui/views/active/form_field/animal_group_form_field.dart';
 import 'package:app/ui/views/active/form_field/int_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +9,13 @@ class LoadingVehicleInfoFormField extends StatefulWidget {
   final Function(LoadingVehicleInfo info) onSaved;
   final LoadingVehicleInfo initialInfo;
   final String title = "Loading Vehicle Information";
+  final _innerFormKey = GlobalKey<FormState>();
 
-  // Use the form key to save all the fields of this form
-  final formKey = GlobalKey<FormState>();
+  void save() => _innerFormKey.currentState.save();
+
+  // This function does not change the state of the widget
+  // Must call validate within widget for error text to appear
+  bool validate() => _innerFormKey.currentState.validate();
 
   LoadingVehicleInfoFormField(
       {Key key, @required this.initialInfo, @required this.onSaved})
@@ -31,7 +34,7 @@ class _LoadingVehicleInfoFormFieldState
   int _animalsPerLoadingArea;
   List<AnimalGroup> _animalsLoaded;
 
-  DynamicFormField<AnimalGroup, AnimalGroupFormField> _animalsLoadedFormField;
+  DynamicFormField<AnimalGroup> _animalsLoadedFormField;
 
   @override
   void initState() {
@@ -49,6 +52,10 @@ class _LoadingVehicleInfoFormFieldState
     super.initState();
   }
 
+  // As the forms are nested, they need to be told to save
+  // Only one call to saved them is needed as this form's fields are saved together
+  void _saveNestedForms() => _animalsLoadedFormField.save();
+
   void _saveAll() => widget.onSaved(LoadingVehicleInfo(
       dateAndTimeLoaded: _dateAndTimeLoaded,
       loadingArea: _loadingArea,
@@ -56,10 +63,17 @@ class _LoadingVehicleInfoFormFieldState
       animalsPerLoadingArea: _animalsPerLoadingArea,
       animalsLoaded: _animalsLoaded));
 
+  void _validateAndSaveAll() {
+    // Do not short-circuit the validation calls using &&
+    final isFormValid = widget._innerFormKey.currentState.validate();
+    final isInnerFormValid = _animalsLoadedFormField.validate();
+    if (isFormValid && isInnerFormValid) widget.save();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.formKey,
+      key: widget._innerFormKey,
       child: Column(children: [
         ListTile(
             title: Text("Date and time of loading"),
@@ -74,6 +88,7 @@ class _LoadingVehicleInfoFormFieldState
             title: "Floor or container area available to animals (m2 or ft2)",
             onSaved: (int changed) {
               _loadingArea = changed;
+              _saveNestedForms();
               _saveAll();
             }),
         IntFormField(
@@ -92,7 +107,7 @@ class _LoadingVehicleInfoFormFieldState
             }),
         ListTile(title: Text("Animals loaded")),
         _animalsLoadedFormField,
-        RaisedButton(child: Text("Save"), onPressed: _saveAll)
+        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
       ]),
     );
   }

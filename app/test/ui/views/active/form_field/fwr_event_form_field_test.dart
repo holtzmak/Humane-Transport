@@ -8,18 +8,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Future<void> pumpFwrEventFormField(
-          WidgetTester tester,
-          FeedWaterRestEvent initial,
-          Function(FeedWaterRestEvent) onSaved,
-          Function() onDelete) async =>
+          WidgetTester tester, Widget widget) async =>
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
               body: SingleChildScrollView(
-        child: FeedWaterRestEventFormField(
-          initial: initial,
-          onSaved: onSaved,
-          onDelete: onDelete,
-        ),
+        child: widget,
       ))));
 
   group('Feed, Water, and Rest Event Form Field', () {
@@ -34,11 +27,16 @@ void main() {
               country: "FWR country",
               postalCode: "234rty"),
           fwrProvidedOnboard: false);
-      await pumpFwrEventFormField(tester, feedWaterRestEvent, (_) {
-        // do nothing for test
-      }, () {
-        // do nothing for test
-      });
+      final widget = FeedWaterRestEventFormField(
+        initial: feedWaterRestEvent,
+        onSaved: (_) {
+          // do nothing for test
+        },
+        onDelete: () {
+          // do nothing for test
+        },
+      );
+      await pumpFwrEventFormField(tester, widget);
       verifyFwrEventInformationIsShown(feedWaterRestEvent);
     });
 
@@ -47,9 +45,14 @@ void main() {
       bool callback;
       final onDeleteCallback = () => callback = true;
       final deleteButtonFinder = find.byIcon(Icons.delete);
-      await pumpFwrEventFormField(tester, testFwrEvent(), (_) {
-        // do nothing for test
-      }, onDeleteCallback);
+      final widget = FeedWaterRestEventFormField(
+        initial: testFwrEvent(),
+        onSaved: (_) {
+          // do nothing for test
+        },
+        onDelete: onDeleteCallback,
+      );
+      await pumpFwrEventFormField(tester, widget);
       await tester.ensureVisible(deleteButtonFinder);
       await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
@@ -69,13 +72,20 @@ void main() {
           testFwrEvent(lastFwrLocation: testAddress(streetAddress: testStreet));
       final editedFeedWaterRestEvent = testFwrEvent(
           lastFwrLocation: testAddress(streetAddress: editedStreet));
-
-      await pumpFwrEventFormField(
-          tester, testFeedWaterRestEvent, onSavedCallback, () {
-        // do nothing for test
-      });
+      final formKey = GlobalKey<FormState>();
+      final widget = Form(
+          key: formKey,
+          child: FeedWaterRestEventFormField(
+            initial: testFeedWaterRestEvent,
+            onSaved: onSavedCallback,
+            onDelete: () {
+              // do nothing for test
+            },
+          ));
+      await pumpFwrEventFormField(tester, widget);
       await tester.enterText(fieldFinder, editedStreet);
       await tester.pumpAndSettle();
+      formKey.currentState.save();
       // expect was saved
       expect(callback, editedFeedWaterRestEvent);
       // expect edited text visible

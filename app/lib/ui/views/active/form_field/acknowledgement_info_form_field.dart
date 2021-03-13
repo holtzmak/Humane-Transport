@@ -5,9 +5,11 @@ class AcknowledgementInfoFormField extends StatefulWidget {
   final Function(AcknowledgementInfo info) onSaved;
   final AcknowledgementInfo initialInfo;
   final String title = "Acknowledgements";
+  final _formKey = GlobalKey<FormState>();
 
-  // Use the form key to save all the fields of this form
-  final formKey = GlobalKey<FormState>();
+  void save() => _formKey.currentState.save();
+
+  bool validate() => _formKey.currentState.validate();
 
   AcknowledgementInfoFormField(
       {Key key, @required this.initialInfo, @required this.onSaved})
@@ -21,14 +23,16 @@ class AcknowledgementInfoFormField extends StatefulWidget {
 class _AcknowledgementInfoFormFieldState
     extends State<AcknowledgementInfoFormField> {
 // TODO: Resolve how to edit ack info
-  void _saveAll() {
-    widget.onSaved(widget.initialInfo);
+  void _saveAll() => widget.onSaved(widget.initialInfo);
+
+  void _validateAndSaveAll() {
+    if (widget.validate()) _saveAll();
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.formKey,
+      key: widget._formKey,
       child: Column(children: [
         ListTile(
           title: Text("Shipper acknowledgement"),
@@ -42,7 +46,7 @@ class _AcknowledgementInfoFormFieldState
           title: Text("Consignee acknowledgement"),
           subtitle: Text("TODO"),
         ),
-        RaisedButton(child: Text("Save"), onPressed: _saveAll)
+        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
       ]),
     );
   }

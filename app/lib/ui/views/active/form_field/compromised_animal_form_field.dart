@@ -4,13 +4,34 @@ import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
 
 /// A custom form field with onSaved and onDelete callback
-class CompromisedAnimalFormField extends StatefulWidget {
+class CompromisedAnimalFormField extends FormField<CompromisedAnimal> {
+  CompromisedAnimalFormField(
+      {Key key,
+      @required CompromisedAnimal initial,
+      @required String title,
+      @required Function(CompromisedAnimal) onSaved,
+      @required Function() onDelete})
+      : super(
+            key: key,
+            onSaved: onSaved,
+            initialValue: initial,
+            builder: (FormFieldState<CompromisedAnimal> state) {
+              return _CompromisedAnimalFormFieldInner(
+                title: title,
+                initial: state.value,
+                onSaved: onSaved,
+                onDelete: onDelete,
+              );
+            });
+}
+
+class _CompromisedAnimalFormFieldInner extends StatefulWidget {
   final CompromisedAnimal initial;
   final String title;
   final Function(CompromisedAnimal) onSaved;
   final Function() onDelete;
 
-  CompromisedAnimalFormField(
+  _CompromisedAnimalFormFieldInner(
       {Key key,
       @required this.initial,
       @required this.title,
@@ -24,7 +45,7 @@ class CompromisedAnimalFormField extends StatefulWidget {
 }
 
 class _CompromisedAnimalFormFieldState
-    extends State<CompromisedAnimalFormField> {
+    extends State<_CompromisedAnimalFormFieldInner> {
   String _animalDescription;
   String _measuresTakenToCareForAnimal;
 

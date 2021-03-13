@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 DateTimePicker dateTimePicker(
         {@required DateTime initialDate, @required Function(String) onSaved}) =>
     DateTimePicker(
+      decoration: InputDecoration(border: OutlineInputBorder()),
       type: DateTimePickerType.dateTimeSeparate,
       initialValue: initialDate.toString(),
       firstDate: DateTime(2000),
@@ -13,16 +14,11 @@ DateTimePicker dateTimePicker(
     );
 
 DateTimePicker timePicker(
-        {@required TimeOfDay initialTime,
-        @required Function(String) onSaved}) =>
+        {@required DateTime initialTime, @required Function(String) onSaved}) =>
     DateTimePicker(
+      decoration: InputDecoration(border: OutlineInputBorder()),
       type: DateTimePickerType.time,
-      initialValue: convertTimeOfDayToString(initialTime),
-      onSaved: onSaved,
-      onChanged: onSaved,
+      initialValue: DateFormat('HH:mm').format(initialTime),
+      onSaved: (String changed) => onSaved("1970-01-01 $changed"),
+      onChanged: (String changed) => onSaved("1970-01-01 $changed"),
     );
-
-/// The TimeOfDay toString() is not like DateTime toString()
-/// This function converts it to the expected string of HH:mm
-String convertTimeOfDayToString(TimeOfDay initialTime) =>
-    initialTime.toString().substring(10, 15);

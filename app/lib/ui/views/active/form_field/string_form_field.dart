@@ -1,75 +1,86 @@
 import 'package:app/core/utilities/optional.dart';
 import 'package:flutter/material.dart';
 
-/// A custom form field with onSaved and onDelete callback
-class StringFormField extends StatefulWidget {
-  final String initial;
-  final String title;
-  final bool isMultiline;
-  final FormFieldSetter<String> onSaved;
-  final Optional<Function()> onDelete;
-
-  StringFormField(
-      {Key key,
-      @required this.initial,
-      @required this.title,
-      @required this.onSaved,
-      @required this.onDelete,
-      this.isMultiline = false})
-      : super(key: key);
-
-  @override
-  _StringFormFieldState createState() => _StringFormFieldState();
+// TODO: Extract validators into their own service
+String emptyFieldValidation(String value) {
+  if (value.isEmpty) {
+    return "* Required";
+  } else
+    return null;
 }
 
-class _StringFormFieldState extends State<StringFormField> {
-  TextEditingController controller;
+/// A custom form field with onSaved and onDelete callback
+class StringFormField extends FormField<String> {
+  StringFormField(
+      {Key key,
+      @required String initial,
+      @required String title,
+      @required FormFieldSetter<String> onSaved,
+      @required Optional<Function()> onDelete,
+      FormFieldValidator<String> validator = emptyFieldValidation,
+      bool isMultiline = false})
+      : super(
+            key: key,
+            initialValue: initial,
+            builder: (FormFieldState<String> state) {
+              return _StringFormFieldState(
+                state: state,
+                title: title,
+                isMultiline: isMultiline,
+                onSaved: onSaved,
+                onDelete: onDelete,
+                validator: validator,
+              );
+            });
+}
 
-  @override
-  void initState() {
-    controller = TextEditingController(text: widget.initial);
-    super.initState();
-  }
+class _StringFormFieldState extends StatelessWidget {
+  final FormFieldState<String> state;
+  final String title;
+  final bool isMultiline;
+  final Optional<Function()> onDelete;
+  final FormFieldSetter<String> onSaved;
+  final FormFieldValidator<String> validator;
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  _StringFormFieldState({
+    @required this.state,
+    @required this.title,
+    @required this.isMultiline,
+    @required this.onDelete,
+    @required this.onSaved,
+    @required this.validator,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return widget.onDelete.isPresent()
+    return onDelete.isPresent()
         ? ListTile(
-            title: Text(widget.title),
-            subtitle: TextFormField(
-              keyboardType: widget.isMultiline
-                  ? TextInputType.multiline
-                  : TextInputType.text,
+            title: TextFormField(
+              validator: validator,
+              initialValue: state.value,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(), labelText: title),
+              keyboardType:
+                  isMultiline ? TextInputType.multiline : TextInputType.text,
               // Needed for the text field to expand
               maxLines: null,
-              controller: controller,
-              // TODO: This is intensive to do, and should be refactored sometime
-              // This is the same as onSaved, so we can avoid needing an
-              // explicit save button in dynamic forms
-              onChanged: widget.onSaved,
-              onSaved: widget.onSaved,
+              onSaved: onSaved,
             ),
             trailing: IconButton(
               icon: Icon(Icons.delete),
-              onPressed: widget.onDelete.get(),
-            ),
-          )
+              onPressed: onDelete.get(),
+            ))
         : ListTile(
-            title: Text(widget.title),
-            subtitle: TextFormField(
-              keyboardType: widget.isMultiline
-                  ? TextInputType.multiline
-                  : TextInputType.text,
+            title: TextFormField(
+              validator: validator,
+              initialValue: state.value,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(), labelText: title),
+              keyboardType:
+                  isMultiline ? TextInputType.multiline : TextInputType.text,
+              // Needed for the text field to expand
               maxLines: null,
-              controller: controller,
-              onSaved: widget.onSaved,
-              onChanged: widget.onSaved,
+              onSaved: onSaved,
             ),
           );
   }

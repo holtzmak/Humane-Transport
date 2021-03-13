@@ -1,6 +1,5 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/services/dialog_service.dart';
-import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
 import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
@@ -16,8 +15,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
-class MockNavigationService extends Mock implements NavigationService {}
-
 class MockDialogService extends Mock implements DialogService {}
 
 class MockActiveScreenViewModel extends Mock implements ActiveScreenViewModel {}
@@ -26,6 +23,7 @@ final testLocator = GetIt.instance;
 
 void main() {
   final mockActiveScreenViewModel = MockActiveScreenViewModel();
+  final mockDialogService = MockDialogService();
 
   Future<void> pumpATREditingScreen(
           WidgetTester tester, AnimalTransportRecord initialATR) async =>
@@ -35,6 +33,7 @@ void main() {
     setUpAll(() async {
       testLocator.registerLazySingleton<ActiveScreenViewModel>(
           () => mockActiveScreenViewModel);
+      testLocator.registerLazySingleton<DialogService>(() => mockDialogService);
     });
 
     testWidgets('has shipping info form field', (WidgetTester tester) async {
@@ -144,7 +143,7 @@ void main() {
           fwrInfo: testFwrInfo(lastFwrLocation: testAddress(city: "Iqaluit")));
       final backButtonFinder = find.byIcon(Icons.arrow_back);
       final fieldFinder = find.widgetWithText(TextFormField, "Yellowknife");
-      when(mockActiveScreenViewModel.saveEditedAtr(testATR))
+      when(mockActiveScreenViewModel.saveEditedAtr(editedATR))
           .thenAnswer((_) => Future.value()); // do nothing for test
 
       await pumpATREditingScreen(tester, testATR);

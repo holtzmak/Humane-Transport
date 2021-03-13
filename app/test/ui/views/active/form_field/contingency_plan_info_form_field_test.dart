@@ -26,15 +26,12 @@ void main() {
   }
 
   Future<void> pumpContingencyPlanInfoFormField(
-          WidgetTester tester,
-          ContingencyPlanInfo testInfo,
-          Function(ContingencyPlanInfo) callback) async =>
+          WidgetTester tester, Widget widget) async =>
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
               body: SingleChildScrollView(
                   child: Container(
-        child: ContingencyPlanInfoFormField(
-            initialInfo: testInfo, onSaved: callback),
+        child: widget,
       )))));
 
   group('Contingency Plan Info Form Field', () {
@@ -50,18 +47,23 @@ void main() {
             "Team Rocket blasting off at the speed of light!"
           ],
           contingencyEvents: []);
-      await pumpContingencyPlanInfoFormField(tester, contingencyPlanInfo, (_) {
-        // Do nothing for test
-      });
+      final widget = ContingencyPlanInfoFormField(
+          initialInfo: contingencyPlanInfo,
+          onSaved: (_) {
+            // Do nothing for test
+          });
+      await pumpContingencyPlanInfoFormField(tester, widget);
       verifyInformationIsShown(contingencyPlanInfo);
     });
 
     testWidgets('shows save button', (WidgetTester tester) async {
       final saveButtonFinder = find.widgetWithText(RaisedButton, "Save");
-      await pumpContingencyPlanInfoFormField(tester, testContingencyInfo(),
-          (_) {
-        // Do nothing for test
-      });
+      final widget = ContingencyPlanInfoFormField(
+          initialInfo: testContingencyInfo(),
+          onSaved: (_) {
+            // Do nothing for test
+          });
+      await pumpContingencyPlanInfoFormField(tester, widget);
       await tester.ensureVisible(saveButtonFinder);
       expect(saveButtonFinder, findsOneWidget);
     });
@@ -73,7 +75,9 @@ void main() {
       ContingencyPlanInfo callbackInfo;
       final onSavedCallback = (ContingencyPlanInfo info) => callbackInfo = info;
 
-      await pumpContingencyPlanInfoFormField(tester, testInfo, onSavedCallback);
+      final widget = ContingencyPlanInfoFormField(
+          initialInfo: testInfo, onSaved: onSavedCallback);
+      await pumpContingencyPlanInfoFormField(tester, widget);
       await tester.ensureVisible(saveButtonFinder);
       await tester.tap(saveButtonFinder);
       await tester.pumpAndSettle();
@@ -96,7 +100,9 @@ void main() {
       ]);
       final saveButtonFinder = find.widgetWithText(RaisedButton, "Save");
 
-      await pumpContingencyPlanInfoFormField(tester, testInfo, onSaved);
+      final widget =
+          ContingencyPlanInfoFormField(initialInfo: testInfo, onSaved: onSaved);
+      await pumpContingencyPlanInfoFormField(tester, widget);
       // Edit text
       await tester.ensureVisible(fieldFinder);
       await tester.enterText(fieldFinder, editedContact);

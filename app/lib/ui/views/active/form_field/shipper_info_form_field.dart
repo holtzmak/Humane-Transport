@@ -1,18 +1,19 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/views/active/form_field/address_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
-
-import 'address_form_field.dart';
 
 class ShipperInfoFormField extends StatefulWidget {
   final Function(ShipperInfo info) onSaved;
   final ShipperInfo initialInfo;
   final String title = "Shipper's Information";
+  final _formKey = GlobalKey<FormState>();
 
-  // Use the form key to save all the fields of this form
-  final formKey = GlobalKey<FormState>();
+  void save() => _formKey.currentState.save();
+
+  bool validate() => _formKey.currentState.validate();
 
   ShipperInfoFormField(
       {Key key, @required this.initialInfo, @required this.onSaved})
@@ -49,20 +50,22 @@ class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
     super.initState();
   }
 
-  void _saveAll() {
-    widget.onSaved(ShipperInfo(
-        shipperName: _name,
-        shipperIsAnimalOwner: _isAnimalOwner == "Yes" ? true : false,
-        departureLocationId: _departureId,
-        departureLocationName: _departureLocationName,
-        departureAddress: _departureAddress,
-        shipperContactInfo: _contactInfo));
+  void _saveAll() => widget.onSaved(ShipperInfo(
+      shipperName: _name,
+      shipperIsAnimalOwner: _isAnimalOwner == "Yes" ? true : false,
+      departureLocationId: _departureId,
+      departureLocationName: _departureLocationName,
+      departureAddress: _departureAddress,
+      shipperContactInfo: _contactInfo));
+
+  void _validateAndSaveAll() {
+    if (widget.validate()) widget.save();
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.formKey,
+      key: widget._formKey,
       child: Column(children: [
         StringFormField(
             initial: _name,
@@ -73,22 +76,23 @@ class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
             },
             onDelete: Optional.empty()),
         ListTile(
-            visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-            title: Text(
-                "The shipper is the owner of the animals loaded in the vehicle?"),
-            subtitle: DropdownButtonFormField(
-              value: _isAnimalOwner,
-              items: ["Yes", "No"]
-                  .map((label) => DropdownMenuItem(
-                        child: Text(label),
-                        value: label,
-                      ))
-                  .toList(),
-              onChanged: (String changed) => setState(() {
-                _isAnimalOwner = changed;
-                _saveAll();
-              }),
-            )),
+            title: DropdownButtonFormField(
+          decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText:
+                  "The shipper is the owner of the animals loaded in the vehicle?"),
+          value: _isAnimalOwner,
+          items: ["Yes", "No"]
+              .map((label) => DropdownMenuItem(
+                    child: Text(label),
+                    value: label,
+                  ))
+              .toList(),
+          onChanged: (String changed) => setState(() {
+            _isAnimalOwner = changed;
+            _saveAll();
+          }),
+        )),
         StringFormField(
             initial: _departureId,
             title: "Departure Premises Identification number (PID)",
@@ -116,7 +120,7 @@ class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
               _saveAll();
             },
             onDelete: Optional.empty()),
-        RaisedButton(child: Text("Save"), onPressed: _saveAll)
+        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
       ]),
     );
   }

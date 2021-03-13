@@ -1,9 +1,8 @@
 import 'package:app/core/models/contingency_plan_info.dart';
+import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/form_field/contingency_plan_event_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-
-import 'dynamic_form_field.dart';
 
 /// A custom form field for ContingencyPlanEvents.
 /// Due to it's dynamic nature this widget should only be used inside a grow-able
@@ -11,7 +10,7 @@ import 'dynamic_form_field.dart';
 dynamicContingencyPlanEventFormField(
         {@required List<ContingencyPlanEvent> initialList,
         @required Function(List<ContingencyPlanEvent>) onSaved}) =>
-    DynamicFormField<ContingencyPlanEvent, ContingencyPlanEventFormField>(
+    DynamicFormField<ContingencyPlanEvent>(
         initialList: initialList,
         titles: "Event Specific Plans",
         onSaved: onSaved,

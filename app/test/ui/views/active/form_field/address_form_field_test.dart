@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Future<void> pumpAddressFormField(
-          WidgetTester tester, AddressFormField widget) async =>
+  Future<void> pumpAddressFormField(WidgetTester tester, Widget widget) async =>
       tester.pumpWidget(MaterialApp(home: Scaffold(body: widget)));
 
   group('Address Form Field', () {
@@ -28,7 +27,7 @@ void main() {
       verifyAddressIsShown(testAddr);
     });
 
-    testWidgets('onSaved called when info is edited',
+    testWidgets('onSaved called when info is edited and saved',
         (WidgetTester tester) async {
       final initialStreet = "ABC Street";
       final editedStreet = "Edited Street";
@@ -37,13 +36,18 @@ void main() {
       Address callback;
       final onSaved = (Address changed) => callback = changed;
       final fieldFinder = find.text(initialStreet);
-      final widget = AddressFormField(
-        initialAddr: testAddr,
-        onSaved: onSaved,
+      final formKey = GlobalKey<FormState>();
+      final widget = Form(
+        key: formKey,
+        child: AddressFormField(
+          initialAddr: testAddr,
+          onSaved: onSaved,
+        ),
       );
       await pumpAddressFormField(tester, widget);
       await tester.enterText(fieldFinder, editedStreet);
       await tester.pumpAndSettle();
+      formKey.currentState.save();
       expect(callback, editedAddr);
     });
   });

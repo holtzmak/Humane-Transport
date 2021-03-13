@@ -7,15 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Future<void> pumpReceiverInfoFormField(WidgetTester tester,
-          ReceiverInfo initial, Function(ReceiverInfo) onSaved) async =>
+  Future<void> pumpReceiverInfoFormField(
+          WidgetTester tester, Widget widget) async =>
       tester.pumpWidget(MaterialApp(
           home: Scaffold(
               body: SingleChildScrollView(
-        child: ReceiverInfoFormField(
-          initialInfo: initial,
-          onSaved: onSaved,
-        ),
+        child: widget,
       ))));
 
   group('Receiver Info Form Field', () {
@@ -28,9 +25,13 @@ void main() {
           destinationLocationName: "Tester Company Farms",
           destinationAddress: testAddress(),
           receiverContactInfo: "By phone: 3061111111");
-      await pumpReceiverInfoFormField(tester, testReceiverInfo, (_) {
-        // do nothing for test
-      });
+      final widget = ReceiverInfoFormField(
+        initialInfo: testReceiverInfo,
+        onSaved: (_) {
+          // do nothing for test
+        },
+      );
+      await pumpReceiverInfoFormField(tester, widget);
       verifyReceiverInfoIsShown(testReceiverInfo);
     });
 
@@ -45,9 +46,17 @@ void main() {
       final testRecInfo = testReceiverInfo(accountId: testAccountId);
       final editedRecInfo = testReceiverInfo(accountId: editedAccountId);
 
-      await pumpReceiverInfoFormField(tester, testRecInfo, onSavedCallback);
+      final formKey = GlobalKey<FormState>();
+      final widget = Form(
+          key: formKey,
+          child: ReceiverInfoFormField(
+            initialInfo: testRecInfo,
+            onSaved: onSavedCallback,
+          ));
+      await pumpReceiverInfoFormField(tester, widget);
       await tester.enterText(fieldFinder, "123");
       await tester.pumpAndSettle();
+      formKey.currentState.save();
       // expect was saved
       expect(callback, editedRecInfo);
       // expect edited text visible

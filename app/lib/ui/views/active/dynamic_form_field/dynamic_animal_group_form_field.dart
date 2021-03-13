@@ -1,9 +1,8 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
+import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/form_field/animal_group_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-
-import 'dynamic_form_field.dart';
 
 /// A custom form field for AnimalGroups.
 /// Due to it's dynamic nature this widget should only be used inside a grow-able
@@ -11,7 +10,7 @@ import 'dynamic_form_field.dart';
 dynamicAnimalGroupFormField(
         {@required List<AnimalGroup> initialList,
         @required Function(List<AnimalGroup>) onSaved}) =>
-    DynamicFormField<AnimalGroup, AnimalGroupFormField>(
+    DynamicFormField<AnimalGroup>(
         initialList: initialList,
         titles: "Animal(s) description",
         onSaved: onSaved,
@@ -29,6 +28,6 @@ dynamicAnimalGroupFormField(
             AnimalGroupFormField(
                 // Must have unique keys in rebuilding widget lists
                 key: ObjectKey(Uuid().v4()),
-                initialInfo: it,
+                initial: it,
                 onSaved: (AnimalGroup changed) => onSaved(index, changed),
                 onDelete: () => onDelete(index)));

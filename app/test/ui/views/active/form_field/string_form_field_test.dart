@@ -9,8 +9,7 @@ void main() {
     expect(find.widgetWithText(ListTile, titleExpected), findsOneWidget);
   }
 
-  Future<void> pumpStringFormField(
-          WidgetTester tester, StringFormField widget) async =>
+  Future<void> pumpStringFormField(WidgetTester tester, Widget widget) async =>
       tester.pumpWidget(MaterialApp(home: Scaffold(body: widget)));
 
   group('String Form Field', () {
@@ -64,23 +63,28 @@ void main() {
       expect(deleteButtonFinder, findsNothing);
     });
 
-    testWidgets('onSaved called when edited', (WidgetTester tester) async {
+    testWidgets('onSaved called when edited then saved',
+        (WidgetTester tester) async {
       final testInfo = "Test";
       final editedInfo = "Edited";
       String callback;
       final onSavedCallback = (String changed) => callback = changed;
       final fieldFinder = find.widgetWithText(TextFormField, testInfo);
       final editedFieldFinder = find.widgetWithText(TextFormField, editedInfo);
-      final widget = StringFormField(
-        initial: testInfo,
-        title: "Test Title",
-        onSaved: onSavedCallback,
-        onDelete: Optional.empty(),
-      );
+      final testFormKey = GlobalKey<FormState>();
+      final widget = Form(
+          key: testFormKey,
+          child: StringFormField(
+            initial: testInfo,
+            title: "Test Title",
+            onSaved: onSavedCallback,
+            onDelete: Optional.empty(),
+          ));
 
       await pumpStringFormField(tester, widget);
       await tester.enterText(fieldFinder, editedInfo);
       await tester.pumpAndSettle();
+      testFormKey.currentState.save();
       // expect was saved
       expect(callback, editedInfo);
       // expect edited text visible

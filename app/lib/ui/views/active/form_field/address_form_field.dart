@@ -3,14 +3,11 @@ import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
 
-/// A custom form field for addresses
+/// A custom form field for Addresses
 /// Intended to be used inside a GroupFormField
 class AddressFormField extends StatefulWidget {
   final Address initialAddr;
   final Function(Address) onSaved;
-
-  // Use the form key to save all the fields of this form
-  final formKey = GlobalKey<FormState>();
 
   AddressFormField(
       {Key key, @required this.initialAddr, @required this.onSaved})
@@ -39,61 +36,56 @@ class _AddressFormFieldState extends State<AddressFormField> {
     super.initState();
   }
 
-  void _saveAll() {
-    widget.onSaved(Address(
-        streetAddress: _street,
-        city: _city,
-        provinceOrState: _provinceOrState,
-        country: _country,
-        postalCode: _postalCode));
-  }
+  void _saveAll() => widget.onSaved(Address(
+      streetAddress: _street,
+      city: _city,
+      provinceOrState: _provinceOrState,
+      country: _country,
+      postalCode: _postalCode));
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: widget.formKey,
-      child: Column(children: [
-        StringFormField(
-            initial: _street,
-            title: "Street",
-            onSaved: (String changed) {
-              _street = changed;
-              _saveAll();
-            },
-            onDelete: Optional.empty()),
-        StringFormField(
-            initial: _city,
-            title: "City",
-            onSaved: (String changed) {
-              _city = changed;
-              _saveAll();
-            },
-            onDelete: Optional.empty()),
-        StringFormField(
-            initial: _provinceOrState,
-            title: "Province or State",
-            onSaved: (String changed) {
-              _provinceOrState = changed;
-              _saveAll();
-            },
-            onDelete: Optional.empty()),
-        StringFormField(
-            initial: _country,
-            title: "Country",
-            onSaved: (String changed) {
-              _country = changed;
-              _saveAll();
-            },
-            onDelete: Optional.empty()),
-        StringFormField(
-            initial: _postalCode,
-            title: "Postal Code",
-            onSaved: (String changed) {
-              _postalCode = changed;
-              _saveAll();
-            },
-            onDelete: Optional.empty()),
-      ]),
-    );
+    return Column(children: [
+      StringFormField(
+          initial: _street,
+          title: "Street",
+          onSaved: (String changed) {
+            _street = changed;
+            _saveAll();
+          },
+          onDelete: Optional.empty()),
+      StringFormField(
+          initial: _city,
+          title: "City",
+          onSaved: (String changed) {
+            _city = changed;
+            _saveAll();
+          },
+          onDelete: Optional.empty()),
+      StringFormField(
+          initial: _provinceOrState,
+          title: "Province or State",
+          onSaved: (String changed) {
+            _provinceOrState = changed;
+            _saveAll();
+          },
+          onDelete: Optional.empty()),
+      StringFormField(
+          initial: _country,
+          title: "Country",
+          onSaved: (String changed) {
+            _country = changed;
+            _saveAll();
+          },
+          onDelete: Optional.empty()),
+      StringFormField(
+          initial: _postalCode,
+          title: "Postal Code",
+          onSaved: (String changed) {
+            _postalCode = changed;
+            _saveAll();
+          },
+          onDelete: Optional.empty()),
+    ]);
   }
 }

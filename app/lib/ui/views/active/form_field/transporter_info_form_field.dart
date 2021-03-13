@@ -3,19 +3,22 @@ import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_string_form_field.dart';
+import 'package:app/ui/views/active/form_field/address_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
-
-import 'address_form_field.dart';
 
 class TransporterInfoFormField extends StatefulWidget {
   final Function(TransporterInfo info) onSaved;
   final TransporterInfo initialInfo;
   final String title = "Transporter's Information";
+  final _innerFormKey = GlobalKey<FormState>();
 
-  // Use the form key to save all the fields of this form
-  final formKey = GlobalKey<FormState>();
+  void save() => _innerFormKey.currentState.save();
+
+  // This function does not change the state of the widget
+  // Must call validate within widget for error text to appear
+  bool validate() => _innerFormKey.currentState.validate();
 
   TransporterInfoFormField(
       {Key key, @required this.initialInfo, @required this.onSaved})
@@ -43,7 +46,7 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
 
   AddressFormField _companyAddressFormField;
   AddressFormField _addressLastCleanedAtFormField;
-  DynamicFormField<String, StringFormField> _driverNamesFormField;
+  DynamicFormField<String> _driverNamesFormField;
 
   @override
   void initState() {
@@ -84,6 +87,10 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
     super.initState();
   }
 
+  // As the forms are nested, they need to be told to save
+  // Only one call to saved them is needed as this form's fields are saved together
+  void _saveNestedForms() => _driverNamesFormField.save();
+
   void _saveAll() => widget.onSaved(TransporterInfo(
       companyName: _companyName,
       companyAddress: _companyAddress,
@@ -99,16 +106,24 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
       trainingType: _trainingType,
       trainingExpiryDate: _trainingExpiryDate));
 
+  void _validateAndSaveAll() {
+    // Do not short-circuit the validation calls using &&
+    final isFormValid = widget._innerFormKey.currentState.validate();
+    final isInnerFormValid = _driverNamesFormField.validate();
+    if (isFormValid && isInnerFormValid) widget.save();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.formKey,
+      key: widget._innerFormKey,
       child: Column(children: [
         StringFormField(
             initial: _companyName,
             title: "Name of transporting company",
             onSaved: (String changed) {
               _companyName = changed;
+              _saveNestedForms();
               _saveAll();
             },
             onDelete: Optional.empty()),
@@ -163,37 +178,40 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
                 "Address conveyance or container last cleaned and disinfected at"),
             subtitle: _addressLastCleanedAtFormField),
         ListTile(
-            visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-            title: Text("Driver(s) have been briefed on the contingency plan?"),
-            subtitle: DropdownButtonFormField(
-              value: _driversAreBriefed,
-              items: ["Yes", "No"]
-                  .map((label) => DropdownMenuItem(
-                        child: Text(label),
-                        value: label,
-                      ))
-                  .toList(),
-              onChanged: (String changed) => setState(() {
-                _driversAreBriefed = changed;
-                _saveAll();
-              }),
-            )),
+            title: DropdownButtonFormField(
+          decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText:
+                  "Driver(s) have been briefed on the contingency plan?"),
+          value: _driversAreBriefed,
+          items: ["Yes", "No"]
+              .map((label) => DropdownMenuItem(
+                    child: Text(label),
+                    value: label,
+                  ))
+              .toList(),
+          onChanged: (String changed) => setState(() {
+            _driversAreBriefed = changed;
+            _saveAll();
+          }),
+        )),
         ListTile(
-            visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-            title: Text("Driver(s) have received humane transport training?"),
-            subtitle: DropdownButtonFormField(
-              value: _driversHaveTraining,
-              items: ["Yes", "No"]
-                  .map((label) => DropdownMenuItem(
-                        child: Text(label),
-                        value: label,
-                      ))
-                  .toList(),
-              onChanged: (String changed) => setState(() {
-                _driversHaveTraining = changed;
-                _saveAll();
-              }),
-            )),
+            title: DropdownButtonFormField(
+          decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: "Driver(s) have received humane transport training?"),
+          value: _driversHaveTraining,
+          items: ["Yes", "No"]
+              .map((label) => DropdownMenuItem(
+                    child: Text(label),
+                    value: label,
+                  ))
+              .toList(),
+          onChanged: (String changed) => setState(() {
+            _driversHaveTraining = changed;
+            _saveAll();
+          }),
+        )),
         StringFormField(
             initial: _trainingType,
             title: "Training type",
@@ -210,7 +228,7 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
                   _trainingExpiryDate = DateTime.parse(changed);
                   _saveAll();
                 })),
-        RaisedButton(child: Text("Save"), onPressed: _saveAll)
+        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
       ]),
     );
   }

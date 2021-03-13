@@ -6,11 +6,14 @@ import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter_info.dart';
+import 'package:app/core/services/dialog_service.dart';
+import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/contingency_plan_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/delivery_info_form_field.dart';
+import 'package:app/ui/views/active/form_field/fwr_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/loading_vehicle_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/transporter_info_form_field.dart';
@@ -19,10 +22,9 @@ import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 
-import 'form_field/fwr_info_form_field.dart';
-
 class ATREditingScreen extends StatefulWidget {
   static const route = "/atrEditingScreen";
+  final DialogService _dialogService = locator<DialogService>();
   final AnimalTransportRecord atr;
 
   ATREditingScreen({Key key, @required this.atr}) : super(key: key);
@@ -105,44 +107,65 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     ]);
   }
 
-  bool _formIsValid() =>
-      _shipperInfoField.formKey.currentState.validate() &&
-      _transporterInfoFormField.formKey.currentState.validate() &&
-      _feedWaterRestInfoFormField.formKey.currentState.validate() &&
-      _loadingVehicleInfoFormField.formKey.currentState.validate() &&
-      _deliveryInfoFormField.formKey.currentState.validate() &&
-      _acknowledgementInfoFormField.formKey.currentState.validate() &&
-      _contingencyPlanInfoFormField.formKey.currentState.validate();
+  // TODO: #134. Determine which form was invalid and notify transporter
+  bool _isFormValid() =>
+      _shipperInfoField.validate() &&
+      _transporterInfoFormField.validate() &&
+      _feedWaterRestInfoFormField.validate() &&
+      _loadingVehicleInfoFormField.validate() &&
+      _deliveryInfoFormField.validate() &&
+      _acknowledgementInfoFormField.validate() &&
+      _contingencyPlanInfoFormField.validate();
 
-  bool _canAndDidFormSave() {
-    if (_formIsValid()) {
-      _shipperInfoField.formKey.currentState.save();
-      _transporterInfoFormField.formKey.currentState.save();
-      _feedWaterRestInfoFormField.formKey.currentState.save();
-      _loadingVehicleInfoFormField.formKey.currentState.save();
-      _deliveryInfoFormField.formKey.currentState.save();
-      _acknowledgementInfoFormField.formKey.currentState.save();
-      _contingencyPlanInfoFormField.formKey.currentState.save();
-      return true;
+  Future<bool> _isFormValidAndSaved() {
+    if (_isFormValid()) {
+      _saveForm();
+      return Future.value(true);
     }
-    return false;
+    return Future.error(false);
   }
 
-  Future<bool> _saveATR(ActiveScreenViewModel model) async =>
-      Future.value(_canAndDidFormSave())
-          .then((_) => model.saveEditedAtr(_replacementAtr))
-          .then((_) => true)
-          .catchError((_) => false);
+  void _saveForm() {
+    _shipperInfoField.save();
+    _transporterInfoFormField.save();
+    _feedWaterRestInfoFormField.save();
+    _loadingVehicleInfoFormField.save();
+    _deliveryInfoFormField.save();
+    _acknowledgementInfoFormField.save();
+    _contingencyPlanInfoFormField.save();
+  }
+
+  Future<bool> _saveBeforeWillPop(ActiveScreenViewModel model) async {
+    _saveForm();
+    return model
+        .saveEditedAtr(_replacementAtr)
+        .then((_) => true)
+        .catchError((e) => false);
+  }
+
+  Future<void> _saveAndNavigateBack(ActiveScreenViewModel model) async {
+    _saveForm();
+    return model
+        .saveEditedAtr(_replacementAtr)
+        .then((_) => model.navigateBack())
+        .catchError((e) => widget._dialogService.showDialog(
+              title: 'Saving the Animal Transport Record failed',
+              description: e.message,
+            ));
+  }
 
   Future<void> _submitATR(ActiveScreenViewModel model) async =>
-      Future.value(_canAndDidFormSave())
-          .then((_) => model.saveCompletedAtr(_replacementAtr));
+      _isFormValidAndSaved()
+          .then((_) => model.saveCompletedAtr(_replacementAtr))
+          .catchError((_) => widget._dialogService.showDialog(
+              title: 'Submission of the Animal Transport Record failed',
+              description: 'One or more the the form fields is invalid'));
 
   @override
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<ActiveScreenViewModel>(
         builder: (context, model, child) => WillPopScope(
-              onWillPop: () => _saveATR(model),
+              onWillPop: () => _saveBeforeWillPop(model),
               child: BusyOverlayScreen(
                 show: model.state == ViewState.Busy,
                 child: Scaffold(
@@ -150,10 +173,8 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                       title: Text("Animal Transport Form"),
                       automaticallyImplyLeading: false,
                       leading: new IconButton(
-                        icon: new Icon(Icons.arrow_back),
-                        onPressed: () async => _saveATR(model)
-                            .then((value) => model.navigateBack()),
-                      ),
+                          icon: new Icon(Icons.arrow_back),
+                          onPressed: () async => _saveAndNavigateBack(model)),
                     ),
                     body: SingleChildScrollView(
                       child: Column(
