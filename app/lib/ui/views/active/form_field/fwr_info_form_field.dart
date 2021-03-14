@@ -92,7 +92,12 @@ class _FeedWaterRestInfoFormFieldState
             subtitle: _lastFwrAddressFormField),
         ListTile(title: Text("If FWR was provided during transport")),
         _fwrEventFormField,
-        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
+        RaisedButton(
+            child: Text(
+              "Save",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: _validateAndSaveAll)
       ]),
     );
   }

@@ -4,6 +4,7 @@ import 'package:app/ui/widgets/atr_preview_card.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:app/ui/common/style.dart';
 
 class HistoryScreen extends StatefulWidget {
   static const route = '/history';
@@ -24,11 +25,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<HistoryScreenViewModel>(
       builder: (context, model, _) => Scaffold(
-          appBar: AppBar(
-            title: Text('History Screen'),
-            automaticallyImplyLeading: false,
-          ),
+          appBar: appBar('Travel History'),
+          backgroundColor: homeBackground,
           bottomNavigationBar: BottomNavigationBar(
+              unselectedLabelStyle: TextStyle(color: buttonColor),
+              backgroundColor: bottomNavBarColor,
               onTap: (int item) async {
                 switch (item) {
                   case 0:
@@ -39,11 +40,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
               },
               items: [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.arrow_back),
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: buttonColor,
+                  ),
                   label: "Back",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.directions_car),
+                  icon: Icon(
+                    Icons.directions_car,
+                    color: buttonColor,
+                  ),
                   label: "Active",
                 ),
               ]),

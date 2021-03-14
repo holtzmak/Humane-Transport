@@ -2,6 +2,7 @@ import 'package:app/core/view_models/home_screen_view_model.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:app/ui/common/style.dart';
 
 class HomeScreen extends StatelessWidget {
   static const route = '/home';
@@ -9,10 +10,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Screen'),
-        automaticallyImplyLeading: false,
-      ),
+      backgroundColor: homeBackground,
+      appBar: appBar('Home Screen'),
       body: Center(
         child: TemplateBaseViewModel<HomeScreenViewModel>(
           builder: (context, model, child) => SingleChildScrollView(
@@ -21,42 +20,29 @@ class HomeScreen extends StatelessWidget {
                 Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
-                    Image(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                          'https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?ixid=MXwxMjA3fDB8MHxzZWFyY2h8OXx8c2t5fGVufDB8fDB8&ixlib=rb-1.2.1&w=1000&q=80'),
-                    ),
+                    Image.asset("assets/home_cover.jpg"),
+                    //TODO load transporter name
                     Positioned(
                         bottom: 20.0,
                         left: 10.0,
                         child: Text(
-                          'John Doe',
+                          'Transporter Name',
                           style: TextStyle(
-                              color: Colors.blueGrey,
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 20.0),
-                        )),
-                    Positioned(
-                        bottom: 10.0,
-                        left: 10.0,
-                        child: Text(
-                          'Regina, SK',
-                          style: TextStyle(
-                              color: Colors.blueGrey,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10.0),
+                              fontSize: MediumTextSize),
                         )),
                     Positioned(
                         bottom: 0.0,
                         right: 0.0,
                         child: IconButton(
                           icon: Icon(Icons.edit),
-                          color: Colors.blueGrey,
+                          color: Colors.white,
                           onPressed: model.navigateToAccountScreen,
                         )),
                     Positioned(
                         child: CircleAvatar(
-                      radius: 50,
+                      radius: 70,
                       backgroundColor: Colors.white,
                       backgroundImage: NetworkImage(
                           "https://images.unsplash.com/photo-1544393569-eb1568319eef?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8c3RvcHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"),
@@ -72,17 +58,17 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.all(30.0),
                       icon: Icon(
                         Icons.add_circle,
-                        color: Colors.white,
+                        color: buttonColor,
                         size: 40.0,
                       ),
-                      color: Colors.orange,
+                      color: Colors.white,
                       label: Text(
                         'New Form',
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            color: buttonColor),
                         textAlign: TextAlign.left,
                       ),
                     ),
@@ -96,17 +82,17 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.all(30.0),
                       icon: Icon(
                         Icons.wifi_protected_setup,
-                        color: Colors.white,
+                        color: buttonColor,
                         size: 40.0,
                       ),
-                      color: Colors.orange,
+                      color: Colors.white,
                       label: Text(
                         'Active Form',
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            color: buttonColor),
                       ),
                     ),
                     Padding(
@@ -119,17 +105,17 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.all(30.0),
                       icon: Icon(
                         Icons.history_sharp,
-                        color: Colors.white,
+                        color: buttonColor,
                         size: 40.0,
                       ),
-                      color: Colors.orange,
+                      color: Colors.white,
                       label: Text(
                         'Travel History',
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            color: buttonColor),
                       ),
                     ),
                     Padding(
@@ -142,17 +128,17 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.all(30.0),
                       icon: Icon(
                         Icons.logout,
-                        color: Colors.white,
+                        color: buttonColor,
                         size: 40.0,
                       ),
-                      color: Colors.orange,
+                      color: Colors.white,
                       label: Text(
                         'Sign Out',
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            color: buttonColor),
                       ),
                     ),
                   ],

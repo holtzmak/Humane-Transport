@@ -107,7 +107,12 @@ class _LoadingVehicleInfoFormFieldState
             }),
         ListTile(title: Text("Animals loaded")),
         _animalsLoadedFormField,
-        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
+        RaisedButton(
+            child: Text(
+              "Save",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: _validateAndSaveAll)
       ]),
     );
   }

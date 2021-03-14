@@ -1,5 +1,6 @@
 import 'package:app/core/models/transporter.dart';
 import 'package:app/core/view_models/account_edit_view_model.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
@@ -90,8 +91,8 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                         Text(
                           'Edit Account',
                           style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.black54,
+                              fontSize: LargeTextSize,
+                              color: buttonColor,
                               fontWeight: FontWeight.bold),
                         ),
                         Padding(
@@ -153,26 +154,35 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                             top: 20.0,
                           ),
                         ),
-                        RaisedButton(
-                          onPressed: () {
-                            if (widget.formKey.currentState.validate()) {
-                              model.saveTransporterAccount(
-                                userEmailAddress: _emailController.text.trim(),
-                                firstName: _firstNameController.text.trim(),
-                                lastName: _lastNameController.text.trim(),
-                                userPhoneNumber:
-                                    _userPhoneNumberController.text.trim(),
-                              );
-                            }
-                          },
-                          child: Text('Save',
-                              style: TextStyle(
-                                fontSize: 20,
-                              )),
-                          color: Colors.green,
-                        ),
+                        SizedBox(
+                            height: 42,
+                            width: 200,
+                            child: RaisedButton(
+                              onPressed: () {
+                                if (widget.formKey.currentState.validate()) {
+                                  model.saveTransporterAccount(
+                                    userEmailAddress:
+                                        _emailController.text.trim(),
+                                    firstName: _firstNameController.text.trim(),
+                                    lastName: _lastNameController.text.trim(),
+                                    userPhoneNumber:
+                                        _userPhoneNumberController.text.trim(),
+                                  );
+                                }
+                              },
+                              child: Text('Save',
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.white)),
+                              color: buttonColor,
+                            )),
                         TextButton(
-                          child: Text('Cancel and go back to your account'),
+                          child: Text(
+                            'Cancel and go back to your account',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(140, 129, 70, 1),
+                            ),
+                          ),
                           onPressed: () => model.navigateToAccount(),
                         ),
                       ],

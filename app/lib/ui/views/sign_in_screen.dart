@@ -3,6 +3,8 @@ import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:app/ui/common/style.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class SignInScreen extends StatefulWidget {
   static const route = '/signIn';
@@ -39,7 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
         builder: (context, model, child) => BusyOverlayScreen(
             show: model.state == ViewState.Busy,
             child: Scaffold(
-              appBar: AppBar(title: Text('Animal Transport Record App')),
+              appBar: appBar('Humane Transport App'),
               body: Padding(
                 padding: const EdgeInsets.all(40),
                 child: Center(
@@ -54,7 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             'SIGN IN',
                             style: TextStyle(
                                 fontSize: 24,
-                                color: Colors.black54,
+                                color: buttonColor,
                                 fontWeight: FontWeight.bold),
                           ),
                           Padding(
@@ -91,34 +93,43 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           Text('Forgot Password?',
                               style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.green,
-                              ),
+                                  color: HexColor('#8C8146'),
+                                  fontSize: BodyTextSize,
+                                  fontWeight: FontWeight.bold),
                               textAlign: TextAlign.end),
                           Padding(
                             padding: EdgeInsets.only(
                               top: 50.0,
                             ),
                           ),
-                          RaisedButton(
-                            onPressed: () {
-                              if (widget.formKey.currentState.validate()) {
-                                model.signIn(
-                                    email: emailController.text.trim(),
-                                    password: passwordController.text.trim());
-                              }
-                            },
-                            child: Text('Sign In',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                )),
-                            color: Colors.green,
-                          ),
+                          SizedBox(
+                              height: 42,
+                              width: 200,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  if (widget.formKey.currentState.validate()) {
+                                    model.signIn(
+                                        email: emailController.text.trim(),
+                                        password:
+                                            passwordController.text.trim());
+                                  }
+                                },
+                                child: Text('Sign In',
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.white)),
+                                color: buttonColor,
+                              )),
                           SizedBox(
                             height: 100.0,
                           ),
                           TextButton(
-                            child: Text('Do not have an account? Sign Up Here'),
+                            child: Text(
+                              'Do not have an account? Sign Up Here',
+                              style: TextStyle(
+                                  color: HexColor('#8C8146'),
+                                  fontSize: BodyTextSize,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             onPressed: () => model.navigateToSignUpScreen(),
                           ),
                           Padding(
@@ -127,7 +138,13 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                           ),
                           TextButton(
-                            child: Text('Go back to welcome screen'),
+                            child: Text(
+                              'Go back to welcome screen',
+                              style: TextStyle(
+                                  color: HexColor('#8C8146'),
+                                  fontSize: BodyTextSize,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             onPressed: () => model.navigateToWelcomeScreen(),
                           ),
                         ],

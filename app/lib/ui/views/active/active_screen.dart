@@ -4,6 +4,7 @@ import 'package:app/ui/widgets/atr_preview_card.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:app/ui/common/style.dart';
 
 class ActiveScreen extends StatefulWidget {
   static const route = '/active';
@@ -24,11 +25,10 @@ class _ActiveScreenState extends State<ActiveScreen> {
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<ActiveScreenViewModel>(
       builder: (context, model, _) => Scaffold(
-        appBar: AppBar(
-          title: Text('Active Screen'),
-          automaticallyImplyLeading: false,
-        ),
+        backgroundColor: homeBackground,
+        appBar: appBar('Active Forms'),
         bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: bottomNavBarColor,
             onTap: (int item) async {
               switch (item) {
                 case 0:
@@ -41,15 +41,24 @@ class _ActiveScreenState extends State<ActiveScreen> {
             },
             items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.arrow_back),
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: buttonColor,
+                ),
                 label: "Back",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.access_time),
+                icon: Icon(
+                  Icons.access_time,
+                  color: buttonColor,
+                ),
                 label: "History",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.add_circle),
+                icon: Icon(
+                  Icons.add_circle,
+                  color: buttonColor,
+                ),
                 label: "New Form",
               )
             ]),

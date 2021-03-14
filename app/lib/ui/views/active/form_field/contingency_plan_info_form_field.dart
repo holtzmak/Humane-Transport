@@ -182,7 +182,12 @@ class _ContingencyPlanInfoFormFieldState
           title: Text("Event Specific Plan(s)"),
         ),
         _contingencyEventsFormField,
-        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
+        RaisedButton(
+            child: Text(
+              "Save",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: _validateAndSaveAll)
       ]),
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
@@ -45,7 +46,12 @@ class EmailScreen extends StatelessWidget {
   ) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Email Form'),
+          title: Text(
+            'Email Form',
+            style: TextStyle(color: buttonColor),
+          ),
+          iconTheme: IconThemeData(color: buttonColor),
+          backgroundColor: homeBackground,
         ),
         body: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -75,7 +81,9 @@ class EmailScreen extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                                title: Text('Email Response'),
+                                title: Text(
+                                  'Email Response',
+                                ),
                                 content: Text(email.emailResponse),
                                 actions: <Widget>[
                                   FlatButton(
@@ -86,7 +94,10 @@ class EmailScreen extends StatelessWidget {
                               ));
                     }
                   },
-                  child: Text('Submit'),
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ]),
             )));

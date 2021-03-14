@@ -3,6 +3,8 @@ import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:app/ui/common/style.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const route = '/signup';
@@ -68,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         builder: (context, model, child) => BusyOverlayScreen(
             show: model.state == ViewState.Busy,
             child: Scaffold(
-                appBar: AppBar(title: Text('Animal Transport Record App')),
+                appBar: appBar('Humane Transport App'),
                 body: Center(
                   child: SingleChildScrollView(
                       child: Form(
@@ -84,7 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               'Create An Account',
                               style: TextStyle(
                                   fontSize: 24,
-                                  color: Colors.black54,
+                                  color: buttonColor,
                                   fontWeight: FontWeight.bold),
                             ),
                             Padding(
@@ -158,7 +160,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             ),
                             TextButton(
-                              child: Text('Already have an account?'),
+                              child: Text(
+                                'Already have an account?',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: HexColor('#8C8146'),
+                                ),
+                              ),
                               onPressed: () => model.navigateToSignInScreen(),
                             ),
                             Padding(
@@ -166,40 +174,53 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 top: 20.0,
                               ),
                             ),
-                            RaisedButton(
-                              onPressed: () {
-                                if (widget.formKey.currentState.validate()) {
-                                  model.signUp(
-                                    userEmailAddress:
-                                        _emailController.text.trim(),
-                                    password: _passwordController.text.trim(),
-                                    firstName: _firstNameController.text.trim(),
-                                    lastName: _lastNameController.text.trim(),
-                                    userPhoneNumber:
-                                        _userPhoneNumberController.text.trim(),
-                                  );
-                                }
-                              },
-                              child: Text('Register',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  )),
-                              color: Colors.green,
-                            ),
+                            SizedBox(
+                                height: 42,
+                                width: 200,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    if (widget.formKey.currentState
+                                        .validate()) {
+                                      model.signUp(
+                                        userEmailAddress:
+                                            _emailController.text.trim(),
+                                        password:
+                                            _passwordController.text.trim(),
+                                        firstName:
+                                            _firstNameController.text.trim(),
+                                        lastName:
+                                            _lastNameController.text.trim(),
+                                        userPhoneNumber:
+                                            _userPhoneNumberController.text
+                                                .trim(),
+                                      );
+                                    }
+                                  },
+                                  child: Text('Register',
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.white)),
+                                  color: buttonColor,
+                                )),
                             Text(
                                 'By creating an account you agree to our Terms of Service and Privacy Policy',
                                 style: TextStyle(
                                   fontSize: 15,
-                                  color: Colors.green,
+                                  color: Colors.black,
                                 ),
                                 textAlign: TextAlign.center),
                             Padding(
                               padding: EdgeInsets.only(
-                                top: 50.0,
+                                top: 30.0,
                               ),
                             ),
                             TextButton(
-                              child: Text('Go back to Welcome screen'),
+                              child: Text(
+                                'Go back to Welcome screen',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: HexColor('#8C8146'),
+                                ),
+                              ),
                               onPressed: () => model.navigateToWelcomeScreen(),
                             ),
                           ],

@@ -10,8 +10,25 @@ const MediumTextSize = 20.0;
 const LargeTextSize = 23.0;
 
 const buttonColor = Color.fromRGBO(20, 57, 89, 1);
+const appBarColor = Colors.white;
+const homeBackground = Color.fromRGBO(191, 186, 159, 1);
+const bottomNavBarColor = Color.fromRGBO(134, 151, 166, 1);
 
 const MainAppColor = Color(0xff66bb6a);
+
+appBar(String title) {
+  return AppBar(
+    title: Text(
+      title,
+      style: TextStyle(
+          color: buttonColor,
+          fontWeight: FontWeight.bold,
+          fontSize: MediumTextSize),
+    ),
+    automaticallyImplyLeading: false,
+    backgroundColor: appBarColor,
+  );
+}
 
 const BottomBorderStyle = BorderSide(
   // Add more properties if needed
@@ -32,6 +49,12 @@ const BodyTextStyle = TextStyle(
   fontSize: SmallTextSize,
   color: Color(0xFF212121),
   letterSpacing: 1.5,
+);
+
+const DefaultButtonTheme = ButtonThemeData(
+  minWidth: 25,
+  padding: EdgeInsets.all(20),
+  buttonColor: buttonColor,
 );
 
 const DefaultRaisedButtonStyle = ButtonThemeData(

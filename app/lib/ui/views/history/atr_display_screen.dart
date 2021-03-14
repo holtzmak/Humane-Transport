@@ -3,6 +3,7 @@ import 'package:app/core/view_models/history_screen_view_model.dart';
 import 'package:app/ui/widgets/models/expansion_list_item.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:app/ui/common/style.dart';
 
 class ATRDisplayScreen extends StatefulWidget {
   static const route = "/atrDisplayScreen";
@@ -44,14 +45,17 @@ class _ATRDisplayScreenState extends State<ATRDisplayScreen> {
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<HistoryScreenViewModel>(
         builder: (context, model, child) => Scaffold(
+              backgroundColor: homeBackground,
               appBar: AppBar(
+                iconTheme: IconThemeData(color: buttonColor),
+                backgroundColor: appBarColor,
                 actions: [
                   OutlinedButton.icon(
                       onPressed: model.navigateToPDFScreen,
-                      icon: Icon(Icons.share_outlined, color: Colors.white),
+                      icon: Icon(Icons.share_outlined, color: buttonColor),
                       label: Text(
                         'Share as PDF',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: buttonColor),
                       ))
                 ],
                 automaticallyImplyLeading: false,

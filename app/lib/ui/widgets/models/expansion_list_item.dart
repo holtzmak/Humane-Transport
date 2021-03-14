@@ -1,3 +1,4 @@
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/material.dart';
 
 class ExpansionListItem {
@@ -20,8 +21,11 @@ Widget buildExpansionPanelList(
     expansionCallback: expansionCallback,
     children: items.map<ExpansionPanel>((item) {
       return ExpansionPanel(
-        headerBuilder: (context, isExpanded) =>
-            ListTile(title: Text(item.headerValue)),
+        headerBuilder: (context, isExpanded) => ListTile(
+            title: Text(
+          item.headerValue,
+          style: TextStyle(color: buttonColor, fontWeight: FontWeight.bold),
+        )),
         body: item.expandedValue,
         isExpanded: item.isExpanded,
         canTapOnHeader: true,
