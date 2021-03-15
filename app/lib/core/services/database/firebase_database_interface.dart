@@ -10,7 +10,6 @@ import 'database_interface.dart';
 
 class FirebaseDatabaseInterface implements DatabaseInterface {
   final FirebaseFirestore _firestore;
-  final _firebaseStorage = FirebaseStorage.instance;
   FirebaseDatabaseInterface(this._firestore);
 
   @override
@@ -106,7 +105,7 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
 
   @override
   Future<String> uploadAtrImage(File file, String fileName) async =>
-      _firebaseStorage
+      FirebaseStorage.instance
           .ref()
           .child('atrImages/$fileName')
           .putFile(file)
