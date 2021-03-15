@@ -20,7 +20,7 @@ class SignInViewModel extends BaseViewModel {
       _navigationService.navigateBackUntil(WelcomeScreen.route);
 
   void navigateToForgotPasswordScreen() =>
-      _navigationService.navigateAndReplace(ForgotPasswordScreen.route);
+      _navigationService.navigateTo(ForgotPasswordScreen.route);
 
   void navigateToSignUpScreen() =>
       _navigationService.navigateAndReplace(SignUpScreen.route);

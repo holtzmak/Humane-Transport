@@ -91,7 +91,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               child: Text('Forgot Password?',
                                   style: TextStyle(
                                     fontSize: 18,
-                                    color: Colors.green,
+                                    color: HexColor('#8C8146'),
                                   )),
                               onPressed: () =>
                                   model.navigateToForgotPasswordScreen()),
