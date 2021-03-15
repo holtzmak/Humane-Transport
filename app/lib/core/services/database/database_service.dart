@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/transporter.dart';
@@ -37,6 +38,9 @@ class DatabaseService {
 
   Future<List<AnimalTransportRecord>> getCompleteRecords(String userId) async =>
       interface.getCompleteRecords(userId);
+
+  Future<String> uploadAtrImage(File file, String fileName) async =>
+      interface.uploadAtrImage(file, fileName);
 
   Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId) =>
       interface.getUpdatedCompleteATRs(userId);
