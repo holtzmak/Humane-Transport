@@ -15,7 +15,7 @@ class ForgotPasswordViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
 
   void navigateToSignInScreen() =>
-      _navigationService.navigateAndReplace(SignInScreen.route);
+      _navigationService.navigateBackUntil(SignInScreen.route);
 
   Future<void> resetPassword({
     @required String email,

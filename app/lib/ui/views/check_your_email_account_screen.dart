@@ -1,8 +1,10 @@
 import 'package:app/core/view_models/check_your_email_account_view_model.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class ConfirmationMessageScreen extends StatefulWidget {
   static const route = '/confirmationMsg';
@@ -24,7 +26,7 @@ class _ConfirmationMessageScreenState extends State<ConfirmationMessageScreen> {
       builder: (context, model, child) => BusyOverlayScreen(
         show: model.state == ViewState.Busy,
         child: Scaffold(
-          appBar: AppBar(title: Text('Animal Transport Record App')),
+          appBar: appBar('Humane Transport App'),
           body: Padding(
             padding: const EdgeInsets.all(40),
             child: Center(
@@ -36,7 +38,7 @@ class _ConfirmationMessageScreenState extends State<ConfirmationMessageScreen> {
                     'Check Your Email Account',
                     style: TextStyle(
                         fontSize: 30,
-                        color: Colors.black54,
+                        color: NavyBlue,
                         fontWeight: FontWeight.bold),
                   ),
                   Padding(
@@ -70,7 +72,8 @@ class _ConfirmationMessageScreenState extends State<ConfirmationMessageScreen> {
                   ),
                   TextButton(
                     child: Text('Click here to go to login page',
-                        style: TextStyle(fontSize: 20)),
+                        style: TextStyle(
+                            fontSize: 20, color: HexColor('#8C8146'))),
                     onPressed: () => model.navigateToSignInScreen(),
                   ),
                 ],
