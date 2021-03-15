@@ -1,6 +1,8 @@
 import 'package:app/core/view_models/account_screen_view_model.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:app/ui/common/style.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class AccountScreen extends StatelessWidget {
   static const route = '/accountScreen';
@@ -10,7 +12,7 @@ class AccountScreen extends StatelessWidget {
     return TemplateBaseViewModel<AccountScreenViewModel>(
       onModelReady: (model) => model.loadTransporterInfo(),
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(),
+        appBar: appBar('Profile'),
         body: model.transporter != null
             ? Center(
                 child: Container(
@@ -21,7 +23,7 @@ class AccountScreen extends StatelessWidget {
                         leading: Icon(
                           Icons.account_circle_sharp,
                           size: 30.0,
-                          color: Colors.green[400],
+                          color: buttonColor,
                         ),
                         title: Text(
                           '${model.transporter.firstName} ${model.transporter.lastName}',
@@ -31,40 +33,50 @@ class AccountScreen extends StatelessWidget {
                           onPressed: () =>
                               model.navigateToAccountEditingScreen(),
                           child: Text('Edit'),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  buttonColor)),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 20.0),
                       ),
                       Table(
-                        border: TableBorder.all(color: Colors.black12),
+                        border:
+                            TableBorder.all(color: Colors.black12, width: 2),
                         children: [
-                          TableRow(children: [
-                            ListTile(
-                              leading: Icon(
-                                Icons.call,
-                                size: 30.0,
-                                color: Colors.green[400],
-                              ),
-                              title: Text(
-                                '${model.transporter.userPhoneNumber}',
-                                style: TextStyle(fontSize: 15.0),
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            ListTile(
-                              leading: Icon(
-                                Icons.markunread,
-                                size: 30.0,
-                                color: Colors.green[400],
-                              ),
-                              title: Text(
-                                '${model.transporter.userEmailAddress} ',
-                                style: TextStyle(fontSize: 15.0),
-                              ),
-                            ),
-                          ])
+                          TableRow(
+                              decoration:
+                                  BoxDecoration(color: HexColor('#BFBA9F')),
+                              children: [
+                                ListTile(
+                                  leading: Icon(
+                                    Icons.call,
+                                    size: 30.0,
+                                    color: buttonColor,
+                                  ),
+                                  title: Text(
+                                    '${model.transporter.userPhoneNumber}',
+                                    style: TextStyle(fontSize: 15.0),
+                                  ),
+                                ),
+                              ]),
+                          TableRow(
+                              decoration:
+                                  BoxDecoration(color: HexColor('#BFBA9F')),
+                              children: [
+                                ListTile(
+                                  leading: Icon(
+                                    Icons.markunread,
+                                    size: 30.0,
+                                    color: buttonColor,
+                                  ),
+                                  title: Text(
+                                    '${model.transporter.userEmailAddress} ',
+                                    style: TextStyle(fontSize: 15.0),
+                                  ),
+                                ),
+                              ])
                         ],
                       ),
                     ],

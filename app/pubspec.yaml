@@ -41,6 +41,7 @@ dependencies:
   uuid: 2.2.2
   flutter_launcher_icons: ^0.8.0
   hexcolor: ^1.0.6
+  google_fonts: ^1.1.2
 
 dev_dependencies:
   flutter_driver:
@@ -70,6 +71,7 @@ flutter:
   assets:
     - assets/splash_screen.png
     - assets/welcome_screen.jpg
+    - assets/home_cover.jpg
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

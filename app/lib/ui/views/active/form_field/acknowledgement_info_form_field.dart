@@ -46,7 +46,12 @@ class _AcknowledgementInfoFormFieldState
           title: Text("Consignee acknowledgement"),
           subtitle: Text("TODO"),
         ),
-        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
+        RaisedButton(
+            child: Text(
+              "Save",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: _validateAndSaveAll)
       ]),
     );
   }

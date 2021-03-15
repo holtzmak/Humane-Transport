@@ -4,6 +4,7 @@ import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final String title;
@@ -32,12 +33,13 @@ class WelcomeScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Welcome to Humane Transport Mobile Application',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        fontSize: LargeTextSize,
-                        height: 1.6,
-                        color: HexColor("#0D0D0D")),
+                    style: GoogleFonts.alike(
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            fontSize: LargeTextSize,
+                            height: 1.6,
+                            color: HexColor("#0D0D0D"))),
                   ),
                   Padding(
                     padding: EdgeInsets.all(40),

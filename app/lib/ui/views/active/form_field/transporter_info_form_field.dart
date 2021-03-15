@@ -228,7 +228,12 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
                   _trainingExpiryDate = DateTime.parse(changed);
                   _saveAll();
                 })),
-        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
+        RaisedButton(
+            child: Text(
+              "Save",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: _validateAndSaveAll)
       ]),
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
@@ -40,7 +41,12 @@ class _PDFScreenState extends State<PDFScreen> {
               else
                 return PDFViewerScaffold(
                   appBar: AppBar(
-                    title: Text('Example PDF'),
+                    iconTheme: IconThemeData(color: buttonColor),
+                    backgroundColor: homeBackground,
+                    title: Text(
+                      'Example PDF',
+                      style: TextStyle(color: buttonColor),
+                    ),
                     actions: [
                       OutlinedButton.icon(
                           onPressed: () {
@@ -52,10 +58,10 @@ class _PDFScreenState extends State<PDFScreen> {
                                           pdf: snapshot.requireData,
                                         )));
                           },
-                          icon: Icon(Icons.mail, color: Colors.white),
+                          icon: Icon(Icons.mail, color: buttonColor),
                           label: Text(
                             'Email',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: buttonColor),
                           ))
                     ],
                   ),

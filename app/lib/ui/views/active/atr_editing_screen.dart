@@ -21,6 +21,7 @@ import 'package:app/ui/widgets/models/expansion_list_item.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:app/ui/common/style.dart';
 
 class ATREditingScreen extends StatefulWidget {
   static const route = "/atrEditingScreen";
@@ -169,10 +170,17 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
               child: BusyOverlayScreen(
                 show: model.state == ViewState.Busy,
                 child: Scaffold(
+                    backgroundColor: homeBackground,
                     appBar: AppBar(
-                      title: Text("Animal Transport Form"),
+                      title: Text(
+                        "Animal Transport Form",
+                        style: TextStyle(
+                            color: buttonColor, fontWeight: FontWeight.bold),
+                      ),
+                      backgroundColor: appBarColor,
                       automaticallyImplyLeading: false,
                       leading: new IconButton(
+                          color: buttonColor,
                           icon: new Icon(Icons.arrow_back),
                           onPressed: () async => _saveAndNavigateBack(model)),
                     ),
@@ -189,10 +197,19 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                                     });
                                   },
                                   items: _atrFormFieldsWrapper)),
-                          RaisedButton(
-                            child: Text("Submit"),
-                            onPressed: () async => _submitATR(model),
+                          Padding(
+                            padding: EdgeInsets.all(20),
                           ),
+                          SizedBox(
+                              height: 42,
+                              width: 200,
+                              child: RaisedButton(
+                                child: Text("Submit",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: MediumTextSize)),
+                                onPressed: () async => _submitATR(model),
+                              )),
                         ],
                       ),
                     )),

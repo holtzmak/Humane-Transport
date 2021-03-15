@@ -120,7 +120,12 @@ class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
               _saveAll();
             },
             onDelete: Optional.empty()),
-        RaisedButton(child: Text("Save"), onPressed: _validateAndSaveAll)
+        RaisedButton(
+            child: Text(
+              "Save",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: _validateAndSaveAll)
       ]),
     );
   }
