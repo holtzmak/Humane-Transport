@@ -201,6 +201,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           fontSize: 20, color: Colors.white)),
                                   color: buttonColor,
                                 )),
+                            Padding(padding: EdgeInsets.all(10)),
                             Text(
                                 'By creating an account you agree to our Terms of Service and Privacy Policy',
                                 style: TextStyle(
@@ -210,7 +211,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 textAlign: TextAlign.center),
                             Padding(
                               padding: EdgeInsets.only(
-                                top: 30.0,
+                                top: 20.0,
                               ),
                             ),
                             TextButton(
