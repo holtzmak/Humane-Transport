@@ -28,6 +28,9 @@ class _ActiveScreenState extends State<ActiveScreen> {
         backgroundColor: homeBackground,
         appBar: appBar('Active Forms'),
         bottomNavigationBar: BottomNavigationBar(
+            unselectedLabelStyle: TextStyle(fontSize: SmallTextSize),
+            selectedItemColor: buttonColor,
+            unselectedItemColor: buttonColor,
             backgroundColor: bottomNavBarColor,
             onTap: (int item) async {
               switch (item) {

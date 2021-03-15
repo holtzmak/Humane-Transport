@@ -28,7 +28,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
           appBar: appBar('Travel History'),
           backgroundColor: homeBackground,
           bottomNavigationBar: BottomNavigationBar(
-              unselectedLabelStyle: TextStyle(color: buttonColor),
+              unselectedLabelStyle: TextStyle(fontSize: SmallTextSize),
+              selectedItemColor: buttonColor,
+              unselectedItemColor: buttonColor,
               backgroundColor: bottomNavBarColor,
               onTap: (int item) async {
                 switch (item) {
