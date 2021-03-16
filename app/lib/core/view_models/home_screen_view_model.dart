@@ -31,7 +31,7 @@ class HomeScreenViewModel extends BaseViewModel {
   void signOut() async {
     _authenticationService
         .signOut()
-        .then((_) => _navigationService.navigateBackUntil(WelcomeScreen.route))
+        .then((_) => _navigationService.navigateAndReplace(WelcomeScreen.route))
         .catchError((error) => _dialogService.showDialog(
               title: 'Sign out failed',
               description: error.message,
