@@ -48,10 +48,10 @@ class EmailScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             'Email Form',
-            style: TextStyle(color: buttonColor),
+            style: TextStyle(color: NavyBlue),
           ),
-          iconTheme: IconThemeData(color: buttonColor),
-          backgroundColor: homeBackground,
+          iconTheme: IconThemeData(color: NavyBlue),
+          backgroundColor: Beige,
         ),
         body: Padding(
             padding: const EdgeInsets.all(16.0),

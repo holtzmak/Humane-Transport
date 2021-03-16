@@ -1,8 +1,8 @@
 import 'package:app/core/view_models/home_screen_view_model.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:app/ui/common/style.dart';
 
 class HomeScreen extends StatelessWidget {
   static const route = '/home';
@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: homeBackground,
+      backgroundColor: Beige,
       appBar: appBar('Home Screen'),
       body: Center(
         child: TemplateBaseViewModel<HomeScreenViewModel>(
@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.all(30.0),
                       icon: Icon(
                         Icons.add_circle,
-                        color: buttonColor,
+                        color: NavyBlue,
                         size: 40.0,
                       ),
                       color: Colors.white,
@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                             fontStyle: FontStyle.italic,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
-                            color: buttonColor),
+                            color: NavyBlue),
                         textAlign: TextAlign.left,
                       ),
                     ),
@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.all(30.0),
                       icon: Icon(
                         Icons.wifi_protected_setup,
-                        color: buttonColor,
+                        color: NavyBlue,
                         size: 40.0,
                       ),
                       color: Colors.white,
@@ -92,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                             fontStyle: FontStyle.italic,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
-                            color: buttonColor),
+                            color: NavyBlue),
                       ),
                     ),
                     Padding(
@@ -105,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.all(30.0),
                       icon: Icon(
                         Icons.history_sharp,
-                        color: buttonColor,
+                        color: NavyBlue,
                         size: 40.0,
                       ),
                       color: Colors.white,
@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                             fontStyle: FontStyle.italic,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
-                            color: buttonColor),
+                            color: NavyBlue),
                       ),
                     ),
                     Padding(
@@ -128,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.all(30.0),
                       icon: Icon(
                         Icons.logout,
-                        color: buttonColor,
+                        color: NavyBlue,
                         size: 40.0,
                       ),
                       color: Colors.white,
@@ -138,7 +138,7 @@ class HomeScreen extends StatelessWidget {
                             fontStyle: FontStyle.italic,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
-                            color: buttonColor),
+                            color: NavyBlue),
                       ),
                     ),
                   ],

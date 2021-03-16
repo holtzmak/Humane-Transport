@@ -117,7 +117,7 @@ class _ImageScreenState extends State<ImageScreen> {
             },
             child: CircleAvatar(
               radius: 55,
-              backgroundColor: CircleAvatarBackgroundColor,
+              backgroundColor: NavyBlue,
               child: _image != null
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(50),

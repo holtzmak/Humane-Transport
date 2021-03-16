@@ -41,11 +41,11 @@ class _PDFScreenState extends State<PDFScreen> {
               else
                 return PDFViewerScaffold(
                   appBar: AppBar(
-                    iconTheme: IconThemeData(color: buttonColor),
-                    backgroundColor: homeBackground,
+                    iconTheme: IconThemeData(color: NavyBlue),
+                    backgroundColor: Beige,
                     title: Text(
                       'Example PDF',
-                      style: TextStyle(color: buttonColor),
+                      style: TextStyle(color: NavyBlue),
                     ),
                     actions: [
                       OutlinedButton.icon(
@@ -58,10 +58,10 @@ class _PDFScreenState extends State<PDFScreen> {
                                           pdf: snapshot.requireData,
                                         )));
                           },
-                          icon: Icon(Icons.mail, color: buttonColor),
+                          icon: Icon(Icons.mail, color: NavyBlue),
                           label: Text(
                             'Email',
-                            style: TextStyle(color: buttonColor),
+                            style: TextStyle(color: NavyBlue),
                           ))
                     ],
                   ),

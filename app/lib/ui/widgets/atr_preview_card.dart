@@ -22,10 +22,9 @@ class _AtrPreviewState extends State<ATRPreviewCard> {
         child: GridTile(
             child: Column(
       children: [
-        Padding(padding: EdgeInsets.only(bottom: 5)),
         Icon(
           Icons.folder,
-          color: buttonColor,
+          color: NavyBlue,
           size: 40,
         ),
         ListTile(
@@ -33,6 +32,8 @@ class _AtrPreviewState extends State<ATRPreviewCard> {
             'Transport for ${widget.atr.deliveryInfo.recInfo.receiverCompanyName}',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: BodyTextSize),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
           subtitle: Text(
             '${DateFormat("yyyy-MM-dd hh:mm").format(widget.atr.vehicleInfo.dateAndTimeLoaded)}',

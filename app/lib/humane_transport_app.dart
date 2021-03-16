@@ -29,15 +29,15 @@ class HumaneTransportApp extends StatelessWidget {
             MaterialPageRoute(builder: (context) => DialogScreen(child: child)),
       ),
       theme: ThemeData(
-        appBarTheme: AppBarTheme(color: MainAppColor),
         textTheme: TextTheme(
           headline5: TitleTextStyle,
           bodyText1: BodyTextStyle,
-        ),
-        iconTheme: IconThemeData(
-          color: MainAppColor,
+          bodyText2: BodyTextStyle,
+          caption: BodyTextStyle,
+          subtitle1: SubHeadingTextStyle,
         ),
         buttonTheme: DefaultRaisedButtonStyle,
+        timePickerTheme: AppTimePickerTheme,
       ),
     );
   }

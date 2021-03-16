@@ -3,8 +3,8 @@ import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final String title;
@@ -49,7 +49,7 @@ class WelcomeScreen extends StatelessWidget {
                       ButtonTheme(
                         minWidth: size.width * 0.35,
                         padding: EdgeInsets.all(20),
-                        buttonColor: buttonColor,
+                        buttonColor: NavyBlue,
                         child: RaisedButton(
                           onPressed: model.navigateToSignInScreen,
                           shape: RoundedRectangleBorder(

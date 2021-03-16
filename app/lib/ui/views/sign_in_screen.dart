@@ -1,9 +1,9 @@
 import 'package:app/core/view_models/sign_in_view_model.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:app/ui/common/style.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -56,7 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             'SIGN IN',
                             style: TextStyle(
                                 fontSize: 24,
-                                color: buttonColor,
+                                color: NavyBlue,
                                 fontWeight: FontWeight.bold),
                           ),
                           Padding(
@@ -117,7 +117,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 child: Text('Sign In',
                                     style: TextStyle(
                                         fontSize: 20, color: Colors.white)),
-                                color: buttonColor,
+                                color: NavyBlue,
                               )),
                           SizedBox(
                             height: 100.0,

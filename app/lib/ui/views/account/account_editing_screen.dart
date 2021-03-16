@@ -92,7 +92,7 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                           'Edit Account',
                           style: TextStyle(
                               fontSize: LargeTextSize,
-                              color: buttonColor,
+                              color: NavyBlue,
                               fontWeight: FontWeight.bold),
                         ),
                         Padding(
@@ -173,7 +173,7 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                               child: Text('Save',
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.white)),
-                              color: buttonColor,
+                              color: NavyBlue,
                             )),
                         TextButton(
                           child: Text(
