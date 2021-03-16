@@ -1,10 +1,10 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/view_models/history_screen_view_model.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/atr_preview_card.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import 'package:app/ui/common/style.dart';
 
 class HistoryScreen extends StatefulWidget {
   static const route = '/history';
@@ -26,12 +26,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return TemplateBaseViewModel<HistoryScreenViewModel>(
       builder: (context, model, _) => Scaffold(
           appBar: appBar('Travel History'),
-          backgroundColor: homeBackground,
+          backgroundColor: Beige,
           bottomNavigationBar: BottomNavigationBar(
               unselectedLabelStyle: TextStyle(fontSize: SmallTextSize),
-              selectedItemColor: buttonColor,
-              unselectedItemColor: buttonColor,
-              backgroundColor: bottomNavBarColor,
+              selectedItemColor: NavyBlue,
+              unselectedItemColor: NavyBlue,
+              backgroundColor: SlateGrey,
               onTap: (int item) async {
                 switch (item) {
                   case 0:
@@ -44,14 +44,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 BottomNavigationBarItem(
                   icon: Icon(
                     Icons.arrow_back,
-                    color: buttonColor,
+                    color: NavyBlue,
                   ),
                   label: "Back",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
                     Icons.directions_car,
-                    color: buttonColor,
+                    color: NavyBlue,
                   ),
                   label: "Active",
                 ),

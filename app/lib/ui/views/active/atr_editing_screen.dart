@@ -9,6 +9,7 @@ import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/services/dialog_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/contingency_plan_info_form_field.dart';
@@ -21,7 +22,6 @@ import 'package:app/ui/widgets/models/expansion_list_item.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:app/ui/common/style.dart';
 
 class ATREditingScreen extends StatefulWidget {
   static const route = "/atrEditingScreen";
@@ -170,17 +170,17 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
               child: BusyOverlayScreen(
                 show: model.state == ViewState.Busy,
                 child: Scaffold(
-                    backgroundColor: homeBackground,
+                    backgroundColor: Beige,
                     appBar: AppBar(
                       title: Text(
                         "Animal Transport Form",
                         style: TextStyle(
-                            color: buttonColor, fontWeight: FontWeight.bold),
+                            color: NavyBlue, fontWeight: FontWeight.bold),
                       ),
-                      backgroundColor: appBarColor,
+                      backgroundColor: White,
                       automaticallyImplyLeading: false,
                       leading: new IconButton(
-                          color: buttonColor,
+                          color: NavyBlue,
                           icon: new Icon(Icons.arrow_back),
                           onPressed: () async => _saveAndNavigateBack(model)),
                     ),

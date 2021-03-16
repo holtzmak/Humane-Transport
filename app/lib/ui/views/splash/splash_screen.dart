@@ -1,4 +1,5 @@
 import 'package:app/core/view_models/splash_screen_view_model.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class SplashScreen extends StatelessWidget {
               ),
               CircularProgressIndicator(
                 strokeWidth: 4,
-                valueColor: AlwaysStoppedAnimation(Colors.green),
+                valueColor: AlwaysStoppedAnimation(NavyBlue),
               ),
             ],
           ),

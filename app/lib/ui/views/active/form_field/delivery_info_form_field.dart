@@ -96,7 +96,7 @@ class _DeliveryInfoFormFieldState extends State<DeliveryInfoFormField> {
                 })),
         ListTile(
             title: Text(
-                "If any animals did not arrive in good condition\n\nAdd the description of transport related conditions and actions taken to address prior to arrival")),
+                "If any animals did not arrive in good condition...\n\nThen add the description of transport related conditions and actions taken to address prior to arrival")),
         _compromisedAnimalsFormField,
         StringFormField(
             initial: _additionalWelfareConcerns,

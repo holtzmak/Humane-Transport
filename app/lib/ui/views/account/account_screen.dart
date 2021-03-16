@@ -1,7 +1,7 @@
 import 'package:app/core/view_models/account_screen_view_model.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:app/ui/common/style.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -12,7 +12,21 @@ class AccountScreen extends StatelessWidget {
     return TemplateBaseViewModel<AccountScreenViewModel>(
       onModelReady: (model) => model.loadTransporterInfo(),
       builder: (context, model, child) => Scaffold(
-        appBar: appBar('Profile'),
+        appBar: AppBar(
+          title: Text(
+            "Profile",
+            style: TextStyle(
+                color: NavyBlue,
+                fontWeight: FontWeight.bold,
+                fontSize: MediumTextSize),
+          ),
+          automaticallyImplyLeading: false,
+          backgroundColor: White,
+          leading: new IconButton(
+              color: NavyBlue,
+              icon: new Icon(Icons.arrow_back),
+              onPressed: model.navigateToHomeScreen),
+        ),
         body: model.transporter != null
             ? Center(
                 child: Container(
@@ -23,7 +37,7 @@ class AccountScreen extends StatelessWidget {
                         leading: Icon(
                           Icons.account_circle_sharp,
                           size: 30.0,
-                          color: buttonColor,
+                          color: NavyBlue,
                         ),
                         title: Text(
                           '${model.transporter.firstName} ${model.transporter.lastName}',
@@ -34,8 +48,8 @@ class AccountScreen extends StatelessWidget {
                               model.navigateToAccountEditingScreen(),
                           child: Text('Edit'),
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  buttonColor)),
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(NavyBlue)),
                         ),
                       ),
                       Padding(
@@ -53,7 +67,7 @@ class AccountScreen extends StatelessWidget {
                                   leading: Icon(
                                     Icons.call,
                                     size: 30.0,
-                                    color: buttonColor,
+                                    color: NavyBlue,
                                   ),
                                   title: Text(
                                     '${model.transporter.userPhoneNumber}',
@@ -69,7 +83,7 @@ class AccountScreen extends StatelessWidget {
                                   leading: Icon(
                                     Icons.markunread,
                                     size: 30.0,
-                                    color: buttonColor,
+                                    color: NavyBlue,
                                   ),
                                   title: Text(
                                     '${model.transporter.userEmailAddress} ',

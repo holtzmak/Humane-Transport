@@ -1,10 +1,10 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/atr_preview_card.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import 'package:app/ui/common/style.dart';
 
 class ActiveScreen extends StatefulWidget {
   static const route = '/active';
@@ -25,13 +25,13 @@ class _ActiveScreenState extends State<ActiveScreen> {
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<ActiveScreenViewModel>(
       builder: (context, model, _) => Scaffold(
-        backgroundColor: homeBackground,
+        backgroundColor: Beige,
         appBar: appBar('Active Forms'),
         bottomNavigationBar: BottomNavigationBar(
             unselectedLabelStyle: TextStyle(fontSize: SmallTextSize),
-            selectedItemColor: buttonColor,
-            unselectedItemColor: buttonColor,
-            backgroundColor: bottomNavBarColor,
+            selectedItemColor: NavyBlue,
+            unselectedItemColor: NavyBlue,
+            backgroundColor: SlateGrey,
             onTap: (int item) async {
               switch (item) {
                 case 0:
@@ -46,21 +46,21 @@ class _ActiveScreenState extends State<ActiveScreen> {
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.arrow_back,
-                  color: buttonColor,
+                  color: NavyBlue,
                 ),
                 label: "Back",
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.access_time,
-                  color: buttonColor,
+                  color: NavyBlue,
                 ),
                 label: "History",
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.add_circle,
-                  color: buttonColor,
+                  color: NavyBlue,
                 ),
                 label: "New Form",
               )

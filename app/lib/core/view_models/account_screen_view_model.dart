@@ -8,6 +8,7 @@ import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/account/account_editing_screen.dart';
+import 'package:app/ui/views/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -62,4 +63,7 @@ class AccountScreenViewModel extends BaseViewModel {
 
   void navigateToAccountEditingScreen() => _navigationService
       .navigateTo(AccountEditingScreen.route, arguments: _transporter);
+
+  void navigateToHomeScreen() =>
+      _navigationService.navigateBackUntil(HomeScreen.route);
 }

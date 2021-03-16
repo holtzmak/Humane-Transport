@@ -24,7 +24,7 @@ Widget buildExpansionPanelList(
         headerBuilder: (context, isExpanded) => ListTile(
             title: Text(
           item.headerValue,
-          style: TextStyle(color: buttonColor, fontWeight: FontWeight.bold),
+          style: TextStyle(color: NavyBlue, fontWeight: FontWeight.bold),
         )),
         body: item.expandedValue,
         isExpanded: item.isExpanded,

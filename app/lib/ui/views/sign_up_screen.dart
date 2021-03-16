@@ -1,9 +1,9 @@
 import 'package:app/core/view_models/signup_view_model.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:app/ui/common/style.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -86,7 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               'Create An Account',
                               style: TextStyle(
                                   fontSize: 24,
-                                  color: buttonColor,
+                                  color: NavyBlue,
                                   fontWeight: FontWeight.bold),
                             ),
                             Padding(
@@ -199,7 +199,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   child: Text('Register',
                                       style: TextStyle(
                                           fontSize: 20, color: Colors.white)),
-                                  color: buttonColor,
+                                  color: NavyBlue,
                                 )),
                             Padding(padding: EdgeInsets.all(10)),
                             Text(

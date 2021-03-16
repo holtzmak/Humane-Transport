@@ -11,12 +11,15 @@ class SplashScreenViewModel extends BaseViewModel {
       locator<AuthenticationService>();
 
   void skipToHomeScreenIfLoggedIn() {
-    if (_authenticationService.currentUser.isPresent()) _navigateToHomeScreen();
-    _navigationService.navigateTo(WelcomeScreen.route);
+    if (_authenticationService.currentUser.isPresent()) {
+      _navigateToHomeScreen();
+    } else {
+      _navigationService.navigateAndReplace(WelcomeScreen.route);
+    }
   }
 
   void _navigateToHomeScreen() =>
-      _navigationService.navigateTo(HomeScreen.route);
+      _navigationService.navigateAndReplace(HomeScreen.route);
 
   Future handleStartLogic() async {
     Future.delayed(Duration(seconds: 3))
