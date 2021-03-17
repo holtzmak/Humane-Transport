@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/transporter.dart';
 
@@ -17,6 +19,8 @@ abstract class DatabaseInterface {
   Future<void> updateAtr(AnimalTransportRecord atr);
 
   Future<void> removeAtr(String atrId);
+
+  Future<String> uploadAtrImage(File file, String fileName);
 
   Future<List<AnimalTransportRecord>> getCompleteRecords(String userId);
 

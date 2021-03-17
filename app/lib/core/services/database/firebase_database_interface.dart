@@ -1,14 +1,15 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/transporter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'database_interface.dart';
 
 class FirebaseDatabaseInterface implements DatabaseInterface {
   final FirebaseFirestore _firestore;
-
   FirebaseDatabaseInterface(this._firestore);
 
   @override
@@ -101,4 +102,12 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .map((snapshot) => snapshot.docs
               .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
               .toList());
+
+  @override
+  Future<String> uploadAtrImage(File file, String fileName) async =>
+      FirebaseStorage.instance
+          .ref()
+          .child('atrImages/$fileName')
+          .putFile(file)
+          .then((TaskSnapshot snapshot) => snapshot.ref.getDownloadURL());
 }
