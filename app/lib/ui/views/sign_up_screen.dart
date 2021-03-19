@@ -1,12 +1,16 @@
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/view_models/signup_view_model.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_formatter/formatters/phone_input_formatter.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class SignUpScreen extends StatefulWidget {
+  final ValidationService _validator = locator<ValidationService>();
   static const route = '/signup';
   final formKey = GlobalKey<FormState>();
 
@@ -33,35 +37,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _lastNameController.dispose();
     _userPhoneNumberController.dispose();
     super.dispose();
-  }
-
-  // TODO: Extract validators into their own service
-  String emptyFieldValidation(String value) {
-    if (value.isEmpty) {
-      return "* Required";
-    } else
-      return null;
-  }
-
-  String validatePassword(String value) {
-    if (value.isEmpty) {
-      return "* Required";
-    } else if (value.length < 6) {
-      return "Password should be at least 6 characters";
-    } else if (value.length > 10) {
-      return "Password should not be greater than 10 characters";
-    } else
-      return null;
-  }
-
-  String validateEmail(String value) {
-    if (value.isEmpty) {
-      return '* Required';
-    }
-    if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
-      return '* Please enter a valid Email';
-    }
-    return null;
   }
 
   @override
@@ -96,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             TextFormField(
                               key: ObjectKey("First Name"),
-                              validator: emptyFieldValidation,
+                              validator: widget._validator.stringFieldValidator,
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: "First Name"),
@@ -109,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             TextFormField(
                               key: ObjectKey("Last Name"),
-                              validator: emptyFieldValidation,
+                              validator: widget._validator.stringFieldValidator,
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: "Last Name"),
@@ -122,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             TextFormField(
                               key: ObjectKey("Email"),
-                              validator: validateEmail,
+                              validator: widget._validator.emailValidator,
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: "Email"),
@@ -136,7 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             TextFormField(
                               // TODO: Obscure the password on demand in future
                               key: ObjectKey("Password"),
-                              validator: validatePassword,
+                              validator: widget._validator.passwordValidator,
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: "Password"),
@@ -148,12 +123,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             ),
                             TextFormField(
-                              key: ObjectKey("Phone Number"),
-                              controller: _userPhoneNumberController,
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: "Phone Number"),
-                            ),
+                                key: ObjectKey("Phone Number"),
+                                controller: _userPhoneNumberController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: "Phone Number"),
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: [
+                                  PhoneInputFormatter(),
+                                ]),
                             Padding(
                               padding: EdgeInsets.only(
                                 top: 0.5,

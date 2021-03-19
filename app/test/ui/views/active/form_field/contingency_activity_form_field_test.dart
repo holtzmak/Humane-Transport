@@ -1,9 +1,14 @@
 import 'package:app/core/models/contingency_plan_info.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/test/helper/test_contingency_activity_expectations.dart';
+import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/active/form_field/contingency_activity_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+
+final testLocator = GetIt.instance;
 
 void main() {
   Future<void> pumpContingencyActivityFormField(
@@ -11,6 +16,10 @@ void main() {
       tester.pumpWidget(MaterialApp(home: Scaffold(body: widget)));
 
   group('Contingency Activity Form Field', () {
+    setUpAll(() async {
+      addLazySingletonForTest(testLocator, () => ValidationService());
+    });
+
     testWidgets('shows right information', (WidgetTester tester) async {
       final contingencyActivity = ContingencyActivity(
           time: DateTime.parse("1970-01-01 19:22"),

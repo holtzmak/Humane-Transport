@@ -5,11 +5,6 @@ import 'package:app/ui/views/active/form_field/address_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
 
-// TODO: Extract validators into their own service
-String canBeEmptyFieldValidation(String value) {
-  return null;
-}
-
 class ReceiverInfoFormField extends StatefulWidget {
   final Function(ReceiverInfo info) onSaved;
   final ReceiverInfo initialInfo;
@@ -81,7 +76,6 @@ class _ReceiverInfoFormFieldState extends State<ReceiverInfoFormField> {
           onDelete: Optional.empty()),
       StringFormField(
           initial: _accountId.isPresent() ? _accountId.get() : "",
-          validator: canBeEmptyFieldValidation,
           title:
               "Account identification number of the consignee in the database of the responsible administrator (Optional)",
           onSaved: (String changed) {

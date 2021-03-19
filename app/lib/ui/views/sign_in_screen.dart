@@ -1,3 +1,5 @@
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/common/view_state.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class SignInScreen extends StatefulWidget {
+  final ValidationService _validator = locator<ValidationService>();
   static const route = '/signIn';
   final formKey = GlobalKey<FormState>();
 
@@ -26,13 +29,6 @@ class _SignInScreenState extends State<SignInScreen> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-  }
-
-  String emptyFieldValidation(String value) {
-    if (value.isEmpty) {
-      return "* Required";
-    } else
-      return null;
   }
 
   @override
@@ -66,7 +62,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           TextFormField(
                             key: ObjectKey("Email"),
-                            validator: emptyFieldValidation,
+                            validator: widget._validator.emailValidator,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: "Email"),
@@ -79,7 +75,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           TextFormField(
                             key: ObjectKey("Password"),
-                            validator: emptyFieldValidation,
+                            validator: widget._validator.passwordValidator,
                             controller: passwordController,
                             obscureText: true,
                             decoration: InputDecoration(

@@ -1,7 +1,12 @@
+import 'package:app/core/services/validation_service.dart';
+import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_string_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+
+final testLocator = GetIt.instance;
 
 void main() {
   void verifyNoDuplicateInfoShown(String title, List<String> information) {
@@ -20,6 +25,10 @@ void main() {
       )));
 
   group('Dynamic String Form Field', () {
+    setUpAll(() async {
+      addLazySingletonForTest(testLocator, () => ValidationService());
+    });
+
     testWidgets('shows right information for multiple fields',
         (WidgetTester tester) async {
       final testItems = ["Test0", "Test1", "Test2"];

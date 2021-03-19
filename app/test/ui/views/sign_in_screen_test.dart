@@ -1,4 +1,6 @@
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
+import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/ui/views/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -23,6 +25,7 @@ void main() {
   group('Sign in screen', () {
     setUpAll(() async {
       testLocator.registerFactory<SignInViewModel>(() => mockSignInViewModel);
+      addLazySingletonForTest(testLocator, () => ValidationService());
     });
 
     testWidgets('calls sign in with user credentials on sign in button clicked',

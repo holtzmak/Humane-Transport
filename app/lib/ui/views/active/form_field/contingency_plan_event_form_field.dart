@@ -1,4 +1,6 @@
 import 'package:app/core/models/contingency_plan_info.dart';
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_contingency_activity_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
@@ -6,14 +8,6 @@ import 'package:app/ui/views/active/dynamic_form_field/dynamic_string_form_field
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
-
-// TODO: Extract validators into their own service
-String emptyFieldValidation(String value) {
-  if (value.isEmpty) {
-    return "* Required";
-  } else
-    return null;
-}
 
 /// A custom form field with onSaved and onDelete callback
 class ContingencyPlanEventFormField extends FormField<ContingencyPlanEvent> {
@@ -36,6 +30,7 @@ class ContingencyPlanEventFormField extends FormField<ContingencyPlanEvent> {
 }
 
 class _ContingencyPlanEventFormFieldInner extends StatefulWidget {
+  final ValidationService _validator = locator<ValidationService>();
   final ContingencyPlanEvent initial;
   final Function(ContingencyPlanEvent) onSaved;
   final Function() onDelete;
@@ -167,7 +162,7 @@ class _ContingencyPlanEventFormFieldState
             title: "Disturbances identified",
             validator: (String field) {
               _validateNestedForms();
-              return emptyFieldValidation(field);
+              return widget._validator.stringFieldValidator(field);
             },
             onSaved: (String changed) {
               _disturbancesIdentified = changed;
