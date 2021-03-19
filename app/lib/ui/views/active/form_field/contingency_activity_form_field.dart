@@ -10,7 +10,7 @@ class ContingencyActivityFormField extends FormField<ContingencyActivity> {
       {Key key,
       @required ContingencyActivity initial,
       @required FormFieldSetter<ContingencyActivity> onSaved,
-      @required Function() onDelete})
+      @required Optional<Function()> onDelete})
       : super(
             key: key,
             onSaved: onSaved,
@@ -27,7 +27,7 @@ class ContingencyActivityFormField extends FormField<ContingencyActivity> {
 class _ContingencyActivityFormFieldInner extends StatefulWidget {
   final ContingencyActivity initial;
   final Function(ContingencyActivity) onSaved;
-  final Function() onDelete;
+  final Optional<Function()> onDelete;
 
   _ContingencyActivityFormFieldInner(
       {Key key,
@@ -67,13 +67,17 @@ class _ContingencyActivityFormFieldState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          title: Text("Carrier's communication activity"),
-          trailing: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: widget.onDelete,
-          ),
-        ),
+        widget.onDelete.isPresent()
+            ? ListTile(
+                title: Text("Carrier's communication activity"),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: widget.onDelete.get(),
+                ),
+              )
+            : ListTile(
+                title: Text("Carrier's communication activity"),
+              ),
         ListTile(
           title: Text("Time of communication"),
           subtitle: timePicker(

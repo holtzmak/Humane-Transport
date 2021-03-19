@@ -14,7 +14,7 @@ class AnimalGroupFormField extends FormField<AnimalGroup> {
       {Key key,
       @required AnimalGroup initial,
       @required FormFieldSetter<AnimalGroup> onSaved,
-      @required Function() onDelete})
+      @required Optional<Function()> onDelete})
       : super(
             key: key,
             initialValue: initial,
@@ -30,7 +30,7 @@ class AnimalGroupFormField extends FormField<AnimalGroup> {
 class _AnimalGroupFormFieldInner extends StatefulWidget {
   final ValidationService _validator = locator<ValidationService>();
   final Function(AnimalGroup info) onSaved;
-  final Function() onDelete;
+  final Optional<Function()> onDelete;
   final AnimalGroup initial;
 
   _AnimalGroupFormFieldInner(
@@ -112,13 +112,17 @@ class _AnimalGroupFormFieldState extends State<_AnimalGroupFormFieldInner> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      ListTile(
-        title: Text("Animal Group"),
-        trailing: IconButton(
-          icon: Icon(Icons.delete),
-          onPressed: widget.onDelete,
-        ),
-      ),
+      widget.onDelete.isPresent()
+          ? ListTile(
+              title: Text("Animal Group"),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: widget.onDelete.get(),
+              ),
+            )
+          : ListTile(
+              title: Text("Animal Group"),
+            ),
       StringFormField(
           initial: _species,
           title: "Species",

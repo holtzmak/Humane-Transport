@@ -1,6 +1,7 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/services/validation_service.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:app/test/helper/test_fwr_event_expectations.dart';
 import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/test/test_data.dart';
@@ -37,14 +38,12 @@ void main() {
               postalCode: "234rty"),
           fwrProvidedOnboard: false);
       final widget = FeedWaterRestEventFormField(
-        initial: feedWaterRestEvent,
-        onSaved: (_) {
-          // do nothing for test
-        },
-        onDelete: () {
-          // do nothing for test
-        },
-      );
+          initial: feedWaterRestEvent,
+          onSaved: (_) {
+            // do nothing for test
+          },
+          // Do nothing for test
+          onDelete: Optional.empty());
       await pumpFwrEventFormField(tester, widget);
       verifyFwrEventInformationIsShown(feedWaterRestEvent);
     });
@@ -59,7 +58,7 @@ void main() {
         onSaved: (_) {
           // do nothing for test
         },
-        onDelete: onDeleteCallback,
+        onDelete: Optional.of(onDeleteCallback),
       );
       await pumpFwrEventFormField(tester, widget);
       await tester.ensureVisible(deleteButtonFinder);
@@ -85,12 +84,10 @@ void main() {
       final widget = Form(
           key: formKey,
           child: FeedWaterRestEventFormField(
-            initial: testFeedWaterRestEvent,
-            onSaved: onSavedCallback,
-            onDelete: () {
-              // do nothing for test
-            },
-          ));
+              initial: testFeedWaterRestEvent,
+              onSaved: onSavedCallback,
+              // Do nothing for test
+              onDelete: Optional.empty()));
       await pumpFwrEventFormField(tester, widget);
       await tester.enterText(fieldFinder, editedStreet);
       await tester.pumpAndSettle();

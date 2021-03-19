@@ -1,5 +1,6 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/services/validation_service.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:app/test/helper/test_compromised_animal_expectations.dart';
 import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/test/test_data.dart';
@@ -31,9 +32,8 @@ void main() {
           onSaved: (_) {
             // do nothing for test
           },
-          onDelete: () {
-            // do nothing for test
-          });
+          // Do nothing for test
+          onDelete: Optional.empty());
       await pumpCompromisedAnimalFormField(tester, widget);
       verifyCompromisedAnimalInfoIsShown(compromisedAnimal);
     });
@@ -49,7 +49,7 @@ void main() {
           onSaved: (_) {
             // do nothing for test
           },
-          onDelete: onDeleteCallback);
+          onDelete: Optional.of(onDeleteCallback));
       await pumpCompromisedAnimalFormField(tester, widget);
       await tester.ensureVisible(deleteButtonFinder);
       await tester.tap(deleteButtonFinder);
@@ -72,15 +72,13 @@ void main() {
           testCompromisedAnimal(animalDescription: editedDescription);
       final formKey = GlobalKey<FormState>();
       final widget = Form(
-        key: formKey,
-        child: CompromisedAnimalFormField(
-            title: "Compromised Animal",
-            initial: testAnimal,
-            onSaved: onSavedCallback,
-            onDelete: () {
-              // do nothing for test
-            }),
-      );
+          key: formKey,
+          child: CompromisedAnimalFormField(
+              title: "Compromised Animal",
+              initial: testAnimal,
+              onSaved: onSavedCallback,
+              // Do nothing for test
+              onDelete: Optional.empty()));
       await pumpCompromisedAnimalFormField(tester, widget);
       await tester.enterText(fieldFinder, editedDescription);
       await tester.pumpAndSettle();

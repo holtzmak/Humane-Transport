@@ -1,4 +1,5 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/form_field/animal_group_form_field.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +24,15 @@ dynamicAnimalGroupFormField(
             animalsFitForTransport: true,
             compromisedAnimals: [],
             specialNeedsAnimals: []),
-        fieldCreator: (int index, AnimalGroup it,
-                Function(int, AnimalGroup) onSaved, Function(int) onDelete) =>
+        fieldCreator: (int index,
+                AnimalGroup it,
+                Function(int, AnimalGroup) onSaved,
+                Optional<Function(int)> onDelete) =>
             AnimalGroupFormField(
-                // Must have unique keys in rebuilding widget lists
+// Must have unique keys in rebuilding widget lists
                 key: ObjectKey(Uuid().v4()),
                 initial: it,
                 onSaved: (AnimalGroup changed) => onSaved(index, changed),
-                onDelete: () => onDelete(index)));
+                onDelete: onDelete.isPresent()
+                    ? Optional.of(() => onDelete.get()(index))
+                    : Optional.empty()));

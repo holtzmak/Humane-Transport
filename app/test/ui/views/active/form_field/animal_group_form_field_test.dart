@@ -1,5 +1,6 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/services/validation_service.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:app/test/helper/test_animal_group_expectations.dart';
 import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/test/test_data.dart';
@@ -41,14 +42,12 @@ void main() {
                     "Rendered cow unconscious for travel")
           ]);
       final widget = AnimalGroupFormField(
-        initial: testAnimalGroup,
-        onSaved: (_) {
+          initial: testAnimalGroup,
+          onSaved: (_) {
+            // Do nothing for test
+          },
           // Do nothing for test
-        },
-        onDelete: () {
-          // Do nothing for test
-        },
-      );
+          onDelete: Optional.empty());
       await pumpAnimalGroupFormField(tester, widget);
       verifyAnimalGroupIsShown(testAnimalGroup);
     });
@@ -63,7 +62,7 @@ void main() {
         onSaved: (_) {
           // Do nothing for test
         },
-        onDelete: onDeleteCallback,
+        onDelete: Optional.of(onDeleteCallback),
       );
       await pumpAnimalGroupFormField(tester, widget);
       await tester.ensureVisible(deleteButtonFinder);
@@ -92,9 +91,8 @@ void main() {
           child: AnimalGroupFormField(
             initial: testInfo,
             onSaved: onSaved,
-            onDelete: () {
-              // Do nothing for test
-            },
+            // Do nothing for test
+            onDelete: Optional.empty(),
           ));
       await pumpAnimalGroupFormField(tester, widget);
       await tester.ensureVisible(fieldFinder);

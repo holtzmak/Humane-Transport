@@ -17,11 +17,13 @@ dynamicStringFormField(
         onSaved: onSaved,
         blankFieldCreator: () => "",
         fieldCreator: (int index, String it, Function(int, String) onSaved,
-                Function(int) onDelete) =>
+                Optional<Function(int)> onDelete) =>
             StringFormField(
-                // Must have unique keys in rebuilding widget lists
+// Must have unique keys in rebuilding widget lists
                 key: ObjectKey(Uuid().v4()),
                 initial: it,
                 title: titles,
                 onSaved: (String changed) => onSaved(index, changed),
-                onDelete: Optional.of(() => onDelete(index))));
+                onDelete: onDelete.isPresent()
+                    ? Optional.of(() => onDelete.get()(index))
+                    : Optional.empty()));

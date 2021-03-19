@@ -1,18 +1,18 @@
+import 'package:app/core/utilities/optional.dart';
 import 'package:flutter/material.dart';
 
-// TODO: #134. This class should allow for non-empty lists
-// Meaning that if at least one field should exist, the first item should have no delete button
 /// A custom form field for List<T>.
 /// Due to it's dynamic nature this widget should only be used inside a grow-able
 /// widget, like column, and not inside static widgets like ListTiles.
 class DynamicFormField<T> extends StatefulWidget {
   final List<T> initialList;
   final String titles;
+  final bool canBeEmpty;
   final Function(List<T>) onSaved;
   final T Function() blankFieldCreator;
 
   // The fieldCreator uses index, initial, onSaved, and onDelete
-  final FormField<T> Function(int, T, Function(int, T), Function(int))
+  final FormField<T> Function(int, T, Function(int, T), Optional<Function(int)>)
       fieldCreator;
   final _formKey = GlobalKey<FormState>();
 
@@ -26,7 +26,8 @@ class DynamicFormField<T> extends StatefulWidget {
       @required this.titles,
       @required this.blankFieldCreator,
       @required this.fieldCreator,
-      @required this.onSaved})
+      @required this.onSaved,
+      this.canBeEmpty = true})
       : super(key: key);
 
   @override
@@ -38,11 +39,17 @@ class _DynamicFormFieldState<T> extends State<DynamicFormField<T>> {
 
   void _saveAll() => widget.save();
 
-  // TODO: #136. Trim empties from the saved list
-  // but keep them in the widget's list to have open spots for new items
   void _saveIndividual(int index, T field) {
     _fields[index] = field;
-    widget.onSaved(_fields);
+    final blank = widget.blankFieldCreator();
+    final fieldsTrimmed = _fields.where((T it) => it != blank).toList();
+    if (index == 0 && fieldsTrimmed.isEmpty) {
+      // Save the single, empty field
+      // This event should only occur when validation is not done before save
+      widget.onSaved([blank]);
+    } else {
+      widget.onSaved(fieldsTrimmed);
+    }
   }
 
   void _deleteField(int index) => setState(() {
@@ -60,13 +67,22 @@ class _DynamicFormFieldState<T> extends State<DynamicFormField<T>> {
       });
 
   FormField<T> _createField(int index) {
-    return widget.fieldCreator(
-        index, _fields[index], _saveIndividual, _deleteField);
+    if (index == 0 && !widget.canBeEmpty) {
+      return widget.fieldCreator(
+          index, _fields[index], _saveIndividual, Optional.empty());
+    } else {
+      return widget.fieldCreator(
+          index, _fields[index], _saveIndividual, Optional.of(_deleteField));
+    }
   }
 
   @override
   void initState() {
-    _fields.addAll(widget.initialList);
+    if (!widget.canBeEmpty && widget.initialList.isEmpty) {
+      _fields.add(widget.blankFieldCreator());
+    } else {
+      _fields.addAll(widget.initialList);
+    }
     super.initState();
   }
 

@@ -1,5 +1,6 @@
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/services/validation_service.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:app/test/helper/test_contingency_plan_event_expectations.dart';
 import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/test/test_data.dart';
@@ -33,14 +34,12 @@ void main() {
           activities: [testContingencyActivity()],
           actionsTaken: ["Bandaged up cow"]);
       final widget = ContingencyPlanEventFormField(
-        initial: contingencyEvent,
-        onSaved: (_) {
-          // do nothing for test
-        },
-        onDelete: () {
-          // do nothing for test
-        },
-      );
+          initial: contingencyEvent,
+          onSaved: (_) {
+            // do nothing for test
+          },
+          // Do nothing for test
+          onDelete: Optional.empty());
       await pumpContingencyPlanEventFormField(tester, widget);
       verifyContingencyPlanEventShown(contingencyEvent);
     });
@@ -55,7 +54,7 @@ void main() {
         onSaved: (_) {
           // do nothing for test
         },
-        onDelete: onDeleteCallback,
+        onDelete: Optional.of(onDeleteCallback),
       );
       await pumpContingencyPlanEventFormField(tester, widget);
       await tester.ensureVisible(deleteButtonFinder);
@@ -83,12 +82,10 @@ void main() {
       final widget = Form(
           key: formKey,
           child: ContingencyPlanEventFormField(
-            initial: testEvent,
-            onSaved: onSavedCallback,
-            onDelete: () {
-              // do nothing for test
-            },
-          ));
+              initial: testEvent,
+              onSaved: onSavedCallback,
+              // Do nothing for test
+              onDelete: Optional.empty()));
       await pumpContingencyPlanEventFormField(tester, widget);
       await tester.enterText(fieldFinder, editedContact);
       await tester.pumpAndSettle();
