@@ -46,7 +46,7 @@ class _IntFormFieldState extends StatelessWidget {
           if (validator != null) {
             return validator(int.tryParse(field));
           } else {
-            return _validator.nonNullIntFieldValidator(int.tryParse(field));
+            return _validator.intFieldValidator(int.tryParse(field));
           }
         },
         decoration:

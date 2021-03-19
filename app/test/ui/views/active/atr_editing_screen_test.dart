@@ -163,8 +163,20 @@ void main() {
 
     testWidgets('invalid form blocks completion submission',
         (WidgetTester tester) async {
-      // TODO: Complete with form validation
-      // Maybe also add different tests for the upcoming progress bar tied to validation
+      final invalidAtr = AnimalTransportRecord.defaultAtr("testId");
+      final submitButtonFinder = find.text("Submit");
+
+      await pumpATREditingScreen(tester, invalidAtr);
+      await tester.ensureVisible(submitButtonFinder);
+      await tester.tap(submitButtonFinder);
+      // Non-standard save time
+      await tester.pump(Duration(milliseconds: 1));
+
+      verifyNever(mockActiveScreenViewModel.saveCompletedAtr(any));
+      verify(mockDialogService.showDialog(
+              title: 'Submission of the Animal Transport Record failed',
+              description: 'One or more the the form fields is invalid'))
+          .called(1);
     });
   });
 }
