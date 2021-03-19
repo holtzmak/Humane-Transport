@@ -1,6 +1,6 @@
 class ValidationService {
   String stringFieldValidator(String value) {
-    if (value.isEmpty) {
+    if (value == null || value.isEmpty) {
       return "* Required";
     } else {
       return null;
@@ -26,7 +26,7 @@ class ValidationService {
   String canBeEmptyFieldValidator(String value) => null;
 
   String passwordValidator(String value) {
-    if (value.isEmpty) {
+    if (value == null || value.isEmpty) {
       return "* Required";
     } else if (value.length < 6) {
       return "Password should be at least 6 characters";
@@ -38,7 +38,7 @@ class ValidationService {
   }
 
   String emailValidator(String value) {
-    if (value.isEmpty) {
+    if (value == null || value.isEmpty) {
       return '* Required';
     } else if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
         .hasMatch(value)) {
