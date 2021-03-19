@@ -10,7 +10,7 @@ class CompromisedAnimalFormField extends FormField<CompromisedAnimal> {
       @required CompromisedAnimal initial,
       @required String title,
       @required Function(CompromisedAnimal) onSaved,
-      @required Function() onDelete})
+      @required Optional<Function()> onDelete})
       : super(
             key: key,
             onSaved: onSaved,
@@ -29,7 +29,7 @@ class _CompromisedAnimalFormFieldInner extends StatefulWidget {
   final CompromisedAnimal initial;
   final String title;
   final Function(CompromisedAnimal) onSaved;
-  final Function() onDelete;
+  final Optional<Function()> onDelete;
 
   _CompromisedAnimalFormFieldInner(
       {Key key,
@@ -64,13 +64,17 @@ class _CompromisedAnimalFormFieldState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          title: Text(widget.title),
-          trailing: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: widget.onDelete,
-          ),
-        ),
+        widget.onDelete.isPresent()
+            ? ListTile(
+                title: Text(widget.title),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: widget.onDelete.get(),
+                ),
+              )
+            : ListTile(
+                title: Text(widget.title),
+              ),
         StringFormField(
           initial: _animalDescription,
           title: "Animal description",

@@ -1,4 +1,5 @@
 import 'package:app/core/models/contingency_plan_info.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/form_field/contingency_activity_form_field.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +23,13 @@ dynamicContingencyActivityFormField(
         fieldCreator: (int index,
                 ContingencyActivity it,
                 Function(int, ContingencyActivity) onSaved,
-                Function(int) onDelete) =>
+                Optional<Function(int)> onDelete) =>
             ContingencyActivityFormField(
-                // Must have unique keys in rebuilding widget lists
+// Must have unique keys in rebuilding widget lists
                 key: ObjectKey(Uuid().v4()),
                 initial: it,
                 onSaved: (ContingencyActivity changed) =>
                     onSaved(index, changed),
-                onDelete: () => onDelete(index)));
+                onDelete: onDelete.isPresent()
+                    ? Optional.of(() => onDelete.get()(index))
+                    : Optional.empty()));

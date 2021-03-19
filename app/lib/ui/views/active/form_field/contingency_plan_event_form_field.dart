@@ -15,7 +15,7 @@ class ContingencyPlanEventFormField extends FormField<ContingencyPlanEvent> {
       {Key key,
       @required ContingencyPlanEvent initial,
       @required FormFieldSetter<ContingencyPlanEvent> onSaved,
-      @required Function() onDelete})
+      @required Optional<Function()> onDelete})
       : super(
             key: key,
             onSaved: onSaved,
@@ -33,7 +33,7 @@ class _ContingencyPlanEventFormFieldInner extends StatefulWidget {
   final ValidationService _validator = locator<ValidationService>();
   final ContingencyPlanEvent initial;
   final Function(ContingencyPlanEvent) onSaved;
-  final Function() onDelete;
+  final Optional<Function()> onDelete;
 
   _ContingencyPlanEventFormFieldInner(
       {Key key,
@@ -132,13 +132,17 @@ class _ContingencyPlanEventFormFieldState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          title: Text("Event Specific Plan"),
-          trailing: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: widget.onDelete,
-          ),
-        ),
+        widget.onDelete.isPresent()
+            ? ListTile(
+                title: Text("Event Specific Plan"),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: widget.onDelete.get(),
+                ),
+              )
+            : ListTile(
+                title: Text("Event Specific Plan"),
+              ),
         ListTile(
           title: Text("Date and time of event"),
           subtitle: dateTimePicker(

@@ -1,5 +1,6 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/form_field/address_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class FeedWaterRestEventFormField extends FormField<FeedWaterRestEvent> {
       {Key key,
       @required FeedWaterRestEvent initial,
       @required FormFieldSetter<FeedWaterRestEvent> onSaved,
-      @required Function() onDelete})
+      @required Optional<Function()> onDelete})
       : super(
             key: key,
             onSaved: onSaved,
@@ -27,7 +28,7 @@ class FeedWaterRestEventFormField extends FormField<FeedWaterRestEvent> {
 class _FeedWaterRestEventFormFieldInner extends StatefulWidget {
   final FeedWaterRestEvent initial;
   final FormFieldSetter<FeedWaterRestEvent> onSaved;
-  final Function() onDelete;
+  final Optional<Function()> onDelete;
 
   _FeedWaterRestEventFormFieldInner(
       {Key key,
@@ -76,13 +77,17 @@ class _FeedWaterRestEventFormFieldState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          title: Text("FWR Event"),
-          trailing: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: widget.onDelete,
-          ),
-        ),
+        widget.onDelete.isPresent()
+            ? ListTile(
+                title: Text("FWR Event"),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: widget.onDelete.get(),
+                ),
+              )
+            : ListTile(
+                title: Text("FWR Event"),
+              ),
         ListTile(
           title: DropdownButtonFormField(
             decoration: InputDecoration(

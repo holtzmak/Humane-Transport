@@ -1,5 +1,6 @@
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/services/validation_service.dart';
+import 'package:app/core/utilities/optional.dart';
 import 'package:app/test/helper/test_contingency_activity_expectations.dart';
 import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/test/test_data.dart';
@@ -27,14 +28,12 @@ void main() {
           methodOfContact: "Phone call",
           instructionsGiven: "Wait for authorities to arrive");
       final widget = ContingencyActivityFormField(
-        initial: contingencyActivity,
-        onSaved: (_) {
-          // do nothing for test
-        },
-        onDelete: () {
-          // do nothing for test
-        },
-      );
+          initial: contingencyActivity,
+          onSaved: (_) {
+            // do nothing for test
+          },
+          // Do nothing for test
+          onDelete: Optional.empty());
       await pumpContingencyActivityFormField(tester, widget);
       verifyContingencyActivityShown(contingencyActivity);
     });
@@ -49,7 +48,7 @@ void main() {
         onSaved: (_) {
           // do nothing for test
         },
-        onDelete: onDeleteCallback,
+        onDelete: Optional.of(onDeleteCallback),
       );
       await pumpContingencyActivityFormField(tester, widget);
       await tester.ensureVisible(deleteButtonFinder);
@@ -76,12 +75,10 @@ void main() {
       final widget = Form(
           key: formKey,
           child: ContingencyActivityFormField(
-            initial: testActivity,
-            onSaved: onSavedCallback,
-            onDelete: () {
-              // do nothing for test
-            },
-          ));
+              initial: testActivity,
+              onSaved: onSavedCallback,
+              // Do nothing for test
+              onDelete: Optional.empty()));
       await pumpContingencyActivityFormField(tester, widget);
       await tester.enterText(fieldFinder, editedContact);
       await tester.pumpAndSettle();
