@@ -1,11 +1,14 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/receiver_info.dart';
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/form_field/address_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
 
 class ReceiverInfoFormField extends StatefulWidget {
+  final ValidationService _validator = locator<ValidationService>();
   final Function(ReceiverInfo info) onSaved;
   final ReceiverInfo initialInfo;
 
@@ -76,6 +79,7 @@ class _ReceiverInfoFormFieldState extends State<ReceiverInfoFormField> {
           onDelete: Optional.empty()),
       StringFormField(
           initial: _accountId.isPresent() ? _accountId.get() : "",
+          validator: widget._validator.canBeEmptyFieldValidator,
           title:
               "Account identification number of the consignee in the database of the responsible administrator (Optional)",
           onSaved: (String changed) {

@@ -51,7 +51,7 @@ class _StringFormFieldState extends StatelessWidget {
     return onDelete.isPresent()
         ? ListTile(
             title: TextFormField(
-              validator: validator ?? _validator.canBeEmptyFieldValidator,
+              validator: validator ?? _validator.stringFieldValidator,
               initialValue: state.value,
               decoration: InputDecoration(
                   border: OutlineInputBorder(), labelText: title),
@@ -67,7 +67,7 @@ class _StringFormFieldState extends StatelessWidget {
             ))
         : ListTile(
             title: TextFormField(
-              validator: validator ?? _validator.canBeEmptyFieldValidator,
+              validator: validator ?? _validator.stringFieldValidator,
               initialValue: state.value,
               decoration: InputDecoration(
                   border: OutlineInputBorder(), labelText: title),

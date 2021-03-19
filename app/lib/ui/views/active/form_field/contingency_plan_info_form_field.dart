@@ -60,14 +60,14 @@ class _ContingencyPlanInfoFormFieldState
           _crisisContacts = changed;
           _saveAll();
         },
-        titles: "Producer contact used");
+        titles: "Contact used");
     _potentialHazardsFormField = dynamicStringFormField(
         initialList: _potentialHazards,
         onSaved: (List<String> changed) {
           _potentialHazards = changed;
           _saveAll();
         },
-        titles: "Receiver contact used");
+        titles: "Hazard/Event/Challenge");
     _potentialSafetyActionsFormField = dynamicStringFormField(
         initialList: _potentialSafetyActions,
         onSaved: (List<String> changed) {
