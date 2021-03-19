@@ -180,7 +180,6 @@ testReceiverInfo(
         destinationAddress: destinationAddress ?? testAddress(),
         receiverContactInfo: receiverContactInfo ?? "ABC123");
 
-// TODO: Add mock files or something, we're not likely to use this
 testAckInfo({File shipperAck, File transporterAck, File receiverAck}) =>
     AcknowledgementInfo(
         shipperAck: null, transporterAck: null, receiverAck: null);

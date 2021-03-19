@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   children: <Widget>[
                     Image.asset("assets/home_cover.jpg"),
-                    //TODO load transporter name
+                    // TODO: #223. Use the logged in transporter's name
                     Positioned(
                         bottom: 20.0,
                         left: 10.0,
