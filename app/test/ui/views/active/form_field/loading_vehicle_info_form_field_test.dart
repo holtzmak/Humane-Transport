@@ -1,10 +1,15 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/test/helper/test_animal_group_expectations.dart';
+import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/active/form_field/loading_vehicle_info_form_field.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+
+final testLocator = GetIt.instance;
 
 void main() {
   void verifyInformationIsShown(LoadingVehicleInfo infoExpected) {
@@ -38,6 +43,10 @@ void main() {
       )))));
 
   group('Loading Vehicle Info Form Field', () {
+    setUpAll(() async {
+      addLazySingletonForTest(testLocator, () => ValidationService());
+    });
+
     testWidgets('shows right information', (WidgetTester tester) async {
       final testVehicleInfo = LoadingVehicleInfo(
           dateAndTimeLoaded: DateTime.parse("2021-02-03 13:01"),

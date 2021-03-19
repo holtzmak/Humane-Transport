@@ -1,6 +1,10 @@
+import 'package:app/core/services/auth_service.dart';
 import 'package:app/core/services/database/database_interface.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/database/firebase_database_interface.dart';
+import 'package:app/core/services/dialog_service.dart';
+import 'package:app/core/services/nav_service.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/view_models/account_edit_view_model.dart';
 import 'package:app/core/view_models/account_screen_view_model.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
@@ -14,10 +18,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 
-import 'auth_service.dart';
-import 'dialog_service.dart';
-import 'nav_service.dart';
-
 final locator = GetIt.instance;
 
 void setUpLocator() {
@@ -30,6 +30,7 @@ void setUpLocator() {
       () => AuthenticationService(firebaseAuth: FirebaseAuth.instance));
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<DialogService>(() => DialogService());
+  locator.registerLazySingleton<ValidationService>(() => ValidationService());
 
   // Factories
   locator.registerFactory<SplashScreenViewModel>(() => SplashScreenViewModel());

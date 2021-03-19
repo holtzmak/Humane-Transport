@@ -1,18 +1,12 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_compromised_animal_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/form_field/int_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
-
-// TODO: Extract validators into their own service
-String emptyFieldValidation(String value) {
-  if (value.isEmpty) {
-    return "* Required";
-  } else
-    return null;
-}
 
 /// A custom form field with onSaved and onDelete callback
 class AnimalGroupFormField extends FormField<AnimalGroup> {
@@ -34,6 +28,7 @@ class AnimalGroupFormField extends FormField<AnimalGroup> {
 }
 
 class _AnimalGroupFormFieldInner extends StatefulWidget {
+  final ValidationService _validator = locator<ValidationService>();
   final Function(AnimalGroup info) onSaved;
   final Function() onDelete;
   final AnimalGroup initial;
@@ -129,7 +124,7 @@ class _AnimalGroupFormFieldState extends State<_AnimalGroupFormFieldInner> {
           title: "Species",
           validator: (String field) {
             _validateNestedForms();
-            return emptyFieldValidation(field);
+            return widget._validator.stringFieldValidator(field);
           },
           onSaved: (String changed) {
             _species = changed;

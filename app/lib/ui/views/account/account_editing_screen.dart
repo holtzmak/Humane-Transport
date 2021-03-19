@@ -1,4 +1,6 @@
 import 'package:app/core/models/transporter.dart';
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/view_models/account_edit_view_model.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/common/view_state.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 
 class AccountEditingScreen extends StatefulWidget {
+  final ValidationService _validator = locator<ValidationService>();
   static const route = '/accountEditingScreen';
   final formKey = GlobalKey<FormState>();
   final Transporter account;
@@ -33,35 +36,6 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
     _lastNameController.dispose();
     _userPhoneNumberController.dispose();
     super.dispose();
-  }
-
-  // TODO: Extract validators into their own service
-  String emptyFieldValidation(String value) {
-    if (value.isEmpty) {
-      return "* Required";
-    } else
-      return null;
-  }
-
-  String validatePassword(String value) {
-    if (value.isEmpty) {
-      return "* Required";
-    } else if (value.length < 6) {
-      return "Password should be at least 6 characters";
-    } else if (value.length > 10) {
-      return "Password should not be greater than 10 characters";
-    } else
-      return null;
-  }
-
-  String validateEmail(String value) {
-    if (value.isEmpty) {
-      return '* Required';
-    }
-    if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
-      return '* Please enter a valid Email';
-    }
-    return null;
   }
 
   @override
@@ -102,7 +76,7 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                         ),
                         TextFormField(
                           key: ObjectKey("First Name"),
-                          validator: emptyFieldValidation,
+                          validator: widget._validator.stringFieldValidator,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: "First Name"),
@@ -115,7 +89,7 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                         ),
                         TextFormField(
                           key: ObjectKey("Last Name"),
-                          validator: emptyFieldValidation,
+                          validator: widget._validator.stringFieldValidator,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: "Last Name"),
@@ -128,7 +102,7 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                         ),
                         TextFormField(
                           key: ObjectKey("Email"),
-                          validator: validateEmail,
+                          validator: widget._validator.emailValidator,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(), labelText: "Email"),
                           controller: _emailController,

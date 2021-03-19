@@ -1,10 +1,15 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/shipper_info.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/test/helper/test_address_expectations.dart';
+import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+
+final testLocator = GetIt.instance;
 
 void main() {
   void verifyInformationIsShown(ShipperInfo infoExpected) {
@@ -27,6 +32,10 @@ void main() {
       )))));
 
   group('Shipper Info Form Field', () {
+    setUpAll(() async {
+      addLazySingletonForTest(testLocator, () => ValidationService());
+    });
+
     testWidgets('shows right information', (WidgetTester tester) async {
       final testShipperInfo = ShipperInfo(
           shipperName: "Jackson Black",

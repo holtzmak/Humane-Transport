@@ -1,6 +1,8 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/services/dialog_service.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
+import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
 import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
@@ -34,6 +36,7 @@ void main() {
       testLocator.registerLazySingleton<ActiveScreenViewModel>(
           () => mockActiveScreenViewModel);
       testLocator.registerLazySingleton<DialogService>(() => mockDialogService);
+      addLazySingletonForTest(testLocator, () => ValidationService());
     });
 
     testWidgets('has shipping info form field', (WidgetTester tester) async {

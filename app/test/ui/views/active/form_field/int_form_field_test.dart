@@ -1,6 +1,11 @@
+import 'package:app/core/services/validation_service.dart';
+import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/ui/views/active/form_field/int_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+
+final testLocator = GetIt.instance;
 
 void main() {
   void verifyInformationIsShown(int infoExpected, String titleExpected) {
@@ -13,6 +18,10 @@ void main() {
       tester.pumpWidget(MaterialApp(home: Scaffold(body: widget)));
 
   group('Integer Form Field', () {
+    setUpAll(() async {
+      addLazySingletonForTest(testLocator, () => ValidationService());
+    });
+
     testWidgets('shows right information', (WidgetTester tester) async {
       final testItem = 123;
       final testTitle = "Test Title";

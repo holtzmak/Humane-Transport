@@ -1,11 +1,16 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/test/helper/test_fwr_event_expectations.dart';
+import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_fwr_event_form_field.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+
+final testLocator = GetIt.instance;
 
 void main() {
   void verifyNoDuplicateInfoShown(List<FeedWaterRestEvent> infoExpected) {
@@ -43,6 +48,10 @@ void main() {
       )));
 
   group('Dynamic FWR Form Field', () {
+    setUpAll(() async {
+      addLazySingletonForTest(testLocator, () => ValidationService());
+    });
+
     testWidgets('shows right information for multiple events',
         (WidgetTester tester) async {
       final testItems = [

@@ -1,13 +1,6 @@
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:flutter/material.dart';
-
-// TODO: Extract validators into their own service
-String emptyFieldValidation(int value) {
-  if (value == null || value == 0) {
-    return "* Required";
-  } else {
-    return null;
-  }
-}
 
 /// A custom form field with onSaved and onDelete callback
 class IntFormField extends FormField<int> {
@@ -16,7 +9,7 @@ class IntFormField extends FormField<int> {
       @required int initial,
       @required String title,
       @required FormFieldSetter<int> onSaved,
-      FormFieldValidator<int> validator = emptyFieldValidation})
+      FormFieldValidator<int> validator})
       : super(
             key: key,
             initialValue: initial,
@@ -31,6 +24,7 @@ class IntFormField extends FormField<int> {
 }
 
 class _IntFormFieldState extends StatelessWidget {
+  final ValidationService _validator = locator<ValidationService>();
   final FormFieldState<int> state;
   final String title;
   final FormFieldSetter<int> onSaved;
@@ -48,7 +42,13 @@ class _IntFormFieldState extends StatelessWidget {
     return ListTile(
       title: TextFormField(
         initialValue: state.value.toString(),
-        validator: (String field) => validator(int.tryParse(field)),
+        validator: (String field) {
+          if (validator != null) {
+            return validator(int.tryParse(field));
+          } else {
+            return _validator.nonNullIntFieldValidator(int.tryParse(field));
+          }
+        },
         decoration:
             InputDecoration(border: OutlineInputBorder(), labelText: title),
         keyboardType: TextInputType.number,

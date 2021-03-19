@@ -1,4 +1,6 @@
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/view_models/signup_view_model.dart';
+import 'package:app/test/mock/test_service_locator.dart';
 import 'package:app/ui/views/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,6 +23,7 @@ void main() {
   group('Sign up screen', () {
     setUpAll(() async {
       testLocator.registerFactory<SignUpViewModel>(() => mockSignUpViewModel);
+      addLazySingletonForTest(testLocator, () => ValidationService());
     });
 
     testWidgets(
@@ -37,7 +40,7 @@ void main() {
       await tester.enterText(firstNameFinder, "Test first name");
       await tester.enterText(lastNameFinder, "Test last name");
       await tester.enterText(emailFinder, "email@email.com");
-      await tester.enterText(phoneFinder, "Test phone number");
+      await tester.enterText(phoneFinder, "13061234567");
       await tester.enterText(passwordFinder, "Test pas");
       // Non-standard animation time due to decoration
       await tester.pump(Duration(milliseconds: 1));
@@ -48,13 +51,14 @@ void main() {
       await tester.tap(registerButtonFinder);
       // Non-standard animation time due to decoration
       await tester.pump(Duration(milliseconds: 1));
+      await tester.ensureVisible(find.text("+1 (306) 123 4567"));
 
       verify(mockSignUpViewModel.signUp(
               userEmailAddress: "email@email.com",
               password: "Test pas",
               firstName: "Test first name",
               lastName: "Test last name",
-              userPhoneNumber: "Test phone number"))
+              userPhoneNumber: "+1 (306) 123 4567"))
           .called(1);
     });
 
@@ -145,8 +149,8 @@ void main() {
         (WidgetTester tester) async {
       await pumpSignUpScreen(tester);
 
-      final emailFinder = find.byKey(ObjectKey("Password"));
-      await tester.enterText(emailFinder, "1234");
+      final passwordFinder = find.byKey(ObjectKey("Password"));
+      await tester.enterText(passwordFinder, "1234");
 
       await tester.pump(Duration(milliseconds: 1));
 
