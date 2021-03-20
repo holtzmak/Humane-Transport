@@ -85,6 +85,7 @@ class _ContingencyPlanEventFormFieldState
         },
         titles: "Receiver contact used");
     _actionsTakenFormField = dynamicStringFormField(
+        canBeEmpty: false,
         initialList: _actionsTaken,
         onSaved: (List<String> changed) {
           _actionsTaken = changed;
@@ -92,6 +93,7 @@ class _ContingencyPlanEventFormFieldState
         },
         titles: "Action taken");
     _contingencyActivitiesFormField = dynamicContingencyActivityFormField(
+        canBeEmpty: false,
         initialList: _activities,
         onSaved: (List<ContingencyActivity> changed) {
           _activities = changed;
@@ -175,8 +177,10 @@ class _ContingencyPlanEventFormFieldState
             },
             onDelete: Optional.empty()),
         ListTile(
-          title: Text(
-              "List of animal welfare related measures and actions taken (specific to the event)"),
+          title: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
+              child: Text(
+                  "List of animal welfare related measures and actions taken (specific to the event)")),
         ),
         _actionsTakenFormField,
         ListTile(

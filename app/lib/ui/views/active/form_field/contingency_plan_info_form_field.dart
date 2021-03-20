@@ -55,26 +55,29 @@ class _ContingencyPlanInfoFormFieldState
     _contingencyEvents = widget.initialInfo.contingencyEvents;
 
     _crisisContactsFormField = dynamicStringFormField(
+        canBeEmpty: false,
         initialList: _crisisContacts,
         onSaved: (List<String> changed) {
           _crisisContacts = changed;
           _saveAll();
         },
-        titles: "Contact used");
+        titles: "Potential crisis contact");
     _potentialHazardsFormField = dynamicStringFormField(
+        canBeEmpty: false,
         initialList: _potentialHazards,
         onSaved: (List<String> changed) {
           _potentialHazards = changed;
           _saveAll();
         },
-        titles: "Hazard/Event/Challenge");
+        titles: "Potential hazard/event/challenge");
     _potentialSafetyActionsFormField = dynamicStringFormField(
+        canBeEmpty: false,
         initialList: _potentialSafetyActions,
         onSaved: (List<String> changed) {
           _potentialSafetyActions = changed;
           _saveAll();
         },
-        titles: "Action taken");
+        titles: "Potential action to take");
     _contingencyEventsFormField = dynamicContingencyPlanEventFormField(
         initialList: _contingencyEvents,
         onSaved: (List<ContingencyPlanEvent> changed) {
@@ -147,8 +150,10 @@ class _ContingencyPlanInfoFormFieldState
             },
             onDelete: Optional.empty()),
         ListTile(
-          title: Text(
-              "Crisis contacts and links (general helpline, industry related links and websites)"),
+          title: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
+              child: Text(
+                  "Crisis contacts and links (general helpline, industry related links and websites)")),
         ),
         _crisisContactsFormField,
         StringFormField(

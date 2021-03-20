@@ -106,14 +106,20 @@ class _FeedWaterRestEventFormFieldState
           ),
         ),
         ListTile(
-            title: Text("Date and time"),
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text("Date and time")),
             subtitle: dateTimePicker(
                 initialDate: _fwrTime,
                 onSaved: (String changed) {
                   _fwrTime = DateTime.parse(changed);
                   _saveAll();
                 })),
-        ListTile(title: Text("Address"), subtitle: _lastFwrAddressFormField),
+        ListTile(
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text("Address")),
+            subtitle: _lastFwrAddressFormField),
         ListTile(
             title: DropdownButtonFormField(
           decoration: InputDecoration(

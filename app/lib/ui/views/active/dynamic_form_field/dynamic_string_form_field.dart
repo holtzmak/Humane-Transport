@@ -10,8 +10,10 @@ import 'package:uuid/uuid.dart';
 dynamicStringFormField(
         {@required List<String> initialList,
         @required String titles,
-        @required Function(List<String>) onSaved}) =>
+        @required Function(List<String>) onSaved,
+        bool canBeEmpty = true}) =>
     DynamicFormField<String>(
+        canBeEmpty: canBeEmpty,
         initialList: initialList,
         titles: titles,
         onSaved: onSaved,

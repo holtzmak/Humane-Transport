@@ -10,8 +10,10 @@ import 'package:uuid/uuid.dart';
 /// widget, like column, and not inside static widgets like ListTiles.
 dynamicContingencyActivityFormField(
         {@required List<ContingencyActivity> initialList,
-        @required Function(List<ContingencyActivity>) onSaved}) =>
+        @required Function(List<ContingencyActivity>) onSaved,
+        bool canBeEmpty = true}) =>
     DynamicFormField<ContingencyActivity>(
+        canBeEmpty: canBeEmpty,
         initialList: initialList,
         titles: "Carrier's communication activities",
         onSaved: onSaved,

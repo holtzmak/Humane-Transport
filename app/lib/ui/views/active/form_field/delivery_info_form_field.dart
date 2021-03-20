@@ -83,11 +83,15 @@ class _DeliveryInfoFormFieldState extends State<DeliveryInfoFormField> {
       key: widget._innerFormKey,
       child: Column(children: [
         ListTile(
-          title: Text("Receiver Info"),
+          title: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
+              child: Text("Receiver Info")),
           subtitle: _receiverInfoFormField,
         ),
         ListTile(
-            title: Text("Date and time of arrival"),
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text("Date and time of arrival")),
             subtitle: dateTimePicker(
                 initialDate: _arrivalDateAndTime,
                 onSaved: (String changed) {
@@ -95,8 +99,10 @@ class _DeliveryInfoFormFieldState extends State<DeliveryInfoFormField> {
                   _saveAll();
                 })),
         ListTile(
-            title: Text(
-                "If any animals did not arrive in good condition...\n\nThen add the description of transport related conditions and actions taken to address prior to arrival")),
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child:
+                    Text("If any animals did not arrive in good condition"))),
         _compromisedAnimalsFormField,
         StringFormField(
             initial: _additionalWelfareConcerns,

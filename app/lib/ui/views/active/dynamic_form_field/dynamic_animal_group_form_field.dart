@@ -10,8 +10,10 @@ import 'package:uuid/uuid.dart';
 /// widget, like column, and not inside static widgets like ListTiles.
 dynamicAnimalGroupFormField(
         {@required List<AnimalGroup> initialList,
-        @required Function(List<AnimalGroup>) onSaved}) =>
+        @required Function(List<AnimalGroup>) onSaved,
+        bool canBeEmpty = true}) =>
     DynamicFormField<AnimalGroup>(
+        canBeEmpty: canBeEmpty,
         initialList: initialList,
         titles: "Animal(s) description",
         onSaved: onSaved,
