@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
       appBar: appBar('Home Screen'),
       body: Center(
         child: TemplateBaseViewModel<HomeScreenViewModel>(
+          onModelReady: (model) => model.loadTransporterInfo(),
           builder: (context, model, child) => SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -23,15 +24,21 @@ class HomeScreen extends StatelessWidget {
                     Image.asset("assets/home_cover.jpg"),
                     // TODO: #223. Use the logged in transporter's name
                     Positioned(
-                        bottom: 20.0,
-                        left: 10.0,
-                        child: Text(
-                          'Transporter Name',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediumTextSize),
-                        )),
+                      bottom: 20.0,
+                      left: 10.0,
+                      child: model.transporter != null
+                          ? Text(
+                              '${model.transporter.firstName} ${model.transporter.lastName} ',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: MediumTextSize),
+                            )
+                          : CircularProgressIndicator(
+                              strokeWidth: 4,
+                              valueColor: AlwaysStoppedAnimation(NavyBlue),
+                            ),
+                    ),
                     Positioned(
                         bottom: 0.0,
                         right: 0.0,
@@ -41,12 +48,29 @@ class HomeScreen extends StatelessWidget {
                           onPressed: model.navigateToAccountScreen,
                         )),
                     Positioned(
-                        child: CircleAvatar(
-                      radius: 70,
-                      backgroundColor: Colors.white,
-                      backgroundImage: NetworkImage(
-                          "https://images.unsplash.com/photo-1544393569-eb1568319eef?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8c3RvcHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"),
-                    ))
+                      child: model.transporter != null
+                          ? CircleAvatar(
+                              radius: 52,
+                              backgroundColor: NavyBlue,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Container(
+                                  color: Colors.grey[300],
+                                  child: Image.network(
+                                    model.transporter.displayImageUrl,
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                    scale: 1,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : CircularProgressIndicator(
+                              strokeWidth: 4,
+                              valueColor: AlwaysStoppedAnimation(NavyBlue),
+                            ),
+                    )
                   ],
                 ),
                 ListView(

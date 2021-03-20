@@ -110,4 +110,12 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .child('atrImages/$fileName')
           .putFile(file)
           .then((TaskSnapshot snapshot) => snapshot.ref.getDownloadURL());
+
+  @override
+  Future<String> uploadAvatarImage(File file, String fileName) async =>
+      FirebaseStorage.instance
+          .ref()
+          .child('avatarImages/$fileName')
+          .putFile(file)
+          .then((TaskSnapshot snapshot) => snapshot.ref.getDownloadURL());
 }

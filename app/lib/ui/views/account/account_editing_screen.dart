@@ -71,6 +71,38 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(
+                            top: 20.0,
+                          ),
+                        ),
+                        CircleAvatar(
+                          radius: 53,
+                          backgroundColor: NavyBlue,
+                          child: model.selectedImage != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: Image.file(
+                                    model.selectedImage,
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                    scale: 1.0,
+                                  ),
+                                )
+                              : Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  width: 100,
+                                  height: 100,
+                                  child: Icon(
+                                    Icons.camera_alt,
+                                    color: Colors.grey[800],
+                                  ),
+                                ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
                             top: 40.0,
                           ),
                         ),
@@ -129,26 +161,45 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                           ),
                         ),
                         SizedBox(
-                            height: 42,
-                            width: 200,
-                            child: RaisedButton(
-                              onPressed: () {
-                                if (widget.formKey.currentState.validate()) {
-                                  model.saveTransporterAccount(
-                                    userEmailAddress:
-                                        _emailController.text.trim(),
-                                    firstName: _firstNameController.text.trim(),
-                                    lastName: _lastNameController.text.trim(),
-                                    userPhoneNumber:
-                                        _userPhoneNumberController.text.trim(),
-                                  );
-                                }
-                              },
-                              child: Text('Save',
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white)),
-                              color: NavyBlue,
-                            )),
+                          height: 42,
+                          width: 200,
+                          child: RaisedButton(
+                            onPressed: () {
+                              model.selectImage();
+                            },
+                            child: Text('Update Photo',
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white)),
+                            color: NavyBlue,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 20.0,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 42,
+                          width: 200,
+                          child: RaisedButton(
+                            onPressed: () {
+                              if (widget.formKey.currentState.validate()) {
+                                model.saveTransporterAccount(
+                                  userEmailAddress:
+                                      _emailController.text.trim(),
+                                  firstName: _firstNameController.text.trim(),
+                                  lastName: _lastNameController.text.trim(),
+                                  userPhoneNumber:
+                                      _userPhoneNumberController.text.trim(),
+                                );
+                              }
+                            },
+                            child: Text('Save',
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white)),
+                            color: NavyBlue,
+                          ),
+                        ),
                         TextButton(
                           child: Text(
                             'Cancel and go back to your account',
