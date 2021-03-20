@@ -44,6 +44,11 @@ const SubHeadingTextStyle = TextStyle(
   color: NavyBlue,
 );
 
+const CaptionStyle = TextStyle(
+  fontSize: SmallTextSize,
+  color: AlmostBlack,
+);
+
 const DefaultRaisedButtonStyle = ButtonThemeData(
   buttonColor: NavyBlue,
 );

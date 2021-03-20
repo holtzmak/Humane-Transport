@@ -1,8 +1,8 @@
+import 'package:app/core/models/address.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import 'address.dart';
 
 @immutable
 class FeedWaterRestInfo {
@@ -62,29 +62,36 @@ class FeedWaterRestInfo {
   List<Widget> _fwrEventsToWidget() => _fwrEvents.isEmpty
       ? [
           ListTile(
-              visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-              title: Text("N/A"))
+              title: Container(
+                  padding: EdgeInsets.all(16.0),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: NavyBlue)),
+                  child: Text("N/A")))
         ]
       : _fwrEvents.map((event) => event.toWidget()).toList();
 
   Widget toWidget() {
     final List<Widget> fields = [
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text(
               "Last access to feed, water and rest (FWR) prior to loading")),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Date and time"),
-          subtitle:
-              Text('${DateFormat("yyyy-MM-dd hh:mm").format(lastFwrDate)}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Date and time")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(
+                  '${DateFormat("yyyy-MM-dd hh:mm").format(lastFwrDate)}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Place"),
-          subtitle: Text('$lastFwrLocation')),
-      ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("If FWR was provided during transport")),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0), child: Text("Place")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$lastFwrLocation'))),
+      ListTile(title: Text("If FWR was provided during transport")),
     ];
     fields.addAll(_fwrEventsToWidget());
     return Column(children: fields);
@@ -141,21 +148,37 @@ class FeedWaterRestEvent {
   Widget toWidget() {
     return Column(children: [
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Animals unloaded?"),
-          subtitle: Text('${animalsWereUnloaded ? 'Yes' : 'No'}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Animals unloaded?")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${animalsWereUnloaded ? 'Yes' : 'No'}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Date and time"),
-          subtitle: Text('${DateFormat("yyyy-MM-dd hh:mm").format(fwrTime)}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Date and time")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child:
+                  Text('${DateFormat("yyyy-MM-dd hh:mm").format(fwrTime)}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Place"),
-          subtitle: Text('$lastFwrLocation')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0), child: Text("Place")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$lastFwrLocation'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Provided onboard?"),
-          subtitle: Text('${fwrProvidedOnboard ? 'Yes' : 'No'}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Provided onboard?")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${fwrProvidedOnboard ? 'Yes' : 'No'}'))),
     ]);
   }
 }

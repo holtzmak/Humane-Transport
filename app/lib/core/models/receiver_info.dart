@@ -1,4 +1,5 @@
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/material.dart';
 
 import 'address.dart';
@@ -82,34 +83,62 @@ class ReceiverInfo {
   Widget toWidget() {
     return Column(children: [
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Receiving company name"),
-          subtitle: Text(receiverCompanyName)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Receiving company name")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(receiverCompanyName))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Representative name"),
-          subtitle: Text(receiverName)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Representative name")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(receiverName))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text(
-              "Account identification number of the consignee in the database of the responsible administrator (Optional)"),
-          subtitle: Text('${accountId.isPresent() ? accountId.get() : "N/A"}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                  "Account identification number of the consignee in the database of the responsible administrator (Optional)")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child:
+                  Text('${accountId.isPresent() ? accountId.get() : "N/A"}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Destination and Premises Identification number (PID)"),
-          subtitle: Text(destinationLocationId)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child:
+                  Text("Destination and Premises Identification number (PID)")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(destinationLocationId))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Name"),
-          subtitle: Text(destinationLocationName)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0), child: Text("Name")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(destinationLocationName))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Address"),
-          subtitle: Text('$destinationAddress')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0), child: Text("Address")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$destinationAddress'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Receiver’s Contact number in case of emergency"),
-          subtitle: Text(receiverContactInfo)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Receiver’s Contact number in case of emergency")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(receiverContactInfo))),
     ]);
   }
 }
