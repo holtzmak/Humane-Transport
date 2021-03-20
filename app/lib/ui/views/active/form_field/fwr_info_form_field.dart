@@ -79,8 +79,10 @@ class _FeedWaterRestInfoFormFieldState
       key: widget._innerFormKey,
       child: Column(children: [
         ListTile(
-            title: Text(
-                "Last access to feed, water and rest (FWR) prior to loading"),
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                    "Last access to feed, water and rest (FWR) prior to loading")),
             subtitle: dateTimePicker(
                 initialDate: _lastFwrDate,
                 onSaved: (String changed) {
@@ -88,7 +90,9 @@ class _FeedWaterRestInfoFormFieldState
                   _saveAll();
                 })),
         ListTile(
-            title: Text("Last FWR location"),
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text("Last FWR location")),
             subtitle: _lastFwrAddressFormField),
         ListTile(title: Text("If FWR was provided during transport")),
         _fwrEventFormField,

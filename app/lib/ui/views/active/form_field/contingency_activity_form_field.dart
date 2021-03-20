@@ -79,7 +79,9 @@ class _ContingencyActivityFormFieldState
                 title: Text("Carrier's communication activity"),
               ),
         ListTile(
-          title: Text("Time of communication"),
+          title: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
+              child: Text("Time of communication")),
           subtitle: timePicker(
               initialTime: _time,
               onSaved: (String changed) {

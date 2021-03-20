@@ -3,6 +3,7 @@ import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/views/active/form_field/address_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ShipperInfoFormField extends StatefulWidget {
@@ -110,7 +111,9 @@ class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
             },
             onDelete: Optional.empty()),
         ListTile(
-            title: Text("Departure Premises Address"),
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text("Departure Premises Address")),
             subtitle: _departureAddressFormField),
         StringFormField(
             initial: _contactInfo,

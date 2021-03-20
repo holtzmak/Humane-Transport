@@ -182,7 +182,13 @@ class _AnimalGroupFormFieldState extends State<_AnimalGroupFormFieldInner> {
           _saveAll();
         }),
       )),
+      ListTile(
+        title: Text("If there are any compromised animals"),
+      ),
       _compromisedAnimalsFormField,
+      ListTile(
+        title: Text("If there are any special needs animals"),
+      ),
       _specialNeedsAnimalsFormField,
     ]);
   }

@@ -105,7 +105,9 @@ class _ReceiverInfoFormFieldState extends State<ReceiverInfoFormField> {
           },
           onDelete: Optional.empty()),
       ListTile(
-        title: Text("Destination and Premises address"),
+        title: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0),
+            child: Text("Destination and Premises address")),
         subtitle: _destinationAddressFormField,
       ),
       StringFormField(

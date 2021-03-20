@@ -11,7 +11,7 @@ class DynamicFormField<T> extends StatefulWidget {
   final Function(List<T>) onSaved;
   final T Function() blankFieldCreator;
 
-  // The fieldCreator uses index, initial, onSaved, and onDelete
+  // The fieldCreator uses index, initial, onSaved, and an optional onDelete
   final FormField<T> Function(int, T, Function(int, T), Optional<Function(int)>)
       fieldCreator;
   final _formKey = GlobalKey<FormState>();
@@ -41,15 +41,7 @@ class _DynamicFormFieldState<T> extends State<DynamicFormField<T>> {
 
   void _saveIndividual(int index, T field) {
     _fields[index] = field;
-    final blank = widget.blankFieldCreator();
-    final fieldsTrimmed = _fields.where((T it) => it != blank).toList();
-    if (index == 0 && fieldsTrimmed.isEmpty) {
-      // Save the single, empty field
-      // This event should only occur when validation is not done before save
-      widget.onSaved([blank]);
-    } else {
-      widget.onSaved(fieldsTrimmed);
-    }
+    widget.onSaved(_fields);
   }
 
   void _deleteField(int index) => setState(() {

@@ -44,6 +44,7 @@ class _LoadingVehicleInfoFormFieldState
     _animalsPerLoadingArea = widget.initialInfo.animalsPerLoadingArea;
     _animalsLoaded = widget.initialInfo.animalsLoaded;
     _animalsLoadedFormField = dynamicAnimalGroupFormField(
+        canBeEmpty: false,
         initialList: _animalsLoaded,
         onSaved: (List<AnimalGroup> changed) {
           _animalsLoaded = changed;
@@ -76,7 +77,9 @@ class _LoadingVehicleInfoFormFieldState
       key: widget._innerFormKey,
       child: Column(children: [
         ListTile(
-            title: Text("Date and time of loading"),
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text("Date and time of loading")),
             subtitle: dateTimePicker(
                 initialDate: _dateAndTimeLoaded,
                 onSaved: (String changed) {

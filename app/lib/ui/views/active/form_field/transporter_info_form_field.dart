@@ -80,6 +80,7 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
     _driverNamesFormField = dynamicStringFormField(
         initialList: _driverNames,
         titles: "Driver Name",
+        canBeEmpty: false,
         onSaved: (List<String> changed) {
           _driverNames = changed;
           _saveAll();
@@ -128,7 +129,9 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
             },
             onDelete: Optional.empty()),
         ListTile(
-            title: Text("Transporting Company Address"),
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text("Transporting Company Address")),
             subtitle: _companyAddressFormField),
         ListTile(title: Text("Driver(s) name(s)")),
         _driverNamesFormField,
@@ -165,8 +168,10 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
             },
             onDelete: Optional.empty()),
         ListTile(
-            title: Text(
-                "Date and time conveyance or container last cleaned and disinfected"),
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                    "Date and time conveyance or container last cleaned and disinfected")),
             subtitle: dateTimePicker(
                 initialDate: _dateLastCleaned,
                 onSaved: (String changed) {
@@ -174,8 +179,10 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
                   _saveAll();
                 })),
         ListTile(
-            title: Text(
-                "Address conveyance or container last cleaned and disinfected at"),
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                    "Address conveyance or container last cleaned and disinfected at")),
             subtitle: _addressLastCleanedAtFormField),
         ListTile(
             title: DropdownButtonFormField(
@@ -221,7 +228,9 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
             },
             onDelete: Optional.empty()),
         ListTile(
-            title: Text("Training expiry date"),
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text("Training expiry date")),
             subtitle: dateTimePicker(
                 initialDate: _trainingExpiryDate,
                 onSaved: (String changed) {
