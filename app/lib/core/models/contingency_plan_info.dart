@@ -1,3 +1,4 @@
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -122,40 +123,67 @@ class ContingencyPlanInfo {
   Widget toWidget() {
     final List<Widget> fields = [
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text(
-              "Goal Statement (company’s goal and purpose of the plan i.e avoid animal suffering)"),
-          subtitle: Text(goalStatement)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                  "Goal Statement (company’s goal and purpose of the plan i.e avoid animal suffering)")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(goalStatement))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text(
-              "Communication Plan (who should be contacted and who will initiate or permit the process?)"),
-          subtitle: Text(communicationPlan)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                  "Communication Plan (who should be contacted and who will initiate or permit the process?)")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(communicationPlan))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text(
-              "Crisis contacts and links( general helpline, industry related links and websites)"),
-          subtitle: Text('${_crisisContacts.join(',')}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                  "Crisis contacts and links( general helpline, industry related links and websites)")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${_crisisContacts.join(',')}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text(
-              "Expected Preparation Process (what should be done prior to loading animals?)"),
-          subtitle: Text(expectedPrepProcess)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                  "Expected Preparation Process (what should be done prior to loading animals?)")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(expectedPrepProcess))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Standard Animal Monitoring"),
-          subtitle: Text(standardAnimalMonitoring)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Standard Animal Monitoring")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(standardAnimalMonitoring))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Potential Hazard/Events/Challenges"),
-          subtitle: Text('${_potentialHazards.join(',')}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Potential Hazard/Events/Challenges")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${_potentialHazards.join(',')}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Potential Actions to Ensure Human or Animal Safety"),
-          subtitle: Text('${_potentialSafetyActions.join(',')}')),
-      ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Event Specific Plan(s)")),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child:
+                  Text("Potential Actions to Ensure Human or Animal Safety")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${_potentialSafetyActions.join(',')}'))),
+      ListTile(title: Text("Event Specific Plan(s)")),
     ];
     fields.addAll(_contingencyEventsToWidget());
     return Column(children: fields);
@@ -244,31 +272,49 @@ class ContingencyPlanEvent {
   Widget toWidget() {
     final List<Widget> widgetFields = [
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Date and time of event"),
-          subtitle: Text(
-              '${DateFormat("yyyy-MM-dd hh:mm").format(eventDateAndTime)}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Date and time of event")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(
+                  '${DateFormat("yyyy-MM-dd hh:mm").format(eventDateAndTime)}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Producer's emergency contacts used"),
-          subtitle: Text('${_producerContactsUsed.join(",")}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Producer's emergency contacts used")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${_producerContactsUsed.join(",")}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Receiver's emergency contacts used"),
-          subtitle: Text('${_receiverContactsUsed.join(",")}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Receiver's emergency contacts used")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${_receiverContactsUsed.join(",")}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text(
-              "Transportation challenges and disturbances identified by driver"),
-          subtitle: Text(disturbancesIdentified)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                  "Transportation challenges and disturbances identified by driver")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(disturbancesIdentified))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text(
-              "List of animal welfare related measures and actions taken(specific to the event)"),
-          subtitle: Text('${_actionsTaken.join(",")}')),
-      ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Carrier's communication activities")),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                  "List of animal welfare related measures and actions taken(specific to the event)")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${_actionsTaken.join(",")}'))),
+      ListTile(title: Text("Carrier's communication activities")),
     ];
     widgetFields
         .addAll(_activities.map((activity) => activity.toWidget()).toList());
@@ -328,22 +374,41 @@ class ContingencyActivity {
   Widget toWidget() {
     return Column(children: [
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Time of communication"),
-          subtitle: Text('${DateFormat("hh:mm").format(time)}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Time of communication")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${DateFormat("hh:mm").format(time)}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Who was contacted"),
-          subtitle: Text(personContacted)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Who was contacted")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(personContacted))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Communication method used"),
-          subtitle: Text(methodOfContact)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Communication method used")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(methodOfContact))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text(
-              "What instructions were given and decisions made with the guidance of emergency contacts reached"),
-          subtitle: Text(instructionsGiven)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                  "What instructions were given and decisions made with the guidance of emergency contacts reached")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(instructionsGiven))),
+      Padding(
+        padding: EdgeInsets.only(bottom: 10.0),
+      )
     ]);
   }
 }

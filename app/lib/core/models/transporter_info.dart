@@ -1,3 +1,4 @@
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -132,53 +133,95 @@ class TransporterInfo {
   Widget toWidget() {
     return Column(children: [
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Name of transporting company"),
-          subtitle: Text(companyName)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Name of transporting company")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(companyName))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Address"),
-          subtitle: Text('$companyAddress')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0), child: Text("Address")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$companyAddress'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Driver(s) name(s)"),
-          subtitle: Text('${_driverNames.join(",")}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Driver(s) name(s)")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${_driverNames.join(",")}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text(
-              "Province and License Plate number of the conveyance transporting the animals"),
-          subtitle: Text('$vehicleProvince, $vehicleLicensePlate')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                  "Province and License Plate number of the conveyance transporting the animals")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$vehicleProvince, $vehicleLicensePlate'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("(including trailer)"),
-          subtitle: Text('$trailerProvince, $trailerLicensePlate')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("(including trailer)")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$trailerProvince, $trailerLicensePlate'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text("Conveyance or container last cleaned and disinfected")),
       ListTile(
-        visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-        title: Text("Date and time"),
-        subtitle:
-            Text('${DateFormat("yyyy-MM-dd hh:mm").format(dateLastCleaned)}'),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Date and time")),
+          subtitle: Container(
+            padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+            child: Text(
+                '${DateFormat("yyyy-MM-dd hh:mm").format(dateLastCleaned)}'),
+          )),
+      ListTile(
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0), child: Text("Place")),
+          subtitle: Container(
+            padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+            child: Text('$addressLastCleanedAt'),
+          )),
+      ListTile(
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child:
+                  Text("Driver(s) have been briefed on the contingency plan?")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${driversAreBriefed ? 'Yes' : 'No'}'))),
+      ListTile(
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child:
+                  Text("Driver(s) have received humane transport training?")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${driversHaveTraining ? 'Yes' : 'No'}'))),
+      ListTile(
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Training type and Expiry date")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(
+                  '$trainingType, ${DateFormat("yyyy-MM-dd hh:mm").format(trainingExpiryDate)}'))),
+      Padding(
+        padding: EdgeInsets.only(bottom: 10.0),
       ),
-      ListTile(
-        visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-        title: Text("Place"),
-        subtitle: Text('$addressLastCleanedAt'),
-      ),
-      ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Driver(s) have been briefed on the contingency plan?"),
-          subtitle: Text('${driversAreBriefed ? 'Yes' : 'No'}')),
-      ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Driver(s) have received humane transport training?"),
-          subtitle: Text('${driversHaveTraining ? 'Yes' : 'No'}')),
-      ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Training type and Expiry date"),
-          subtitle: Text(
-              '$trainingType, ${DateFormat("yyyy-MM-dd hh:mm").format(trainingExpiryDate)}')),
     ]);
   }
 }

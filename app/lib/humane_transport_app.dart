@@ -33,7 +33,7 @@ class HumaneTransportApp extends StatelessWidget {
           headline5: TitleTextStyle,
           bodyText1: BodyTextStyle,
           bodyText2: BodyTextStyle,
-          caption: BodyTextStyle,
+          caption: CaptionStyle,
           subtitle1: SubHeadingTextStyle,
         ),
         buttonTheme: DefaultRaisedButtonStyle,

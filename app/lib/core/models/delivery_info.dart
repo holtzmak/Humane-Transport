@@ -1,4 +1,5 @@
 import 'package:app/core/models/receiver_info.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -66,7 +67,11 @@ class DeliveryInfo {
       ? [
           ListTile(
               visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-              title: Text('N/A'))
+              title: Container(
+                  padding: EdgeInsets.all(16.0),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: NavyBlue)),
+                  child: Text('N/A')))
         ]
       : _compromisedAnimals.map((animals) => animals.toWidget()).toList();
 
@@ -86,28 +91,44 @@ class DeliveryInfo {
   Widget toWidget() {
     final List<Widget> fields = [
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Date and time of arrival"),
-          subtitle: Text(
-              '${DateFormat("yyyy-MM-dd hh:mm").format(arrivalDateAndTime)}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Date and time of arrival")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(
+                  '${DateFormat("yyyy-MM-dd hh:mm").format(arrivalDateAndTime)}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("All animals arrived in good condition?"),
-          subtitle: Text('${_compromisedAnimals.isEmpty ? 'Yes' : 'No'}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("All animals arrived in good condition?")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${_compromisedAnimals.isEmpty ? 'Yes' : 'No'}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text(
-              "Description of transport related conditions and actions taken to address prior to arrival")),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                  "Description of transport related conditions and actions taken to address prior to arrival"))),
     ];
     final Widget welfareConcerns = ListTile(
-        visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-        title: Text(
-            "Additional animal welfare concerns for the consignee to be aware of ?"),
-        subtitle: Text(additionalWelfareConcerns));
+        title: Padding(
+            padding: EdgeInsets.only(bottom: 10.0),
+            child: Text(
+                "Additional animal welfare concerns for the consignee to be aware of ?")),
+        subtitle: Container(
+            padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+            child: Text(additionalWelfareConcerns)));
 
     fields.insert(0, recInfo.toWidget());
     fields.addAll(_compromisedAnimalsToWidget());
     fields.add(welfareConcerns);
+    fields.add(Padding(
+      padding: EdgeInsets.only(bottom: 10.0),
+    ));
     return Column(children: fields);
   }
 }

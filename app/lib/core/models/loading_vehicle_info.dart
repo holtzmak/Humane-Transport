@@ -1,3 +1,4 @@
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -77,26 +78,40 @@ class LoadingVehicleInfo {
   Widget toWidget() {
     final List<Widget> fields = [
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Date and time of loading"),
-          subtitle: Text(
-              '${DateFormat("yyyy-MM-dd hh:mm").format(dateAndTimeLoaded)}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Date and time of loading")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(
+                  '${DateFormat("yyyy-MM-dd hh:mm").format(dateAndTimeLoaded)}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title:
-              Text("Floor or container area available to animals (m2 or ft2)"),
-          subtitle: Text('$loadingArea')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                  "Floor or container area available to animals (m2 or ft2)")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$loadingArea'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Loading density"),
-          subtitle: Text('$loadingDensity')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Loading density")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$loadingDensity'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Animals per floor area (Kg/m2 or lbs/ft2)"),
-          subtitle: Text('$animalsPerLoadingArea')),
-      ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Animals loaded")),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Animals per floor area (Kg/m2 or lbs/ft2)")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$animalsPerLoadingArea'))),
+      ListTile(title: Text("Animals loaded")),
     ];
     fields.addAll(_animalsLoaded.map((group) => group.toWidget()).toList());
     return Column(children: fields);
@@ -213,64 +228,95 @@ class AnimalGroup {
   List<Widget> _compromisedAnimalsToWidget() => _compromisedAnimals.isEmpty
       ? [
           ListTile(
-              visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-              title: Text("N/A"))
+              title: Container(
+                  padding: EdgeInsets.all(16.0),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: NavyBlue)),
+                  child: Text("N/A")))
         ]
       : _compromisedAnimals.map((animal) => animal.toWidget()).toList();
 
   List<Widget> _specialNeedsAnimalsToWidget() => _specialNeedsAnimals.isEmpty
       ? [
           ListTile(
-              visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-              title: Text("N/A"))
+              title: Container(
+                  padding: EdgeInsets.all(16.0),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: NavyBlue)),
+                  child: Text("N/A")))
         ]
       : _specialNeedsAnimals.map((animal) => animal.toWidget()).toList();
 
   Widget toWidget() {
     final List<Widget> fields = [
+      ListTile(title: Text("Animal(s) description")),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Animal(s) description")),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0), child: Text("Species")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(species))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Species"),
-          subtitle: Text(species)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0), child: Text("Group age")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$groupAge'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Group age"),
-          subtitle: Text('$groupAge')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Approximate weight")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$approximateWeight'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Approximate weight"),
-          subtitle: Text('$approximateWeight')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0), child: Text("Purpose")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(animalPurpose))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Purpose"),
-          subtitle: Text(animalPurpose)),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Number of animals")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('$numberAnimals'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Number of animals"),
-          subtitle: Text('$numberAnimals')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Are all animals fit for transport?")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text(' ${animalsFitForTransport ? 'Yes' : 'No'}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Are all animals fit for transport?"),
-          subtitle: Text(' ${animalsFitForTransport ? 'Yes' : 'No'}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Number of compromised animals loaded")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${_compromisedAnimals.length}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Number of compromised animals loaded"),
-          subtitle: Text('${_compromisedAnimals.length}')),
-      ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text(
               "Compromised animal(s), identification description and measures taken")),
     ];
     final List<Widget> specialNeedsFields = [
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Number of animal(s) with special needs"),
-          subtitle: Text('${_specialNeedsAnimals.length}')),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Number of animal(s) with special needs")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Text('${_specialNeedsAnimals.length}'))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
           title: Text(
               "Special needs animal(s), identification description and measures taken")),
     ];
@@ -278,6 +324,9 @@ class AnimalGroup {
     fields.addAll(_compromisedAnimalsToWidget());
     fields.addAll(specialNeedsFields);
     fields.addAll(_specialNeedsAnimalsToWidget());
+    fields.add(Padding(
+      padding: EdgeInsets.only(bottom: 10.0),
+    ));
     return Column(children: fields);
   }
 }
@@ -315,7 +364,11 @@ class CompromisedAnimal {
   $measuresTakenToCareForAnimal''';
 
   Widget toWidget() => ListTile(
-      visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-      title: Text(animalDescription),
-      subtitle: Text(measuresTakenToCareForAnimal));
+      title: Padding(
+          padding: EdgeInsets.only(bottom: 10.0),
+          child: Text(animalDescription)),
+      subtitle: Container(
+          padding: EdgeInsets.all(16.0),
+          decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+          child: Text(measuresTakenToCareForAnimal)));
 }
