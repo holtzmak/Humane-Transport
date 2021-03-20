@@ -46,9 +46,13 @@ class _DynamicFormFieldState<T> extends State<DynamicFormField<T>> {
 
   void _deleteField(int index) => setState(() {
         _saveAll();
-        setState(() {
-          _fields.removeAt(index);
-        });
+        if (index == 0 && !widget.canBeEmpty) {
+          // do not delete the last field
+        } else {
+          setState(() {
+            _fields.removeAt(index);
+          });
+        }
       });
 
   void _addField() => setState(() {
