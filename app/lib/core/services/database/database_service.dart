@@ -39,15 +39,19 @@ class DatabaseService {
   Future<List<AnimalTransportRecord>> getCompleteRecords(String userId) async =>
       interface.getCompleteRecords(userId);
 
-  Future<String> uploadAtrImage(File file, String fileName) async =>
-      interface.uploadAtrImage(file, fileName);
-
-  Future<String> uploadAvatarImage(File file, String fileName) async =>
-      interface.uploadAvatarImage(file, fileName);
-
   Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId) =>
       interface.getUpdatedCompleteATRs(userId);
 
   Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs(String userId) =>
       interface.getUpdatedActiveATRs(userId);
+
+  Future<String> uploadAvatarImage(File file, String fileName) async =>
+      interface.uploadAvatarImage(file, fileName);
+
+  Future<String> uploadAtrImage(File file, String fileName) async =>
+      interface.uploadAtrImage(file, fileName);
+
+  // Use to check before upload if the image already exists, use it's URL
+  Future<String> getAtrImage(String fileName) async =>
+      interface.getAtrImage(fileName);
 }

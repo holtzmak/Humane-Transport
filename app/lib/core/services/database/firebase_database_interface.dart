@@ -10,6 +10,7 @@ import 'database_interface.dart';
 
 class FirebaseDatabaseInterface implements DatabaseInterface {
   final FirebaseFirestore _firestore;
+
   FirebaseDatabaseInterface(this._firestore);
 
   @override
@@ -118,4 +119,10 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .child('avatarImages/$fileName')
           .putFile(file)
           .then((TaskSnapshot snapshot) => snapshot.ref.getDownloadURL());
+
+  @override
+  Future<String> getAtrImage(String fileName) async => FirebaseStorage.instance
+      .ref()
+      .child('atrImages/$fileName')
+      .getDownloadURL();
 }

@@ -24,6 +24,8 @@ abstract class DatabaseInterface {
 
   Future<String> uploadAvatarImage(File file, String fileName);
 
+  Future<String> getAtrImage(String fileName);
+
   Future<List<AnimalTransportRecord>> getCompleteRecords(String userId);
 
   Future<List<AnimalTransportRecord>> getActiveRecords(String userId);
