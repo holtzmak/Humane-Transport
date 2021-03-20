@@ -57,10 +57,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               ]),
           body: model.animalTransportRecords.isEmpty
-              ? ListTile(
-                  title: Text("No completed Animal Transport Records"),
-                  subtitle:
-                      Text("Submitted completed records will appear here"))
+              ? Center(
+                  child: Container(
+                    margin: EdgeInsets.all(50.0),
+                    child: Card(
+                      child: ListTile(
+                        title: Text("No completed Animal Transport Records"),
+                        subtitle: Text(
+                            "Submitted completed records will appear here"),
+                      ),
+                    ),
+                  ),
+                )
               : GridView.builder(
                   itemCount: model.animalTransportRecords.length,
                   itemBuilder: (_, index) =>

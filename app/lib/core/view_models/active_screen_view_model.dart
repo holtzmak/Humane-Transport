@@ -89,15 +89,16 @@ class ActiveScreenViewModel extends BaseViewModel {
   }
 
   Future<void> startNewAtr() async {
+    setState(ViewState.Busy);
     final currentUser = _authenticationService.currentUser;
     currentUser.isPresent()
-        ? _databaseService
-            .saveNewAtr(currentUser.get().uid)
-            .then((atr) => navigateToEditingScreen(atr))
-            .catchError((e) => _dialogService.showDialog(
-                  title: 'Starting a new Animal Transport Record failed',
-                  description: e.message,
-                ))
+        ? _databaseService.saveNewAtr(currentUser.get().uid).then((atr) {
+            setState(ViewState.Idle);
+            return navigateToEditingScreen(atr);
+          }).catchError((e) => _dialogService.showDialog(
+              title: 'Starting a new Animal Transport Record failed',
+              description: e.message,
+            ))
         : _dialogService.showDialog(
             title: 'Starting a new Animal Transport Record failed',
             description: "You are not logged in!",
