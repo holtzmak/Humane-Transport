@@ -60,7 +60,7 @@ class AuthenticationService {
     @required String userEmailAddress,
     @required String userPhoneNumber,
     @required String password,
-    String displayImageUrl,
+    String displayImageUrl = '',
   }) async =>
       firebaseAuth
           .createUserWithEmailAndPassword(
