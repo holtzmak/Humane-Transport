@@ -63,7 +63,7 @@ class AccountEditViewModel extends BaseViewModel {
         userEmailAddress: userEmailAddress,
         userId: _account.userId,
         userPhoneNumber: userPhoneNumber,
-        displayImageUrl: _imageUrl ?? _account.displayImageUrl,
+        displayImageUrl: _imageUrl,
       );
       _databaseService.updateTransporter(updateTransporterAccount);
     }).then((_) => _dialogService
