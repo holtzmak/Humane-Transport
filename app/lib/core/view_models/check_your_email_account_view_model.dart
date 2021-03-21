@@ -7,5 +7,5 @@ class ConfirmationMessageModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
 
   void navigateToSignInScreen() =>
-      _navigationService.navigateTo(SignInScreen.route);
+      _navigationService.navigateBackUntil(SignInScreen.route);
 }

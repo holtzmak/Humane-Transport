@@ -11,6 +11,7 @@ const LargeTextSize = 23.0;
 const NavyBlue = Color.fromRGBO(20, 57, 89, 1);
 const White = Colors.white;
 const Beige = Color.fromRGBO(191, 186, 159, 1);
+const DarkerBeige = Color.fromRGBO(170, 160, 130, 1);
 const SlateGrey = Color.fromRGBO(134, 151, 166, 1);
 const AlmostBlack = Color(0xFF212121);
 const OverlayColor = Color.fromRGBO(0, 0, 0, 0.5);

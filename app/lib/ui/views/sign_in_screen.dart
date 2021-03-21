@@ -6,7 +6,6 @@ import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class SignInScreen extends StatefulWidget {
   final ValidationService _validator = locator<ValidationService>();
@@ -91,7 +90,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               child: Text('Forgot Password?',
                                   style: TextStyle(
                                     fontSize: 18,
-                                    color: HexColor('#8C8146'),
+                                    color: DarkerBeige,
                                   )),
                               onPressed: () =>
                                   model.navigateToForgotPasswordScreen()),
@@ -124,7 +123,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             child: Text(
                               'Do not have an account? Sign Up Here',
                               style: TextStyle(
-                                  color: HexColor('#8C8146'),
+                                  color: DarkerBeige,
                                   fontSize: BodyTextSize,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -139,7 +138,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             child: Text(
                               'Go back to welcome screen',
                               style: TextStyle(
-                                  color: HexColor('#8C8146'),
+                                  color: DarkerBeige,
                                   fontSize: BodyTextSize,
                                   fontWeight: FontWeight.bold),
                             ),

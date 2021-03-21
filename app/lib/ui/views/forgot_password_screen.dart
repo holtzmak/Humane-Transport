@@ -4,7 +4,6 @@ import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   static const route = '/forgotPWD';
@@ -95,7 +94,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               'Click here to go to login page',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: HexColor('#8C8146'),
+                                color: DarkerBeige,
                               ),
                             ),
                             onPressed: () => model.navigateToSignInScreen(),
