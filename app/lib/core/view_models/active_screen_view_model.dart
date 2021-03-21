@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
+import 'package:app/core/models/acknowledgement_info.dart';
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/services/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
@@ -10,6 +13,7 @@ import 'package:app/core/utilities/optional.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
+import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
 import 'package:app/ui/views/history/history_screen.dart';
 import 'package:app/ui/views/home_screen.dart';
 import 'package:date_time_picker/date_time_picker.dart';
@@ -105,10 +109,12 @@ class ActiveScreenViewModel extends BaseViewModel {
           );
   }
 
-  Future<void> saveEditedAtr(AnimalTransportRecord atr) async {
+  Future<void> saveEditedAtr(
+      AnimalTransportRecord atr, AcknowledgementInfoImages ackImages) async {
     setState(ViewState.Busy);
-    return _databaseService
-        .saveUpdatedAtr(atr)
+    return _uploadAcknowledgementImagesIfNeeded(ackImages)
+        .then((AcknowledgementInfo ackInfo) =>
+            _databaseService.saveUpdatedAtr(atr.withAckInfo(ackInfo)))
         .then((_) => setState(ViewState.Idle))
         .catchError((e) {
       setState(ViewState.Idle);
@@ -119,16 +125,17 @@ class ActiveScreenViewModel extends BaseViewModel {
     });
   }
 
-  Future<void> saveCompletedAtr(AnimalTransportRecord atr) async {
+  Future<void> saveCompletedAtr(
+      AnimalTransportRecord atr, AcknowledgementInfoImages ackImages) async {
     setState(ViewState.Busy);
-    saveEditedAtr(atr.asComplete())
+    saveEditedAtr(atr.asComplete(), ackImages)
         .then((_) => _dialogService.showDialog(
             title: "Animal Transport Form Submitted",
             description:
                 '${DateFormat("yyyy-MM-dd hh:mm").format(DateTime.now())}'))
         .then((_) => setState(ViewState.Idle))
-        .then((_) =>
-            navigateBack()) // May have come from Home screen or Active screen
+        // May have come from Home screen or Active screen
+        .then((_) => navigateBack())
         .catchError((e) {
       setState(ViewState.Idle);
       _dialogService.showDialog(
@@ -136,5 +143,39 @@ class ActiveScreenViewModel extends BaseViewModel {
         description: e.message,
       );
     });
+  }
+
+  Future<String> _uploadOrGetExstingImageUrl(File image) async {
+    final fileName = base64Encode(image.readAsBytesSync());
+    return _databaseService
+        .getAtrImage(fileName)
+        .catchError((_) => _databaseService.uploadAtrImage(image, fileName));
+  }
+
+  Future<AcknowledgementInfo> _uploadAcknowledgementImagesIfNeeded(
+      AcknowledgementInfoImages ackImages) async {
+    String shipperAck = ackImages.shipperAck;
+    String transporterAck = ackImages.transporterAck;
+    String receiverAck = ackImages.receiverAck;
+    try {
+      if (ackImages.shipperAckRecentImage != null) {
+        shipperAck =
+            await _uploadOrGetExstingImageUrl(ackImages.shipperAckRecentImage);
+      }
+      if (ackImages.transporterAckRecentImage != null) {
+        transporterAck = await _uploadOrGetExstingImageUrl(
+            ackImages.transporterAckRecentImage);
+      }
+      if (ackImages.receiverAckRecentImage != null) {
+        receiverAck =
+            await _uploadOrGetExstingImageUrl(ackImages.receiverAckRecentImage);
+      }
+      return Future.value(AcknowledgementInfo(
+          shipperAck: shipperAck,
+          transporterAck: transporterAck,
+          receiverAck: receiverAck));
+    } catch (error) {
+      return Future.error(error);
+    }
   }
 }
