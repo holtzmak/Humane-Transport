@@ -4,7 +4,6 @@ import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class ConfirmationMessageScreen extends StatefulWidget {
   static const route = '/confirmationMsg';
@@ -29,54 +28,55 @@ class _ConfirmationMessageScreenState extends State<ConfirmationMessageScreen> {
           appBar: appBar('Humane Transport App'),
           body: Padding(
             padding: const EdgeInsets.all(40),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(padding: EdgeInsets.all(1.0)),
-                  Text(
-                    'Check Your Email Account',
-                    style: TextStyle(
-                        fontSize: 30,
-                        color: NavyBlue,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 40.0,
+            child: SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(padding: EdgeInsets.all(1.0)),
+                    Text(
+                      'Check Your Email Account',
+                      style: TextStyle(
+                          fontSize: 30,
+                          color: NavyBlue,
+                          fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  Text(
-                    'You will receive a link to reset your password at your email account.',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 40.0,
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 40.0,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'If you do not see the email within 12 hours, check your spam or junk folder before submitting a new request.',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 40.0,
+                    Text(
+                      'You will receive a link to reset your password at your email account.',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  TextButton(
-                    child: Text('Click here to go to login page',
-                        style: TextStyle(
-                            fontSize: 20, color: HexColor('#8C8146'))),
-                    onPressed: () => model.navigateToSignInScreen(),
-                  ),
-                ],
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 40.0,
+                      ),
+                    ),
+                    Text(
+                      'If you do not see the email within 12 hours, check your spam or junk folder before submitting a new request.',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 40.0,
+                      ),
+                    ),
+                    TextButton(
+                      child: Text('Click here to go to login page',
+                          style: TextStyle(fontSize: 20, color: DarkerBeige)),
+                      onPressed: () => model.navigateToSignInScreen(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

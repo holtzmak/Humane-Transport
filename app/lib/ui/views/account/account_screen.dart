@@ -2,7 +2,6 @@ import 'package:app/core/view_models/account_screen_view_model.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class AccountScreen extends StatelessWidget {
   static const route = '/accountScreen';
@@ -60,8 +59,7 @@ class AccountScreen extends StatelessWidget {
                             TableBorder.all(color: Colors.black12, width: 2),
                         children: [
                           TableRow(
-                              decoration:
-                                  BoxDecoration(color: HexColor('#BFBA9F')),
+                              decoration: BoxDecoration(color: Beige),
                               children: [
                                 ListTile(
                                   leading: Icon(
@@ -76,8 +74,7 @@ class AccountScreen extends StatelessWidget {
                                 ),
                               ]),
                           TableRow(
-                              decoration:
-                                  BoxDecoration(color: HexColor('#BFBA9F')),
+                              decoration: BoxDecoration(color: Beige),
                               children: [
                                 ListTile(
                                   leading: Icon(

@@ -7,7 +7,6 @@ import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/formatters/phone_input_formatter.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class SignUpScreen extends StatefulWidget {
   final ValidationService _validator = locator<ValidationService>();
@@ -142,7 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 'Already have an account?',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: HexColor('#8C8146'),
+                                  color: DarkerBeige,
                                 ),
                               ),
                               onPressed: () => model.navigateToSignInScreen(),
@@ -197,7 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 'Go back to Welcome screen',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: HexColor('#8C8146'),
+                                  color: DarkerBeige,
                                 ),
                               ),
                               onPressed: () => model.navigateToWelcomeScreen(),
