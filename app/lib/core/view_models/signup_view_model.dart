@@ -39,7 +39,7 @@ class SignUpViewModel extends BaseViewModel {
       firstName: firstName,
       lastName: lastName,
       userPhoneNumber: userPhoneNumber,
-      displayImageUrl: _imageUrl,
+      displayImageUrl: _imageUrl ?? "",
     )
         .then((_) {
       _navigationService.navigateTo(SignInScreen.route);
