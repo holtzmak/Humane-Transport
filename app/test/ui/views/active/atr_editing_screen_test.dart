@@ -1,5 +1,6 @@
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/services/dialog_service.dart';
+import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
 import 'package:app/test/mock/test_service_locator.dart';
@@ -21,11 +22,14 @@ class MockDialogService extends Mock implements DialogService {}
 
 class MockActiveScreenViewModel extends Mock implements ActiveScreenViewModel {}
 
+class MockNavigationService extends Mock implements NavigationService {}
+
 final testLocator = GetIt.instance;
 
 void main() {
   final mockActiveScreenViewModel = MockActiveScreenViewModel();
   final mockDialogService = MockDialogService();
+  final mockNavigationService = MockNavigationService();
 
   Future<void> pumpATREditingScreen(
           WidgetTester tester, AnimalTransportRecord initialATR) async =>
@@ -36,6 +40,8 @@ void main() {
       testLocator.registerLazySingleton<ActiveScreenViewModel>(
           () => mockActiveScreenViewModel);
       testLocator.registerLazySingleton<DialogService>(() => mockDialogService);
+      testLocator.registerLazySingleton<NavigationService>(
+          () => mockNavigationService);
       addLazySingletonForTest(testLocator, () => ValidationService());
     });
 
@@ -88,15 +94,20 @@ void main() {
     testWidgets('gives completed ATR to view model on submit',
         (WidgetTester tester) async {
       final testATR = testAnimalTransportRecord();
+      final testAckImages = testAcknowledgementInfoImages(
+          shipperAck: "test file name",
+          transporterAck: "test file name",
+          receiverAck: "test file name");
       final submitButtonFinder = find.widgetWithText(RaisedButton, "Submit");
-      when(mockActiveScreenViewModel.saveCompletedAtr(testATR))
+      when(mockActiveScreenViewModel.saveCompletedAtr(testATR, testAckImages))
           .thenAnswer((_) => Future.value()); // do nothing for test
       await pumpATREditingScreen(tester, testATR);
       await tester.ensureVisible(submitButtonFinder);
       await tester.tap(submitButtonFinder);
       // Non-standard submission time
       await tester.pump(Duration(milliseconds: 1));
-      verify(mockActiveScreenViewModel.saveCompletedAtr(testATR)).called(1);
+      verify(mockActiveScreenViewModel.saveCompletedAtr(testATR, testAckImages))
+          .called(1);
     });
 
     testWidgets('edited completed ATR is given to view model on submission',
@@ -105,9 +116,10 @@ void main() {
           shipInfo: testShipperInfo(shipperName: "Ali Rae"));
       final editedATR = testAnimalTransportRecord(
           shipInfo: testShipperInfo(shipperName: "Alicia Rae"));
+      final testAckImages = testAcknowledgementInfoImages();
       final submitButtonFinder = find.widgetWithText(RaisedButton, "Submit");
       final fieldFinder = find.widgetWithText(TextFormField, "Ali Rae");
-      when(mockActiveScreenViewModel.saveCompletedAtr(testATR))
+      when(mockActiveScreenViewModel.saveCompletedAtr(testATR, testAckImages))
           .thenAnswer((_) => Future.value()); // do nothing for test
 
       await pumpATREditingScreen(tester, testATR);
@@ -119,14 +131,17 @@ void main() {
       await tester.tap(submitButtonFinder);
       // Non-standard submission time
       await tester.pump(Duration(milliseconds: 1));
-      verify(mockActiveScreenViewModel.saveCompletedAtr(editedATR)).called(1);
+      verify(mockActiveScreenViewModel.saveCompletedAtr(
+              editedATR, testAckImages))
+          .called(1);
     });
 
     testWidgets('gives saved ATR to view model on exit, then exits',
         (WidgetTester tester) async {
       final testATR = testAnimalTransportRecord();
+      final testAckImages = testAcknowledgementInfoImages();
       final backButtonFinder = find.byIcon(Icons.arrow_back);
-      when(mockActiveScreenViewModel.saveEditedAtr(testATR))
+      when(mockActiveScreenViewModel.saveEditedAtr(testATR, testAckImages))
           .thenAnswer((_) => Future.value()); // do nothing for test
 
       await pumpATREditingScreen(tester, testATR);
@@ -134,7 +149,8 @@ void main() {
       await tester.tap(backButtonFinder);
       // Non-standard save time
       await tester.pump(Duration(milliseconds: 1));
-      verify(mockActiveScreenViewModel.saveEditedAtr(testATR)).called(1);
+      verify(mockActiveScreenViewModel.saveEditedAtr(testATR, testAckImages))
+          .called(1);
     });
 
     testWidgets('edited ATR is given to view model on exit, then exits',
@@ -144,9 +160,10 @@ void main() {
               testFwrInfo(lastFwrLocation: testAddress(city: "Yellowknife")));
       final editedATR = testAnimalTransportRecord(
           fwrInfo: testFwrInfo(lastFwrLocation: testAddress(city: "Iqaluit")));
+      final testAckImages = testAcknowledgementInfoImages();
       final backButtonFinder = find.byIcon(Icons.arrow_back);
       final fieldFinder = find.widgetWithText(TextFormField, "Yellowknife");
-      when(mockActiveScreenViewModel.saveEditedAtr(editedATR))
+      when(mockActiveScreenViewModel.saveEditedAtr(editedATR, testAckImages))
           .thenAnswer((_) => Future.value()); // do nothing for test
 
       await pumpATREditingScreen(tester, testATR);
@@ -158,7 +175,8 @@ void main() {
       await tester.tap(backButtonFinder);
       // Non-standard save time
       await tester.pump(Duration(milliseconds: 1));
-      verify(mockActiveScreenViewModel.saveEditedAtr(editedATR)).called(1);
+      verify(mockActiveScreenViewModel.saveEditedAtr(editedATR, testAckImages))
+          .called(1);
     });
 
     testWidgets('invalid form blocks completion submission',
@@ -172,7 +190,7 @@ void main() {
       // Non-standard save time
       await tester.pump(Duration(milliseconds: 1));
 
-      verifyNever(mockActiveScreenViewModel.saveCompletedAtr(any));
+      verifyNever(mockActiveScreenViewModel.saveCompletedAtr(any, any));
       verify(mockDialogService.showDialog(
               title: 'Submission of the Animal Transport Record failed',
               description: 'One or more the the form fields is invalid'))

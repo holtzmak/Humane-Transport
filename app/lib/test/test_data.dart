@@ -13,6 +13,7 @@ import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/models/transporter.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
 
 testAddress(
         {String streetAddress,
@@ -181,10 +182,22 @@ testReceiverInfo(
         receiverContactInfo: receiverContactInfo ?? "ABC123");
 
 testAckInfo({File shipperAck, File transporterAck, File receiverAck}) =>
-    AcknowledgementInfo(
-        shipperAck: "testFile1",
-        transporterAck: "testFile2",
-        receiverAck: "testFile3");
+    AcknowledgementInfo(shipperAck: "", transporterAck: "", receiverAck: "");
+
+testAcknowledgementInfoImages(
+        {String shipperAck,
+        String transporterAck,
+        String receiverAck,
+        File shipperAckRecentImage,
+        File transporterAckRecentImage,
+        File receiverAckRecentImage}) =>
+    AcknowledgementInfoImages(
+        shipperAck: shipperAck ?? "",
+        transporterAck: transporterAck ?? "",
+        receiverAck: receiverAck ?? "",
+        shipperAckRecentImage: shipperAckRecentImage ?? null,
+        transporterAckRecentImage: transporterAckRecentImage ?? null,
+        receiverAckRecentImage: receiverAckRecentImage ?? null);
 
 testContingencyInfo(
         {String goalStatement,
