@@ -50,6 +50,13 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   void initState() {
     super.initState();
     _replacementAtr = widget.atr;
+    _replacementImages = AcknowledgementInfoImages(
+        shipperAck: widget.atr.ackInfo.shipperAck,
+        transporterAck: widget.atr.ackInfo.transporterAck,
+        receiverAck: widget.atr.ackInfo.receiverAck,
+        shipperAckRecentImage: null,
+        transporterAckRecentImage: null,
+        receiverAckRecentImage: null);
 
     _shipperInfoField = ShipperInfoFormField(
         initialInfo: _replacementAtr.shipInfo,

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/core/models/acknowledgement_info.dart';
@@ -16,6 +15,7 @@ import 'package:app/ui/views/active/atr_editing_screen.dart';
 import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
 import 'package:app/ui/views/history/history_screen.dart';
 import 'package:app/ui/views/home_screen.dart';
+import 'package:crypto/crypto.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -145,8 +145,8 @@ class ActiveScreenViewModel extends BaseViewModel {
     });
   }
 
-  Future<String> _uploadOrGetExstingImageUrl(File image) async {
-    final fileName = base64Encode(image.readAsBytesSync());
+  Future<String> _uploadOrGetExistingImageUrl(File image) async {
+    final fileName = md5.convert(image.readAsBytesSync()).toString();
     return _databaseService
         .getAtrImage(fileName)
         .catchError((_) => _databaseService.uploadAtrImage(image, fileName));
@@ -160,15 +160,15 @@ class ActiveScreenViewModel extends BaseViewModel {
     try {
       if (ackImages.shipperAckRecentImage != null) {
         shipperAck =
-            await _uploadOrGetExstingImageUrl(ackImages.shipperAckRecentImage);
+            await _uploadOrGetExistingImageUrl(ackImages.shipperAckRecentImage);
       }
       if (ackImages.transporterAckRecentImage != null) {
-        transporterAck = await _uploadOrGetExstingImageUrl(
+        transporterAck = await _uploadOrGetExistingImageUrl(
             ackImages.transporterAckRecentImage);
       }
       if (ackImages.receiverAckRecentImage != null) {
-        receiverAck =
-            await _uploadOrGetExstingImageUrl(ackImages.receiverAckRecentImage);
+        receiverAck = await _uploadOrGetExistingImageUrl(
+            ackImages.receiverAckRecentImage);
       }
       return Future.value(AcknowledgementInfo(
           shipperAck: shipperAck,

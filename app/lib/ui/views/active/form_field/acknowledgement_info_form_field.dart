@@ -38,10 +38,7 @@ class _AcknowledgementInfoFormFieldState
   File _shipperAckRecentImage;
   File _transporterAckRecentImage;
   File _receiverAckRecentImage;
-  String _validatorText;
-
-  Future<File> _selectNewImage() async =>
-      widget._navigationService.navigateTo(ImageScreen.route);
+  String _validatorText = "";
 
   Widget _showShipperAckIfOneIsAvailable() {
     if (_shipperAckRecentImage != null) {
@@ -88,12 +85,16 @@ class _AcknowledgementInfoFormFieldState
       Column(
         children: [
           RaisedButton(
-              child: Text("Upload new image"),
+              key: ObjectKey("Shipper ack image picker"),
+              child: Text(
+                "Upload new image",
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () async {
-                setState(() async =>
-                    _shipperAckRecentImage = await _selectNewImage());
-                widget._imageForm.shipperAckRecentImage =
-                    _shipperAckRecentImage;
+                _shipperAckRecentImage = await widget._navigationService
+                    .navigateTo(ImageScreen.route) as File;
+                setState(() => widget._imageForm.shipperAckRecentImage =
+                    _shipperAckRecentImage);
               }),
           _showShipperAckIfOneIsAvailable(),
         ],
@@ -104,12 +105,16 @@ class _AcknowledgementInfoFormFieldState
       Column(
         children: [
           RaisedButton(
-              child: Text("Upload new image"),
+              key: ObjectKey("Transporter ack image picker"),
+              child: Text(
+                "Upload new image",
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () async {
-                setState(() async =>
-                    _transporterAckRecentImage = await _selectNewImage());
-                widget._imageForm.transporterAckRecentImage =
-                    _transporterAckRecentImage;
+                _transporterAckRecentImage = await widget._navigationService
+                    .navigateTo(ImageScreen.route) as File;
+                setState(() => widget._imageForm.transporterAckRecentImage =
+                    _transporterAckRecentImage);
               }),
           _showTransporterAckIfOneIsAvailable(),
         ],
@@ -120,12 +125,16 @@ class _AcknowledgementInfoFormFieldState
       Column(
         children: [
           RaisedButton(
-              child: Text("Upload new image"),
+              key: ObjectKey("Receiver ack image picker"),
+              child: Text(
+                "Upload new image",
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () async {
-                setState(() async =>
-                    _receiverAckRecentImage = await _selectNewImage());
-                widget._imageForm.receiverAckRecentImage =
-                    _receiverAckRecentImage;
+                _receiverAckRecentImage = await widget._navigationService
+                    .navigateTo(ImageScreen.route) as File;
+                setState(() => widget._imageForm.receiverAckRecentImage =
+                    _receiverAckRecentImage);
               }),
           _showReceiverAckIfOneIsAvailable(),
         ],
@@ -142,9 +151,13 @@ class _AcknowledgementInfoFormFieldState
             style: TextStyle(color: Colors.white),
           ),
           onPressed: () => setState(() {
-                _validatorText = widget._imageForm.validate()
-                    ? ""
-                    : "* Missing one or more of the required acknowledgement images";
+                if (widget._imageForm.validate()) {
+                  setState(() => _validatorText = "");
+                  widget._imageForm.save();
+                } else {
+                  setState(() => _validatorText =
+                      "* Missing one or more of the required acknowledgement images");
+                }
               })),
     ]);
   }
@@ -165,6 +178,32 @@ class AcknowledgementInfoImages {
       @required this.shipperAckRecentImage,
       @required this.transporterAckRecentImage,
       @required this.receiverAckRecentImage});
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AcknowledgementInfoImages &&
+          runtimeType == other.runtimeType &&
+          shipperAck == other.shipperAck &&
+          transporterAck == other.transporterAck &&
+          receiverAck == other.receiverAck &&
+          shipperAckRecentImage == other.shipperAckRecentImage &&
+          transporterAckRecentImage == other.transporterAckRecentImage &&
+          receiverAckRecentImage == other.receiverAckRecentImage;
+
+  @override
+  int get hashCode =>
+      shipperAck.hashCode ^
+      transporterAck.hashCode ^
+      receiverAck.hashCode ^
+      shipperAckRecentImage.hashCode ^
+      transporterAckRecentImage.hashCode ^
+      receiverAckRecentImage.hashCode;
+
+  @override
+  String toString() {
+    return 'AcknowledgementInfoImages{shipperAck: $shipperAck, transporterAck: $transporterAck, receiverAck: $receiverAck, shipperAckRecentImage: $shipperAckRecentImage, transporterAckRecentImage: $transporterAckRecentImage, receiverAckRecentImage: $receiverAckRecentImage}';
+  }
 }
 
 class _ImageForm {
