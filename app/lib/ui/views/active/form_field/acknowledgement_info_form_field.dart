@@ -226,12 +226,9 @@ class _ImageForm {
       this.receiverAckRecentImage});
 
   bool validate() =>
-      (shipperAck.isNotEmpty &&
-          transporterAck.isNotEmpty &&
-          receiverAck.isNotEmpty) ||
-      (shipperAckRecentImage != null &&
-          transporterAckRecentImage != null &&
-          receiverAckRecentImage != null);
+      (shipperAck.isNotEmpty || shipperAckRecentImage != null) &&
+      (transporterAck.isNotEmpty || transporterAckRecentImage != null) &&
+      (receiverAck.isNotEmpty || receiverAckRecentImage != null);
 
   void save() async => onSaved(AcknowledgementInfoImages(
       shipperAck: shipperAck,

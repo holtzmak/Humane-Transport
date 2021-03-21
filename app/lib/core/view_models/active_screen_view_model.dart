@@ -146,6 +146,9 @@ class ActiveScreenViewModel extends BaseViewModel {
   }
 
   Future<String> _uploadOrGetExistingImageUrl(File image) async {
+    // We use MD5 here not for security, but for a unique encoding of the
+    // image file that can be repeated with identical images to prevent
+    // file and file name duplication
     final fileName = md5.convert(image.readAsBytesSync()).toString();
     return _databaseService
         .getAtrImage(fileName)
