@@ -1,4 +1,5 @@
 import 'package:app/core/view_models/home_screen_view_model.dart';
+import 'package:app/ui/common/default_image.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class HomeScreen extends StatelessWidget {
       appBar: appBar('Home Screen'),
       body: Center(
         child: TemplateBaseViewModel<HomeScreenViewModel>(
+          onModelReady: (model) => model.loadTransporterInfo(),
           builder: (context, model, child) => SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -23,15 +25,21 @@ class HomeScreen extends StatelessWidget {
                     Image.asset("assets/home_cover.jpg"),
                     // TODO: #223. Use the logged in transporter's name
                     Positioned(
-                        bottom: 20.0,
-                        left: 10.0,
-                        child: Text(
-                          'Transporter Name',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediumTextSize),
-                        )),
+                      bottom: 20.0,
+                      left: 10.0,
+                      child: model.transporter != null
+                          ? Text(
+                              '${model.transporter.firstName} ${model.transporter.lastName} ',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: MediumTextSize),
+                            )
+                          : CircularProgressIndicator(
+                              strokeWidth: 4,
+                              valueColor: AlwaysStoppedAnimation(NavyBlue),
+                            ),
+                    ),
                     Positioned(
                         bottom: 0.0,
                         right: 0.0,
@@ -41,12 +49,24 @@ class HomeScreen extends StatelessWidget {
                           onPressed: model.navigateToAccountScreen,
                         )),
                     Positioned(
-                        child: CircleAvatar(
-                      radius: 70,
-                      backgroundColor: Colors.white,
-                      backgroundImage: NetworkImage(
-                          "https://images.unsplash.com/photo-1544393569-eb1568319eef?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8c3RvcHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"),
-                    ))
+                      child: model.transporter != null
+                          ? CircleAvatar(
+                              radius: 52,
+                              backgroundColor: NavyBlue,
+                              child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.grey[300],
+                                  backgroundImage: model.transporter
+                                          .displayImageUrl.isNotEmpty
+                                      ? NetworkImage(
+                                          model.transporter.displayImageUrl)
+                                      : NetworkImage(defaultImage)),
+                            )
+                          : CircularProgressIndicator(
+                              strokeWidth: 4,
+                              valueColor: AlwaysStoppedAnimation(NavyBlue),
+                            ),
+                    )
                   ],
                 ),
                 ListView(

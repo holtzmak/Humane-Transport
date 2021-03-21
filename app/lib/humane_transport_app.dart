@@ -12,6 +12,7 @@ class HumaneTransportApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       onGenerateRoute: AppRouteGenerator.onGenerateRoute,
       initialRoute: SplashScreen.route,
       navigatorKey: locator<NavigationService>().navigationKey,

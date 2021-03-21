@@ -8,11 +8,15 @@ import 'package:app/ui/views/sign_in_screen.dart';
 import 'package:app/ui/views/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
+// TODO: Update Signup view model based on new changes made on task #207
 class SignUpViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final DialogService _dialogService = locator<DialogService>();
   final NavigationService _navigationService = locator<NavigationService>();
+
+  String _imageUrl;
+  String get imageUrl => _imageUrl;
 
   void navigateToWelcomeScreen() =>
       _navigationService.navigateBackUntil(WelcomeScreen.route);
@@ -35,6 +39,7 @@ class SignUpViewModel extends BaseViewModel {
       firstName: firstName,
       lastName: lastName,
       userPhoneNumber: userPhoneNumber,
+      displayImageUrl: _imageUrl,
     )
         .then((_) {
       _navigationService.navigateTo(SignInScreen.route);

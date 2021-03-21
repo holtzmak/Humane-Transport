@@ -42,6 +42,9 @@ class DatabaseService {
   Future<String> uploadAtrImage(File file, String fileName) async =>
       interface.uploadAtrImage(file, fileName);
 
+  Future<String> uploadAvatarImage(File file, String fileName) async =>
+      interface.uploadAvatarImage(file, fileName);
+
   Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId) =>
       interface.getUpdatedCompleteATRs(userId);
 

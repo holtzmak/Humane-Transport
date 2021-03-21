@@ -60,6 +60,7 @@ class AuthenticationService {
     @required String userEmailAddress,
     @required String userPhoneNumber,
     @required String password,
+    String displayImageUrl,
   }) async =>
       firebaseAuth
           .createUserWithEmailAndPassword(
@@ -72,6 +73,7 @@ class AuthenticationService {
                 lastName: lastName,
                 userEmailAddress: userEmailAddress,
                 userPhoneNumber: userPhoneNumber,
+                displayImageUrl: displayImageUrl,
                 // SignUp for admin is not done through this application
                 isAdmin: false,
               )));
