@@ -7,7 +7,6 @@ import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import 'package:app/ui/common/style.dart';
 
 class ActiveScreen extends StatefulWidget {
   static const route = '/active';
@@ -23,7 +22,6 @@ class _ActiveScreenState extends State<ActiveScreen> {
           key: ObjectKey(Uuid().v4()),
           atr: atr,
           onTap: () => model.navigateToEditingScreen(atr));
-
   @override
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<ActiveScreenViewModel>(
