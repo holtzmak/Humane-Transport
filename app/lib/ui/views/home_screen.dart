@@ -4,7 +4,6 @@ import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:app/ui/common/style.dart';
 
 class HomeScreen extends StatelessWidget {
   static const route = '/home';
