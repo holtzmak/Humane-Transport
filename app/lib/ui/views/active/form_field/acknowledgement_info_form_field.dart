@@ -84,6 +84,7 @@ class _AcknowledgementInfoFormFieldState
       ),
       Column(
         children: [
+          _showShipperAckIfOneIsAvailable(),
           RaisedButton(
               key: ObjectKey("Shipper ack image picker"),
               child: Text(
@@ -96,7 +97,6 @@ class _AcknowledgementInfoFormFieldState
                 setState(() => widget._imageForm.shipperAckRecentImage =
                     _shipperAckRecentImage);
               }),
-          _showShipperAckIfOneIsAvailable(),
         ],
       ),
       ListTile(
@@ -104,6 +104,7 @@ class _AcknowledgementInfoFormFieldState
       ),
       Column(
         children: [
+          _showTransporterAckIfOneIsAvailable(),
           RaisedButton(
               key: ObjectKey("Transporter ack image picker"),
               child: Text(
@@ -116,7 +117,6 @@ class _AcknowledgementInfoFormFieldState
                 setState(() => widget._imageForm.transporterAckRecentImage =
                     _transporterAckRecentImage);
               }),
-          _showTransporterAckIfOneIsAvailable(),
         ],
       ),
       ListTile(
@@ -124,6 +124,7 @@ class _AcknowledgementInfoFormFieldState
       ),
       Column(
         children: [
+          _showReceiverAckIfOneIsAvailable(),
           RaisedButton(
               key: ObjectKey("Receiver ack image picker"),
               child: Text(
@@ -136,7 +137,6 @@ class _AcknowledgementInfoFormFieldState
                 setState(() => widget._imageForm.receiverAckRecentImage =
                     _receiverAckRecentImage);
               }),
-          _showReceiverAckIfOneIsAvailable(),
         ],
       ),
       ListTile(
