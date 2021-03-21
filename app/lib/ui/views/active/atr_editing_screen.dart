@@ -1,4 +1,3 @@
-import 'package:app/core/models/acknowledgement_info.dart';
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/models/delivery_info.dart';
@@ -36,6 +35,7 @@ class ATREditingScreen extends StatefulWidget {
 
 class _ATREditingScreenState extends State<ATREditingScreen> {
   AnimalTransportRecord _replacementAtr;
+  AcknowledgementInfoImages _replacementImages;
   final List<ExpansionListItem> _atrFormFieldsWrapper = [];
 
   ShipperInfoFormField _shipperInfoField;
@@ -74,8 +74,8 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
     );
     _acknowledgementInfoFormField = AcknowledgementInfoFormField(
       initialInfo: _replacementAtr.ackInfo,
-      onSaved: (AcknowledgementInfo newInfo) =>
-          _replacementAtr = _replacementAtr.withAckInfo(newInfo),
+      onSaved: (AcknowledgementInfoImages newInfo) =>
+          _replacementImages = newInfo,
     );
     _contingencyPlanInfoFormField = ContingencyPlanInfoFormField(
       initialInfo: _replacementAtr.contingencyInfo,
@@ -139,7 +139,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   Future<bool> _saveBeforeWillPop(ActiveScreenViewModel model) async {
     _saveForm();
     return model
-        .saveEditedAtr(_replacementAtr)
+        .saveEditedAtr(_replacementAtr, _replacementImages)
         .then((_) => true)
         .catchError((e) => false);
   }
@@ -147,7 +147,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   Future<void> _saveAndNavigateBack(ActiveScreenViewModel model) async {
     _saveForm();
     return model
-        .saveEditedAtr(_replacementAtr)
+        .saveEditedAtr(_replacementAtr, _replacementImages)
         .then((_) => model.navigateBack())
         .catchError((e) => widget._dialogService.showDialog(
               title: 'Saving the Animal Transport Record failed',
@@ -157,7 +157,8 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
 
   Future<void> _submitATR(ActiveScreenViewModel model) async =>
       _isFormValidAndSaved()
-          .then((_) => model.saveCompletedAtr(_replacementAtr))
+          .then((_) =>
+              model.saveCompletedAtr(_replacementAtr, _replacementImages))
           .catchError((_) => widget._dialogService.showDialog(
               title: 'Submission of the Animal Transport Record failed',
               description: 'One or more the the form fields is invalid'));

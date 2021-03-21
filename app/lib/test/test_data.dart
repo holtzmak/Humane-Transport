@@ -182,7 +182,9 @@ testReceiverInfo(
 
 testAckInfo({File shipperAck, File transporterAck, File receiverAck}) =>
     AcknowledgementInfo(
-        shipperAck: null, transporterAck: null, receiverAck: null);
+        shipperAck: "testFile1",
+        transporterAck: "testFile2",
+        receiverAck: "testFile3");
 
 testContingencyInfo(
         {String goalStatement,

@@ -1,21 +1,19 @@
-import 'dart:io';
-
+import 'package:app/ui/common/style.dart';
 import 'package:flutter/material.dart';
 
 @immutable
 class AcknowledgementInfo {
-  // TODO: #199. Resolve ack info images. There's nulls here we don't want.
-  final File shipperAck;
-  final File transporterAck;
-  final File receiverAck;
+  final String shipperAck;
+  final String transporterAck;
+  final String receiverAck;
 
   AcknowledgementInfo(
       {@required this.shipperAck,
       @required this.transporterAck,
       @required this.receiverAck});
 
-  factory AcknowledgementInfo.defaultAckInfo() => AcknowledgementInfo(
-      shipperAck: null, transporterAck: null, receiverAck: null);
+  factory AcknowledgementInfo.defaultAckInfo() =>
+      AcknowledgementInfo(shipperAck: "", transporterAck: "", receiverAck: "");
 
   @override
   int get hashCode =>
@@ -30,12 +28,9 @@ class AcknowledgementInfo {
   }
 
   AcknowledgementInfo.fromJSON(Map<String, dynamic> json)
-      // : shipperAck = File(json['shipperAck']),
-      //   transporterAck = File(json['transporterAck']),
-      //   receiverAck = File(json['receiverAck']);
-      : shipperAck = null,
-        transporterAck = null,
-        receiverAck = null;
+      : shipperAck = json['shipperAck'],
+        transporterAck = json['transporterAck'],
+        receiverAck = json['receiverAck'];
 
   Map<String, dynamic> toJSON() => {
         'shipperAck': shipperAck,
@@ -44,19 +39,34 @@ class AcknowledgementInfo {
       };
 
   String toString() =>
-      "Shipper acknowledgement: , Transporter acknowledgement: , Consignee acknowledgement: ";
+      "Shipper acknowledgement: $shipperAck, Transporter acknowledgement: $transporterAck, Consignee acknowledgement: $receiverAck";
 
   Widget toWidget() {
     return Column(children: [
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Shipper acknowledgement")),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Shipper acknowledgement")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Image.network(shipperAck))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Transporter acknowledgement")),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Transporter acknowledgement")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Image.network(transporterAck))),
       ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -2),
-          title: Text("Consignee acknowledgement")),
+          title: Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Text("Consignee acknowledgement")),
+          subtitle: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
+              child: Image.network(receiverAck))),
     ]);
   }
 }

@@ -78,6 +78,11 @@ class _ImageScreenState extends State<ImageScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Upload Image"),
+        automaticallyImplyLeading: false,
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(_image),
+        ),
       ),
       body: Center(
         child: FutureBuilder<void>(
