@@ -84,11 +84,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             },
                             child: Text('Reset Password',
                                 style: TextStyle(
-<<<<<<< HEAD
                                     fontSize: 20, color: Colors.white)),
-=======
-                                    fontSize: 15, color: Colors.white)),
->>>>>>> 004587d (added minor changes & gui)
                             color: NavyBlue,
                           ),
                           SizedBox(
