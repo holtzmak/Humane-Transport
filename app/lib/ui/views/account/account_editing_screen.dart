@@ -74,32 +74,35 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                             top: 20.0,
                           ),
                         ),
-                        CircleAvatar(
-                          radius: 53,
-                          backgroundColor: NavyBlue,
-                          child: model.selectedImage != null
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: Image.file(
-                                    model.selectedImage,
+                        GestureDetector(
+                          onTap: () => model.selectImage(),
+                          child: CircleAvatar(
+                            radius: 53,
+                            backgroundColor: NavyBlue,
+                            child: model.selectedImage != null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.file(
+                                      model.selectedImage,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                      scale: 1.0,
+                                    ),
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
                                     width: 100,
                                     height: 100,
-                                    fit: BoxFit.cover,
-                                    scale: 1.0,
+                                    child: Icon(
+                                      Icons.camera_alt,
+                                      color: Colors.grey[800],
+                                    ),
                                   ),
-                                )
-                              : Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[300],
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  width: 100,
-                                  height: 100,
-                                  child: Icon(
-                                    Icons.camera_alt,
-                                    color: Colors.grey[800],
-                                  ),
-                                ),
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(

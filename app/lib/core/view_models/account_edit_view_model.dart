@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:app/core/models/transporter.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/dialog_service.dart';
@@ -10,7 +9,6 @@ import 'package:app/ui/common/view_state.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:uuid/uuid.dart';
 
 class AccountEditViewModel extends BaseViewModel {
   final DatabaseService _databaseService = locator<DatabaseService>();
@@ -30,12 +28,10 @@ class AccountEditViewModel extends BaseViewModel {
     var permissionStatus = await Permission.photos.status;
 
     if (permissionStatus.isGranted) {
-      print('granted');
       var tempImage = await _picker.getImage(source: ImageSource.gallery);
 
       if (tempImage != null) {
         _selectedImage = File(tempImage.path);
-
         notifyListeners();
       }
     } else {
@@ -46,10 +42,10 @@ class AccountEditViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> setImageUrl() async {
-    _imageUrl =
-        await _databaseService.uploadAvatarImage(_selectedImage, Uuid().v4());
-  }
+  Future<void> setImageUrl() async => _imageUrl = _selectedImage != null
+      ? await _databaseService.uploadAvatarImage(
+          _selectedImage, _account.userId)
+      : _account.displayImageUrl;
 
   Future<void> saveTransporterAccount({
     @required String firstName,
@@ -67,9 +63,9 @@ class AccountEditViewModel extends BaseViewModel {
         userEmailAddress: userEmailAddress,
         userId: _account.userId,
         userPhoneNumber: userPhoneNumber,
-        displayImageUrl: _imageUrl,
+        displayImageUrl: _imageUrl ?? _account.displayImageUrl,
       );
-      _databaseService.addTransporter(updateTransporterAccount);
+      _databaseService.updateTransporter(updateTransporterAccount);
     }).then((_) => _dialogService
             .showDialog(
                 title: 'Transporter Account',

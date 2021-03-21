@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:app/core/models/transporter.dart';
 import 'package:app/core/services/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
@@ -56,7 +55,7 @@ class HomeScreenViewModel extends BaseViewModel {
       });
     } else {
       _dialogService.showDialog(
-        title: 'Launching the account screen failed',
+        title: 'Launching the home screen failed',
         description: "You are not logged in!",
       );
     }

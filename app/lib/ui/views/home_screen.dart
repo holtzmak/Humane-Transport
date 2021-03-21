@@ -1,4 +1,5 @@
 import 'package:app/core/view_models/home_screen_view_model.dart';
+import 'package:app/ui/common/default_image.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
@@ -52,19 +53,14 @@ class HomeScreen extends StatelessWidget {
                           ? CircleAvatar(
                               radius: 52,
                               backgroundColor: NavyBlue,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: Container(
-                                  color: Colors.grey[300],
-                                  child: Image.network(
-                                    model.transporter.displayImageUrl,
-                                    width: 100,
-                                    height: 100,
-                                    fit: BoxFit.cover,
-                                    scale: 1,
-                                  ),
-                                ),
-                              ),
+                              child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.grey[300],
+                                  backgroundImage: model.transporter
+                                          .displayImageUrl.isNotEmpty
+                                      ? NetworkImage(
+                                          model.transporter.displayImageUrl)
+                                      : NetworkImage(defaultImage)),
                             )
                           : CircularProgressIndicator(
                               strokeWidth: 4,
