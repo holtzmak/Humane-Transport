@@ -29,7 +29,7 @@ class _ActiveScreenState extends State<ActiveScreen> {
         show: model.state == ViewState.Busy,
         child: Scaffold(
           backgroundColor: Beige,
-          appBar: appBar('Active Forms'),
+          appBar: appBarInner('Active Forms'),
           bottomNavigationBar: BottomNavigationBar(
               unselectedLabelStyle: TextStyle(fontSize: SmallTextSize),
               selectedItemColor: NavyBlue,

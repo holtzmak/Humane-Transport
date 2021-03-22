@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Beige,
-      appBar: appBar('Home Screen'),
+      appBar: appBarInner('Home Screen'),
       body: Center(
         child: TemplateBaseViewModel<HomeScreenViewModel>(
           onModelReady: (model) => model.loadTransporterInfo(),

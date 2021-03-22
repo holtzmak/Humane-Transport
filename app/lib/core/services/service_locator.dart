@@ -12,6 +12,7 @@ import 'package:app/core/view_models/check_your_email_account_view_model.dart';
 import 'package:app/core/view_models/forgot_password_view_model.dart';
 import 'package:app/core/view_models/history_screen_view_model.dart';
 import 'package:app/core/view_models/home_screen_view_model.dart';
+import 'package:app/core/view_models/setting_screen_view_model.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
 import 'package:app/core/view_models/signup_view_model.dart';
 import 'package:app/core/view_models/splash_screen_view_model.dart';
@@ -51,4 +52,6 @@ void setUpLocator() {
   locator
       .registerFactory<HistoryScreenViewModel>(() => HistoryScreenViewModel());
   locator.registerFactory<ActiveScreenViewModel>(() => ActiveScreenViewModel());
+  locator
+      .registerFactory<SettingScreenViewModel>(() => SettingScreenViewModel());
 }

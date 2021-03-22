@@ -4,11 +4,12 @@ import 'package:app/ui/views/account/account_editing_screen.dart';
 import 'package:app/ui/views/account/account_screen.dart';
 import 'package:app/ui/views/active/active_screen.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
-import 'package:app/ui/views/check_your_email_account_screen.dart';
-import 'package:app/ui/views/forgot_password_screen.dart';
+import 'package:app/ui/views/reset_password/check_your_email_account_screen.dart';
+import 'package:app/ui/views/reset_password/forgot_password_screen.dart';
 import 'package:app/ui/views/history/atr_display_screen.dart';
 import 'package:app/ui/views/history/history_screen.dart';
 import 'package:app/ui/views/home_screen.dart';
+import 'package:app/ui/views/setting_screen.dart';
 import 'package:app/ui/views/sign_in_screen.dart';
 import 'package:app/ui/views/sign_up_screen.dart';
 import 'package:app/ui/views/splash/splash_screen.dart';
@@ -40,6 +41,11 @@ class AppRouteGenerator {
             return ConfirmationMessageScreen();
           case SignUpScreen.route:
             return SignUpScreen();
+          case SettingScreen.route:
+            return isLoggedIn()
+                ? SettingScreen()
+                : throw Exception(
+                    'You must be logged in to view this screen: ${settings.name}');
           // Main screens, only available if logged in
           case HomeScreen.route:
             return isLoggedIn()

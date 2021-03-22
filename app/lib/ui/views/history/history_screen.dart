@@ -25,7 +25,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<HistoryScreenViewModel>(
       builder: (context, model, _) => Scaffold(
-          appBar: appBar('Travel History'),
+          appBar: appBarInner('Travel History'),
           backgroundColor: Beige,
           bottomNavigationBar: BottomNavigationBar(
               unselectedLabelStyle: TextStyle(fontSize: SmallTextSize),
