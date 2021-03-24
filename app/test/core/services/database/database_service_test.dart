@@ -5,6 +5,7 @@ import 'package:app/core/services/database/database_interface.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/database/firebase_database_interface.dart';
 import 'package:app/test/mock/test_mocks_for_firebase.dart';
+import 'package:app/test/test_data.dart';
 import 'package:app/test/test_json.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -78,12 +79,12 @@ void main() {
       verify(mockDocumentReference.delete()).called(1);
     });
 
-    test('Should set new default ATR to firestore', () async {
+    test('Should set new ATR to firestore', () async {
       when(mockFirestoreInstance.collection('atr'))
           .thenReturn(mockCollectionReference);
       when(mockCollectionReference.add(any))
           .thenAnswer((_) async => mockDocumentReference);
-      await dbService.saveNewAtr("test ID");
+      await dbService.saveNewAtr(testAnimalTransportRecord());
       verify(mockCollectionReference.add(any)).called(1);
     });
 

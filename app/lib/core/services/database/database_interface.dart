@@ -14,7 +14,7 @@ abstract class DatabaseInterface {
 
   Stream<Transporter> getUpdatedTransporter(String userId);
 
-  Future<AnimalTransportRecord> setNewAtr(String userId);
+  Future<AnimalTransportRecord> setNewAtr(AnimalTransportRecord atr);
 
   Future<void> updateAtr(AnimalTransportRecord atr);
 
