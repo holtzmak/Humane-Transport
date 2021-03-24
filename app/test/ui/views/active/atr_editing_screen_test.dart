@@ -201,7 +201,7 @@ void main() {
 
     testWidgets('invalid form blocks completion submission',
         (WidgetTester tester) async {
-      final invalidAtr = AnimalTransportRecord.defaultAtr("testId");
+      final invalidAtr = AnimalTransportRecord.empty("testId");
       final submitButtonFinder = find.text("Submit");
 
       await pumpATREditingScreen(tester, invalidAtr);

@@ -18,7 +18,7 @@ class FeedWaterRestInfo {
 
   List<FeedWaterRestEvent> get fwrEvents => List.unmodifiable(_fwrEvents);
 
-  factory FeedWaterRestInfo.defaultFwrInfo() => FeedWaterRestInfo(
+  factory FeedWaterRestInfo.empty() => FeedWaterRestInfo(
       lastFwrDate: DateTime.now(),
       lastFwrLocation: Address.defaultAddress(),
       fwrEvents: []);
