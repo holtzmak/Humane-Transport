@@ -4,6 +4,7 @@ import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/database/firebase_database_interface.dart';
 import 'package:app/core/services/dialog_service.dart';
 import 'package:app/core/services/nav_service.dart';
+import 'package:app/core/services/shared_preferences_service.dart';
 import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/view_models/account_edit_view_model.dart';
 import 'package:app/core/view_models/account_screen_view_model.dart';
@@ -19,10 +20,13 @@ import 'package:app/core/view_models/welcome_screen_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final locator = GetIt.instance;
 
-void setUpLocator() {
+void setUpLocator() async {
+  final sharedPreferencesInstance = await SharedPreferences.getInstance();
+
   // Singletons
   locator.registerLazySingleton<DatabaseInterface>(
       () => FirebaseDatabaseInterface(FirebaseFirestore.instance));
@@ -33,6 +37,8 @@ void setUpLocator() {
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<DialogService>(() => DialogService());
   locator.registerLazySingleton<ValidationService>(() => ValidationService());
+  locator.registerLazySingleton<SharedPreferencesService>(
+      () => SharedPreferencesService(sharedPreferencesInstance));
 
   // Factories
   locator.registerFactory<SplashScreenViewModel>(() => SplashScreenViewModel());
