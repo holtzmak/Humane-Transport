@@ -50,7 +50,7 @@ class _PDFScreenState extends State<PDFScreen> {
                     iconTheme: IconThemeData(color: NavyBlue),
                     backgroundColor: Beige,
                     title: Text(
-                      'Example PDF',
+                      'PDF View',
                       style: TextStyle(color: NavyBlue),
                     ),
                     actions: [
@@ -82,8 +82,15 @@ class _PDFScreenState extends State<PDFScreen> {
     final pdf = pw.Document();
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      margin: pw.EdgeInsets.all(25),
+      margin: pw.EdgeInsets.all(45),
+      footer: (pw.Context context) {
+        return pw.Container(
+            alignment: pw.Alignment.centerRight,
+            margin: const pw.EdgeInsets.only(top: 1.0 * PdfPageFormat.cm),
+            child: pw.Text(
+              'Page ${context.pageNumber} of ${context.pagesCount}',
+            ));
+      },
       build: (pw.Context context) {
         //TODO: Add Complete Atr
         return <pw.Widget>[
@@ -91,60 +98,55 @@ class _PDFScreenState extends State<PDFScreen> {
               level: 0,
               child: pw.Text('Animal Transport Record',
                   style: pw.TextStyle(
-                      fontSize: 22, fontWeight: pw.FontWeight.bold)),
+                      fontSize: 20, fontWeight: pw.FontWeight.bold)),
               outlineStyle: PdfOutlineStyle.italicBold),
           pw.Header(
               level: 1,
               child: pw.Text("Shipper's Information",
-                  style: pw.TextStyle(fontSize: 20))),
+                  style: pw.TextStyle(fontSize: 18))),
           pw.Paragraph(
-              text: "Shipper's Name ${widget.atr.shipInfo.shipperName}"),
-          pw.Paragraph(
-              text:
-                  "Emergency Contact ${widget.atr.shipInfo.shipperContactInfo}"),
-          pw.Paragraph(
-              text:
-                  "Shipper is the owner of the animals loaded in the vehicle? ${widget.atr.shipInfo.shipperIsAnimalOwner}"),
-          pw.Paragraph(
-              text:
-                  "Departure Premises Identification Number (PID): ${widget.atr.shipInfo.departureLocationName}"),
-          pw.Paragraph(
-              text:
-                  "Departure Location Name: ${widget.atr.shipInfo.departureLocationName}"),
-          pw.Paragraph(
-              text:
-                  "Departure Address: ${widget.atr.shipInfo.departureAddress}"),
+              text: widget.atr.shipInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
           pw.Header(
               level: 1,
               child: pw.Text("Transporter's Information",
-                  style: pw.TextStyle(fontSize: 20))),
+                  style: pw.TextStyle(fontSize: 18))),
           pw.Paragraph(
-              text: "Company Name: ${widget.atr.tranInfo.companyName}"),
-          pw.Paragraph(
-              text: "Company Address: ${widget.atr.tranInfo.companyAddress}"),
-          pw.Paragraph(
-              text: "Driver(s) Name(s) ${widget.atr.tranInfo.driverNames}"),
-          pw.Paragraph(text: " ${widget.atr.shipInfo.shipperContactInfo}"),
+              text: widget.atr.tranInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
           pw.Header(
               level: 1,
               child: pw.Text("Feed Water and Rest Information",
-                  style: pw.TextStyle(fontSize: 20))),
+                  style: pw.TextStyle(fontSize: 18))),
+          pw.Paragraph(
+              text: widget.atr.fwrInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
           pw.Header(
               level: 1,
               child: pw.Text("Loading Vehicle Information",
-                  style: pw.TextStyle(fontSize: 20))),
+                  style: pw.TextStyle(fontSize: 18))),
+          pw.Paragraph(
+              text: widget.atr.vehicleInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
           pw.Header(
               level: 1,
               child: pw.Text("Delivery Information",
-                  style: pw.TextStyle(fontSize: 20))),
+                  style: pw.TextStyle(fontSize: 18))),
+          pw.Paragraph(
+              text: widget.atr.deliveryInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
           pw.Header(
               level: 1,
               child: pw.Text("Acknowledgements",
-                  style: pw.TextStyle(fontSize: 20))),
+                  style: pw.TextStyle(fontSize: 18))),
+          //TODO: Add Ack Images
           pw.Header(
               level: 1,
               child: pw.Text("Contingency Plan",
-                  style: pw.TextStyle(fontSize: 20))),
+                  style: pw.TextStyle(fontSize: 18))),
+          pw.Paragraph(
+              text: widget.atr.contingencyInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
         ];
       },
     ));
@@ -152,6 +154,7 @@ class _PDFScreenState extends State<PDFScreen> {
     // TODO: Change the filename to something useful
     return Future.wait([getTemporaryDirectory(), pdf.save()]).then(
         (List values) =>
-            File("${values[0].path}/example.pdf").writeAsBytes(values[1]));
+            File("${values[0].path}/${atr.identifier.atrDocumentId}.pdf")
+                .writeAsBytes(values[1]));
   }
 }

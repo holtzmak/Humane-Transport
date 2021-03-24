@@ -83,10 +83,10 @@ class DeliveryInfo {
           .join(",");
 
   String toString() => '''$recInfo
-  Date and time of arrival: ${DateFormat("yyyy-MM-dd hh:mm").format(arrivalDateAndTime)}
-  All animals arrived in good condition?: ${_compromisedAnimals.isEmpty ? 'Yes' : 'No'}
-  Description of transport related conditions and actions taken to address prior to arrival: ${_compromisedAnimalsToString()}
-  Additional animal welfare concerns for the consignee to be aware of?: $additionalWelfareConcerns''';
+  \nDate and time of arrival: ${DateFormat("yyyy-MM-dd hh:mm").format(arrivalDateAndTime)}
+  \nAll animals arrived in good condition?: ${_compromisedAnimals.isEmpty ? 'Yes' : 'No'}
+  \nDescription of transport related conditions and actions taken to address prior to arrival: ${_compromisedAnimalsToString()}
+  \nAdditional animal welfare concerns for the consignee to be aware of?: $additionalWelfareConcerns''';
 
   Widget toWidget() {
     final List<Widget> fields = [

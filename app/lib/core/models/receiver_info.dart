@@ -74,11 +74,11 @@ class ReceiverInfo {
       };
 
   String toString() => '''Receiving company name: $receiverCompanyName
-  Representative name: $receiverName
-  Account identification number (Optional): ${accountId.isPresent() ? accountId.get() : "N/A"}
-  Destination and Premises Identification number (PID): $destinationLocationId, Name: $destinationLocationName
-  Address: $destinationAddress
-  Receiver’s Contact number in case of emergency: $receiverContactInfo''';
+  \nRepresentative name: $receiverName
+  \nAccount identification number (Optional): ${accountId.isPresent() ? accountId.get() : 'N/A'}
+  \nDestination and Premises Identification number (PID): $destinationLocationId, Name: $destinationLocationName
+  \nAddress: $destinationAddress
+  \nReceiver's Contact number in case of emergency: $receiverContactInfo''';
 
   Widget toWidget() {
     return Column(children: [

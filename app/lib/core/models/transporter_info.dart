@@ -119,16 +119,16 @@ class TransporterInfo {
         'trainingExpiryDate': trainingExpiryDate,
       };
 
-  String toString() => '''Name of transporting company: $companyName
-  Address: $companyAddress
-  Driver(s) name(s): ${driverNames.join(",")}
-  Province and License Plate number of the conveyance transporting the animals: $vehicleProvince, $vehicleLicensePlate
-  (including trailer): $trailerProvince, $trailerProvince
-  Conveyance or container last cleaned and disinfected date and time: ${DateFormat("yyyy-MM-dd hh:mm").format(dateLastCleaned)}
-  Place: $addressLastCleanedAt
-  Driver(s) have been briefed on the contingency plan?: ${driversAreBriefed ? 'Yes' : 'No'}
-  Driver(s) have received humane transport training?: ${driversHaveTraining ? 'Yes' : 'No'}
-  Training type: $trainingType, Expiry date: ${DateFormat("yyyy-MM-dd hh:mm").format(trainingExpiryDate)}''';
+  String toString() => '''\nName of transporting company: $companyName
+  \nAddress: $companyAddress
+  \nDriver(s) name(s): ${driverNames.join(",")}
+  \nProvince and License Plate number of the conveyance transporting the animals: $vehicleProvince, $vehicleLicensePlate
+  \n(including trailer): $trailerProvince, $trailerProvince
+  \nConveyance or container last cleaned and disinfected date and time: ${DateFormat("yyyy-MM-dd hh:mm").format(dateLastCleaned)}
+  \nPlace: $addressLastCleanedAt
+  \nDriver(s) have been briefed on the contingency plan?: ${driversAreBriefed ? 'Yes' : 'No'}
+  \nDriver(s) have received humane transport training?: ${driversHaveTraining ? 'Yes' : 'No'}
+  \nTraining type: $trainingType, Expiry date: ${DateFormat("yyyy-MM-dd hh:mm").format(trainingExpiryDate)}''';
 
   Widget toWidget() {
     return Column(children: [
