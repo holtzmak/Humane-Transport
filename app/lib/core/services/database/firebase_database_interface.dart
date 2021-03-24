@@ -40,12 +40,11 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           (DocumentSnapshot snapshot) => Transporter.fromJSON(snapshot.data()));
 
   @override
-  Future<AnimalTransportRecord> setNewAtr(String userId) async {
-    final defaultAtrAsPlaceholder = AnimalTransportRecord.empty(userId);
+  Future<AnimalTransportRecord> setNewAtr(AnimalTransportRecord atr) async {
     return _firestore
         .collection('atr')
-        .add(defaultAtrAsPlaceholder.toJSON())
-        .then((docRef) => defaultAtrAsPlaceholder.withDocId(docRef.id));
+        .add(atr.toJSON())
+        .then((docRef) => atr.withDocId(docRef.id));
   }
 
   @override

@@ -25,8 +25,8 @@ class DatabaseService {
   Stream<Transporter> getUpdatedTransporter(String userId) =>
       interface.getUpdatedTransporter(userId);
 
-  Future<AnimalTransportRecord> saveNewAtr(String userId) async =>
-      interface.setNewAtr(userId);
+  Future<AnimalTransportRecord> saveNewAtr(AnimalTransportRecord atr) async =>
+      interface.setNewAtr(atr);
 
   Future<void> saveUpdatedAtr(AnimalTransportRecord atr) async =>
       interface.updateAtr(atr);

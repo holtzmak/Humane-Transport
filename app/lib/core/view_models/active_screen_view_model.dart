@@ -8,6 +8,7 @@ import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/dialog_service.dart';
 import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/shared_preferences_service.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
@@ -22,6 +23,8 @@ import 'package:flutter/cupertino.dart';
 
 /// This ViewModel will only view active ATR models
 class ActiveScreenViewModel extends BaseViewModel {
+  final SharedPreferencesService _sharedPreferencesService =
+      locator<SharedPreferencesService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final DatabaseService _databaseService = locator<DatabaseService>();
   final DialogService _dialogService = locator<DialogService>();
@@ -79,7 +82,7 @@ class ActiveScreenViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // May have come from Home screen or Active screen
+// May have come from Home screen or Active screen
   void navigateBack() => _navigationService.pop();
 
   void navigateToHomeScreen() =>
@@ -95,8 +98,13 @@ class ActiveScreenViewModel extends BaseViewModel {
   Future<void> startNewAtr() async {
     setState(ViewState.Busy);
     final currentUser = _authenticationService.currentUser;
+    final defaultAtr = _sharedPreferencesService.getDefaultAtr();
     currentUser.isPresent()
-        ? _databaseService.saveNewAtr(currentUser.get().uid).then((atr) {
+        ? _databaseService
+            .saveNewAtr(defaultAtr.isPresent()
+                ? defaultAtr.get()
+                : AnimalTransportRecord.empty(currentUser.get().uid))
+            .then((atr) {
             setState(ViewState.Idle);
             return navigateToEditingScreen(atr);
           }).catchError((e) {
