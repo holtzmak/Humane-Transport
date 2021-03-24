@@ -75,7 +75,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       createPreview(model, model.animalTransportRecords[index]),
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200,
-                      childAspectRatio: 3 / 2,
+                      childAspectRatio: 9 / 8,
                       crossAxisSpacing: 20,
                       mainAxisSpacing: 20),
                 )),
