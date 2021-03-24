@@ -39,7 +39,7 @@ class TransporterInfo {
 
   List<String> get driverNames => List.unmodifiable(_driverNames);
 
-  factory TransporterInfo.defaultTransporterInfo() => TransporterInfo(
+  factory TransporterInfo.empty() => TransporterInfo(
       companyName: "",
       companyAddress: Address.defaultAddress(),
       driverNames: [],

@@ -19,7 +19,7 @@ class LoadingVehicleInfo {
       @required List<AnimalGroup> animalsLoaded})
       : _animalsLoaded = animalsLoaded;
 
-  factory LoadingVehicleInfo.defaultVehicleInfo() => LoadingVehicleInfo(
+  factory LoadingVehicleInfo.empty() => LoadingVehicleInfo(
       dateAndTimeLoaded: DateTime.now(),
       loadingArea: 0,
       loadingDensity: 0,

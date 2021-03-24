@@ -31,17 +31,26 @@ class AnimalTransportRecord {
     @required this.identifier,
   });
 
-  factory AnimalTransportRecord.defaultAtr(String userId) =>
-      AnimalTransportRecord(
-        shipInfo: ShipperInfo.defaultShipperInfo(),
-        tranInfo: TransporterInfo.defaultTransporterInfo(),
-        fwrInfo: FeedWaterRestInfo.defaultFwrInfo(),
-        vehicleInfo: LoadingVehicleInfo.defaultVehicleInfo(),
-        deliveryInfo: DeliveryInfo.defaultDeliveryInfo(),
-        ackInfo: AcknowledgementInfo.defaultAckInfo(),
-        contingencyInfo: ContingencyPlanInfo.defaultContingencyInfo(),
+  factory AnimalTransportRecord.empty(String userId) => AnimalTransportRecord(
+        shipInfo: ShipperInfo.empty(),
+        tranInfo: TransporterInfo.empty(),
+        fwrInfo: FeedWaterRestInfo.empty(),
+        vehicleInfo: LoadingVehicleInfo.empty(),
+        deliveryInfo: DeliveryInfo.empty(),
+        ackInfo: AcknowledgementInfo.empty(),
+        contingencyInfo: ContingencyPlanInfo.empty(),
         identifier: AtrIdentifier.defaultAtrIdentifier(userId),
       );
+
+  AnimalTransportRecord asDefault() => AnimalTransportRecord(
+      shipInfo: shipInfo,
+      tranInfo: tranInfo,
+      fwrInfo: FeedWaterRestInfo.empty(),
+      vehicleInfo: LoadingVehicleInfo.empty(),
+      deliveryInfo: deliveryInfo.withJustReceiverInfo(),
+      ackInfo: AcknowledgementInfo.empty(),
+      contingencyInfo: contingencyInfo.withoutContingencyEvents(),
+      identifier: AtrIdentifier.defaultAtrIdentifier(identifier.userId));
 
   @override
   int get hashCode =>

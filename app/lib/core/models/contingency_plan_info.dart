@@ -28,7 +28,7 @@ class ContingencyPlanInfo {
         _potentialSafetyActions = potentialSafetyActions,
         _contingencyEvents = contingencyEvents;
 
-  factory ContingencyPlanInfo.defaultContingencyInfo() => ContingencyPlanInfo(
+  factory ContingencyPlanInfo.empty() => ContingencyPlanInfo(
       goalStatement: "",
       communicationPlan: "",
       crisisContacts: [],
@@ -36,6 +36,16 @@ class ContingencyPlanInfo {
       standardAnimalMonitoring: "",
       potentialHazards: [],
       potentialSafetyActions: [],
+      contingencyEvents: []);
+
+  ContingencyPlanInfo withoutContingencyEvents() => ContingencyPlanInfo(
+      goalStatement: goalStatement,
+      communicationPlan: communicationPlan,
+      crisisContacts: crisisContacts,
+      expectedPrepProcess: expectedPrepProcess,
+      standardAnimalMonitoring: standardAnimalMonitoring,
+      potentialHazards: potentialHazards,
+      potentialSafetyActions: potentialSafetyActions,
       contingencyEvents: []);
 
   @override

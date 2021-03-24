@@ -12,7 +12,7 @@ class AcknowledgementInfo {
       @required this.transporterAck,
       @required this.receiverAck});
 
-  factory AcknowledgementInfo.defaultAckInfo() =>
+  factory AcknowledgementInfo.empty() =>
       AcknowledgementInfo(shipperAck: "", transporterAck: "", receiverAck: "");
 
   @override

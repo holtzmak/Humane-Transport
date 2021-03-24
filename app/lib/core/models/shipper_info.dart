@@ -20,7 +20,7 @@ class ShipperInfo {
       @required this.departureAddress,
       @required this.shipperContactInfo});
 
-  factory ShipperInfo.defaultShipperInfo() => ShipperInfo(
+  factory ShipperInfo.empty() => ShipperInfo(
       shipperName: "",
       shipperIsAnimalOwner: false,
       departureLocationId: "",

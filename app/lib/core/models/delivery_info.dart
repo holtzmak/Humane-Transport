@@ -20,8 +20,14 @@ class DeliveryInfo {
       @required this.additionalWelfareConcerns})
       : _compromisedAnimals = compromisedAnimals;
 
-  factory DeliveryInfo.defaultDeliveryInfo() => DeliveryInfo(
+  factory DeliveryInfo.empty() => DeliveryInfo(
       recInfo: ReceiverInfo.defaultReceiverInfo(),
+      arrivalDateAndTime: DateTime.now(),
+      compromisedAnimals: [],
+      additionalWelfareConcerns: "");
+
+  DeliveryInfo withJustReceiverInfo() => DeliveryInfo(
+      recInfo: recInfo,
       arrivalDateAndTime: DateTime.now(),
       compromisedAnimals: [],
       additionalWelfareConcerns: "");
