@@ -8,8 +8,8 @@ import 'package:intl/intl.dart';
 
 class ATRPreviewCard extends StatefulWidget {
   // TODO: Move this into business logic somehow
-  // Unfortunately it needs to stay here as the set as default is common
-  // to all preview cards
+  // Unfortunately it needs to stay here for now as the set as default
+  // is common to all preview cards
   final SharedPreferencesService _sharedPreferencesService =
       locator<SharedPreferencesService>();
   final AnimalTransportRecord atr;
