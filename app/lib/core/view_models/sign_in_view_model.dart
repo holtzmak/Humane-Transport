@@ -30,15 +30,22 @@ class SignInViewModel extends BaseViewModel {
     @required String password,
   }) async {
     setState(ViewState.Busy);
-    _authenticationService.signIn(email: email, password: password).then((_) {
-      _navigationService.navigateTo(HomeScreen.route);
-      setState(ViewState.Idle);
-    }).catchError((error) {
-      setState(ViewState.Idle);
-      _dialogService.showDialog(
-        title: 'Sign in failed',
-        description: error.message,
-      );
-    });
+    _authenticationService
+        .signIn(email: email, password: password)
+        .then((_) {
+          _navigationService.navigateTo(HomeScreen.route);
+          setState(ViewState.Idle);
+        })
+        .then((_) => _dialogService.showDialog(
+            title: "Welcome back!",
+            description:
+                "Please consider setting your default ATR in either the Active or Travel History screens"))
+        .catchError((error) {
+          setState(ViewState.Idle);
+          _dialogService.showDialog(
+            title: 'Sign in failed',
+            description: error.message,
+          );
+        });
   }
 }

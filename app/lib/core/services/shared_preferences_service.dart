@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/services/dialog_service.dart';
+import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// that writes will be persisted to disk after returning, so this plugin must
 /// not be used for storing critical data.
 class SharedPreferencesService {
+  final DialogService _dialogService = locator<DialogService>();
   final SharedPreferences _sharedPreferences;
 
   SharedPreferencesService(this._sharedPreferences);
@@ -28,13 +31,22 @@ class SharedPreferencesService {
     }
   }
 
-  void setAtrAsDefault(AnimalTransportRecord atr) =>
-      _sharedPreferences.setString("defaultAtr",
-          jsonEncode(atr.toJSON(), toEncodable: _encodeDateTimeIfNeeded));
+  void setAtrAsDefault(AnimalTransportRecord atr) {
+    _sharedPreferences.setString("defaultAtr",
+        jsonEncode(atr.toJSON(), toEncodable: _encodeDateTimeIfNeeded));
+    _dialogService.showDialog(
+      title:
+          'The transport for ${atr.deliveryInfo.recInfo.receiverCompanyName} is now your default',
+      description:
+          "When you start a new record, it will use the same information",
+    );
+  }
+
+  void unsetDefaultAtr() => _sharedPreferences.remove("defaultAtr");
 
   dynamic _decodeDateTimeIfNeeded(dynamic key, dynamic value) {
     try {
-      // We decode for google's date format so we convert to that format
+      // We decode for google's date format so we convert to that format here
       return Timestamp.fromDate(DateTime.parse(value));
     } catch (_) {
       return value;
