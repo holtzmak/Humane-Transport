@@ -84,7 +84,7 @@ class AppRouteGenerator {
                     'You must be logged in to view this screen: ${settings.name}');
           case PDFScreen.route:
             return isLoggedIn()
-                ? PDFScreen()
+                ? PDFScreen(atr: settings.arguments)
                 : throw Exception(
                     'You must be logged in to view this screen: ${settings.name}');
 

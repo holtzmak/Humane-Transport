@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/ui/common/style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
@@ -12,6 +15,9 @@ import 'email_screen.dart';
 
 class PDFScreen extends StatefulWidget {
   static const route = '/pdf_preview';
+  final AnimalTransportRecord atr;
+
+  PDFScreen({Key key, @required this.atr});
 
   @override
   _PDFScreenState createState() => _PDFScreenState();
@@ -23,7 +29,7 @@ class _PDFScreenState extends State<PDFScreen> {
   @override
   void initState() {
     super.initState();
-    _pdf = _getBuiltAndSavedPdf();
+    _pdf = _getBuiltAndSavedPdf(widget.atr);
   }
 
   @override
@@ -72,25 +78,73 @@ class _PDFScreenState extends State<PDFScreen> {
   }
 
   // TODO: Give this function an object to build PDF from
-  Future<File> _getBuiltAndSavedPdf() async {
+  Future<File> _getBuiltAndSavedPdf(AnimalTransportRecord atr) async {
     final pdf = pw.Document();
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
-      margin: pw.EdgeInsets.all(34),
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      margin: pw.EdgeInsets.all(25),
       build: (pw.Context context) {
-        /* We will be calling API and fetching data from the database here.
-        Now just adding random text for experimentation purpose. Once we have
-        database/API set up, will experimenting on fetching data */
+        //TODO: Add Complete Atr
         return <pw.Widget>[
           pw.Header(
               level: 0,
-              child: pw.Text('Shipper Information'),
-              outlineColor: PdfColors.blue),
-          pw.Paragraph(text: 'Some Information'),
-          pw.Paragraph(text: 'Some Information'),
-          pw.Header(level: 1, child: pw.Text("Travel Information")),
-          pw.Paragraph(text: 'Some Text 1'),
-          pw.Paragraph(text: 'Some Text 2'),
+              child: pw.Text('Animal Transport Record',
+                  style: pw.TextStyle(
+                      fontSize: 22, fontWeight: pw.FontWeight.bold)),
+              outlineStyle: PdfOutlineStyle.italicBold),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Shipper's Information",
+                  style: pw.TextStyle(fontSize: 20))),
+          pw.Paragraph(
+              text: "Shipper's Name ${widget.atr.shipInfo.shipperName}"),
+          pw.Paragraph(
+              text:
+                  "Emergency Contact ${widget.atr.shipInfo.shipperContactInfo}"),
+          pw.Paragraph(
+              text:
+                  "Shipper is the owner of the animals loaded in the vehicle? ${widget.atr.shipInfo.shipperIsAnimalOwner}"),
+          pw.Paragraph(
+              text:
+                  "Departure Premises Identification Number (PID): ${widget.atr.shipInfo.departureLocationName}"),
+          pw.Paragraph(
+              text:
+                  "Departure Location Name: ${widget.atr.shipInfo.departureLocationName}"),
+          pw.Paragraph(
+              text:
+                  "Departure Address: ${widget.atr.shipInfo.departureAddress}"),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Transporter's Information",
+                  style: pw.TextStyle(fontSize: 20))),
+          pw.Paragraph(
+              text: "Company Name: ${widget.atr.tranInfo.companyName}"),
+          pw.Paragraph(
+              text: "Company Address: ${widget.atr.tranInfo.companyAddress}"),
+          pw.Paragraph(
+              text: "Driver(s) Name(s) ${widget.atr.tranInfo.driverNames}"),
+          pw.Paragraph(text: " ${widget.atr.shipInfo.shipperContactInfo}"),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Feed Water and Rest Information",
+                  style: pw.TextStyle(fontSize: 20))),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Loading Vehicle Information",
+                  style: pw.TextStyle(fontSize: 20))),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Delivery Information",
+                  style: pw.TextStyle(fontSize: 20))),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Acknowledgements",
+                  style: pw.TextStyle(fontSize: 20))),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Contingency Plan",
+                  style: pw.TextStyle(fontSize: 20))),
         ];
       },
     ));
