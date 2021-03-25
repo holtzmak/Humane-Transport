@@ -33,6 +33,7 @@ appBar(String title) {
 
 appBarInner(String title) {
   return AppBar(
+    automaticallyImplyLeading: false,
     title: Text(
       title,
       style: TextStyle(
