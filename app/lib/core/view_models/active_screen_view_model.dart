@@ -99,10 +99,13 @@ class ActiveScreenViewModel extends BaseViewModel {
         ? _databaseService.saveNewAtr(currentUser.get().uid).then((atr) {
             setState(ViewState.Idle);
             return navigateToEditingScreen(atr);
-          }).catchError((e) => _dialogService.showDialog(
+          }).catchError((e) {
+            setState(ViewState.Idle);
+            _dialogService.showDialog(
               title: 'Starting a new Animal Transport Record failed',
               description: e.message,
-            ))
+            );
+          })
         : _dialogService.showDialog(
             title: 'Starting a new Animal Transport Record failed',
             description: "You are not logged in!",
