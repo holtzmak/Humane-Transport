@@ -1,5 +1,6 @@
 import 'package:app/core/view_models/account_screen_view_model.dart';
 import 'package:app/ui/common/style.dart';
+import 'package:app/ui/widgets/utility/setting_icon.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class AccountScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: MediumTextSize),
           ),
+          actions: <Widget>[SettingIconWidget()],
           automaticallyImplyLeading: false,
           backgroundColor: White,
           leading: new IconButton(

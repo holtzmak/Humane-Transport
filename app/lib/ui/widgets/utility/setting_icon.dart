@@ -18,7 +18,7 @@ class SettingIconWidget extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () =>
-                  _navigationService.navigateTo(SettingScreen.route)),
+                  _navigationService.navigateTo(SettingScreen.route))
         ],
       ),
     );

@@ -46,7 +46,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(padding: EdgeInsets.all(5.0)),
+                          Image.asset(
+                            'assets/splash_screen.png',
+                            height: 150,
+                            width: 250,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 30.0,
+                            ),
+                          ),
                           Text(
                             'SIGN IN',
                             style: TextStyle(
@@ -83,7 +92,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              top: 20.0,
+                              top: 10.0,
                             ),
                           ),
                           TextButton(
@@ -96,7 +105,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   model.navigateToForgotPasswordScreen()),
                           Padding(
                             padding: EdgeInsets.only(
-                              top: 50.0,
+                              top: 20.0,
                             ),
                           ),
                           SizedBox(
@@ -117,7 +126,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 color: NavyBlue,
                               )),
                           SizedBox(
-                            height: 100.0,
+                            height: 50.0,
                           ),
                           TextButton(
                             child: Text(
@@ -128,11 +137,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             onPressed: () => model.navigateToSignUpScreen(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              top: 20.0,
-                            ),
                           ),
                           TextButton(
                             child: Text(

@@ -40,7 +40,6 @@ appBarInner(String title) {
           fontWeight: FontWeight.bold,
           fontSize: MediumTextSize),
     ),
-    automaticallyImplyLeading: false,
     backgroundColor: White,
     actions: <Widget>[SettingIconWidget()],
   );
