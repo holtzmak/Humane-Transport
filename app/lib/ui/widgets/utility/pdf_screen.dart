@@ -42,10 +42,17 @@ class _PDFScreenState extends State<PDFScreen> {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Container(
-                  padding: EdgeInsets.all(20),
-                  alignment: Alignment.center,
-                  color: Colors.white,
-                  child: Text('Loading PDF', style: TitleTextStyle));
+                  color: Beige,
+                  child: Stack(
+                    alignment: FractionalOffset.center,
+                    children: <Widget>[
+                      new Container(
+                        child: new CircularProgressIndicator(
+                          backgroundColor: NavyBlue,
+                        ),
+                      ),
+                    ],
+                  ));
             default:
               if (snapshot.hasError)
                 return Container(
@@ -101,7 +108,7 @@ class _PDFScreenState extends State<PDFScreen> {
         tranImage = tranAckImage;
       });
     } catch (e) {
-      Text("Could not load transporter's  Acknowledgment Receipt");
+      Future.error("Could not load transporter's  Acknowledgment Receipt");
     }
     try {
       final shipperAckImage =
@@ -110,7 +117,7 @@ class _PDFScreenState extends State<PDFScreen> {
         shipperImage = shipperAckImage;
       });
     } catch (e) {
-      Text("Could not load transporter's  Acknowledgment Receipt");
+      Future.error("Could not load transporter's  Acknowledgment Receipt");
     }
     try {
       final receiverAckImage =
@@ -119,7 +126,7 @@ class _PDFScreenState extends State<PDFScreen> {
         receiverImage = receiverAckImage;
       });
     } catch (e) {
-      Text("Could not load transporter's  Acknowledgment Receipt");
+      Future.error("Could not load transporter's  Acknowledgment Receipt");
     }
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
@@ -181,19 +188,16 @@ class _PDFScreenState extends State<PDFScreen> {
                   style: pw.TextStyle(fontSize: 18))),
           pw.Text("Transporter's Acknowledgment"),
           pw.SizedBox(
-            height: 250,
             child: pw.Image(tranImage),
           ),
           pw.Padding(padding: pw.EdgeInsets.all(20)),
           pw.Text("Shipper's Acknowledgment"),
           pw.SizedBox(
-            height: 250,
             child: pw.Image(shipperImage),
           ),
           pw.Padding(padding: pw.EdgeInsets.all(20)),
           pw.Text("Receiver's Acknowledgment"),
           pw.SizedBox(
-            height: 250,
             child: pw.Image(receiverImage),
           ),
           pw.Padding(padding: pw.EdgeInsets.all(25)),
@@ -210,7 +214,7 @@ class _PDFScreenState extends State<PDFScreen> {
 
     return Future.wait(
         [getTemporaryDirectory(), pdf.save()]).then((List values) => File(
-            "${values[0].path}/${atr.deliveryInfo.recInfo.destinationLocationName}${atr.deliveryInfo.arrivalDateAndTime}.pdf")
+            "${values[0].path}/${atr.deliveryInfo.recInfo.destinationLocationName}${atr.deliveryInfo.arrivalDateAndTime}${atr.identifier.atrDocumentId}.pdf")
         .writeAsBytes(values[1]));
   }
 }
