@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 class ATRDisplayScreen extends StatefulWidget {
   static const route = "/atrDisplayScreen";
   final List<ExpansionListItem> _displayFields = [];
+  final AnimalTransportRecord atr;
 
-  ATRDisplayScreen({Key key, @required AnimalTransportRecord atr})
-      : super(key: key) {
+  ATRDisplayScreen({Key key, @required this.atr}) : super(key: key) {
     _displayFields.addAll([
       ExpansionListItem(
           headerValue: 'Shipper\'s Information',
@@ -51,7 +51,9 @@ class _ATRDisplayScreenState extends State<ATRDisplayScreen> {
                 backgroundColor: White,
                 actions: [
                   OutlinedButton.icon(
-                      onPressed: model.navigateToPDFScreen,
+                      onPressed: () {
+                        model.navigateToPDFScreen(widget.atr);
+                      },
                       icon: Icon(Icons.share_outlined, color: NavyBlue),
                       label: Text(
                         'Share as PDF',

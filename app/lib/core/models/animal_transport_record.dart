@@ -90,13 +90,12 @@ class AnimalTransportRecord {
         'identifier': identifier.toJSON(),
       };
 
-  String toString() => '''Shipper's Information: $shipInfo
-  Transporter's Information: $tranInfo
-  Feed, Water, and Rest Information: $fwrInfo
-  Loading Vehicle Information: $vehicleInfo
-  Delivery Information: $deliveryInfo
-  Acknowledgements: $ackInfo
-  Contingency Plan: $contingencyInfo''';
+  String toString() =>
+      '''Shipper's Information: $shipInfo\nTransporter's Information: $tranInfo\nFeed, Water, and Rest Information: $fwrInfo
+  \nLoading Vehicle Information: $vehicleInfo
+  \nDelivery Information: $deliveryInfo
+  \nAcknowledgements: $ackInfo
+  \nContingency Plan: $contingencyInfo''';
 
   AnimalTransportRecord withDocId(String docId) => AnimalTransportRecord(
       shipInfo: shipInfo,

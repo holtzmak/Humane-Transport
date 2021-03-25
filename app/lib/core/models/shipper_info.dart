@@ -65,10 +65,10 @@ class ShipperInfo {
   }
 
   String toString() => '''Name: $shipperName
-  The shipper is the owner of the animals loaded in the vehicle?: ${shipperIsAnimalOwner ? 'Yes' : 'No'}
-  Departure Premises Identification number (PID): $departureLocationId, Name: $departureLocationName
-  Address: $departureAddress
-  Shipper’s Contact information in case of emergency: $shipperContactInfo''';
+  \nThe shipper is the owner of the animals loaded in the vehicle?: ${shipperIsAnimalOwner ? 'Yes' : 'No'}
+  \nDeparture Premises Identification number (PID): $departureLocationId,\nLocation Name: $departureLocationName
+  \nAddress: $departureAddress
+  \nShipper's Contact information in case of emergency: $shipperContactInfo''';
 
   Widget toWidget() {
     return Column(children: [

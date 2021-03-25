@@ -70,10 +70,10 @@ class LoadingVehicleInfo {
 
   String toString() =>
       '''Date and time of loading: ${DateFormat("yyyy-MM-dd hh:mm").format(dateAndTimeLoaded)}
-      Floor or container area available to animals (m2 or ft2): $loadingArea
-      Loading density: $loadingDensity
-      Animals per floor area (Kg/m2 or lbs/ft2): $animalsPerLoadingArea
-      Animals loaded: ${_animalsLoaded.map((group) => group.toString()).join('\n')}''';
+      \nFloor or container area available to animals (m2 or ft2): $loadingArea
+      \nLoading density: $loadingDensity
+      \nAnimals per floor area (Kg/m2 or lbs/ft2): $animalsPerLoadingArea
+      \nAnimals loaded: ${_animalsLoaded.map((group) => group.toString()).join('\n')}''';
 
   Widget toWidget() {
     final List<Widget> fields = [
@@ -217,13 +217,13 @@ class AnimalGroup {
           .join(",");
 
   String toString() => '''Animal(s) description:
-  Species: $species, Group age: $groupAge, Approximate weight: $approximateWeight
-  Purpose: $animalPurpose, Number of animals: $numberAnimals
-  Are all animals fit for transport?: ${animalsFitForTransport ? 'Yes' : 'No'}
-  Number of compromised animals loaded: ${_compromisedAnimals.length}
-  Compromised animal(s), identification description and measures taken: ${_compromisedAnimalsToString()}
-  Number of animal(s) with special needs: ${_specialNeedsAnimals.length}
-  Special needs animal(s), identification description and measures taken: ${_specialNeedsAnimalsToString()}''';
+  \nSpecies: $species, Group age: $groupAge, Approximate weight: $approximateWeight
+  \nPurpose: $animalPurpose, Number of animals: $numberAnimals
+  \nAre all animals fit for transport?: ${animalsFitForTransport ? 'Yes' : 'No'}
+  \nNumber of compromised animals loaded: ${_compromisedAnimals.length}
+  \nCompromised animal(s), identification description and measures taken: ${_compromisedAnimalsToString()}
+  \nNumber of animal(s) with special needs: ${_specialNeedsAnimals.length}
+  \nSpecial needs animal(s), identification description and measures taken: ${_specialNeedsAnimalsToString()}''';
 
   List<Widget> _compromisedAnimalsToWidget() => _compromisedAnimals.isEmpty
       ? [
@@ -361,7 +361,7 @@ class CompromisedAnimal {
       };
 
   String toString() => '''$animalDescription
-  $measuresTakenToCareForAnimal''';
+  \n$measuresTakenToCareForAnimal''';
 
   Widget toWidget() => ListTile(
       title: Padding(

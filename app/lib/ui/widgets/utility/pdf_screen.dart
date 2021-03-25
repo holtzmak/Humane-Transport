@@ -1,6 +1,10 @@
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/ui/common/style.dart';
+import 'package:network_image_to_byte/network_image_to_byte.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
@@ -12,6 +16,9 @@ import 'email_screen.dart';
 
 class PDFScreen extends StatefulWidget {
   static const route = '/pdf_preview';
+  final AnimalTransportRecord atr;
+
+  PDFScreen({Key key, @required this.atr});
 
   @override
   _PDFScreenState createState() => _PDFScreenState();
@@ -23,7 +30,7 @@ class _PDFScreenState extends State<PDFScreen> {
   @override
   void initState() {
     super.initState();
-    _pdf = _getBuiltAndSavedPdf();
+    _pdf = _getBuiltAndSavedPdf(widget.atr);
   }
 
   @override
@@ -34,17 +41,35 @@ class _PDFScreenState extends State<PDFScreen> {
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Text('Loading PDF');
+              return Container(
+                  color: Beige,
+                  child: Stack(
+                    alignment: FractionalOffset.center,
+                    children: <Widget>[
+                      new Container(
+                        child: new CircularProgressIndicator(
+                          backgroundColor: NavyBlue,
+                        ),
+                      ),
+                    ],
+                  ));
             default:
               if (snapshot.hasError)
-                return Text('Could not build and save PDF: ${snapshot.error}');
+                return Container(
+                    padding: EdgeInsets.all(20),
+                    alignment: Alignment.center,
+                    color: Colors.white,
+                    child: Text(
+                      'Could not build and save PDF: ${snapshot.error}',
+                      style: TitleTextStyle,
+                    ));
               else
                 return PDFViewerScaffold(
                   appBar: AppBar(
                     iconTheme: IconThemeData(color: NavyBlue),
                     backgroundColor: Beige,
                     title: Text(
-                      'Example PDF',
+                      'PDF View',
                       style: TextStyle(color: NavyBlue),
                     ),
                     actions: [
@@ -71,33 +96,128 @@ class _PDFScreenState extends State<PDFScreen> {
         });
   }
 
-  // TODO: Give this function an object to build PDF from
-  Future<File> _getBuiltAndSavedPdf() async {
+  Future<File> _getBuiltAndSavedPdf(AnimalTransportRecord atr) async {
     final pdf = pw.Document();
+    pw.MemoryImage tranImage;
+    pw.MemoryImage shipperImage;
+    pw.MemoryImage receiverImage;
+    try {
+      final tranAckImage =
+          pw.MemoryImage(await networkImageToByte(atr.ackInfo.transporterAck));
+      setState(() {
+        tranImage = tranAckImage;
+      });
+    } catch (e) {
+      return Future.error(
+          "Could not load transporter's  Acknowledgment Receipt");
+    }
+    try {
+      final shipperAckImage =
+          pw.MemoryImage(await networkImageToByte(atr.ackInfo.shipperAck));
+      setState(() {
+        shipperImage = shipperAckImage;
+      });
+    } catch (e) {
+      return Future.error(
+          "Could not load transporter's  Acknowledgment Receipt");
+    }
+    try {
+      final receiverAckImage =
+          pw.MemoryImage(await networkImageToByte(atr.ackInfo.receiverAck));
+      setState(() {
+        receiverImage = receiverAckImage;
+      });
+    } catch (e) {
+      return Future.error(
+          "Could not load transporter's  Acknowledgment Receipt");
+    }
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
-      margin: pw.EdgeInsets.all(34),
+      margin: pw.EdgeInsets.all(45),
+      footer: (pw.Context context) {
+        return pw.Container(
+            alignment: pw.Alignment.centerRight,
+            margin: const pw.EdgeInsets.only(top: 1.0 * PdfPageFormat.cm),
+            child: pw.Text(
+              'Page ${context.pageNumber} of ${context.pagesCount}',
+            ));
+      },
       build: (pw.Context context) {
-        /* We will be calling API and fetching data from the database here.
-        Now just adding random text for experimentation purpose. Once we have
-        database/API set up, will experimenting on fetching data */
         return <pw.Widget>[
           pw.Header(
               level: 0,
-              child: pw.Text('Shipper Information'),
-              outlineColor: PdfColors.blue),
-          pw.Paragraph(text: 'Some Information'),
-          pw.Paragraph(text: 'Some Information'),
-          pw.Header(level: 1, child: pw.Text("Travel Information")),
-          pw.Paragraph(text: 'Some Text 1'),
-          pw.Paragraph(text: 'Some Text 2'),
+              child: pw.Text('Animal Transport Record',
+                  style: pw.TextStyle(
+                      fontSize: 20, fontWeight: pw.FontWeight.bold)),
+              outlineStyle: PdfOutlineStyle.italicBold),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Shipper's Information",
+                  style: pw.TextStyle(fontSize: 18))),
+          pw.Paragraph(
+              text: widget.atr.shipInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Transporter's Information",
+                  style: pw.TextStyle(fontSize: 18))),
+          pw.Paragraph(
+              text: widget.atr.tranInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Feed Water and Rest Information",
+                  style: pw.TextStyle(fontSize: 18))),
+          pw.Paragraph(
+              text: widget.atr.fwrInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Loading Vehicle Information",
+                  style: pw.TextStyle(fontSize: 18))),
+          pw.Paragraph(
+              text: widget.atr.vehicleInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Delivery Information",
+                  style: pw.TextStyle(fontSize: 18))),
+          pw.Paragraph(
+              text: widget.atr.deliveryInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Acknowledgements",
+                  style: pw.TextStyle(fontSize: 18))),
+          pw.Text("Transporter's Acknowledgment"),
+          pw.SizedBox(
+            child: pw.Image(tranImage),
+          ),
+          pw.Padding(padding: pw.EdgeInsets.all(20)),
+          pw.Text("Shipper's Acknowledgment"),
+          pw.SizedBox(
+            child: pw.Image(shipperImage),
+          ),
+          pw.Padding(padding: pw.EdgeInsets.all(20)),
+          pw.Text("Receiver's Acknowledgment"),
+          pw.SizedBox(
+            child: pw.Image(receiverImage),
+          ),
+          pw.Padding(padding: pw.EdgeInsets.all(25)),
+          pw.Header(
+              level: 1,
+              child: pw.Text("Contingency Plan",
+                  style: pw.TextStyle(fontSize: 18))),
+          pw.Paragraph(
+              text: widget.atr.contingencyInfo.toString(),
+              style: pw.TextStyle(fontSize: 16)),
         ];
       },
     ));
 
-    // TODO: Change the filename to something useful
-    return Future.wait([getTemporaryDirectory(), pdf.save()]).then(
-        (List values) =>
-            File("${values[0].path}/example.pdf").writeAsBytes(values[1]));
+    return Future.wait(
+        [getTemporaryDirectory(), pdf.save()]).then((List values) => File(
+            "${values[0].path}/${atr.deliveryInfo.recInfo.destinationLocationName}${atr.deliveryInfo.arrivalDateAndTime}${atr.identifier.atrDocumentId}.pdf")
+        .writeAsBytes(values[1]));
   }
 }

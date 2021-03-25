@@ -79,7 +79,8 @@ class HistoryScreenViewModel extends BaseViewModel {
   void navigateToDisplayScreen(AnimalTransportRecord atr) =>
       _navigationService.navigateTo(ATRDisplayScreen.route, arguments: atr);
 
-  void navigateToPDFScreen() => _navigationService.navigateTo(PDFScreen.route);
+  void navigateToPDFScreen(AnimalTransportRecord atr) =>
+      _navigationService.navigateTo(PDFScreen.route, arguments: atr);
 
   void navigateToHomeScreen() =>
       _navigationService.navigateBackUntil(HomeScreen.route);

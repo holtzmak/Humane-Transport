@@ -103,14 +103,14 @@ class ContingencyPlanInfo {
       : _contingencyEvents.map((event) => event.toString()).toList().join(",");
 
   String toString() =>
-      '''Goal Statement (company’s goal and purpose of the plan i.e avoid animal suffering): $goalStatement
-      Communication Plan (who should be contacted and who will initiate or permit the process?): $communicationPlan
-      Crisis contacts and links (general helpline, industry related links and websites): ${_crisisContacts.join(',')}
-      Expected Preparation Process (what should be done prior to loading animals?): $expectedPrepProcess
-      Standard Animal Monitoring: $standardAnimalMonitoring
-      Potential Hazard/Events/Challenges: ${_potentialHazards.join(',')}
-      Potential Actions to Ensure Human or Animal Safety: ${_potentialSafetyActions.join(',')}
-      Event Specific Plan(s): ${_contingencyEventsToString()}''';
+      '''Goal Statement (company's goal and purpose of the plan i.e avoid animal suffering): $goalStatement
+      \nCommunication Plan (who should be contacted and who will initiate or permit the process?): $communicationPlan
+      \nCrisis contacts and links (general helpline, industry related links and websites): ${_crisisContacts.join(',')}
+      \nExpected Preparation Process (what should be done prior to loading animals?): $expectedPrepProcess
+      \nStandard Animal Monitoring: $standardAnimalMonitoring
+      \nPotential Hazard/Events/Challenges: ${_potentialHazards.join(',')}
+      \nPotential Actions to Ensure Human or Animal Safety: ${_potentialSafetyActions.join(',')}
+      \nEvent Specific Plan(s): ${_contingencyEventsToString()}''';
 
   List<Widget> _contingencyEventsToWidget() => _contingencyEvents.isEmpty
       ? [
@@ -263,11 +263,11 @@ class ContingencyPlanEvent {
 
   String toString() =>
       '''Date and time of event: ${DateFormat("yyyy-MM-dd hh:mm").format(eventDateAndTime)}
-      Producer's emergency contacts used: ${_producerContactsUsed.join(",")}
-      Receiver's emergency contacts used: ${_receiverContactsUsed.join(",")}
-      Disturbances identified: $disturbancesIdentified
-      List of animal welfare related measures and actions taken(specific to the event): ${_actionsTaken.join(",")}
-      Carrier's communication activities: ${_activities.map((activity) => activity.toString()).toList().join(',')}''';
+      \nProducer's emergency contacts used: ${_producerContactsUsed.join(",")}
+      \nReceiver's emergency contacts used: ${_receiverContactsUsed.join(",")}
+      \nDisturbances identified: $disturbancesIdentified
+      \nList of animal welfare related measures and actions taken(specific to the event): ${_actionsTaken.join(",")}
+      \nCarrier's communication activities: ${_activities.map((activity) => activity.toString()).toList().join(',')}''';
 
   Widget toWidget() {
     final List<Widget> widgetFields = [
@@ -366,10 +366,10 @@ class ContingencyActivity {
       };
 
   String toString() =>
-      '''Time of communication: ${DateFormat("hh:mm").format(time)}
-  Who was contacted: $personContacted
-  Communication method used: $methodOfContact
-  What instructions were given and decisions made with the guidance of emergency contacts reached: $instructionsGiven''';
+      '''\nTime of communication: ${DateFormat("hh:mm").format(time)}
+  \nWho was contacted: $personContacted
+  \nCommunication method used: $methodOfContact
+  \nWhat instructions were given and decisions made with the guidance of emergency contacts reached: $instructionsGiven''';
 
   Widget toWidget() {
     return Column(children: [
