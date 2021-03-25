@@ -1,3 +1,4 @@
+import 'package:app/ui/widgets/utility/setting_icon.dart';
 import 'package:flutter/material.dart';
 
 // The padding property can be added to style.dart, but doing so would be overkill:
@@ -27,6 +28,21 @@ appBar(String title) {
     ),
     automaticallyImplyLeading: false,
     backgroundColor: White,
+  );
+}
+
+appBarInner(String title) {
+  return AppBar(
+    automaticallyImplyLeading: false,
+    title: Text(
+      title,
+      style: TextStyle(
+          color: NavyBlue,
+          fontWeight: FontWeight.bold,
+          fontSize: MediumTextSize),
+    ),
+    backgroundColor: White,
+    actions: <Widget>[SettingIconWidget()],
   );
 }
 

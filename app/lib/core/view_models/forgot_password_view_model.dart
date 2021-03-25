@@ -4,7 +4,7 @@ import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
-import 'package:app/ui/views/check_your_email_account_screen.dart';
+import 'package:app/ui/views/reset_password/check_your_email_account_screen.dart';
 import 'package:app/ui/views/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 
