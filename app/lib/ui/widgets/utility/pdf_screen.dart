@@ -108,7 +108,8 @@ class _PDFScreenState extends State<PDFScreen> {
         tranImage = tranAckImage;
       });
     } catch (e) {
-      Future.error("Could not load transporter's  Acknowledgment Receipt");
+      return Future.error(
+          "Could not load transporter's  Acknowledgment Receipt");
     }
     try {
       final shipperAckImage =
@@ -117,7 +118,8 @@ class _PDFScreenState extends State<PDFScreen> {
         shipperImage = shipperAckImage;
       });
     } catch (e) {
-      Future.error("Could not load transporter's  Acknowledgment Receipt");
+      return Future.error(
+          "Could not load transporter's  Acknowledgment Receipt");
     }
     try {
       final receiverAckImage =
@@ -126,7 +128,8 @@ class _PDFScreenState extends State<PDFScreen> {
         receiverImage = receiverAckImage;
       });
     } catch (e) {
-      Future.error("Could not load transporter's  Acknowledgment Receipt");
+      return Future.error(
+          "Could not load transporter's  Acknowledgment Receipt");
     }
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
