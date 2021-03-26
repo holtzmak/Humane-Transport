@@ -23,18 +23,27 @@ class HomeScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   children: <Widget>[
                     Image.asset("assets/home_cover.jpg"),
-                    // TODO: #223. Use the logged in transporter's name
                     Positioned(
                       bottom: 20.0,
                       left: 10.0,
                       child: model.transporter != null
-                          ? Text(
-                              '${model.transporter.firstName} ${model.transporter.lastName} ',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: MediumTextSize),
-                            )
+                          ? Column(children: [
+                              if (model.transporter.isAdmin)
+                                Text(
+                                  'Administrator',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediumTextSize),
+                                ),
+                              Text(
+                                '${model.transporter.firstName} ${model.transporter.lastName}',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: MediumTextSize),
+                              )
+                            ])
                           : CircularProgressIndicator(
                               strokeWidth: 4,
                               valueColor: AlwaysStoppedAnimation(NavyBlue),
