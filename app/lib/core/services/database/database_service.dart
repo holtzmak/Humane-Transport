@@ -42,6 +42,9 @@ class DatabaseService {
   Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId) =>
       interface.getUpdatedCompleteATRs(userId);
 
+  Stream<List<AnimalTransportRecord>> getAllUpdatedCompleteATRs() =>
+      interface.getAllUpdatedCompleteATRs();
+
   Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs(String userId) =>
       interface.getUpdatedActiveATRs(userId);
 
