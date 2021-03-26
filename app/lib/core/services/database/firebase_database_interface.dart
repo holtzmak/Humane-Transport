@@ -79,7 +79,6 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
               .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
               .toList());
 
-  /// This returns the whole list of records in the database, not just updated ones
   @override
   Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId) =>
       _firestore
@@ -91,7 +90,15 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
               .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
               .toList());
 
-  /// This returns the whole list of records in the database, not just updated ones
+  @override
+  Stream<List<AnimalTransportRecord>> getAllUpdatedCompleteATRs() => _firestore
+      .collection('atr')
+      .where('identifier.isComplete', isEqualTo: true)
+      .snapshots()
+      .map((snapshot) => snapshot.docs
+          .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
+          .toList());
+
   @override
   Stream<List<AnimalTransportRecord>> getUpdatedActiveATRs(String userId) =>
       _firestore

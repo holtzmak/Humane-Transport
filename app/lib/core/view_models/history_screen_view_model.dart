@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/models/transporter.dart';
 import 'package:app/core/services/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/dialog_service.dart';
@@ -35,11 +36,27 @@ class HistoryScreenViewModel extends BaseViewModel {
   HistoryScreenViewModel() {
     final thisUser = _authenticationService.currentUser;
     if (thisUser.isPresent()) {
-      _atrSubscription = _databaseService
-          .getUpdatedCompleteATRs(thisUser.get().uid)
-          .listen((atrs) {
-        removeAll();
-        addAll(atrs);
+      _databaseService
+          .getTransporter(thisUser.get().uid)
+          .then((Transporter transporter) {
+        _atrSubscription = transporter.isAdmin
+            ? _databaseService
+                .getAllUpdatedCompleteATRs()
+                .listen((List<AnimalTransportRecord> atrs) {
+                removeAll();
+                addAll(atrs);
+              })
+            : _databaseService
+                .getUpdatedCompleteATRs(transporter.userId)
+                .listen((List<AnimalTransportRecord> atrs) {
+                removeAll();
+                addAll(atrs);
+              });
+      }).catchError((error) {
+        _dialogService.showDialog(
+          title: 'Launching the history screen failed',
+          description: error.message,
+        );
       });
       _currentUserSubscription = _authenticationService.currentUserChanges
           .listen((Optional<User> user) {
