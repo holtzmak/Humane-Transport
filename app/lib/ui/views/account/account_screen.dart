@@ -1,4 +1,5 @@
 import 'package:app/core/view_models/account_screen_view_model.dart';
+import 'package:app/ui/common/default_image.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/setting_icon.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
@@ -35,14 +36,16 @@ class AccountScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       ListTile(
-                        leading: Icon(
-                          Icons.account_circle_sharp,
-                          size: 30.0,
-                          color: NavyBlue,
-                        ),
+                        leading: CircleAvatar(
+                            radius: 35,
+                            backgroundColor: Colors.grey[300],
+                            backgroundImage:
+                                model.transporter.displayImageUrl.isNotEmpty
+                                    ? NetworkImage(
+                                        model.transporter.displayImageUrl)
+                                    : NetworkImage(defaultImage)),
                         title: Text(
                           '${model.transporter.firstName} ${model.transporter.lastName}',
-                          style: TextStyle(fontSize: 15.0),
                         ),
                         trailing: ElevatedButton(
                           onPressed: () =>
@@ -60,6 +63,21 @@ class AccountScreen extends StatelessWidget {
                         border:
                             TableBorder.all(color: Colors.black12, width: 2),
                         children: [
+                          if (model.transporter.isAdmin)
+                            TableRow(
+                                decoration: BoxDecoration(color: Beige),
+                                children: [
+                                  ListTile(
+                                    leading: Icon(
+                                      Icons.account_circle,
+                                      size: 30.0,
+                                      color: NavyBlue,
+                                    ),
+                                    title: Text(
+                                      'Administrator',
+                                    ),
+                                  ),
+                                ]),
                           TableRow(
                               decoration: BoxDecoration(color: Beige),
                               children: [
@@ -71,7 +89,6 @@ class AccountScreen extends StatelessWidget {
                                   ),
                                   title: Text(
                                     '${model.transporter.userPhoneNumber}',
-                                    style: TextStyle(fontSize: 15.0),
                                   ),
                                 ),
                               ]),
@@ -86,7 +103,6 @@ class AccountScreen extends StatelessWidget {
                                   ),
                                   title: Text(
                                     '${model.transporter.userEmailAddress} ',
-                                    style: TextStyle(fontSize: 15.0),
                                   ),
                                 ),
                               ])
