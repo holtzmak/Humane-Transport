@@ -238,5 +238,29 @@ void main() {
         expect(records, testRecords);
       }));
     });
+
+    test('Should get all completed ATRs stream', () async {
+      final testRecords = [
+        AnimalTransportRecord.fromJSON(testAtrJson(), "123")
+      ];
+      when(mockFirestoreInstance.collection('atr'))
+          .thenReturn(mockCollectionReference);
+      when(mockCollectionReference.where('identifier.isComplete',
+              isEqualTo: true))
+          .thenReturn(mockQuery);
+
+      // Mock stream and stream map return
+      Stream<List<AnimalTransportRecord>> myStream() async* {
+        yield [AnimalTransportRecord.fromJSON(testAtrJson(), "123")];
+      }
+
+      when(mockQuery.snapshots()).thenAnswer((_) => mockStream);
+      when(mockStream.map(any)).thenAnswer((_) => myStream());
+
+      final stream = dbService.getAllUpdatedCompleteATRs();
+      stream.listen(expectAsync1<void, List<AnimalTransportRecord>>((records) {
+        expect(records, testRecords);
+      }));
+    });
   });
 }

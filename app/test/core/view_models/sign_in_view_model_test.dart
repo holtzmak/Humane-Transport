@@ -37,7 +37,7 @@ void main() {
         email: userEmailAddress,
         password: password,
       )).thenAnswer((_) async => Future.value()); // successful return
-      when(mockNavigationService.navigateTo(any)).thenAnswer(
+      when(mockNavigationService.navigateAndReplace(any)).thenAnswer(
           (_) async => Future.value()); // ignore return for this test
 
       await SignInViewModel()
@@ -46,7 +46,7 @@ void main() {
         email: userEmailAddress,
         password: password,
       )).called(1);
-      verify(mockNavigationService.navigateTo(any)).called(1);
+      verify(mockNavigationService.navigateAndReplace(any)).called(1);
     });
 
     test('failed to Navigate to HomeScreen after SignIn', () async {
@@ -65,7 +65,8 @@ void main() {
         email: userEmailAddress,
         password: password,
       )).called(1);
-      verifyNever(mockNavigationService.navigateTo(mockHomeScreenRoute));
+      verifyNever(
+          mockNavigationService.navigateAndReplace(mockHomeScreenRoute));
       verify(mockDialogService.showDialog(
               title: "Sign in failed", description: anyNamed("description")))
           .called(1);
