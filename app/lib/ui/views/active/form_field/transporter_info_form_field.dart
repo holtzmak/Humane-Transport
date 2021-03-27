@@ -1,6 +1,7 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/transporter_info.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_string_form_field.dart';
 import 'package:app/ui/views/active/form_field/address_form_field.dart';
@@ -119,6 +120,12 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
     return Form(
       key: widget._innerFormKey,
       child: Column(children: [
+        outlinedTextContainer(
+            textColor: White,
+            borderColor: NavyBlue,
+            backgroundColor: NavyBlue,
+            text:
+                "The transporter's information is that of the person(s) directly transporting the animals"),
         StringFormField(
             initial: _companyName,
             title: "Name of transporting company",
@@ -129,12 +136,28 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
             },
             onDelete: Optional.empty()),
         ListTile(
-            title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text("Transporting Company Address")),
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text: "Transporting Company Address"),
             subtitle: _companyAddressFormField),
-        ListTile(title: Text("Driver(s) name(s)")),
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
+        ListTile(
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text: "Driver(s) name(s)")),
         _driverNamesFormField,
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
+        Padding(padding: EdgeInsets.only(bottom: 10.0)),
         StringFormField(
             initial: _vehicleProvince,
             title: "Province of the conveyance transporting the animals",
@@ -168,10 +191,12 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
             },
             onDelete: Optional.empty()),
         ListTile(
-            title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text(
-                    "Date and time conveyance or container last cleaned and disinfected")),
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text:
+                    "Date and time conveyance or container last cleaned and disinfected"),
             subtitle: dateTimePicker(
                 initialDate: _dateLastCleaned,
                 onSaved: (String changed) {
@@ -179,10 +204,12 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
                   _saveAll();
                 })),
         ListTile(
-            title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text(
-                    "Address conveyance or container last cleaned and disinfected at")),
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text:
+                    "Address conveyance or container last cleaned and disinfected at"),
             subtitle: _addressLastCleanedAtFormField),
         ListTile(
             title: DropdownButtonFormField(
@@ -228,9 +255,11 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
             },
             onDelete: Optional.empty()),
         ListTile(
-            title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text("Training expiry date")),
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text: "Training expiry date"),
             subtitle: dateTimePicker(
                 initialDate: _trainingExpiryDate,
                 onSaved: (String changed) {

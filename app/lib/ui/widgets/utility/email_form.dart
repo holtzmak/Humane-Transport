@@ -101,18 +101,12 @@ class _EmailForm extends State<EmailForm> {
                     ),
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  margin: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                      color: Beige,
-                      border: Border.all(color: DarkerBeige),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                  child: Text(
-                    "Clicking send will open your device's email application",
-                    style: TextStyle(fontSize: BodyTextSize),
-                  ),
-                ),
+                outlinedTextContainer(
+                    textColor: NavyBlue,
+                    borderColor: DarkerBeige,
+                    backgroundColor: Beige,
+                    text:
+                        "Clicking send will open your device's email application"),
                 SizedBox(
                     height: 42,
                     width: 200,
