@@ -109,7 +109,7 @@ class _EmailForm extends State<EmailForm> {
                       border: Border.all(color: DarkerBeige),
                       borderRadius: BorderRadius.all(Radius.circular(5.0))),
                   child: Text(
-                    'Note: Send button below will open Gmail',
+                    "Clicking send will open your device's email application",
                     style: TextStyle(fontSize: BodyTextSize),
                   ),
                 ),
