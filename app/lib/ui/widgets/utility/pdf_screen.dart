@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:app/core/models/animal_transport_record.dart';
-import 'package:app/core/view_models/history_screen_view_model.dart';
+import 'package:app/core/view_models/pdf_screen_view_model.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,7 +66,7 @@ class _PDFScreenState extends State<PDFScreen> {
                       style: TitleTextStyle,
                     ));
               } else {
-                return TemplateBaseViewModel<HistoryScreenViewModel>(
+                return TemplateBaseViewModel<PdfScreenViewModel>(
                     builder: (context, model, child) => Scaffold(
                           appBar: AppBar(
                             iconTheme: IconThemeData(color: NavyBlue),
@@ -88,6 +88,7 @@ class _PDFScreenState extends State<PDFScreen> {
                             ],
                           ),
                           body: PDFViewer(
+                            pickerButtonColor: NavyBlue,
                             document: snapshot.data[1],
                             zoomSteps: 1,
                             scrollDirection: Axis.vertical,

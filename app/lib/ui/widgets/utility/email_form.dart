@@ -60,7 +60,11 @@ class _EmailForm extends State<EmailForm> {
                     controller: _recipientController,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2.0, color: NavyBlue)),
                         labelText: 'Add Recipient Email',
+                        labelStyle: TextStyle(color: NavyBlue),
                         hintText: 'example@example.com'),
                   ),
                 ),
@@ -71,7 +75,10 @@ class _EmailForm extends State<EmailForm> {
                     controller: _subjectController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 2.0, color: NavyBlue)),
                       labelText: 'Add Email Subject',
+                      labelStyle: TextStyle(color: NavyBlue),
                     ),
                   ),
                 ),
@@ -86,6 +93,10 @@ class _EmailForm extends State<EmailForm> {
                       textAlignVertical: TextAlignVertical.top,
                       decoration: InputDecoration(
                           labelText: 'Add Message',
+                          labelStyle: TextStyle(color: NavyBlue),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 2.0, color: NavyBlue)),
                           border: OutlineInputBorder()),
                     ),
                   ),
@@ -98,24 +109,28 @@ class _EmailForm extends State<EmailForm> {
                       border: Border.all(color: DarkerBeige),
                       borderRadius: BorderRadius.all(Radius.circular(5.0))),
                   child: Text(
-                    'By clicking send a composed email will open in your default email app',
+                    'Note: Send button below will open Gmail',
                     style: TextStyle(fontSize: BodyTextSize),
                   ),
                 ),
                 SizedBox(
                     height: 42,
                     width: 200,
-                    child: RaisedButton(
+                    child: RaisedButton.icon(
                       color: NavyBlue,
                       onPressed: () async {
                         if (widget.formKey.currentState.validate()) {
                           await send();
                         }
                       },
-                      child: Text(
+                      label: Text(
                         'Send',
                         style: TextStyle(
                             color: Colors.white, fontSize: MediumTextSize),
+                      ),
+                      icon: Icon(
+                        Icons.send_rounded,
+                        color: Colors.white,
                       ),
                     )),
               ],
