@@ -1,5 +1,6 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_fwr_event_form_field.dart';
 import 'package:app/ui/views/active/form_field/address_form_field.dart';
@@ -78,11 +79,19 @@ class _FeedWaterRestInfoFormFieldState
     return Form(
       key: widget._innerFormKey,
       child: Column(children: [
+        outlinedTextContainer(
+            textColor: White,
+            borderColor: NavyBlue,
+            backgroundColor: NavyBlue,
+            text:
+                "Animals are to be provided with feed, water and rest during a transport journey\n\nThis section of the form should be filled out upon first loading the animals and each time the animals are fed, watered, and rested"),
         ListTile(
-            title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text(
-                    "Last access to feed, water and rest (FWR) prior to loading")),
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text:
+                    "Last access to feed, water and rest (FWR) prior to loading"),
             subtitle: dateTimePicker(
                 initialDate: _lastFwrDate,
                 onSaved: (String changed) {
@@ -90,11 +99,22 @@ class _FeedWaterRestInfoFormFieldState
                   _saveAll();
                 })),
         ListTile(
-            title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text("Last FWR location")),
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text: "Last FWR location"),
             subtitle: _lastFwrAddressFormField),
-        ListTile(title: Text("If FWR was provided during transport")),
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
+        ListTile(
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text: "If FWR was provided during transport")),
         _fwrEventFormField,
         RaisedButton(
             child: Text(
