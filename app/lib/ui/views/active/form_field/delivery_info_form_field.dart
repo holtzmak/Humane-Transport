@@ -2,6 +2,7 @@ import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/receiver_info.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_compromised_animal_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/form_field/receiver_info_form_field.dart';
@@ -83,27 +84,41 @@ class _DeliveryInfoFormFieldState extends State<DeliveryInfoFormField> {
       key: widget._innerFormKey,
       child: Column(children: [
         ListTile(
-          title: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: Text("Receiver Info")),
+          title: outlinedTextContainer(
+              textColor: White,
+              borderColor: NavyBlue,
+              backgroundColor: NavyBlue,
+              text: "Receiver Info"),
           subtitle: _receiverInfoFormField,
         ),
         ListTile(
-            title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text("Date and time of arrival")),
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text: "Date and time of arrival"),
             subtitle: dateTimePicker(
                 initialDate: _arrivalDateAndTime,
                 onSaved: (String changed) {
                   _arrivalDateAndTime = DateTime.parse(changed);
                   _saveAll();
                 })),
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         ListTile(
             title: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.0),
-                child:
-                    Text("If any animals did not arrive in good condition"))),
+                child: Text(
+                  "If any animals did not arrive in good condition",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ))),
         _compromisedAnimalsFormField,
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         StringFormField(
             initial: _additionalWelfareConcerns,
             isMultiline: true,
