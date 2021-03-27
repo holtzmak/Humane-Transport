@@ -15,7 +15,7 @@ dynamicAnimalGroupFormField(
     DynamicFormField<AnimalGroup>(
         canBeEmpty: canBeEmpty,
         initialList: initialList,
-        titles: "Animal(s) description",
+        titles: "Animal group",
         onSaved: onSaved,
         blankFieldCreator: () => AnimalGroup(
             species: "",

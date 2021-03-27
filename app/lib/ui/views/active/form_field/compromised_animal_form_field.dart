@@ -1,5 +1,6 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -66,14 +67,22 @@ class _CompromisedAnimalFormFieldState
       children: [
         widget.onDelete.isPresent()
             ? ListTile(
-                title: Text(widget.title),
+                title: outlinedTextContainer(
+                    textColor: White,
+                    borderColor: NavyBlue,
+                    backgroundColor: NavyBlue,
+                    text: widget.title),
                 trailing: IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: widget.onDelete.get(),
                 ),
               )
             : ListTile(
-                title: Text(widget.title),
+                title: outlinedTextContainer(
+                    textColor: White,
+                    borderColor: NavyBlue,
+                    backgroundColor: NavyBlue,
+                    text: widget.title),
               ),
         StringFormField(
           initial: _animalDescription,

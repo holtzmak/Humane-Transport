@@ -2,6 +2,7 @@ import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_compromised_animal_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/form_field/int_form_field.dart';
@@ -114,14 +115,22 @@ class _AnimalGroupFormFieldState extends State<_AnimalGroupFormFieldInner> {
     return Column(children: [
       widget.onDelete.isPresent()
           ? ListTile(
-              title: Text("Animal Group"),
+              title: outlinedTextContainer(
+                  textColor: White,
+                  borderColor: NavyBlue,
+                  backgroundColor: NavyBlue,
+                  text: "Animal Group"),
               trailing: IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: widget.onDelete.get(),
               ),
             )
           : ListTile(
-              title: Text("Animal Group"),
+              title: outlinedTextContainer(
+                  textColor: White,
+                  borderColor: NavyBlue,
+                  backgroundColor: NavyBlue,
+                  text: "Animal Group"),
             ),
       StringFormField(
           initial: _species,
@@ -182,14 +191,28 @@ class _AnimalGroupFormFieldState extends State<_AnimalGroupFormFieldInner> {
           _saveAll();
         }),
       )),
+      Divider(
+        color: NavyBlue,
+        thickness: 4.0,
+      ),
       ListTile(
-        title: Text("If there are any compromised animals"),
+        title: Text(
+          "If there are any compromised animals",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       _compromisedAnimalsFormField,
       ListTile(
-        title: Text("If there are any special needs animals"),
+        title: Text(
+          "If there are any special needs animals",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       _specialNeedsAnimalsFormField,
+      Divider(
+        color: NavyBlue,
+        thickness: 4.0,
+      ),
     ]);
   }
 }

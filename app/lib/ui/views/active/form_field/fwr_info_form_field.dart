@@ -110,11 +110,10 @@ class _FeedWaterRestInfoFormFieldState
           thickness: 4.0,
         ),
         ListTile(
-            title: outlinedTextContainer(
-                textColor: White,
-                borderColor: NavyBlue,
-                backgroundColor: NavyBlue,
-                text: "If FWR was provided during transport")),
+            title: Text(
+          "If FWR was provided during transport",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        )),
         _fwrEventFormField,
         RaisedButton(
             child: Text(

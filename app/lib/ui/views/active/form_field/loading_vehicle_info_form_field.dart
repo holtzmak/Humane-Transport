@@ -1,4 +1,5 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_animal_group_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/form_field/int_form_field.dart';
@@ -76,10 +77,18 @@ class _LoadingVehicleInfoFormFieldState
     return Form(
       key: widget._innerFormKey,
       child: Column(children: [
+        outlinedTextContainer(
+            textColor: White,
+            borderColor: NavyBlue,
+            backgroundColor: NavyBlue,
+            text:
+                "The loading vehicle information is to be filled out before the start of a transporter journey and should list the animals loaded and if any animals are compromised or have special needs"),
         ListTile(
-            title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text("Date and time of loading")),
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text: "Date and time of loading"),
             subtitle: dateTimePicker(
                 initialDate: _dateAndTimeLoaded,
                 onSaved: (String changed) {
@@ -108,7 +117,15 @@ class _LoadingVehicleInfoFormFieldState
               _animalsPerLoadingArea = changed;
               _saveAll();
             }),
-        ListTile(title: Text("Animals loaded")),
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
+        ListTile(
+            title: Text(
+          "Animals loaded",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        )),
         _animalsLoadedFormField,
         RaisedButton(
             child: Text(
