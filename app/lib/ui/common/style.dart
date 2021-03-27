@@ -90,7 +90,7 @@ const DefaultRaisedButtonStyle = ButtonThemeData(
 );
 
 const AppTimePickerTheme = TimePickerThemeData(
-  hourMinuteColor: NavyBlue,
-  hourMinuteTextColor: Colors.white,
+  hourMinuteColor: Beige,
+  hourMinuteTextColor: NavyBlue,
   dialHandColor: NavyBlue,
 );
