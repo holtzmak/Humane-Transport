@@ -1,6 +1,7 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/form_field/address_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,11 @@ class _FeedWaterRestEventFormFieldState
       children: [
         widget.onDelete.isPresent()
             ? ListTile(
-                title: Text("FWR Event"),
+                title: outlinedTextContainer(
+                    textColor: White,
+                    borderColor: NavyBlue,
+                    backgroundColor: NavyBlue,
+                    text: "FWR Event"),
                 trailing: IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: widget.onDelete.get(),
@@ -106,9 +111,11 @@ class _FeedWaterRestEventFormFieldState
           ),
         ),
         ListTile(
-            title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text("Date and time")),
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text: "Date and time"),
             subtitle: dateTimePicker(
                 initialDate: _fwrTime,
                 onSaved: (String changed) {
@@ -116,9 +123,11 @@ class _FeedWaterRestEventFormFieldState
                   _saveAll();
                 })),
         ListTile(
-            title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text("Address")),
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text: "Address"),
             subtitle: _lastFwrAddressFormField),
         ListTile(
             title: DropdownButtonFormField(
