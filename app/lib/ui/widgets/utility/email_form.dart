@@ -1,5 +1,5 @@
-import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,13 +7,14 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class EmailForm extends StatefulWidget {
   final ValidationService _validator = locator<ValidationService>();
-  static const route = '/email_pdf';
+  static const route = '/emailForm';
   final formKey = GlobalKey<FormState>();
 
   final dynamic pdf;
 
   EmailForm({Key key, @required this.pdf}) : super(key: key);
 
+  @override
   _EmailForm createState() => _EmailForm();
 }
 
@@ -90,13 +91,14 @@ class _EmailForm extends State<EmailForm> {
                   ),
                 ),
                 Container(
+                  padding: const EdgeInsets.all(8.0),
                   margin: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                       color: Beige,
                       border: Border.all(color: DarkerBeige),
                       borderRadius: BorderRadius.all(Radius.circular(5.0))),
                   child: Text(
-                    'Note: By clicking send a composed email will open in Gmail',
+                    'By clicking send a composed email will open in your default email app',
                     style: TextStyle(fontSize: BodyTextSize),
                   ),
                 ),
@@ -143,7 +145,7 @@ class _EmailForm extends State<EmailForm> {
                     textAlign: TextAlign.center,
                   ),
                   content: Text(
-                    'Copy of animal transport Record sent',
+                    'Copy of animal transport record sent!',
                     textAlign: TextAlign.center,
                   ),
                   actions: <Widget>[
@@ -165,7 +167,7 @@ class _EmailForm extends State<EmailForm> {
           context: context,
           builder: (context) => AlertDialog(
                 title: Text(
-                  'Error Sending Email',
+                  'Error Sending Email!',
                   textAlign: TextAlign.center,
                 ),
                 content: Text(
