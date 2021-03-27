@@ -1,5 +1,6 @@
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -69,19 +70,29 @@ class _ContingencyActivityFormFieldState
       children: [
         widget.onDelete.isPresent()
             ? ListTile(
-                title: Text("Carrier's communication activity"),
+                title: outlinedTextContainer(
+                    textColor: White,
+                    borderColor: NavyBlue,
+                    backgroundColor: NavyBlue,
+                    text: "Carrier's communication activity"),
                 trailing: IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: widget.onDelete.get(),
                 ),
               )
             : ListTile(
-                title: Text("Carrier's communication activity"),
+                title: outlinedTextContainer(
+                    textColor: White,
+                    borderColor: NavyBlue,
+                    backgroundColor: NavyBlue,
+                    text: "Carrier's communication activity"),
               ),
         ListTile(
-          title: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: Text("Time of communication")),
+          title: outlinedTextContainer(
+              textColor: White,
+              borderColor: NavyBlue,
+              backgroundColor: NavyBlue,
+              text: "Time of communication"),
           subtitle: timePicker(
               initialTime: _time,
               onSaved: (String changed) {

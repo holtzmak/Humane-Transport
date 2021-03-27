@@ -187,12 +187,23 @@ class _AcknowledgementInfoFormFieldState
               }),
         ],
       ),
-      ListTile(
-        title: Text(
-          _validatorText,
-          style: TextStyle(color: Colors.red),
-        ),
+      Divider(
+        color: NavyBlue,
+        thickness: 4.0,
       ),
+      if (_validatorText.isNotEmpty)
+        ListTile(
+          title: Text(
+            _validatorText,
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+      outlinedTextContainer(
+          textColor: White,
+          borderColor: NavyBlue,
+          backgroundColor: NavyBlue,
+          text:
+              "The transfer of care from the transporter to the receiver occurs immediately upon acknowledgement of the shipment and the accompanying documentation by the receiver"),
       RaisedButton(
           child: Text(
             "Save",

@@ -1,5 +1,6 @@
 import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_contingency_plan_event_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_string_form_field.dart';
@@ -128,6 +129,12 @@ class _ContingencyPlanInfoFormFieldState
     return Form(
       key: widget._innerFormKey,
       child: Column(children: [
+        outlinedTextContainer(
+            textColor: White,
+            borderColor: NavyBlue,
+            backgroundColor: NavyBlue,
+            text:
+                "Failure to have a contingency plan is a violation of section 138.2 of the HAR\n\nThe plan can be in a number of formats but the written plan below will allow for ready access and quick response time"),
         StringFormField(
             initial: _goalStatement,
             isMultiline: true,
@@ -149,13 +156,23 @@ class _ContingencyPlanInfoFormFieldState
               _saveAll();
             },
             onDelete: Optional.empty()),
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         ListTile(
-          title: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: Text(
-                  "Crisis contacts and links (general helpline, industry related links and websites)")),
+          title: outlinedTextContainer(
+              textColor: White,
+              borderColor: NavyBlue,
+              backgroundColor: NavyBlue,
+              text:
+                  "Crisis contacts and links (general helpline, industry related links and websites)"),
         ),
         _crisisContactsFormField,
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         StringFormField(
             initial: _expectedPrepProcess,
             isMultiline: true,
@@ -175,16 +192,39 @@ class _ContingencyPlanInfoFormFieldState
               _saveAll();
             },
             onDelete: Optional.empty()),
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         ListTile(
-          title: Text("Potential Hazard/Events/Challenges"),
+          title: outlinedTextContainer(
+              textColor: White,
+              borderColor: NavyBlue,
+              backgroundColor: NavyBlue,
+              text: "Potential Hazard/Events/Challenges"),
         ),
         _potentialHazardsFormField,
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         ListTile(
-          title: Text("Potential Actions to Ensure Human or Animal Safety"),
+          title: outlinedTextContainer(
+              textColor: White,
+              borderColor: NavyBlue,
+              backgroundColor: NavyBlue,
+              text: "Potential Actions to Ensure Human or Animal Safety"),
         ),
         _potentialSafetyActionsFormField,
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         ListTile(
-          title: Text("Event Specific Plan(s)"),
+          title: Text(
+            "Event Specific Plan(s)",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         _contingencyEventsFormField,
         RaisedButton(
