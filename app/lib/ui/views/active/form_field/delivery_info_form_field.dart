@@ -83,6 +83,12 @@ class _DeliveryInfoFormFieldState extends State<DeliveryInfoFormField> {
     return Form(
       key: widget._innerFormKey,
       child: Column(children: [
+        outlinedTextContainer(
+            textColor: White,
+            borderColor: NavyBlue,
+            backgroundColor: NavyBlue,
+            text:
+                "The delivery information includes receiver's information necessary for animal transfer of care"),
         ListTile(
           title: outlinedTextContainer(
               textColor: White,

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app/core/models/acknowledgement_info.dart';
 import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/image_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -42,9 +43,17 @@ class _AcknowledgementInfoFormFieldState
 
   Widget _showShipperAckIfOneIsAvailable() {
     if (_shipperAckRecentImage != null) {
-      return Image.file(_shipperAckRecentImage);
+      return Image.file(
+        _shipperAckRecentImage,
+        width: 400,
+        height: 400,
+      );
     } else if (widget._imageForm.shipperAck.isNotEmpty) {
-      return Image.network(widget._imageForm.shipperAck);
+      return Image.network(
+        widget._imageForm.shipperAck,
+        width: 400,
+        height: 400,
+      );
     } else {
       return CircleAvatar(
         child: Icon(Icons.image_not_supported),
@@ -54,9 +63,17 @@ class _AcknowledgementInfoFormFieldState
 
   Widget _showTransporterAckIfOneIsAvailable() {
     if (_transporterAckRecentImage != null) {
-      return Image.file(_transporterAckRecentImage);
+      return Image.file(
+        _transporterAckRecentImage,
+        width: 400,
+        height: 400,
+      );
     } else if (widget._imageForm.transporterAck.isNotEmpty) {
-      return Image.network(widget._imageForm.transporterAck);
+      return Image.network(
+        widget._imageForm.transporterAck,
+        width: 400,
+        height: 400,
+      );
     } else {
       return CircleAvatar(
         child: Icon(Icons.image_not_supported),
@@ -66,9 +83,17 @@ class _AcknowledgementInfoFormFieldState
 
   Widget _showReceiverAckIfOneIsAvailable() {
     if (_receiverAckRecentImage != null) {
-      return Image.file(_receiverAckRecentImage);
+      return Image.file(
+        _receiverAckRecentImage,
+        width: 400,
+        height: 400,
+      );
     } else if (widget._imageForm.receiverAck.isNotEmpty) {
-      return Image.network(widget._imageForm.receiverAck);
+      return Image.network(
+        widget._imageForm.receiverAck,
+        width: 400,
+        height: 400,
+      );
     } else {
       return CircleAvatar(
         child: Icon(Icons.image_not_supported),
@@ -79,8 +104,17 @@ class _AcknowledgementInfoFormFieldState
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      outlinedTextContainer(
+          textColor: White,
+          borderColor: NavyBlue,
+          backgroundColor: NavyBlue,
+          text:
+              "This section of the form collects images of the acknowledgements\n\nThese images may be of written signatures or another form of digital signature"),
       ListTile(
-        title: Text("Shipper acknowledgement"),
+        title: Text(
+          "Shipper acknowledgement",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       Column(
         children: [
@@ -99,8 +133,15 @@ class _AcknowledgementInfoFormFieldState
               }),
         ],
       ),
+      Divider(
+        color: NavyBlue,
+        thickness: 4.0,
+      ),
       ListTile(
-        title: Text("Transporter acknowledgement"),
+        title: Text(
+          "Transporter acknowledgement",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       Column(
         children: [
@@ -119,8 +160,15 @@ class _AcknowledgementInfoFormFieldState
               }),
         ],
       ),
+      Divider(
+        color: NavyBlue,
+        thickness: 4.0,
+      ),
       ListTile(
-        title: Text("Consignee acknowledgement"),
+        title: Text(
+          "Consignee acknowledgement",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       Column(
         children: [
