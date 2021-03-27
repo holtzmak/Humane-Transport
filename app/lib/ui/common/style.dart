@@ -18,7 +18,7 @@ const SlateGreyOpaque = Color.fromRGBO(134, 151, 166, 200);
 const AlmostBlack = Color(0xFF212121);
 const OverlayColor = Color.fromRGBO(0, 0, 0, 0.5);
 
-appBar(String title) {
+AppBar appBar(String title) {
   return AppBar(
     title: Text(
       title,
@@ -32,7 +32,7 @@ appBar(String title) {
   );
 }
 
-appBarInner(String title) {
+AppBar appBarInner(String title) {
   return AppBar(
     automaticallyImplyLeading: false,
     title: Text(
@@ -46,6 +46,24 @@ appBarInner(String title) {
     actions: <Widget>[SettingIconWidget()],
   );
 }
+
+Container outlinedTextContainer(
+        {@required Color textColor,
+        @required Color borderColor,
+        @required Color backgroundColor,
+        @required String text}) =>
+    Container(
+      padding: EdgeInsets.all(8.0),
+      margin: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+          color: backgroundColor,
+          border: Border.all(color: borderColor),
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: BodyTextSize, color: textColor),
+      ),
+    );
 
 const TitleTextStyle = TextStyle(
   fontSize: LargeTextSize,

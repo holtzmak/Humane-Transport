@@ -16,20 +16,27 @@ class ExpansionListItem {
 Widget buildExpansionPanelList(
     {@required Function(int, bool) expansionCallback,
     @required List<ExpansionListItem> items}) {
-  return ExpansionPanelList(
-    expandedHeaderPadding: EdgeInsets.only(top: 0.0, bottom: 0.0),
-    expansionCallback: expansionCallback,
-    children: items.map<ExpansionPanel>((item) {
-      return ExpansionPanel(
-        headerBuilder: (context, isExpanded) => ListTile(
-            title: Text(
-          item.headerValue,
-          style: TextStyle(color: NavyBlue, fontWeight: FontWeight.bold),
-        )),
-        body: item.expandedValue,
-        isExpanded: item.isExpanded,
-        canTapOnHeader: true,
-      );
-    }).toList(),
+  return Container(
+    padding: EdgeInsets.all(8.0),
+    margin: EdgeInsets.all(8.0),
+    decoration: BoxDecoration(
+        color: NavyBlue, borderRadius: BorderRadius.all(Radius.circular(5.0))),
+    child: ExpansionPanelList(
+      expandedHeaderPadding: EdgeInsets.zero,
+      dividerColor: NavyBlue,
+      expansionCallback: expansionCallback,
+      children: items.map<ExpansionPanel>((item) {
+        return ExpansionPanel(
+          headerBuilder: (context, isExpanded) => ListTile(
+              title: Text(
+            item.headerValue,
+            style: TextStyle(color: NavyBlue, fontWeight: FontWeight.bold),
+          )),
+          body: item.expandedValue,
+          isExpanded: item.isExpanded,
+          canTapOnHeader: true,
+        );
+      }).toList(),
+    ),
   );
 }

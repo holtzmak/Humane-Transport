@@ -1,6 +1,7 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/shipper_info.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/form_field/address_form_field.dart';
 import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,6 +69,12 @@ class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
     return Form(
       key: widget._formKey,
       child: Column(children: [
+        outlinedTextContainer(
+            textColor: White,
+            borderColor: NavyBlue,
+            backgroundColor: NavyBlue,
+            text:
+                "The shipper's information is that of the commercial carrier or person who transports the animals"),
         StringFormField(
             initial: _name,
             title: "Name",
@@ -111,9 +118,11 @@ class _ShipperInfoFormFieldState extends State<ShipperInfoFormField> {
             },
             onDelete: Optional.empty()),
         ListTile(
-            title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text("Departure Premises Address")),
+            title: outlinedTextContainer(
+                textColor: White,
+                borderColor: NavyBlue,
+                backgroundColor: NavyBlue,
+                text: "Departure Premises Address"),
             subtitle: _departureAddressFormField),
         StringFormField(
             initial: _contactInfo,
