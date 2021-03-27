@@ -1,21 +1,22 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/view_models/pdf_screen_view_model.dart';
 import 'package:app/ui/common/style.dart';
-import 'package:network_image_to_byte/network_image_to_byte.dart';
+import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
+import 'package:network_image_to_byte/network_image_to_byte.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import 'email_screen.dart';
-
 class PDFScreen extends StatefulWidget {
-  static const route = '/pdf_preview';
+  static const route = '/pdfScreen';
   final AnimalTransportRecord atr;
 
   PDFScreen({Key key, @required this.atr});
@@ -25,20 +26,21 @@ class PDFScreen extends StatefulWidget {
 }
 
 class _PDFScreenState extends State<PDFScreen> {
-  Future<File> _pdf;
+  Future<PDFDocument> document;
+  Future<File> file;
 
   @override
   void initState() {
+    file = _getBuiltAndSavedPdf(widget.atr);
+    document = file.then((File file) => PDFDocument.fromFile(file));
     super.initState();
-    _pdf = _getBuiltAndSavedPdf(widget.atr);
   }
 
   @override
   build(BuildContext context) {
-    // TODO: Use the BusyOverlay here
-    return FutureBuilder<File>(
-        future: _pdf,
-        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+    return FutureBuilder<List>(
+        future: Future.wait([file, document]),
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Container(
@@ -54,7 +56,7 @@ class _PDFScreenState extends State<PDFScreen> {
                     ],
                   ));
             default:
-              if (snapshot.hasError)
+              if (snapshot.hasError) {
                 return Container(
                     padding: EdgeInsets.all(20),
                     alignment: Alignment.center,
@@ -63,35 +65,36 @@ class _PDFScreenState extends State<PDFScreen> {
                       'Could not build and save PDF: ${snapshot.error}',
                       style: TitleTextStyle,
                     ));
-              else
-                return PDFViewerScaffold(
-                  appBar: AppBar(
-                    iconTheme: IconThemeData(color: NavyBlue),
-                    backgroundColor: Beige,
-                    title: Text(
-                      'PDF View',
-                      style: TextStyle(color: NavyBlue),
-                    ),
-                    actions: [
-                      OutlinedButton.icon(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EmailScreen(
-                                          pdf: snapshot.requireData,
-                                        )));
-                          },
-                          icon: Icon(Icons.mail, color: NavyBlue),
-                          label: Text(
-                            'Email',
-                            style: TextStyle(color: NavyBlue),
-                          ))
-                    ],
-                  ),
-                  path: snapshot.data.path,
-                );
+              } else {
+                return TemplateBaseViewModel<PdfScreenViewModel>(
+                    builder: (context, model, child) => Scaffold(
+                          appBar: AppBar(
+                            iconTheme: IconThemeData(color: NavyBlue),
+                            backgroundColor: Beige,
+                            title: Text(
+                              'PDF View',
+                              style: TextStyle(color: NavyBlue),
+                            ),
+                            actions: [
+                              OutlinedButton.icon(
+                                  onPressed: () {
+                                    model.navigateToEmailForm(snapshot.data[0]);
+                                  },
+                                  icon: Icon(Icons.mail, color: NavyBlue),
+                                  label: Text(
+                                    'Email',
+                                    style: TextStyle(color: NavyBlue),
+                                  ))
+                            ],
+                          ),
+                          body: PDFViewer(
+                            pickerButtonColor: NavyBlue,
+                            document: snapshot.data[1],
+                            zoomSteps: 1,
+                            scrollDirection: Axis.vertical,
+                          ),
+                        ));
+              }
           }
         });
   }
@@ -109,7 +112,7 @@ class _PDFScreenState extends State<PDFScreen> {
       });
     } catch (e) {
       return Future.error(
-          "Could not load transporter's  Acknowledgment Receipt");
+          "Could not load transporter's acknowledgment receipt");
     }
     try {
       final shipperAckImage =
@@ -118,8 +121,7 @@ class _PDFScreenState extends State<PDFScreen> {
         shipperImage = shipperAckImage;
       });
     } catch (e) {
-      return Future.error(
-          "Could not load transporter's  Acknowledgment Receipt");
+      return Future.error("Could not load shipper's acknowledgment receipt");
     }
     try {
       final receiverAckImage =
@@ -128,8 +130,7 @@ class _PDFScreenState extends State<PDFScreen> {
         receiverImage = receiverAckImage;
       });
     } catch (e) {
-      return Future.error(
-          "Could not load transporter's  Acknowledgment Receipt");
+      return Future.error("Could not load receiver's acknowledgment receipt");
     }
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,

@@ -18,6 +18,7 @@ import 'package:app/core/view_models/sign_in_view_model.dart';
 import 'package:app/core/view_models/signup_view_model.dart';
 import 'package:app/core/view_models/splash_screen_view_model.dart';
 import 'package:app/core/view_models/welcome_screen_view_model.dart';
+import 'package:app/core/view_models/pdf_screen_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -60,4 +61,5 @@ void setUpLocator() async {
   locator.registerFactory<ActiveScreenViewModel>(() => ActiveScreenViewModel());
   locator
       .registerFactory<SettingScreenViewModel>(() => SettingScreenViewModel());
+  locator.registerFactory<PdfScreenViewModel>(() => PdfScreenViewModel());
 }
