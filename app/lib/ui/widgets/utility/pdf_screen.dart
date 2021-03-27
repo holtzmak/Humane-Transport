@@ -2,7 +2,9 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:app/core/models/animal_transport_record.dart';
+import 'package:app/core/view_models/history_screen_view_model.dart';
 import 'package:app/ui/common/style.dart';
+import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:network_image_to_byte/network_image_to_byte.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +13,6 @@ import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-
-import 'email_screen.dart';
 
 class PDFScreen extends StatefulWidget {
   static const route = '/pdf_preview';
@@ -64,34 +64,31 @@ class _PDFScreenState extends State<PDFScreen> {
                       style: TitleTextStyle,
                     ));
               else
-                return PDFViewerScaffold(
-                  appBar: AppBar(
-                    iconTheme: IconThemeData(color: NavyBlue),
-                    backgroundColor: Beige,
-                    title: Text(
-                      'PDF View',
-                      style: TextStyle(color: NavyBlue),
-                    ),
-                    actions: [
-                      OutlinedButton.icon(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EmailScreen(
-                                          pdf: snapshot.requireData,
-                                        )));
-                          },
-                          icon: Icon(Icons.mail, color: NavyBlue),
-                          label: Text(
-                            'Email',
-                            style: TextStyle(color: NavyBlue),
-                          ))
-                    ],
-                  ),
-                  path: snapshot.data.path,
-                );
+                return TemplateBaseViewModel<HistoryScreenViewModel>(
+                    builder: (context, model, child) => PDFViewerScaffold(
+                          appBar: AppBar(
+                            iconTheme: IconThemeData(color: NavyBlue),
+                            backgroundColor: Beige,
+                            title: Text(
+                              'PDF View',
+                              style: TextStyle(color: NavyBlue),
+                            ),
+                            actions: [
+                              OutlinedButton.icon(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    model.navigateToEmailScreen(
+                                        snapshot.requireData);
+                                  },
+                                  icon: Icon(Icons.mail, color: NavyBlue),
+                                  label: Text(
+                                    'Email',
+                                    style: TextStyle(color: NavyBlue),
+                                  ))
+                            ],
+                          ),
+                          path: snapshot.data.path,
+                        ));
           }
         });
   }

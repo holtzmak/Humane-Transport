@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/transporter.dart';
@@ -13,6 +14,7 @@ import 'package:app/ui/views/active/active_screen.dart';
 import 'package:app/ui/views/history/atr_display_screen.dart';
 import 'package:app/ui/views/history/history_screen.dart';
 import 'package:app/ui/views/home_screen.dart';
+import 'package:app/ui/widgets/utility/email_screen.dart';
 import 'package:app/ui/widgets/utility/pdf_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -98,6 +100,9 @@ class HistoryScreenViewModel extends BaseViewModel {
 
   void navigateToPDFScreen(AnimalTransportRecord atr) =>
       _navigationService.navigateTo(PDFScreen.route, arguments: atr);
+
+  void navigateToEmailScreen(File pdf) =>
+      _navigationService.navigateTo(EmailForm.route, arguments: pdf);
 
   void navigateToHomeScreen() =>
       _navigationService.navigateBackUntil(HomeScreen.route);

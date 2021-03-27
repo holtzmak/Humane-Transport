@@ -14,6 +14,7 @@ import 'package:app/ui/views/sign_in_screen.dart';
 import 'package:app/ui/views/sign_up_screen.dart';
 import 'package:app/ui/views/splash/splash_screen.dart';
 import 'package:app/ui/views/welcome_screen.dart';
+import 'package:app/ui/widgets/utility/email_screen.dart';
 import 'package:app/ui/widgets/utility/image_screen.dart';
 import 'package:app/ui/widgets/utility/pdf_screen.dart';
 import 'package:flutter/material.dart';
@@ -91,6 +92,11 @@ class AppRouteGenerator {
           case PDFScreen.route:
             return isLoggedIn()
                 ? PDFScreen(atr: settings.arguments)
+                : throw Exception(
+                    'You must be logged in to view this screen: ${settings.name}');
+          case EmailForm.route:
+            return isLoggedIn()
+                ? EmailForm(pdf: settings.arguments)
                 : throw Exception(
                     'You must be logged in to view this screen: ${settings.name}');
 
