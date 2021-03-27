@@ -50,7 +50,11 @@ class AcknowledgementInfo {
           subtitle: Container(
               padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
-              child: Image.network(shipperAck))),
+              child: Image.network(
+                shipperAck,
+                width: 400,
+                height: 400,
+              ))),
       ListTile(
           title: Padding(
               padding: EdgeInsets.only(bottom: 10.0),
@@ -58,7 +62,11 @@ class AcknowledgementInfo {
           subtitle: Container(
               padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
-              child: Image.network(transporterAck))),
+              child: Image.network(
+                transporterAck,
+                width: 400,
+                height: 400,
+              ))),
       ListTile(
           title: Padding(
               padding: EdgeInsets.only(bottom: 10.0),
@@ -66,7 +74,11 @@ class AcknowledgementInfo {
           subtitle: Container(
               padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(border: Border.all(color: NavyBlue)),
-              child: Image.network(receiverAck))),
+              child: Image.network(
+                receiverAck,
+                width: 400,
+                height: 400,
+              ))),
     ]);
   }
 }

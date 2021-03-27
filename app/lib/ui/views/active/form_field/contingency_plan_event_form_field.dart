@@ -2,6 +2,7 @@ import 'package:app/core/models/contingency_plan_info.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_contingency_activity_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_string_form_field.dart';
@@ -136,17 +137,29 @@ class _ContingencyPlanEventFormFieldState
       children: [
         widget.onDelete.isPresent()
             ? ListTile(
-                title: Text("Event Specific Plan"),
+                title: outlinedTextContainer(
+                    textColor: White,
+                    borderColor: NavyBlue,
+                    backgroundColor: NavyBlue,
+                    text: "Event Specific Plan"),
                 trailing: IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: widget.onDelete.get(),
                 ),
               )
             : ListTile(
-                title: Text("Event Specific Plan"),
+                title: outlinedTextContainer(
+                    textColor: White,
+                    borderColor: NavyBlue,
+                    backgroundColor: NavyBlue,
+                    text: "Event Specific Plan"),
               ),
         ListTile(
-          title: Text("Date and time of event"),
+          title: outlinedTextContainer(
+              textColor: White,
+              borderColor: NavyBlue,
+              backgroundColor: NavyBlue,
+              text: "Date and time of event"),
           subtitle: dateTimePicker(
               initialDate: _eventDateAndTime,
               onSaved: (String changed) {
@@ -154,14 +167,32 @@ class _ContingencyPlanEventFormFieldState
                 _saveAll();
               }),
         ),
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         ListTile(
-          title: Text("Producer's emergency contacts used"),
+          title: Text(
+            "Producer's emergency contacts used",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         _producerContactsUsedFormField,
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         ListTile(
-          title: Text("Receiver's emergency contacts used"),
+          title: Text(
+            "Receiver's emergency contacts used",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         _receiverContactsUsedFormField,
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         StringFormField(
             initial: _disturbancesIdentified,
             isMultiline: true,
@@ -176,17 +207,32 @@ class _ContingencyPlanEventFormFieldState
               _saveAll();
             },
             onDelete: Optional.empty()),
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         ListTile(
-          title: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: Text(
-                  "List of animal welfare related measures and actions taken (specific to the event)")),
+          title: Text(
+            "List of animal welfare related measures and actions taken (specific to the event)",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         _actionsTakenFormField,
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
         ListTile(
-          title: Text("Carrier's communication activities"),
+          title: Text(
+            "Carrier's communication activities",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         _contingencyActivitiesFormField,
+        Divider(
+          color: NavyBlue,
+          thickness: 4.0,
+        ),
       ],
     );
   }
