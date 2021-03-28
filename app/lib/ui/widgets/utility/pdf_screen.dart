@@ -43,28 +43,36 @@ class _PDFScreenState extends State<PDFScreen> {
         builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Container(
-                  color: Beige,
-                  child: Stack(
-                    alignment: FractionalOffset.center,
-                    children: <Widget>[
-                      new Container(
-                        child: new CircularProgressIndicator(
-                          backgroundColor: NavyBlue,
-                        ),
-                      ),
-                    ],
+              return Scaffold(
+                  appBar: AppBar(
+                    iconTheme: IconThemeData(color: NavyBlue),
+                    backgroundColor: Beige,
+                    title: Text(
+                      'PDF View',
+                      style: TextStyle(color: NavyBlue),
+                    ),
+                  ),
+                  body: Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: NavyBlue,
+                    ),
                   ));
             default:
               if (snapshot.hasError) {
-                return Container(
-                    padding: EdgeInsets.all(20),
-                    alignment: Alignment.center,
-                    color: Colors.white,
-                    child: Text(
+                return Scaffold(
+                    appBar: AppBar(
+                      iconTheme: IconThemeData(color: NavyBlue),
+                      backgroundColor: Beige,
+                      title: Text(
+                        'PDF View',
+                        style: TextStyle(color: NavyBlue),
+                      ),
+                    ),
+                    body: Center(
+                        child: Text(
                       'Could not build and save PDF: ${snapshot.error}',
                       style: TitleTextStyle,
-                    ));
+                    )));
               } else {
                 return TemplateBaseViewModel<PdfScreenViewModel>(
                     builder: (context, model, child) => Scaffold(

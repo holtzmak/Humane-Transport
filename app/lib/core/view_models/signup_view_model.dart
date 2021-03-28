@@ -16,6 +16,7 @@ class SignUpViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
 
   String _imageUrl;
+
   String get imageUrl => _imageUrl;
 
   void navigateToWelcomeScreen() =>

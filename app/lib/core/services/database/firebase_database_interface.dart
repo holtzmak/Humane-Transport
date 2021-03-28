@@ -8,6 +8,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 import 'database_interface.dart';
 
+/// The interface for FirebaseFirestore
+/// All Future calls contain a timeout as per https://stackoverflow.com/a/53551036
+/// (We could go without futures as suggested, but that seems antipattern
+/// because we would like to be notified of permission errors and the like)
 class FirebaseDatabaseInterface implements DatabaseInterface {
   final FirebaseFirestore _firestore;
 
@@ -17,18 +21,24 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
   Future<void> setNewTransporter(Transporter newTransporter) async => _firestore
       .collection('transporter')
       .doc(newTransporter.userId)
-      .set(newTransporter.toJSON());
+      .set(newTransporter.toJSON())
+      .timeout(Duration(seconds: 10));
 
   @override
-  Future<Transporter> getTransporter(String userId) async =>
-      _firestore.collection('transporter').doc(userId).get().then(
-          (DocumentSnapshot snapshot) => Transporter.fromJSON(snapshot.data()));
+  Future<Transporter> getTransporter(String userId) async => _firestore
+      .collection('transporter')
+      .doc(userId)
+      .get()
+      .then(
+          (DocumentSnapshot snapshot) => Transporter.fromJSON(snapshot.data()))
+      .timeout(Duration(seconds: 10));
 
   @override
   Future<void> updateTransporter(Transporter transporter) => _firestore
       .collection('transporter')
       .doc(transporter.userId)
-      .update(transporter.toJSON());
+      .update(transporter.toJSON())
+      .timeout(Duration(seconds: 10));
 
   @override
   Future<void> removeTransporter(String userId) async =>
@@ -44,18 +54,23 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
     return _firestore
         .collection('atr')
         .add(atr.toJSON())
-        .then((docRef) => atr.withDocId(docRef.id));
+        .then((docRef) => atr.withDocId(docRef.id))
+        .timeout(Duration(seconds: 10));
   }
 
   @override
   Future<void> updateAtr(AnimalTransportRecord atr) async => _firestore
       .collection('atr')
       .doc(atr.identifier.atrDocumentId)
-      .update(atr.toJSON());
+      .update(atr.toJSON())
+      .timeout(Duration(seconds: 10));
 
   @override
-  Future<void> removeAtr(String atrDocumentId) async =>
-      _firestore.collection('atr').doc(atrDocumentId).delete();
+  Future<void> removeAtr(String atrDocumentId) async => _firestore
+      .collection('atr')
+      .doc(atrDocumentId)
+      .delete()
+      .timeout(Duration(seconds: 10));
 
   @override
   Future<List<AnimalTransportRecord>> getCompleteRecords(String userId) async =>
@@ -66,7 +81,8 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .get()
           .then((snapshot) => snapshot.docs
               .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
-              .toList());
+              .toList())
+          .timeout(Duration(seconds: 10));
 
   @override
   Future<List<AnimalTransportRecord>> getActiveRecords(String userId) async =>
@@ -77,7 +93,8 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .get()
           .then((snapshot) => snapshot.docs
               .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
-              .toList());
+              .toList())
+          .timeout(Duration(seconds: 10));
 
   @override
   Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId) =>
@@ -116,7 +133,8 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .ref()
           .child('atrImages/$fileName')
           .putFile(file)
-          .then((TaskSnapshot snapshot) => snapshot.ref.getDownloadURL());
+          .then((TaskSnapshot snapshot) => snapshot.ref.getDownloadURL())
+          .timeout(Duration(seconds: 10));
 
   @override
   Future<String> uploadAvatarImage(File file, String fileName) async =>
@@ -124,11 +142,13 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .ref()
           .child('avatarImages/$fileName')
           .putFile(file)
-          .then((TaskSnapshot snapshot) => snapshot.ref.getDownloadURL());
+          .then((TaskSnapshot snapshot) => snapshot.ref.getDownloadURL())
+          .timeout(Duration(seconds: 10));
 
   @override
   Future<String> getAtrImage(String fileName) async => FirebaseStorage.instance
       .ref()
       .child('atrImages/$fileName')
-      .getDownloadURL();
+      .getDownloadURL()
+      .timeout(Duration(seconds: 10));
 }
