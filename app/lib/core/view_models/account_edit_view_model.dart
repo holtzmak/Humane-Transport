@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:app/core/models/transporter.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/dialog_service.dart';
@@ -19,8 +20,10 @@ class AccountEditViewModel extends BaseViewModel {
 
   Transporter _account;
   File _selectedImage;
+
   File get selectedImage => _selectedImage;
   String _imageUrl;
+
   String get imageUrl => _imageUrl;
 
   Future<void> selectImage() async {
@@ -54,7 +57,6 @@ class AccountEditViewModel extends BaseViewModel {
     @required String userPhoneNumber,
   }) async {
     setState(ViewState.Busy);
-
     setImageUrl().then((value) {
       var updateTransporterAccount = Transporter(
         firstName: firstName,

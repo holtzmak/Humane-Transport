@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 /// A service wrapping FirebaseAuth
 /// Sign in persistence is guaranteed default as per
 /// https://firebase.flutter.dev/docs/auth/usage/#persisting-authentication-state
+/// Timeout are added to every future to prevent locking when internet unavailable
 class AuthenticationService {
   final databaseService = locator<DatabaseService>();
   final FirebaseAuth firebaseAuth;
@@ -49,7 +50,9 @@ class AuthenticationService {
   Future<void> resetPassword({
     @required String userEmailAddress,
   }) async =>
-      firebaseAuth.sendPasswordResetEmail(email: userEmailAddress);
+      firebaseAuth
+          .sendPasswordResetEmail(email: userEmailAddress)
+          .timeout(Duration(seconds: 10));
 
   Future<void> signOut() async => firebaseAuth.signOut();
 
@@ -57,7 +60,9 @@ class AuthenticationService {
     @required String email,
     @required String password,
   }) async =>
-      firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .timeout(Duration(seconds: 10));
 
   Future<void> signUp({
     @required String firstName,
@@ -72,6 +77,7 @@ class AuthenticationService {
             email: userEmailAddress,
             password: password,
           )
+          .timeout(Duration(seconds: 10))
           .then((authResult) => databaseService.addTransporter(Transporter(
                 userId: authResult.user.uid,
                 firstName: firstName,

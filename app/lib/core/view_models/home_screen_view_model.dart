@@ -10,6 +10,7 @@ import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/services/shared_preferences_service.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/core/view_models/base_view_model.dart';
+import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/views/account/account_screen.dart';
 import 'package:app/ui/views/active/active_screen.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
@@ -87,6 +88,7 @@ class HomeScreenViewModel extends BaseViewModel {
   }
 
   Future<void> startNewAtr() async {
+    setState(ViewState.Busy);
     final currentUser = _authenticationService.currentUser;
     final defaultAtr = _sharedPreferencesService.getDefaultAtr();
     currentUser.isPresent()
@@ -94,12 +96,16 @@ class HomeScreenViewModel extends BaseViewModel {
             .saveNewAtr(defaultAtr.isPresent()
                 ? defaultAtr.get()
                 : AnimalTransportRecord.empty(currentUser.get().uid))
-            .then((atr) => _navigationService.navigateTo(ATREditingScreen.route,
-                arguments: atr))
-            .catchError((e) => _dialogService.showDialog(
-                  title: 'Starting a new Animal Transport Record failed',
-                  description: e.message,
-                ))
+            .then((atr) {
+            setState(ViewState.Idle);
+            return _navigationService.navigateTo(ATREditingScreen.route);
+          }).catchError((e) {
+            setState(ViewState.Idle);
+            _dialogService.showDialog(
+              title: 'Starting a new Animal Transport Record failed',
+              description: e.message,
+            );
+          })
         : _dialogService.showDialog(
             title: 'Starting a new Animal Transport Record failed',
             description: "You are not logged in!",

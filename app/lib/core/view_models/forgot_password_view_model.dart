@@ -27,7 +27,7 @@ class ForgotPasswordViewModel extends BaseViewModel {
     }).catchError((error) {
       setState(ViewState.Idle);
       _dialogService.showDialog(
-        title: 'Reset Password failed',
+        title: 'Reset password failed',
         description: error.message,
       );
     });
