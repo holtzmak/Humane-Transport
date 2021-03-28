@@ -33,7 +33,11 @@ void main() {
   void setUpFirebaseAuthMock() {
     when(mockFirebaseAuth.createUserWithEmailAndPassword(
             email: userEmailAddress, password: password))
-        .thenAnswer((_) async => mockUserCredential);
+        .thenAnswer((_) async {
+      // The .timeout call requires this cast to be explicit
+      UserCredential inner() => mockUserCredential;
+      return inner();
+    });
     when(mockUserCredential.user).thenReturn(mockUser);
     when(mockUser.uid).thenReturn(testUserId);
   }

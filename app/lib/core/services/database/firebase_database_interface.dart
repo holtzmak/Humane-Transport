@@ -5,6 +5,7 @@ import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/models/transporter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart';
 
 import 'database_interface.dart';
 
@@ -22,7 +23,9 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
       .collection('transporter')
       .doc(newTransporter.userId)
       .set(newTransporter.toJSON())
-      .timeout(Duration(seconds: 10));
+      .timeout(Duration(seconds: 10),
+          onTimeout: () => Future.error(PlatformException(
+              message: "The connection timed out!", code: "FUTURE_TIMEOUT")));
 
   @override
   Future<Transporter> getTransporter(String userId) async => _firestore
@@ -31,14 +34,18 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
       .get()
       .then(
           (DocumentSnapshot snapshot) => Transporter.fromJSON(snapshot.data()))
-      .timeout(Duration(seconds: 10));
+      .timeout(Duration(seconds: 10),
+          onTimeout: () => Future.error(PlatformException(
+              message: "The connection timed out!", code: "FUTURE_TIMEOUT")));
 
   @override
   Future<void> updateTransporter(Transporter transporter) => _firestore
       .collection('transporter')
       .doc(transporter.userId)
       .update(transporter.toJSON())
-      .timeout(Duration(seconds: 10));
+      .timeout(Duration(seconds: 10),
+          onTimeout: () => Future.error(PlatformException(
+              message: "The connection timed out!", code: "FUTURE_TIMEOUT")));
 
   @override
   Future<void> removeTransporter(String userId) async =>
@@ -55,7 +62,9 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
         .collection('atr')
         .add(atr.toJSON())
         .then((docRef) => atr.withDocId(docRef.id))
-        .timeout(Duration(seconds: 10));
+        .timeout(Duration(seconds: 10),
+            onTimeout: () => Future.error(PlatformException(
+                message: "The connection timed out!", code: "FUTURE_TIMEOUT")));
   }
 
   @override
@@ -63,14 +72,18 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
       .collection('atr')
       .doc(atr.identifier.atrDocumentId)
       .update(atr.toJSON())
-      .timeout(Duration(seconds: 10));
+      .timeout(Duration(seconds: 10),
+          onTimeout: () => Future.error(PlatformException(
+              message: "The connection timed out!", code: "FUTURE_TIMEOUT")));
 
   @override
   Future<void> removeAtr(String atrDocumentId) async => _firestore
       .collection('atr')
       .doc(atrDocumentId)
       .delete()
-      .timeout(Duration(seconds: 10));
+      .timeout(Duration(seconds: 10),
+          onTimeout: () => Future.error(PlatformException(
+              message: "The connection timed out!", code: "FUTURE_TIMEOUT")));
 
   @override
   Future<List<AnimalTransportRecord>> getCompleteRecords(String userId) async =>
@@ -82,7 +95,10 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .then((snapshot) => snapshot.docs
               .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
               .toList())
-          .timeout(Duration(seconds: 10));
+          .timeout(Duration(seconds: 10),
+              onTimeout: () => Future.error(PlatformException(
+                  message: "The connection timed out!",
+                  code: "FUTURE_TIMEOUT")));
 
   @override
   Future<List<AnimalTransportRecord>> getActiveRecords(String userId) async =>
@@ -94,7 +110,10 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .then((snapshot) => snapshot.docs
               .map((doc) => AnimalTransportRecord.fromJSON(doc.data(), doc.id))
               .toList())
-          .timeout(Duration(seconds: 10));
+          .timeout(Duration(seconds: 10),
+              onTimeout: () => Future.error(PlatformException(
+                  message: "The connection timed out!",
+                  code: "FUTURE_TIMEOUT")));
 
   @override
   Stream<List<AnimalTransportRecord>> getUpdatedCompleteATRs(String userId) =>
@@ -134,7 +153,10 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .child('atrImages/$fileName')
           .putFile(file)
           .then((TaskSnapshot snapshot) => snapshot.ref.getDownloadURL())
-          .timeout(Duration(seconds: 10));
+          .timeout(Duration(seconds: 10),
+              onTimeout: () => Future.error(PlatformException(
+                  message: "The connection timed out!",
+                  code: "FUTURE_TIMEOUT")));
 
   @override
   Future<String> uploadAvatarImage(File file, String fileName) async =>
@@ -143,12 +165,17 @@ class FirebaseDatabaseInterface implements DatabaseInterface {
           .child('avatarImages/$fileName')
           .putFile(file)
           .then((TaskSnapshot snapshot) => snapshot.ref.getDownloadURL())
-          .timeout(Duration(seconds: 10));
+          .timeout(Duration(seconds: 10),
+              onTimeout: () => Future.error(PlatformException(
+                  message: "The connection timed out!",
+                  code: "FUTURE_TIMEOUT")));
 
   @override
   Future<String> getAtrImage(String fileName) async => FirebaseStorage.instance
       .ref()
       .child('atrImages/$fileName')
       .getDownloadURL()
-      .timeout(Duration(seconds: 10));
+      .timeout(Duration(seconds: 10),
+          onTimeout: () => Future.error(PlatformException(
+              message: "The connection timed out!", code: "FUTURE_TIMEOUT")));
 }

@@ -6,6 +6,7 @@ import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// A service wrapping FirebaseAuth
 /// Sign in persistence is guaranteed default as per
@@ -50,9 +51,10 @@ class AuthenticationService {
   Future<void> resetPassword({
     @required String userEmailAddress,
   }) async =>
-      firebaseAuth
-          .sendPasswordResetEmail(email: userEmailAddress)
-          .timeout(Duration(seconds: 10));
+      firebaseAuth.sendPasswordResetEmail(email: userEmailAddress).timeout(
+          Duration(seconds: 10),
+          onTimeout: () => Future.error(PlatformException(
+              message: "The connection timed out!", code: "FUTURE_TIMEOUT")));
 
   Future<void> signOut() async => firebaseAuth.signOut();
 
@@ -62,7 +64,10 @@ class AuthenticationService {
   }) async =>
       firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password)
-          .timeout(Duration(seconds: 10));
+          .timeout(Duration(seconds: 10),
+              onTimeout: () => Future<UserCredential>.error(PlatformException(
+                  message: "The connection timed out!",
+                  code: "FUTURE_TIMEOUT")));
 
   Future<void> signUp({
     @required String firstName,
@@ -77,7 +82,10 @@ class AuthenticationService {
             email: userEmailAddress,
             password: password,
           )
-          .timeout(Duration(seconds: 10))
+          .timeout(Duration(seconds: 10),
+              onTimeout: () => Future.error(PlatformException(
+                  message: "The connection timed out!",
+                  code: "FUTURE_TIMEOUT")))
           .then((authResult) => databaseService.addTransporter(Transporter(
                 userId: authResult.user.uid,
                 firstName: firstName,
