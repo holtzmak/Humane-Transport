@@ -30,6 +30,8 @@ class HumaneTransportApp extends StatelessWidget {
             MaterialPageRoute(builder: (context) => DialogScreen(child: child)),
       ),
       theme: ThemeData(
+        primaryColor: NavyBlue,
+        colorScheme: ColorScheme.light().copyWith(primary: NavyBlue),
         textTheme: TextTheme(
           headline5: TitleTextStyle,
           bodyText1: BodyTextStyle,
