@@ -185,6 +185,34 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                         style: TextStyle(
                             color: NavyBlue, fontWeight: FontWeight.bold),
                       ),
+                      actions: [
+                        IconButton(
+                            icon: Icon(Icons.delete),
+                            color: NavyBlue,
+                            onPressed: () => showDialog(
+                                context: context,
+                                child: AlertDialog(
+                                  title: Text('Confirm Delete'),
+                                  content: Text(
+                                      'Are you sure you want to delete this record'),
+                                  actions: [
+                                    FlatButton(
+                                      child: Text('Cancel'),
+                                      onPressed: () => Navigator.of(context,
+                                              rootNavigator: true)
+                                          .pop(),
+                                    ),
+                                    FlatButton(
+                                        child: Text('Confirm'),
+                                        onPressed: () {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop();
+                                          model.deleteActiveAtr(widget.atr);
+                                        }),
+                                  ],
+                                )))
+                      ],
                       backgroundColor: White,
                       automaticallyImplyLeading: false,
                       leading: new IconButton(

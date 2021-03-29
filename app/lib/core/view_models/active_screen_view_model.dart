@@ -136,6 +136,27 @@ class ActiveScreenViewModel extends BaseViewModel {
     });
   }
 
+  Future<void> deleteActiveAtr(AnimalTransportRecord atr) async {
+    setState(ViewState.Busy);
+    final currentUser = _authenticationService.currentUser;
+    currentUser.isPresent()
+        ? _databaseService
+            .removeAtr(atr.identifier.atrDocumentId)
+            .then((_) => _dialogService.showDialog(
+                title: 'Animal Transport Record Deleted',
+                description: 'This record has been successfully removed'))
+            .then((_) => setState(ViewState.Idle))
+            .then((_) => navigateBack())
+            .catchError((e) {
+            setState(ViewState.Idle);
+            _dialogService.showDialog(
+                title: 'Deleting the Animal Transport Record failed',
+                description: e.message);
+          })
+        : _dialogService.showDialog(
+            title: 'Failed to Delete', description: 'User not logged in');
+  }
+
   Future<void> saveCompletedAtr(
       AnimalTransportRecord atr, AcknowledgementInfoImages ackImages) async {
     setState(ViewState.Busy);
