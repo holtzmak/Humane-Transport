@@ -192,18 +192,30 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                             onPressed: () => showDialog(
                                 context: context,
                                 child: AlertDialog(
-                                  title: Text('Confirm Delete'),
+                                  title: Text(
+                                    'Confirm Delete',
+                                    style: DialogBoxTitleStyle,
+                                  ),
                                   content: Text(
-                                      'Are you sure you want to delete this record'),
+                                      'Are you sure you want to delete this record?',
+                                      style: DialogBoxContentStyle),
                                   actions: [
                                     FlatButton(
-                                      child: Text('Cancel'),
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                       onPressed: () => Navigator.of(context,
                                               rootNavigator: true)
                                           .pop(),
                                     ),
                                     FlatButton(
-                                        child: Text('Confirm'),
+                                        child: Text(
+                                          'Confirm',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                         onPressed: () {
                                           Navigator.of(context,
                                                   rootNavigator: true)
