@@ -105,7 +105,7 @@ class AccountEditViewModel extends BaseViewModel {
       cancelText: 'No',
     );
 
-    if (!dialogResponse.confirmed) return null;
+    if (!dialogResponse.confirmed) return;
     setState(ViewState.Busy);
     try {
       _navigationService.navigateTo(WelcomeScreen.route);
