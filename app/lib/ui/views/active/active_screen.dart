@@ -22,6 +22,7 @@ class _ActiveScreenState extends State<ActiveScreen> {
           key: ObjectKey(Uuid().v4()),
           atr: atr,
           onTap: () => model.navigateToEditingScreen(atr));
+
   @override
   Widget build(BuildContext context) {
     return TemplateBaseViewModel<ActiveScreenViewModel>(
@@ -68,33 +69,47 @@ class _ActiveScreenState extends State<ActiveScreen> {
                   label: "New Form",
                 )
               ]),
-          body: model.animalTransportRecords.isEmpty
-              ? Center(
-                  child: Container(
-                    margin: EdgeInsets.all(50.0),
-                    child: Card(
-                      child: ListTile(
-                          title: Text(
-                            "No active Animal Transport Records",
-                            textAlign: TextAlign.center,
-                          ),
-                          subtitle: Text(
-                            "You can add some using the \"New\" button",
-                            textAlign: TextAlign.center,
-                          )),
-                    ),
-                  ),
-                )
-              : GridView.builder(
-                  itemCount: model.animalTransportRecords.length,
-                  itemBuilder: (context, index) =>
-                      createPreview(model, model.animalTransportRecords[index]),
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      childAspectRatio: 9 / 8,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20),
-                ),
+          body: Column(
+            children: [
+              Card(
+                  child: Padding(
+                      padding: EdgeInsets.all(5.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(), labelText: "Search"),
+                        onFieldSubmitted: (String searchTerm) =>
+                            model.filterBySearchTerm(searchTerm),
+                      ))),
+              model.animalTransportRecords.isEmpty
+                  ? Center(
+                      child: Container(
+                        margin: EdgeInsets.all(50.0),
+                        child: Card(
+                          child: ListTile(
+                              title: Text(
+                                "No active Animal Transport Records",
+                                textAlign: TextAlign.center,
+                              ),
+                              subtitle: Text(
+                                "You can add some using the \"New\" button",
+                                textAlign: TextAlign.center,
+                              )),
+                        ),
+                      ),
+                    )
+                  : Expanded(
+                      child: GridView.builder(
+                      itemCount: model.filteredAnimalTransportRecords.length,
+                      itemBuilder: (context, index) => createPreview(
+                          model, model.filteredAnimalTransportRecords[index]),
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 9 / 8,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20),
+                    )),
+            ],
+          ),
         ),
       ),
     );

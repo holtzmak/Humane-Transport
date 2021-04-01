@@ -38,6 +38,11 @@ class ActiveScreenViewModel extends BaseViewModel {
   List<AnimalTransportRecord> get animalTransportRecords =>
       List.unmodifiable(_animalTransportRecords);
 
+  List<AnimalTransportRecord> _filteredAnimalTransportRecords = [];
+
+  List<AnimalTransportRecord> get filteredAnimalTransportRecords =>
+      List.unmodifiable(_filteredAnimalTransportRecords);
+
   ActiveScreenViewModel() {
     final thisUser = _authenticationService.currentUser;
     if (thisUser.isPresent()) {
@@ -74,15 +79,25 @@ class ActiveScreenViewModel extends BaseViewModel {
 
   void addAll(List<AnimalTransportRecord> atrs) {
     _animalTransportRecords.addAll(atrs);
+    _filteredAnimalTransportRecords = _animalTransportRecords;
     notifyListeners();
   }
 
   void removeAll() {
     _animalTransportRecords.clear();
+    _filteredAnimalTransportRecords.clear();
     notifyListeners();
   }
 
-// May have come from Home screen or Active screen
+  void filterBySearchTerm(String searchTerm) {
+    _filteredAnimalTransportRecords = _animalTransportRecords
+        .where((AnimalTransportRecord atr) =>
+            atr.toString().toLowerCase().contains(searchTerm.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
+
+  // May have come from Home screen or Active screen
   void navigateBack() => _navigationService.pop();
 
   void navigateToHomeScreen() =>
