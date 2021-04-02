@@ -151,6 +151,20 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
         .catchError((e) => false);
   }
 
+  Future<void> _confirmAndDeleteAtr(ActiveScreenViewModel model) async =>
+      widget._dialogService
+          .showConfirmationDialog(
+              title: 'Delete Animal Transport Record',
+              description: 'Are you sure want to delete this record?',
+              confirmationText: 'Delete',
+              cancelText: 'Cancel')
+          .then((value) {
+        if (value.confirmed) {
+          model.navigateBack();
+          model.deleteActiveAtr(widget.atr);
+        }
+      });
+
   Future<void> _saveAndNavigateBack(ActiveScreenViewModel model) async {
     _saveForm();
     return model
@@ -186,44 +200,13 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                             color: NavyBlue, fontWeight: FontWeight.bold),
                       ),
                       actions: [
-                        IconButton(
-                            icon: Icon(Icons.delete),
-                            color: NavyBlue,
-                            onPressed: () => showDialog(
-                                context: context,
-                                child: AlertDialog(
-                                  title: Text(
-                                    'Confirm Delete',
-                                    style: DialogBoxTitleStyle,
-                                  ),
-                                  content: Text(
-                                      'Are you sure you want to delete this record?',
-                                      style: DialogBoxContentStyle),
-                                  actions: [
-                                    FlatButton(
-                                      child: Text(
-                                        'Cancel',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      onPressed: () => Navigator.of(context,
-                                              rootNavigator: true)
-                                          .pop(),
-                                    ),
-                                    FlatButton(
-                                        child: Text(
-                                          'Confirm',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.of(context,
-                                                  rootNavigator: true)
-                                              .pop();
-                                          model.deleteActiveAtr(widget.atr);
-                                        }),
-                                  ],
-                                )))
+                        OutlinedButton.icon(
+                            onPressed: () => _confirmAndDeleteAtr(model),
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            label: Text(
+                              'Delete',
+                              style: TextStyle(color: Colors.red),
+                            )),
                       ],
                       backgroundColor: White,
                       automaticallyImplyLeading: false,

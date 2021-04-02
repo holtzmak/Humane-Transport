@@ -1,6 +1,7 @@
 import 'package:app/core/services/dialog_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/utilities/optional.dart';
+import 'package:app/ui/common/style.dart';
 import 'package:app/ui/widgets/utility/dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -32,19 +33,31 @@ class _DialogScreenState extends State<DialogScreen> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: Text(request.title),
-              content: Text(request.description),
+              title: Text(
+                request.title,
+                style: DialogBoxTitleStyle,
+              ),
+              content: Text(
+                request.description,
+                style: DialogBoxContentStyle,
+              ),
               actions: <Widget>[
                 if (isConfirmationDialog)
                   FlatButton(
-                    child: Text(request.cancelText),
+                    child: Text(
+                      request.cancelText,
+                      style: DialogBoxTitleStyle,
+                    ),
                     onPressed: () {
                       _dialogService
                           .dialogComplete(DialogResponse(confirmed: false));
                     },
                   ),
                 FlatButton(
-                  child: Text(request.buttonText),
+                  child: Text(
+                    request.buttonText,
+                    style: DialogBoxTitleStyle,
+                  ),
                   onPressed: () {
                     _dialogService
                         .dialogComplete(DialogResponse(confirmed: true));

@@ -144,7 +144,8 @@ class ActiveScreenViewModel extends BaseViewModel {
             .removeAtr(atr.identifier.atrDocumentId)
             .then((_) => _dialogService.showDialog(
                 title: 'Animal Transport Record Deleted',
-                description: 'This record has been deleted successfully'))
+                description:
+                    'Animal transport record has been deleted successfully'))
             .then((_) => setState(ViewState.Idle))
             .then((_) => navigateBack())
             .catchError((e) {

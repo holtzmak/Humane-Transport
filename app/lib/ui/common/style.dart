@@ -82,12 +82,12 @@ const SubHeadingTextStyle = TextStyle(
 
 const DialogBoxTitleStyle = TextStyle(
   fontSize: MediumTextSize,
-  color: AlmostBlack,
+  color: NavyBlue,
   fontWeight: FontWeight.bold,
 );
 
 const DialogBoxContentStyle =
-    TextStyle(fontSize: BodyTextSize, color: NavyBlue);
+    TextStyle(fontSize: BodyTextSize, color: AlmostBlack);
 
 const CaptionStyle = TextStyle(
   fontSize: SmallTextSize,
