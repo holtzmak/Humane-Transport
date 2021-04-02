@@ -76,6 +76,10 @@ class HomeScreenViewModel extends BaseViewModel {
   void navigateToAccountScreen() =>
       _navigationService.navigateTo(AccountScreen.route);
 
+  void navigateToEditingScreen(AnimalTransportRecord atr) {
+    _navigationService.navigateTo(ATREditingScreen.route, arguments: atr);
+  }
+
   void signOut() async {
     _authenticationService
         .signOut()
@@ -98,7 +102,7 @@ class HomeScreenViewModel extends BaseViewModel {
                 : AnimalTransportRecord.empty(currentUser.get().uid))
             .then((atr) {
             setState(ViewState.Idle);
-            return _navigationService.navigateTo(ATREditingScreen.route);
+            return navigateToEditingScreen(atr);
           }).catchError((e) {
             setState(ViewState.Idle);
             _dialogService.showDialog(
