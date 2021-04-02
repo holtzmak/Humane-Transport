@@ -203,6 +203,22 @@ class _AccountEditingScreenState extends State<AccountEditingScreen> {
                             color: NavyBlue,
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 20.0,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 52,
+                          width: 200,
+                          child: RaisedButton(
+                            onPressed: () => model.deactivateAccount(),
+                            child: Text('Deactivate Account',
+                                style: TextStyle(
+                                    fontSize: 17, color: Colors.white)),
+                            color: Colors.red[900],
+                          ),
+                        ),
                         TextButton(
                           child: Text(
                             'Cancel and go back to your account',

@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:app/core/models/transporter.dart';
+import 'package:app/core/services/auth_service.dart';
 import 'package:app/core/services/database/database_service.dart';
 import 'package:app/core/services/dialog_service.dart';
 import 'package:app/core/services/nav_service.dart';
 import 'package:app/core/services/service_locator.dart';
 import 'package:app/core/view_models/base_view_model.dart';
 import 'package:app/ui/common/view_state.dart';
+import 'package:app/ui/views/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -15,6 +17,8 @@ class AccountEditViewModel extends BaseViewModel {
   final DatabaseService _databaseService = locator<DatabaseService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
 
   final _picker = ImagePicker();
 
@@ -89,4 +93,26 @@ class AccountEditViewModel extends BaseViewModel {
   }
 
   void navigateToAccount() => _navigationService.pop();
+
+  Future<void> deactivateAccount() async {
+    var dialogResponse = await _dialogService.showConfirmationDialog(
+      title: 'Are you sure?',
+      description: 'Do you really want to deactivate your account??',
+      confirmationText: 'Yes',
+      cancelText: 'No',
+    );
+
+    if (!dialogResponse.confirmed) return;
+    setState(ViewState.Busy);
+    try {
+      _navigationService.navigateTo(WelcomeScreen.route);
+      await _authenticationService.deleteAccount();
+    } catch (e) {
+      _dialogService.showDialog(
+        title: 'Deleting your account failed',
+        description: e.message,
+      );
+    }
+    setState(ViewState.Idle);
+  }
 }
