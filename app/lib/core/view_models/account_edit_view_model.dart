@@ -94,9 +94,6 @@ class AccountEditViewModel extends BaseViewModel {
 
   void navigateToAccount() => _navigationService.pop();
 
-  Future<void> removeTransporter(String userId) async =>
-      _databaseService.removeTransporter(userId).catchError((e) => throw (e));
-
   Future<void> deactivateAccount() async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
       title: 'Are you sure?',
