@@ -20,6 +20,7 @@ import 'package:crypto/crypto.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 
 /// This ViewModel will only view active ATR models
 class ActiveScreenViewModel extends BaseViewModel {
