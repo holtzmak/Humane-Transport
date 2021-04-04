@@ -5,7 +5,6 @@ import 'package:app/core/services/nav_service.dart';
 import 'package:app/test/helper/mock_http_client.dart';
 import 'package:app/test/test_data.dart';
 import 'package:app/ui/views/active/form_field/acknowledgement_info_form_field.dart';
-import 'package:app/ui/widgets/utility/image_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -129,37 +128,6 @@ void main() {
       await tester.ensureVisible(saveButtonFinder);
       await tester.tap(saveButtonFinder);
       await tester.pumpAndSettle();
-      expect(callbackInfo, testAcknowledgementImages);
-    });
-
-    testWidgets(
-        'calls onSaved with acknowledgement edited when save button pressed',
-        (WidgetTester tester) async {
-      final mockFile = File("test file");
-      when(mockNavigationService.navigateTo(ImageScreen.route))
-          .thenAnswer((_) => Future.value(mockFile));
-      final testInfo = AcknowledgementInfo(
-          shipperAck: "test file name",
-          transporterAck: "test file name",
-          receiverAck: "test file name");
-      final testAcknowledgementImages = testAcknowledgementInfoImages(
-          shipperAck: "test file name",
-          transporterAck: "test file name",
-          receiverAck: "test file name",
-          shipperAckRecentImage: mockFile);
-      final shipperAckImageButtonFinder =
-          find.byKey(ObjectKey("Shipper ack image picker"));
-      AcknowledgementInfoImages callbackInfo;
-      final onSavedCallback =
-          (AcknowledgementInfoImages info) => callbackInfo = info;
-      final widget = AcknowledgementInfoFormField(
-          initialInfo: testInfo, onSaved: onSavedCallback);
-
-      await pumpAckInfoFormField(tester, widget);
-      await tester.ensureVisible(shipperAckImageButtonFinder);
-      await tester.tap(shipperAckImageButtonFinder);
-      await tester.pumpAndSettle();
-      widget.save();
       expect(callbackInfo, testAcknowledgementImages);
     });
   });

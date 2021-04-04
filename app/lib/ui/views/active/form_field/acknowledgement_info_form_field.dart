@@ -1,14 +1,11 @@
 import 'dart:io';
 
 import 'package:app/core/models/acknowledgement_info.dart';
-import 'package:app/core/services/nav_service.dart';
-import 'package:app/core/services/service_locator.dart';
 import 'package:app/ui/common/style.dart';
-import 'package:app/ui/widgets/utility/image_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AcknowledgementInfoFormField extends StatefulWidget {
-  final NavigationService _navigationService = locator<NavigationService>();
   final Function(AcknowledgementInfoImages info) onSaved;
   final _ImageForm _imageForm;
   final String title = "Acknowledgements";
@@ -101,6 +98,16 @@ class _AcknowledgementInfoFormFieldState
     }
   }
 
+  Future<File> selectImage() async {
+    var tempImage = await ImagePicker().getImage(source: ImageSource.gallery);
+
+    if (tempImage != null) {
+      return File(tempImage.path);
+    } else {
+      return Future.error("No Image Picked!");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -126,10 +133,13 @@ class _AcknowledgementInfoFormFieldState
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () async {
-                _shipperAckRecentImage = await widget._navigationService
-                    .navigateTo(ImageScreen.route) as File;
-                setState(() => widget._imageForm.shipperAckRecentImage =
-                    _shipperAckRecentImage);
+                selectImage().then((File file) {
+                  _shipperAckRecentImage = file;
+                  setState(() => widget._imageForm.shipperAckRecentImage =
+                      _shipperAckRecentImage);
+                }).catchError((_) {
+                  //No Image Picked!
+                });
               }),
         ],
       ),
@@ -153,10 +163,13 @@ class _AcknowledgementInfoFormFieldState
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () async {
-                _transporterAckRecentImage = await widget._navigationService
-                    .navigateTo(ImageScreen.route) as File;
-                setState(() => widget._imageForm.transporterAckRecentImage =
-                    _transporterAckRecentImage);
+                selectImage().then((File file) {
+                  _transporterAckRecentImage = file;
+                  setState(() => widget._imageForm.transporterAckRecentImage =
+                      _transporterAckRecentImage);
+                }).catchError((_) {
+                  //No Image Picked!
+                });
               }),
         ],
       ),
@@ -180,10 +193,13 @@ class _AcknowledgementInfoFormFieldState
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () async {
-                _receiverAckRecentImage = await widget._navigationService
-                    .navigateTo(ImageScreen.route) as File;
-                setState(() => widget._imageForm.receiverAckRecentImage =
-                    _receiverAckRecentImage);
+                selectImage().then((File file) {
+                  _receiverAckRecentImage = file;
+                  setState(() => widget._imageForm.receiverAckRecentImage =
+                      _receiverAckRecentImage);
+                }).catchError((_) {
+                  //No Image Picked!
+                });
               }),
         ],
       ),
