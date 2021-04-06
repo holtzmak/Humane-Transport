@@ -19,7 +19,6 @@ import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/transporter_info_form_field.dart';
 import 'package:app/ui/widgets/models/expansion_list_item.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
-import 'package:app/ui/widgets/utility/custom_progress_bar.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -34,10 +33,13 @@ class ATREditingScreen extends StatefulWidget {
   _ATREditingScreenState createState() => _ATREditingScreenState();
 }
 
+// TODO: Over time, a pattern has emerged for the form fields
+// It would be useful to extract some abstract classes now
 class _ATREditingScreenState extends State<ATREditingScreen> {
   AnimalTransportRecord _replacementAtr;
   AcknowledgementInfoImages _replacementImages;
   final List<ExpansionListItem> _atrFormFieldsWrapper = [];
+  CustomExpansionPanelList _expansionPanelList;
 
   ShipperInfoFormField _shipperInfoField;
   TransporterInfoFormField _transporterInfoFormField;
@@ -46,8 +48,6 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   DeliveryInfoFormField _deliveryInfoFormField;
   AcknowledgementInfoFormField _acknowledgementInfoFormField;
   ContingencyPlanInfoFormField _contingencyPlanInfoFormField;
-
-  NumericProgressBar _progressBar;
 
   @override
   void initState() {
@@ -116,22 +116,61 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
           headerValue: _contingencyPlanInfoFormField.title)
     ]);
 
-    _progressBar = NumericProgressBar(stages: _atrFormFieldsWrapper.length);
+    _expansionPanelList = CustomExpansionPanelList(
+      items: _atrFormFieldsWrapper,
+      expansionCallback: (int index, bool isExpanded) {
+        _updateExpansionListOnExpand(index, !isExpanded);
+      },
+    );
+
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _updateProgressBar());
+
+    // Update the expansion panel list once
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _updateExpansionListAndCollapse());
   }
 
-  void _updateProgressBar() {
-    _progressBar.updateStage(0, _shipperInfoField.validate());
-    _progressBar.updateStage(1, _transporterInfoFormField.validate());
-    _progressBar.updateStage(2, _feedWaterRestInfoFormField.validate());
-    _progressBar.updateStage(3, _loadingVehicleInfoFormField.validate());
-    _progressBar.updateStage(4, _deliveryInfoFormField.validate());
-    _progressBar.updateStage(5, _acknowledgementInfoFormField.validate());
-    _progressBar.updateStage(6, _contingencyPlanInfoFormField.validate());
+  void _updateExpansionListAndCollapse() {
+    _expansionPanelList.updateItem(0, false, _shipperInfoField.validate());
+    _expansionPanelList.updateItem(
+        1, false, _transporterInfoFormField.validate());
+    _expansionPanelList.updateItem(
+        2, false, _feedWaterRestInfoFormField.validate());
+    _expansionPanelList.updateItem(
+        3, false, _loadingVehicleInfoFormField.validate());
+    _expansionPanelList.updateItem(4, false, _deliveryInfoFormField.validate());
+    _expansionPanelList.updateItem(
+        5, false, _acknowledgementInfoFormField.validate());
+    _expansionPanelList.updateItem(
+        6, false, _contingencyPlanInfoFormField.validate());
   }
 
-  // TODO: #204. Determine which form was invalid and notify transporter
+  void _updateExpansionListOnExpand(int index, bool isExpanded) {
+    switch (index) {
+      case 0:
+        return _expansionPanelList.updateItem(
+            0, isExpanded, _shipperInfoField.validate());
+      case 1:
+        return _expansionPanelList.updateItem(
+            1, isExpanded, _transporterInfoFormField.validate());
+      case 2:
+        return _expansionPanelList.updateItem(
+            2, isExpanded, _feedWaterRestInfoFormField.validate());
+      case 3:
+        return _expansionPanelList.updateItem(
+            3, isExpanded, _loadingVehicleInfoFormField.validate());
+      case 4:
+        return _expansionPanelList.updateItem(
+            4, isExpanded, _deliveryInfoFormField.validate());
+      case 5:
+        return _expansionPanelList.updateItem(
+            5, isExpanded, _acknowledgementInfoFormField.validate());
+      case 6:
+        return _expansionPanelList.updateItem(
+            6, isExpanded, _contingencyPlanInfoFormField.validate());
+    }
+  }
+
   bool _isFormValid() =>
       _shipperInfoField.validate() &&
       _transporterInfoFormField.validate() &&
@@ -192,13 +231,16 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
             ));
   }
 
-  Future<void> _submitATR(ActiveScreenViewModel model) async =>
-      _isFormValidAndSaved()
-          .then((_) =>
-              model.saveCompletedAtr(_replacementAtr, _replacementImages))
-          .catchError((_) => widget._dialogService.showDialog(
-              title: 'Submission of the Animal Transport Record failed',
-              description: 'One or more the the form fields is invalid'));
+  Future<void> _submitATR(ActiveScreenViewModel model) async {
+    _updateExpansionListAndCollapse();
+    _isFormValidAndSaved()
+        .then(
+            (_) => model.saveCompletedAtr(_replacementAtr, _replacementImages))
+        .catchError((_) => widget._dialogService.showDialog(
+            title: 'Submission of the Animal Transport Record failed',
+            description:
+                'See the forms with a red number beside them, they seem to be missing something!'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,18 +276,7 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                     body: SingleChildScrollView(
                       child: Column(
                         children: [
-                          _progressBar,
-                          Container(
-                              child: buildExpansionPanelList(
-                                  expansionCallback:
-                                      (int index, bool isExpanded) {
-                                    setState(() {
-                                      _updateProgressBar();
-                                      _atrFormFieldsWrapper[index].isExpanded =
-                                          !isExpanded;
-                                    });
-                                  },
-                                  items: _atrFormFieldsWrapper)),
+                          _expansionPanelList,
                           Padding(
                             padding: EdgeInsets.all(20),
                           ),
