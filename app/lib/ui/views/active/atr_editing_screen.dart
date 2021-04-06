@@ -19,6 +19,7 @@ import 'package:app/ui/views/active/form_field/shipper_info_form_field.dart';
 import 'package:app/ui/views/active/form_field/transporter_info_form_field.dart';
 import 'package:app/ui/widgets/models/expansion_list_item.dart';
 import 'package:app/ui/widgets/utility/busy_overlay_screen.dart';
+import 'package:app/ui/widgets/utility/custom_progress_bar.dart';
 import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -46,9 +47,10 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
   AcknowledgementInfoFormField _acknowledgementInfoFormField;
   ContingencyPlanInfoFormField _contingencyPlanInfoFormField;
 
+  NumericProgressBar _progressBar;
+
   @override
   void initState() {
-    super.initState();
     _replacementAtr = widget.atr;
     _replacementImages = AcknowledgementInfoImages(
         shipperAck: widget.atr.ackInfo.shipperAck,
@@ -113,6 +115,20 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
           expandedValue: _contingencyPlanInfoFormField,
           headerValue: _contingencyPlanInfoFormField.title)
     ]);
+
+    _progressBar = NumericProgressBar(stages: _atrFormFieldsWrapper.length);
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _updateProgressBar());
+  }
+
+  void _updateProgressBar() {
+    _progressBar.updateStage(0, _shipperInfoField.validate());
+    _progressBar.updateStage(1, _transporterInfoFormField.validate());
+    _progressBar.updateStage(2, _feedWaterRestInfoFormField.validate());
+    _progressBar.updateStage(3, _loadingVehicleInfoFormField.validate());
+    _progressBar.updateStage(4, _deliveryInfoFormField.validate());
+    _progressBar.updateStage(5, _acknowledgementInfoFormField.validate());
+    _progressBar.updateStage(6, _contingencyPlanInfoFormField.validate());
   }
 
   // TODO: #204. Determine which form was invalid and notify transporter
@@ -218,11 +234,13 @@ class _ATREditingScreenState extends State<ATREditingScreen> {
                     body: SingleChildScrollView(
                       child: Column(
                         children: [
+                          _progressBar,
                           Container(
                               child: buildExpansionPanelList(
                                   expansionCallback:
                                       (int index, bool isExpanded) {
                                     setState(() {
+                                      _updateProgressBar();
                                       _atrFormFieldsWrapper[index].isExpanded =
                                           !isExpanded;
                                     });

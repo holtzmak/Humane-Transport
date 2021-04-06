@@ -25,18 +25,33 @@ Widget buildExpansionPanelList(
       expandedHeaderPadding: EdgeInsets.zero,
       dividerColor: NavyBlue,
       expansionCallback: expansionCallback,
-      children: items.map<ExpansionPanel>((item) {
-        return ExpansionPanel(
-          headerBuilder: (context, isExpanded) => ListTile(
-              title: Text(
-            item.headerValue,
-            style: TextStyle(color: NavyBlue, fontWeight: FontWeight.bold),
-          )),
-          body: item.expandedValue,
-          isExpanded: item.isExpanded,
-          canTapOnHeader: true,
-        );
-      }).toList(),
+      children: items
+          .asMap()
+          .map((index, item) {
+            return MapEntry(
+                index,
+                ExpansionPanel(
+                  headerBuilder: (context, isExpanded) => ListTile(
+                      leading: Chip(
+                        label: Text("${index + 1}",
+                            style: TextStyle(
+                                color: NavyBlue, fontWeight: FontWeight.bold)),
+                        shape: StadiumBorder(
+                            side: BorderSide(color: NavyBlue, width: 3.0)),
+                        backgroundColor: Colors.white,
+                      ),
+                      title: Text(
+                        item.headerValue,
+                        style: TextStyle(
+                            color: NavyBlue, fontWeight: FontWeight.bold),
+                      )),
+                  body: item.expandedValue,
+                  isExpanded: item.isExpanded,
+                  canTapOnHeader: true,
+                ));
+          })
+          .values
+          .toList(),
     ),
   );
 }
