@@ -213,7 +213,8 @@ void main() {
       verifyNever(mockActiveScreenViewModel.saveCompletedAtr(any, any));
       verify(mockDialogService.showDialog(
               title: 'Submission of the Animal Transport Record failed',
-              description: 'One or more the the form fields is invalid'))
+              description:
+                  'See the forms with a red number beside them, they seem to be missing something!'))
           .called(1);
     });
   });
