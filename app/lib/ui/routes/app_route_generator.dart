@@ -4,6 +4,7 @@ import 'package:app/ui/views/account/account_editing_screen.dart';
 import 'package:app/ui/views/account/account_screen.dart';
 import 'package:app/ui/views/active/active_screen.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
+import 'package:app/ui/views/faq_screen.dart';
 import 'package:app/ui/views/reset_password/check_your_email_account_screen.dart';
 import 'package:app/ui/views/reset_password/forgot_password_screen.dart';
 import 'package:app/ui/views/history/atr_display_screen.dart';
@@ -91,6 +92,11 @@ class AppRouteGenerator {
           case EmailForm.route:
             return isLoggedIn()
                 ? EmailForm(pdf: settings.arguments)
+                : throw Exception(
+                    'You must be logged in to view this screen: ${settings.name}');
+          case FAQScreen.route:
+            return isLoggedIn()
+                ? FAQScreen()
                 : throw Exception(
                     'You must be logged in to view this screen: ${settings.name}');
 

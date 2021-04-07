@@ -14,6 +14,7 @@ import 'package:app/ui/common/view_state.dart';
 import 'package:app/ui/views/account/account_screen.dart';
 import 'package:app/ui/views/active/active_screen.dart';
 import 'package:app/ui/views/active/atr_editing_screen.dart';
+import 'package:app/ui/views/faq_screen.dart';
 import 'package:app/ui/views/history/history_screen.dart';
 import 'package:app/ui/views/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -79,6 +80,8 @@ class HomeScreenViewModel extends BaseViewModel {
   void navigateToEditingScreen(AnimalTransportRecord atr) {
     _navigationService.navigateTo(ATREditingScreen.route, arguments: atr);
   }
+
+  void navigateToFAQScreen() => _navigationService.navigateTo(FAQScreen.route);
 
   void signOut() async {
     _authenticationService
