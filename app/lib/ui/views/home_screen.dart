@@ -159,16 +159,16 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                             RaisedButton.icon(
-                              onPressed: model.signOut,
+                              onPressed: model.navigateToFAQScreen,
                               padding: EdgeInsets.all(30.0),
                               icon: Icon(
-                                Icons.logout,
+                                Icons.chat_outlined,
                                 color: NavyBlue,
                                 size: 40.0,
                               ),
                               color: Colors.white,
                               label: Text(
-                                'Sign Out',
+                                'Frequently Asked Questions',
                                 style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                     fontSize: 20.0,
