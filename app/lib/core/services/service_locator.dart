@@ -10,16 +10,15 @@ import 'package:app/core/view_models/account_edit_view_model.dart';
 import 'package:app/core/view_models/account_screen_view_model.dart';
 import 'package:app/core/view_models/active_screen_view_model.dart';
 import 'package:app/core/view_models/check_your_email_account_view_model.dart';
-import 'package:app/core/view_models/faq_screen_view_model.dart';
 import 'package:app/core/view_models/forgot_password_view_model.dart';
 import 'package:app/core/view_models/history_screen_view_model.dart';
 import 'package:app/core/view_models/home_screen_view_model.dart';
+import 'package:app/core/view_models/pdf_screen_view_model.dart';
 import 'package:app/core/view_models/setting_screen_view_model.dart';
 import 'package:app/core/view_models/sign_in_view_model.dart';
 import 'package:app/core/view_models/signup_view_model.dart';
 import 'package:app/core/view_models/splash_screen_view_model.dart';
 import 'package:app/core/view_models/welcome_screen_view_model.dart';
-import 'package:app/core/view_models/pdf_screen_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -63,5 +62,4 @@ void setUpLocator() async {
   locator
       .registerFactory<SettingScreenViewModel>(() => SettingScreenViewModel());
   locator.registerFactory<PdfScreenViewModel>(() => PdfScreenViewModel());
-  locator.registerFactory<FAQScreenViewModel>(() => FAQScreenViewModel());
 }
