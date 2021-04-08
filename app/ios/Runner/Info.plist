@@ -52,10 +52,9 @@
     <string>Can I use the mic please?</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Example usage description</string>
-
-	<!-- Permission options for the `photos` group -->
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>photos</string>
-
 </dict>
 </plist>

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:app/core/models/animal_transport_record.dart';
 import 'package:app/core/view_models/pdf_screen_view_model.dart';
 import 'package:app/ui/common/style.dart';
@@ -10,6 +9,7 @@ import 'package:app/ui/widgets/utility/template_base_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:network_image_to_byte/network_image_to_byte.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -26,21 +26,19 @@ class PDFScreen extends StatefulWidget {
 }
 
 class _PDFScreenState extends State<PDFScreen> {
-  Future<PDFDocument> document;
   Future<File> file;
 
   @override
   void initState() {
     file = _getBuiltAndSavedPdf(widget.atr);
-    document = file.then((File file) => PDFDocument.fromFile(file));
     super.initState();
   }
 
   @override
   build(BuildContext context) {
-    return FutureBuilder<List>(
-        future: Future.wait([file, document]),
-        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+    return FutureBuilder<File>(
+        future: file,
+        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Scaffold(
@@ -86,7 +84,7 @@ class _PDFScreenState extends State<PDFScreen> {
                             actions: [
                               OutlinedButton.icon(
                                   onPressed: () {
-                                    model.navigateToEmailForm(snapshot.data[0]);
+                                    model.navigateToEmailForm(snapshot.data);
                                   },
                                   icon: Icon(Icons.mail, color: NavyBlue),
                                   label: Text(
@@ -95,12 +93,7 @@ class _PDFScreenState extends State<PDFScreen> {
                                   ))
                             ],
                           ),
-                          body: PDFViewer(
-                            pickerButtonColor: NavyBlue,
-                            document: snapshot.data[1],
-                            zoomSteps: 1,
-                            scrollDirection: Axis.vertical,
-                          ),
+                          body: PDFView(filePath: snapshot.data.uri.toString()),
                         ));
               }
           }
