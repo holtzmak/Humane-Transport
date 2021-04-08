@@ -5,6 +5,8 @@
 
 A [Flutter](https://flutter.dev/) and [Firebase](https://firebase.google.com/) mobile application to record Canadian animal transport and transfer of care documentation, meeting the [requirements and regulations](https://www.inspection.gc.ca/animal-health/humane-transport/eng/1300460032193/1300460096845) set out by the Health of Animals Act and the Canadian Food Inspection Agency (CFIA).
 
+Got questions? You can contact our team by email at [humane.transport@gmail.com](mailto:humane.transport@gmail.com)
+
 [![Watch the commercial](https://user-images.githubusercontent.com/32527219/114086582-04d8ac80-9870-11eb-9fae-6e40ca620980.png)](https://www.youtube.com/watch?v=r14XWNl9UI8)
 
 For an interactable mock-up of the application, see [our Adobe XD Prototype](https://xd.adobe.com/view/9a6f1910-d3ac-4fdf-b051-c2c78510ba32-cf3c/). You can leave feedback if you like!
@@ -26,11 +28,11 @@ Further documentation and diagrams are available in the [`documentation` folder 
 
 Canadian livestock transporters are required to follow rules and regulations specified by the Canadian Food Inspection Agency (CFIA) before, during, and after animal transport. The current process requires paper manifests to be created and maintained by transporters to ensure that all animals and their data are collected for business, market, and tracing purposes; it is not well suited to transporters who may not have access to materials while on the road. Humane Transport is a mobile application which provides transporters with a paper-free way to collect and provide all CFIA required data while meeting the requirements of the Health of Animals Regulations Part XII, Humane transport of animals (sections 136-155), and providing access to interpretive guidance documentation to assist understanding.
 
-## Project Deliverables
+## Project Documentation
 
-All deliverables available on our [website](https://sanakhan1997.github.io/Humane-Transport/).
+Have a look at our [website](https://sanakhan1997.github.io/Humane-Transport/) for a more friendly experience to this README!
 
-The deliverables assigned and set out by our post-seconday software engineering course are as follows:
+The deliverables assigned and set out by our post-seconday software engineering course at the University of Regina are as follows:
 1. [Project Proposal](https://github.com/holtzmak/Humane-Transport/wiki/Project-Proposal-Document) (September 11, 2020)
 1. Project Introduction Vlog [Documentation](https://github.com/holtzmak/Humane-Transport/wiki/Project-Vlog-1-Documentation) and [Video](https://www.youtube.com/watch?v=yEHSdMMVPaU) (September 23, 2020)
 1. Team/Instructor Scrum Report 1 [Slides](https://sanakhan1997.github.io/Humane-Transport/) (September 28, 2020)
@@ -42,13 +44,15 @@ The deliverables assigned and set out by our post-seconday software engineering 
 1. Team/Instructor Scrum Report 4 [Slides](https://sanakhan1997.github.io/Humane-Transport/) (January 21, 2021)
 1. Project Progress Vlog 4 [Video](https://youtu.be/BHDtMDXqNDQ) and [Slides](https://sanakhan1997.github.io/Humane-Transport/) (February 4, 2021)
 1. Team/Instructor Scrum Report 5 [Slides](https://sanakhan1997.github.io/Humane-Transport/) (March 4, 2021)
-1. Project Progress Vlog 5 [Video](https://youtu.be/HzlpUNPJnRY) and [Slides](https://sanakhan1997.github.io/Humane-Transport/)  (March 18, 2021)
+1. Project Progress Vlog 5 [Video](https://youtu.be/HzlpUNPJnRY) and [Slides](https://sanakhan1997.github.io/Humane-Transport/) (March 18, 2021)
+1. Project Progress Vlog 6 [Video](https://youtu.be/ahWm-3r2-XM) and [Slides](https://sanakhan1997.github.io/Humane-Transport/) (April 8, 2021)
+1. Project Commercial [Video](https://www.youtube.com/watch?v=r14XWNl9UI8) (April 8, 2021)
 
 ***
 
 ## Legal Notices
 
-This project is not affiliated with nor endorsed by the Canadian Food Inspection Agency (CFIA).
+This project is not affiliated with the Canadian Food Inspection Agency (CFIA).
 
 > Copyright (C) 2020  Clark Inocalla, Kelly Holtzman, Mansi Patel, Sana Khan
 >
