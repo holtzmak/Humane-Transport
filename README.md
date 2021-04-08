@@ -5,11 +5,11 @@
 
 A [Flutter](https://flutter.dev/) and [Firebase](https://firebase.google.com/) mobile application to record Canadian animal transport and transfer of care documentation, meeting the [requirements and regulations](https://www.inspection.gc.ca/animal-health/humane-transport/eng/1300460032193/1300460096845) set out by the Health of Animals Act and the Canadian Food Inspection Agency (CFIA).
 
+![team](https://user-images.githubusercontent.com/32527219/114089295-330bbb80-9873-11eb-8e48-3fbc830096e5.png)
+
 Got questions? You can contact our team by email at [humane.transport@gmail.com](mailto:humane.transport@gmail.com)
 
 [![Watch the commercial](https://user-images.githubusercontent.com/32527219/114086582-04d8ac80-9870-11eb-9fae-6e40ca620980.png)](https://www.youtube.com/watch?v=r14XWNl9UI8)
-
-For an interactable mock-up of the application, see [our Adobe XD Prototype](https://xd.adobe.com/view/9a6f1910-d3ac-4fdf-b051-c2c78510ba32-cf3c/). You can leave feedback if you like!
 
 **This project's main source of information is the [Wiki](https://github.com/holtzmak/Humane-Transport/wiki).** See our Wiki for the following information and more:
 1. Team meeting minutes (Scrum dates and discussion minutes)
@@ -32,8 +32,12 @@ Canadian livestock transporters are required to follow rules and regulations spe
 
 Have a look at our [website](https://sanakhan1997.github.io/Humane-Transport/) for a more friendly experience to this README!
 
-The deliverables assigned and set out by our post-seconday software engineering course at the University of Regina are as follows:
+### Project Management documents
 1. [Project Proposal](https://github.com/holtzmak/Humane-Transport/wiki/Project-Proposal-Document) (September 11, 2020)
+1. See our techincal and client requirements, software architecture drawings, and user story mappings [here](https://github.com/holtzmak/Humane-Transport/tree/master/documentation) (Created at the beginning of the project in 2020)
+2. See our project closing documents, test reports, lessons learned and after action review reports [here](https://github.com/holtzmak/Humane-Transport/tree/master/documentation/closing) (April 10, 2021)
+
+### Project videos
 1. Project Introduction Vlog [Documentation](https://github.com/holtzmak/Humane-Transport/wiki/Project-Vlog-1-Documentation) and [Video](https://www.youtube.com/watch?v=yEHSdMMVPaU) (September 23, 2020)
 1. Team/Instructor Scrum Report 1 [Slides](https://sanakhan1997.github.io/Humane-Transport/) (September 28, 2020)
 1. Project Progress Vlog 1 [Video](https://www.youtube.com/watch?v=9OWY6PUYiAg) and [Slides](https://sanakhan1997.github.io/Humane-Transport/) (October 19, 2020)
@@ -47,6 +51,16 @@ The deliverables assigned and set out by our post-seconday software engineering 
 1. Project Progress Vlog 5 [Video](https://youtu.be/HzlpUNPJnRY) and [Slides](https://sanakhan1997.github.io/Humane-Transport/) (March 18, 2021)
 1. Project Progress Vlog 6 [Video](https://youtu.be/ahWm-3r2-XM) and [Slides](https://sanakhan1997.github.io/Humane-Transport/) (April 8, 2021)
 1. Project Commercial [Video](https://www.youtube.com/watch?v=r14XWNl9UI8) (April 8, 2021)
+
+### Project posters and prototype images
+1. Interact with our application prototype, [on Adobe XD](https://xd.adobe.com/view/9a6f1910-d3ac-4fdf-b051-c2c78510ba32-cf3c/). You can leave feedback if you like!
+> Can't use the link? You can see the prototype, and our older versions, as PDFs [here](https://github.com/holtzmak/Humane-Transport/tree/master/documentation/gui%20prototypes)
+2. Consider our [project conference poster](https://github.com/holtzmak/Humane-Transport/blob/master/documentation/project%20posters/Conference%20Poster.pdf)
+3. Consider our [project advertisement poster](https://github.com/holtzmak/Humane-Transport/blob/master/documentation/project%20posters/Humane-Transport-Advertisment-Poster.png)
+
+## A Special Thank You
+
+Our team would like to thank all the people who made this project possible! Thank you to our professors, families, and to members of the CFIA for their advice (software, process, legal, and friendly) and for sticking through it all with us. We couldn't have done it without you all!
 
 ***
 
