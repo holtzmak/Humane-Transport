@@ -1,8 +1,11 @@
-# Humane Transport
+![Header](https://user-images.githubusercontent.com/32527219/114085758-03f34b00-986f-11eb-9cc8-af02ce870f1e.png)
+
 ![Build and integration tests](https://github.com/holtzmak/Humane-Transport/actions/workflows/flutter-action-build-and-integration-testing.yml/badge.svg)
 ![Formatting and Unit tests](https://github.com/holtzmak/Humane-Transport/actions/workflows/flutter-action-formatting-and-unit-testing.yml/badge.svg)
 
-A [Flutter](https://flutter.dev/) and [Firebase](https://firebase.google.com/) mobile application to record Canadian animal transport and transfer of care documentation, meeting the [requirements and regulations](https://www.inspection.gc.ca/animal-health/humane-transport/eng/1300460032193/1300460096845) set out by the Canadian Food Inspection Agency (CFIA).
+A [Flutter](https://flutter.dev/) and [Firebase](https://firebase.google.com/) mobile application to record Canadian animal transport and transfer of care documentation, meeting the [requirements and regulations](https://www.inspection.gc.ca/animal-health/humane-transport/eng/1300460032193/1300460096845) set out by the Health of Animals Act and the Canadian Food Inspection Agency (CFIA).
+
+[![Watch the commercial](https://user-images.githubusercontent.com/32527219/114086582-04d8ac80-9870-11eb-9fae-6e40ca620980.png)](https://www.youtube.com/watch?v=r14XWNl9UI8)
 
 For an interactable mock-up of the application, see [our Adobe XD Prototype](https://xd.adobe.com/view/9a6f1910-d3ac-4fdf-b051-c2c78510ba32-cf3c/). You can leave feedback if you like!
 
