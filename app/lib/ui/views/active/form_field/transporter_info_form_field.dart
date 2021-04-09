@@ -1,5 +1,7 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/transporter_info.dart';
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
@@ -10,6 +12,7 @@ import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 class TransporterInfoFormField extends StatefulWidget {
+  final ValidationService _validator = locator<ValidationService>();
   final Function(TransporterInfo info) onSaved;
   final TransporterInfo initialInfo;
   final String title = "Transporter's Information";
@@ -93,6 +96,13 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
   // Only one call to saved them is needed as this form's fields are saved together
   void _saveNestedForms() => _driverNamesFormField.save();
 
+  // The nested save is blocked by validate so we save then validate,
+  // validation must be true before submission so this is fine
+  bool _saveAndValidateNestedForms() {
+    _saveNestedForms();
+    return _driverNamesFormField.validate();
+  }
+
   void _saveAll() => widget.onSaved(TransporterInfo(
       companyName: _companyName,
       companyAddress: _companyAddress,
@@ -129,6 +139,9 @@ class _TransporterInfoFormFieldState extends State<TransporterInfoFormField> {
         StringFormField(
             initial: _companyName,
             title: "Name of transporting company",
+            validator: (String it) => _saveAndValidateNestedForms()
+                ? widget._validator.stringFieldValidator(it)
+                : "*Something is missing. Try the save button!",
             onSaved: (String changed) {
               _companyName = changed;
               _saveNestedForms();

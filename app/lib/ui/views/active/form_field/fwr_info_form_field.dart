@@ -1,5 +1,7 @@
 import 'package:app/core/models/address.dart';
 import 'package:app/core/models/feed_water_rest_info.dart';
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_fwr_event_form_field.dart';
@@ -8,6 +10,7 @@ import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 class FeedWaterRestInfoFormField extends StatefulWidget {
+  final ValidationService _validator = locator<ValidationService>();
   final Function(FeedWaterRestInfo info) onSaved;
   final FeedWaterRestInfo initialInfo;
   final String title = "Feed, Water, and Rest Information";
@@ -62,6 +65,13 @@ class _FeedWaterRestInfoFormFieldState
   // Only one call to saved them is needed as this form's fields are saved together
   void _saveNestedForms() => _fwrEventFormField.save();
 
+  // The nested save is blocked by validate so we save then validate,
+  // validation must be true before submission so this is fine
+  bool _saveAndValidateNestedForms() {
+    _saveNestedForms();
+    return _fwrEventFormField.validate();
+  }
+
   void _saveAll() => widget.onSaved(FeedWaterRestInfo(
       lastFwrDate: _lastFwrDate,
       lastFwrLocation: _lastFwrLocation,
@@ -94,6 +104,9 @@ class _FeedWaterRestInfoFormFieldState
                     "Last access to feed, water and rest (FWR) prior to loading"),
             subtitle: dateTimePicker(
                 initialDate: _lastFwrDate,
+                validator: (String it) => _saveAndValidateNestedForms()
+                    ? widget._validator.stringFieldValidator(it)
+                    : "*Something is missing. Try the save button!",
                 onSaved: (String changed) {
                   _lastFwrDate = DateTime.parse(changed);
                   _saveAll();

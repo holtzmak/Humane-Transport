@@ -1,4 +1,6 @@
 import 'package:app/core/models/contingency_plan_info.dart';
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_contingency_plan_event_form_field.dart';
@@ -8,6 +10,7 @@ import 'package:app/ui/views/active/form_field/string_form_field.dart';
 import 'package:flutter/material.dart';
 
 class ContingencyPlanInfoFormField extends StatefulWidget {
+  final ValidationService _validator = locator<ValidationService>();
   final Function(ContingencyPlanInfo info) onSaved;
   final ContingencyPlanInfo initialInfo;
   final String title = "Contingency Plan";
@@ -97,6 +100,16 @@ class _ContingencyPlanInfoFormFieldState
     _contingencyEventsFormField.save();
   }
 
+  // The nested save is blocked by validate so we save then validate,
+  // validation must be true before submission so this is fine
+  bool _saveAndValidateNestedForms() {
+    _saveNestedForms();
+    return _crisisContactsFormField.validate() &&
+        _potentialHazardsFormField.validate() &&
+        _potentialSafetyActionsFormField.validate() &&
+        _contingencyEventsFormField.validate();
+  }
+
   void _saveAll() => widget.onSaved(ContingencyPlanInfo(
       goalStatement: _goalStatement,
       communicationPlan: _communicationPlan,
@@ -140,6 +153,9 @@ class _ContingencyPlanInfoFormFieldState
             isMultiline: true,
             title:
                 "Goal Statement (company’s goal and purpose of the plan i.e avoid animal suffering)",
+            validator: (String it) => _saveAndValidateNestedForms()
+                ? widget._validator.stringFieldValidator(it)
+                : "*Something is missing. Try the save button!",
             onSaved: (String changed) {
               _goalStatement = changed;
               _saveNestedForms();

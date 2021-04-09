@@ -1,6 +1,8 @@
 import 'package:app/core/models/delivery_info.dart';
 import 'package:app/core/models/loading_vehicle_info.dart';
 import 'package:app/core/models/receiver_info.dart';
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/core/utilities/optional.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_compromised_animal_form_field.dart';
@@ -11,6 +13,7 @@ import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 class DeliveryInfoFormField extends StatefulWidget {
+  final ValidationService _validator = locator<ValidationService>();
   final Function(DeliveryInfo info) onSaved;
   final DeliveryInfo initialInfo;
   final String title = "Delivery Information";
@@ -64,6 +67,13 @@ class _DeliveryInfoFormFieldState extends State<DeliveryInfoFormField> {
   // As the forms are nested, they need to be told to save
   // Only one call to saved them is needed as this form's fields are saved together
   void _saveNestedForms() => _compromisedAnimalsFormField.save();
+
+  // The nested save is blocked by validate so we save then validate,
+  // validation must be true before submission so this is fine
+  bool _saveAndValidateNestedForms() {
+    _saveNestedForms();
+    return _compromisedAnimalsFormField.validate();
+  }
 
   void _saveAll() => widget.onSaved(DeliveryInfo(
       recInfo: _receiverInfo,
@@ -130,6 +140,9 @@ class _DeliveryInfoFormFieldState extends State<DeliveryInfoFormField> {
             isMultiline: true,
             title:
                 "Additional animal welfare concerns for the consignee to be aware of?",
+            validator: (String it) => _saveAndValidateNestedForms()
+                ? widget._validator.stringFieldValidator(it)
+                : "*Something is missing. Try the save button!",
             onSaved: (String changed) {
               _additionalWelfareConcerns = changed;
               _saveNestedForms();
