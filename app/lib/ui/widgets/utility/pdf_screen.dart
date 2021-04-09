@@ -94,6 +94,7 @@ class _PDFScreenState extends State<PDFScreen> {
                             ],
                           ),
                           body: PDFView(
+                              // The file path is relative on iOS but is absolute on Android
                               filePath: Platform.isIOS
                                   ? snapshot.data.path
                                   : snapshot.data.uri.toString()),
