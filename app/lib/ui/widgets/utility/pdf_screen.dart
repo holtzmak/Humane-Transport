@@ -93,7 +93,10 @@ class _PDFScreenState extends State<PDFScreen> {
                                   ))
                             ],
                           ),
-                          body: PDFView(filePath: snapshot.data.uri.toString()),
+                          body: PDFView(
+                              filePath: Platform.isIOS
+                                  ? snapshot.data.path
+                                  : snapshot.data.uri.toString()),
                         ));
               }
           }
