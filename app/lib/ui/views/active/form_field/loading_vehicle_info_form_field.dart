@@ -1,4 +1,6 @@
 import 'package:app/core/models/loading_vehicle_info.dart';
+import 'package:app/core/services/service_locator.dart';
+import 'package:app/core/services/validation_service.dart';
 import 'package:app/ui/common/style.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_animal_group_form_field.dart';
 import 'package:app/ui/views/active/dynamic_form_field/dynamic_form_field.dart';
@@ -7,6 +9,7 @@ import 'package:app/ui/widgets/utility/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 class LoadingVehicleInfoFormField extends StatefulWidget {
+  final ValidationService _validator = locator<ValidationService>();
   final Function(LoadingVehicleInfo info) onSaved;
   final LoadingVehicleInfo initialInfo;
   final String title = "Loading Vehicle Information";
@@ -58,6 +61,13 @@ class _LoadingVehicleInfoFormFieldState
   // Only one call to saved them is needed as this form's fields are saved together
   void _saveNestedForms() => _animalsLoadedFormField.save();
 
+  // The nested save is blocked by validate so we save then validate,
+  // validation must be true before submission so this is fine
+  bool _saveAndValidateNestedForms() {
+    _saveNestedForms();
+    return _animalsLoadedFormField.validate();
+  }
+
   void _saveAll() => widget.onSaved(LoadingVehicleInfo(
       dateAndTimeLoaded: _dateAndTimeLoaded,
       loadingArea: _loadingArea,
@@ -98,6 +108,9 @@ class _LoadingVehicleInfoFormFieldState
         IntFormField(
             initial: _loadingArea,
             title: "Floor or container area available to animals (m2 or ft2)",
+            validator: (int it) => _saveAndValidateNestedForms()
+                ? widget._validator.intFieldValidator(it)
+                : "*Something is missing. Try the save button!",
             onSaved: (int changed) {
               _loadingArea = changed;
               _saveNestedForms();
