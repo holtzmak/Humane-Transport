@@ -22,7 +22,28 @@ Further documentation and diagrams are available in the [`documentation` folder 
 
 ## Installation and Use
 
- **_Instructions for installing and using this application TBD_** 
+ **How to install**
+
+ 1. Get yourself an IDE ([Android Studio](https://developer.android.com/studio/install), [VS Code](https://code.visualstudio.com/download), etc.)
+ 2. Install the [Flutter SDK](https://flutter.dev/docs/get-started/install)
+ 3. Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+ 4. Clone the project with Git
+
+    `git clone https://github.com/holtzmak/Humane-Transport.git`
+
+ 5. Open the project in IDE
+
+     _Note: Your IDE of choice may get the packeges for you automatically. If that is not the case, then type `flutter pub get`_
+
+ 6. You're all set and ready to go!
+
+_Optional: Want to run it on an emulated or real device? [See Android Studio instructions](https://developer.android.com/studio/run/device). Other IDEs are similar. You can also watch this [tutorial](https://www.youtube.com/watch?v=XoqmO1dmEYE) on our YouTube channel_
+
+**How to use Humane Transport**
+
+Watch and learn how to use Humane Transport!
+
+[![Watch the tutorial](https://user-images.githubusercontent.com/43891568/114287428-f6cb8d00-9a23-11eb-8510-3981635d9f6f.png)](https://www.youtube.com/watch?v=GZ21DbvrISQ)
 
 ## Project Abstract
 
